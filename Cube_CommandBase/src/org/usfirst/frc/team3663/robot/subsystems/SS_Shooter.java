@@ -24,12 +24,20 @@ public class SS_Shooter extends Subsystem {
     	
     }
     
-    public void setShooterMotorSpeed(double speed){						//Sets the speed of both motors
-    	shooterTop.set(speed);
-    	shooterBottom.set(speed);
+    public void setShooterMotorBottom(double pSpeed){						//sets the speed of the bottom
+    	shooterBottom.set(pSpeed);
+    }
+    
+    public void setShooterMotorTop(double pSpeed){							//sets the speed of the top
+    	shooterTop.set(pSpeed);
+    }
+    
+    public void setShooterMotorsSpeed(double pSpeed){						//Sets the speed of both motors
+    	shooterTop.set(pSpeed);
+    	shooterBottom.set(pSpeed);
     }
 
-    public void toggleShooterSolenoid(){								//Works as a toggle for the shooter piston
+    public void toggleShooterSolenoid(){									//Works as a toggle for the shooter piston
     	if(shooterSolenoid.get() == DoubleSolenoid.Value.kForward){
     		shooterSolenoid.set(DoubleSolenoid.Value.kReverse);
     	}

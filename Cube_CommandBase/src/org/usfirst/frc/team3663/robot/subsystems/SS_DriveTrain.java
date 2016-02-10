@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
+import org.usfirst.frc.team3663.robot.commands.C_DriveTrain;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Joystick;
@@ -25,7 +26,7 @@ public class SS_DriveTrain extends Subsystem {
 	//Sensors  (there will be encoders and other sensors)
 	
     public void initDefaultCommand() {
-    	
+    	setDefaultCommand(new C_DriveTrain());
     }
     
     public void arcadeRobotDrive(Joystick pStick){		//Responsible for driving the robot

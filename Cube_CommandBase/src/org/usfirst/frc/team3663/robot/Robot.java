@@ -1,6 +1,11 @@
 
 package org.usfirst.frc.team3663.robot;
 
+import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
+import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
+import org.usfirst.frc.team3663.robot.subsystems.SS_PickupArm;
+import org.usfirst.frc.team3663.robot.subsystems.SS_Shooter;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -18,6 +23,10 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 	public static RobotMap robotMap;
+	public static SS_DriveTrain ss_DriveTrain;
+	public static SS_Shooter ss_Shooter;
+	public static SS_PickupArm ss_PickupArm;
+	public static SS_Dart ss_Dart;
 
 
     /**

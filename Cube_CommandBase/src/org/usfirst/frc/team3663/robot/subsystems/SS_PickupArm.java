@@ -19,10 +19,15 @@ public class SS_PickupArm extends Subsystem {
 	private DoubleSolenoid pickupSolenoid = new DoubleSolenoid(Robot.robotMap.pickUpSolenoid[0], Robot.robotMap.pickUpSolenoid[1]);
 	
     public void initDefaultCommand() {
+    	
     }
     
     public void setPickupSpeed(double speed){				//sets the speed of the motor
     	pickupMotor.set(speed);
+    }
+    
+    public void STOP(){
+    	pickupMotor.set(0);
     }
     
     public void togglePickupSolenoid(){						//acts as a toggle for the solenoid

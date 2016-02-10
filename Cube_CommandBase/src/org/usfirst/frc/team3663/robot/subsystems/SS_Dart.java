@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class SS_Dart extends Subsystem {
-
+	
+	private int maxPotentiometer;
+	
 	//Motor
 	private CANTalon dartMotor = new CANTalon(Robot.robotMap.dartMotor);
 	
@@ -20,6 +22,12 @@ public class SS_Dart extends Subsystem {
 	
     public void initDefaultCommand() {
     	
+    }
+    
+    public void moveDart(double pSpeed){
+    	int DistValue = dartPotentiometer.getAverageValue();
+    	if(DistValue < )
+    	dartMotor.set(pSpeed);
     }
     
     public void updateDashboard(){					//updates to the dash board
