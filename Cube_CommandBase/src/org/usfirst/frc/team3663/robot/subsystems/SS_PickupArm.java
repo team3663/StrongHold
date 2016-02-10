@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
-public class SS_PickUpArm extends Subsystem {
+public class SS_PickupArm extends Subsystem {
 	
     //Motors
 	private CANTalon pickupMotor = new CANTalon(Robot.robotMap.pickUpMotor);
