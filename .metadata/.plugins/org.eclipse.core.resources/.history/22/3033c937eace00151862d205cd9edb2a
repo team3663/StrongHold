@@ -1,0 +1,30 @@
+package org.usfirst.frc.team3663.robot;
+/**
+ * The RobotMap is a mapping from the ports sensors and actuators are wired into
+ * to a variable name. This provides flexibility changing wiring, makes checking
+ * the wiring easier and significantly reduces the number of magic numbers
+ * floating around.
+ */
+public class RobotMap {	
+	
+/********CANTalons*******/
+	//drive
+		public static int leftDriveMotor1  = 1;
+		public static int leftDriveMotor2  = 2;
+		public static int rightDriveMotor1 = 3;
+		public static int rightDriveMotor2 = 4;
+	//shooter
+		public static int shooterMotor1 = 5;
+		public static int shooterMotor2 = 6;
+	//pickup
+		public static int pickUpMotor = 7;
+	//dart
+		public static int dartMotor = 8;
+	
+/*********Analogs********/
+		public static int dartPotentiometer = 0;
+    
+/*******Solinoides*******/
+	    public static int[] pickUpSolenoid  = new int[]{4,5};    
+	    public static int[] shooterSolenoid = new int[]{6,7};
+}

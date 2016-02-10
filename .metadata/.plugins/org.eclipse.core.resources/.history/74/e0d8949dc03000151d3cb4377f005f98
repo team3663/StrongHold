@@ -1,0 +1,179 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.IOException;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+
+public class Display extends JFrame implements KeyListener{
+
+	private static JPanel contentPane;
+	private static Display frame;
+	private static dataPacket dP;
+
+	/**
+	 * Launch the application.
+	 */
+	static EchoClient eC;
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					frame = new Display();
+					frame.setVisible(true);
+					frame.setTitle("Worms Client");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		eC = new EchoClient();
+		dP = new dataPacket(eC);
+		System.out.println("this is anoing");
+		new Thread(dP).start();
+		System.out.println("threads");
+		frame.init(contentPane, dP);
+		System.out.println("why");
+	}
+	
+	
+	
+	public Display() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 920, 720);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		contentPane.setBackground(Color.BLACK);
+		contentPane.addKeyListener(this);
+		contentPane.setFocusable(true);
+	}
+	
+	
+	
+	
+		
+	public void init(JPanel contentPane, dataPacket Data){
+		while(true){
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if(Data.data != null){
+				Object[] a = (Object[]) Data.data;		
+				decifer(a);
+			}
+			Data.data = null;
+		}
+	}
+	
+	private void decifer(Object[] cut){
+		for(int i = 0; i < cut.length; i++){
+			Object[] parts = (Object[])cut[i];
+			System.out.println(" ClientData: " + parts + " This is the inide of parts: " + parts[6]);
+			drawSnake((int[][])parts[0], (Color)parts[2], (int[])parts[1], (int[])parts[3], (boolean)parts[4]);		
+		}
+	}
+	
+	private void drawSnake(int[][] test, Color c, int[] clear, int[] food, boolean dead){
+		Graphics G = contentPane.getGraphics();
+		G.setColor(Color.MAGENTA);
+		G.fillRect(food[0], food[1], 10, 10);
+		G.setColor(Color.GRAY);
+		G.drawRect(39, 39, 601, 601);
+		for(int i = 0; i < test.length; i++){
+			if(!dead){
+				G.setColor(c);
+				G.fillRect(test[i][0], test[i][1], 10, 10);
+				G.setColor(Color.black);
+				G.fillRect(clear[0], clear[1], 10, 10);
+			}
+			else{
+				G.setColor(Color.black);
+				G.fillRect(test[i][0], test[i][1], 10, 10);
+				G.setColor(c);
+				G.drawRect(test[i][0], test[i][1], 10, 10);
+			}
+		}
+	}
+	
+	private void decoding(String list){
+		
+	}
+
+	public void drawStuffs(int x, int y, Graphics G, String a){
+		G.copyArea(0, 0, 200, 200, 0, -15);
+		G.clearRect(0, 200-15, 200, 15);
+		G.drawString( "" + a, 0, 200-15);
+	}
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		dP.eC.send("" + arg0.getKeyCode());	
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+}
+
+class dataPacket implements Runnable{
+	public Object data;
+	
+	private Graphics g;
+	public EchoClient eC;
+	
+	public dataPacket(EchoClient pEC){
+		eC = pEC;
+	}
+	
+	@Override
+	public void run() {
+		while(true){
+				try {
+					data = eC.ois.readObject();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					System.out.println("error classnot found");
+				} catch (Exception e) {
+					eC = new EchoClient();
+					// TODO Auto-generated catch block
+				}
+		}
+		// TODO Auto-generated method stub
+		
+	}
+}

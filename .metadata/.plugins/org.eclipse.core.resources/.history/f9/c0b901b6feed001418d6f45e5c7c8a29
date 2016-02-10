@@ -1,0 +1,135 @@
+
+package linkedlist;
+import java.util.Random;
+
+public class LLClass 
+{
+    public void node()
+    {
+        int i = 0;
+        int ll_size = 2; 
+        int seed = 8454;
+        int range = 2;
+        Node head;
+        Node tail;
+
+        Random rand = new Random(seed);
+        int rnd = rand.nextInt(range);
+        
+        tail = head = new Node(rnd);
+        i++;
+        
+        while(i < ll_size)
+        {
+            //rnd = rand.nextInt(range);
+            Node newNode = new Node(-i);
+            tail.next = newNode;
+            tail = newNode;
+            i++;
+        }
+        printLL(head, ll_size);
+        for(int n = 0; n < ll_size; n++){
+        	sortPointers(head, head, false);
+        }
+        //sortNodes(head, ll_size, tail);
+        printLL(head, ll_size);
+    }
+    
+    public void sortPointers(Node pNode, Node pHead, boolean debug){
+    	if(debug)System.out.println("Problem");
+    	Node tnn, tn, tb, lastRun;
+    	lastRun = null;
+    	while(pNode.next != null){
+    		/**/																	if(debug)System.out.print("pNode value :  " + pNode.value + "\npNode value2:  " + pNode.next.value + "\n");
+    		if(pNode.value > pNode.next.value){
+    			/**/																if(debug)System.out.print("Swaped\n");
+    			tnn = pNode.next.next;
+    			tn = pNode.next;
+    			tb = lastRun;
+    			
+    			if(lastRun == null){
+    				Node temp = pHead.next.next;
+    				pHead.next.next = head;
+    				pHead = temp;
+    			}
+    			if(tb != null){
+    				tb.next = tn;
+    				tn.next = pNode;
+    				pNode.next = tnn;
+    				lastRun = tb.next;
+    			}
+    		}
+    		else{
+    			/**/																if(debug)System.out.print("Moving up\n");
+    			lastRun = pNode;
+    			pNode = pNode.next;
+    		}
+    	}
+    	/**/																		if(debug)System.out.print("Screwoff\n");
+    }
+    /*
+    public void sortNodes(Node localHead, int ll_size, Node tail)
+    {
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        boolean done = false;
+        int temp_value;
+        tail = null;
+     
+        while(done == false )
+        {
+            done = true;
+            Node node1 = localHead;
+            while(node1.next!=tail)
+            {
+                if(node1.value > node1.next.value)
+                {
+                    temp_value = node1.next.value;
+                    node1.next.value = node1.value;
+                    node1.value = temp_value; 
+                    done = false;
+                }
+                node1 = node1.next;  
+                j++;
+            }
+            tail = node1;
+            i++;
+        }
+        System.out.println("# of loops "+j);
+    }
+*/
+    public void printLL(Node localHead, int ll_size)
+    {   
+        {
+            int i = 0;
+            while(localHead != null)
+            {
+                System.out.print("  " + localHead.value);
+                localHead = localHead.next;
+            }
+            System.out.println("");
+        }
+    }
+    
+    class Node 
+    {
+        public int value;
+        public Node next;
+        public Node back;
+    
+        Node(int pValue)
+        {
+            value = pValue;
+        }
+    
+        public void setNext(Node nextNode)
+        {
+            next = nextNode;
+        }
+        
+        public void setBack(Node backNode){
+        	back = backNode;
+        }
+    }
+}
