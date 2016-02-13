@@ -5,12 +5,14 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
+import org.usfirst.frc.team3663.robot.commands.C_PrintLidar;
 import org.usfirst.frc.team3663.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3663.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team3663.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3663.robot.subsystems.GyroScope;
 import org.usfirst.frc.team3663.robot.subsystems.Lidar;
-import org.usfirst.frc.team3663.robot.subsystems.TheAccel;
+//import org.usfirst.frc.team3663.robot.subsystems.TheAccel;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,12 +28,11 @@ public class Robot extends IterativeRobot {
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static DriveTrain dTrain;
 	public static GyroScope gScope;
-	public static TheAccel accelero;
+	//public static TheAccel accelero;
 	public static Lidar lidar;
 	public static OI oi;
 
     Command autonomousCommand;
-    SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -41,12 +42,10 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		dTrain = new DriveTrain();
 		gScope = new GyroScope();
-		accelero = new TheAccel();
+		//accelero = new TheAccel();
 		lidar = new Lidar();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+		Command lidarUpdate = new C_PrintLidar();
+		lidarUpdate.start();
     }
 	
 	/**
@@ -72,20 +71,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        
     }
 
     /**
@@ -107,8 +93,6 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	int hey = lidar.getDistance();
-    	SmartDashboard.putNumber("LIDAR PLEASE", hey);
     	Scheduler.getInstance().run();
     }
     
