@@ -34,8 +34,12 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
 		robotMap = new RobotMap();
+		ss_DriveTrain = new SS_DriveTrain();
+		ss_Shooter = new SS_Shooter();
+		ss_PickupArm = new SS_PickupArm();
+		ss_Dart = new SS_Dart();
+		oi = new OI();
     }
 	
 	/**
@@ -61,21 +65,8 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
     	
-    	// schedule the autonomous command (example)
     }
-
     /**
      * This function is called periodically during autonomous
      */
@@ -94,6 +85,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	updateDashboard();
         Scheduler.getInstance().run();
     }
     
@@ -102,5 +94,13 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    }
+    
+    private void updateDashboard(){					//responsible for updating the dash board
+    	SmartDashboard.putString("Update Status", "Running");
+    	ss_Dart.updateDashboard();
+    	ss_DriveTrain.updateDashboard();
+    	ss_PickupArm.updateDashboard();
+    	ss_Shooter.updateDashboard();
     }
 }

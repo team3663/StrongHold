@@ -3,7 +3,9 @@ package org.usfirst.frc.team3663.robot.subsystems;
 import org.usfirst.frc.team3663.robot.Robot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveTrain;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,14 +25,52 @@ public class SS_DriveTrain extends Subsystem {
 	//DriveTrain
 	private RobotDrive driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
 	
-	//Sensors  (there will be encoders and other sensors)
+	//Sensors
+	private AnalogGyro driveGyro = new AnalogGyro(Robot.robotMap.driveGyro);
+	
+	private Encoder leftEncoder = new Encoder(Robot.robotMap.driveLeftEncoder[0], Robot.robotMap.driveLeftEncoder[1]);
+	private Encoder rightEncoder = new Encoder(Robot.robotMap.driveRightEncoder[0], Robot.robotMap.driveRightEncoder[1]);
+	
+	//Carry values
+	private int finalEncoderDistance = 0;
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new C_DriveTrain());
+    	driveGyro.reset();
     }
     
     public void arcadeRobotDrive(Joystick pStick){		//Responsible for driving the robot
-    	driveTrain.arcadeDrive(pStick.getRawAxis(Robot.robotMap.DriveAxisForward), pStick.getRawAxis(Robot.robotMap.DriveAxisTurn));
+    	driveTrain.arcadeDrive(pStick.getRawAxis(Robot.robotMap.driveAxisForward), pStick.getRawAxis(Robot.robotMap.driveAxisTurn));
+    }
+    
+    public void autoArcadeDrive(double pYSpeed, double pXSpeed){
+    	driveTrain.arcadeDrive(pYSpeed, pXSpeed);
+    }
+    
+    public void resetGyro(){							//Resets the Gyro
+    	driveGyro.reset();
+    }
+    
+    public boolean spinByGyro(int pDegrees){			//Spins the robot the passed in value returning if the action was complete
+    	if(pDegrees > driveGyro.getAngle()){
+    		driveTrain.arcadeDrive(0, .5);
+    	}
+    	else{
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public void setDistanceEncoder(int pInches){		//Sets the distance needed to travel
+    	leftEncoder.reset();
+    	rightEncoder.reset();
+    	finalEncoderDistance = pInches * Robot.robotMap.encoderTicksPerInch;
+    }
+    
+    
+    
+    public boolean checkDistance(){						//Checks if the distance was hit
+    	return false;
     }
     
     public void STOP(){									//Stops all of the wheels
@@ -45,6 +85,7 @@ public class SS_DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("Left Drive Motor 2 : ", driveMotorLeft2.getSpeed());
     	SmartDashboard.putNumber("Right Drive Motor 1 : ", driveMotorRight1.getSpeed());
     	SmartDashboard.putNumber("Right Drive Motor 2 : ", driveMotorRight2.getSpeed());
+    	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
     }
 }
 

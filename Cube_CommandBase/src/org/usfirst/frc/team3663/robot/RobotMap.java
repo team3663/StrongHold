@@ -1,4 +1,7 @@
 package org.usfirst.frc.team3663.robot;
+
+import edu.wpi.first.wpilibj.AnalogInput;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -21,8 +24,13 @@ public class RobotMap {
 	//dart
 		public static int dartMotor = 8;
 	
-/*********Analogs********/
+/*********Sensors********/
+	//Analog
 		public static int dartPotentiometer = 0;
+		public static int driveGyro  		= 1;
+	//Digital IO
+		public static int[] driveLeftEncoder  = new int[]{0, 1};
+		public static int[] driveRightEncoder = new int[]{2, 3};
     
 /*******Solinoides*******/
 	    public static int[] pickUpSolenoid  = new int[]{4,5};    
@@ -30,6 +38,13 @@ public class RobotMap {
 	    
 /****DriveControlles*****/
 	//driveTrain
-	    public static int DriveAxisForward = 0;
-	    public static int DriveAxisTurn    = 1;
+	    public static int driveAxisForward = 1;
+	    public static int driveAxisTurn    = 2;
+	    
+/******ChangeValues******/
+	//DriveTrain
+	    public static int encoderTicksPerInch = 20;
+	//Dart
+	    public static int maxDistanceValue = 2000;
+	    public static int minDistanceValue = 1000;
 }

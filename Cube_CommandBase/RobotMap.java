@@ -19,6 +19,7 @@ public class RobotMap {
 /*********Sensors********/
 	//analog
 		public static int dartPotentiometer = 0;
+		public static int driveGyro         = 1;
     
 /*******Solenoides*******/
 	    public static int[] pickUpSolenoid  = new int[]{4,5};    
