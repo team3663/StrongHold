@@ -16,12 +16,12 @@ public class DriveTrain extends Subsystem {
 	RobotDrive chassis;
 	public DriveTrain(){
 		left = new CANTalon(10);
-		right = new CANTalon(20);
+		right = new CANTalon(0);
 		chassis = new RobotDrive(left,right);
 	}
     
-    public void turnLeft(double power, double time){
-    	
+    public void drive(double power){
+    	chassis.arcadeDrive(power, 0);
     }
     public void arcadeDrive(Joystick stick){
     	chassis.arcadeDrive(stick, true);
