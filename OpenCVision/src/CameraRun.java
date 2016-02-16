@@ -64,11 +64,11 @@ public class CameraRun {
 		setRedU();
 
 		table.putBoolean("autoInitFindLeft: ",true);
-		table.putBoolean("commandRunning: ",false);//may not need
-		table.putBoolean("inAutonomous: ",false);//may not need
-		table.putBoolean("centeringGoal: ",false);
-		table.putBoolean("movingWithRadius: ",false);
-		table.putBoolean("okayToShoot: ",false);
+		table.putBoolean("Mode/commandRunning: ",false);//may not need
+		table.putBoolean("Mode/inAutonomous: ",false);//may not need
+		table.putBoolean("C_/centeringGoal: ",false);
+		table.putBoolean("C_/movingWithRadius: ",false);
+		table.putBoolean("C_/okayToShoot: ",false);
 	}
 
 	int buffingCounter = 0;
@@ -113,27 +113,32 @@ public class CameraRun {
 					camera.read(mat);
 					updateJFrame(mat);
 					
-					table.putBoolean("foundObject: ",(gPieceKey>-1));
+			//		table.putBoolean("foundObject: ",(gPieceKey>-1));//may not need
 					//make a put in Camera Init
 					autoFindLeft = table.getBoolean("autoInitFindLeft: ",true);
-					alreadyInCommand = table.getBoolean("commandRunning: ",false);//may not need
-					inAutonomous = table.getBoolean("inAutonomous: ",false);//may not need
-					centeringGoal = table.getBoolean("centeringGoal: ",false);
-					movingWithRadius = table.getBoolean("movingWithRadius: ",false);
-					okayToShoot = table.getBoolean("okayToShoot: ",false);
+					alreadyInCommand = table.getBoolean("Mode/commandRunning: ",false);//may not need
+					inAutonomous = table.getBoolean("Mode/inAutonomous: ",false);//may not need
+					centeringGoal = table.getBoolean("C_/centeringGoal: ",false);
+					movingWithRadius = table.getBoolean("C_/movingWithRadius: ",false);
+					okayToShoot = table.getBoolean("C_/okayToShoot: ",false);
 					
-					if (!movingWithRadius)
+					if (gPieceKey>-1)
 					{
-						centeringGoal = centeringGoal();
-						table.putBoolean("centeringGoal: ", centeringGoal);
-					}
-					if (!centeringGoal)
-					{
-						movingWithRadius = moveWithAngleRadius(bestPieceKey);
 						if (!movingWithRadius)
 						{
-							okayToShoot = isFineAdjustedToGoal();
+							centeringGoal = centeringGoal();
 						}
+						if (!centeringGoal)
+						{
+							movingWithRadius = moveWithAngleRadius(bestPieceKey);
+							if (!movingWithRadius)
+							{
+								okayToShoot = isFineAdjustedGoal();
+							}
+						}
+						table.putBoolean("C_/centeringGoal: ", centeringGoal);
+						table.putBoolean("C_/movingWithRadius: ", movingWithRadius);
+						table.putBoolean("C_/okayToShoot: ", okayToShoot);
 					}
 				}
 				else
@@ -289,15 +294,15 @@ public class CameraRun {
 			angle*=2/3;
 		}
 		
-		table.putNumber("MoveAngle: ", angle);
-		table.putNumber("MoveRadius: ", distance);
+		table.putNumber("Moving/MoveAngle: ", angle);
+		table.putNumber("Moving/MoveRadius: ", distance);
 		
-		if (angle < 20)
+		if (angle < 15 && angle > -15)
 		{
-			table.putBoolean("MoveSideways: ", false);//may not need
+			table.putBoolean("Moving/MoveSideways: ", false);//may not need
 			return false;
 		}
-		table.putBoolean("MoveSideways: ", true);//may not need
+		table.putBoolean("Moving/MoveSideways: ", true);//may not need
 		return true;
 	}
 	
@@ -837,10 +842,34 @@ public class CameraRun {
 	
 	private boolean isFineAdjustedGoal()
 	{
-		int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
+		boolean raiseShooterArm = true;
+		boolean moveShooterArm = false;
+	//	int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
 		int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
+
+		if (yCenter < (pic[0].length/2)-15)
+		{
+			moveShooterArm = true;
+			raiseShooterArm = false;
+		}
+		else if (yCenter > (pic[0].length/2)+15)
+		{
+			moveShooterArm = true;
+			raiseShooterArm = true;
+		}
+
+		if (moveShooterArm)
+		{
+			table.putBoolean("ShooterArm/raiseShooterArm: ", raiseShooterArm);
+		}
+		table.putBoolean("ShooterArm/moveShooterArm: ", moveShooterArm);
 		
-		if (yCenter < )
+		double angle = getAngleTilt(bestPieceKey);
+		if ((angle < 15 && angle > -15) && !moveShooterArm)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 /*	private int[][] newImgArray(BufferedImage img)
