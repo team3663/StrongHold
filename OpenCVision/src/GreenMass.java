@@ -20,7 +20,7 @@ public class GreenMass {
 		
 		outline = new int[width][0];
 		incrementMass(lineLength);
-		updateOutline(lineLength, true);
+		updateOutline(true);
 	}
 	
 	public void addToMass(int xStart, int yStart, int lineLength, int xend)
@@ -29,7 +29,7 @@ public class GreenMass {
 		newXEnd = xend;
 		height++;
 		incrementMass(lineLength);
-		updateOutline(lineLength, false);
+		updateOutline(false);
 	}
 	
 	private void incrementMass(int lineLength)
@@ -38,7 +38,7 @@ public class GreenMass {
 //		System.out.println("mass: " + mass);
 	}
 	
-	private void updateOutline(int lineLength, boolean firstTime)
+	private void updateOutline(boolean firstTime)
 	{
 		int start = xStart;
 		if (xStart > newXStart)
@@ -50,10 +50,12 @@ public class GreenMass {
 		{
 			end = newXEnd;
 		}
+	
+
 	//	System.out.println("xStart: " + start + ", xEnd: " + end);
 		int widthDiff = returnNonOverlap();
 //		System.out.println("widthDiff: " + widthDiff);
-		int startMove = 0;
+/*		int startMove = 0;
 		int newStartMove = 0;
 		if (widthDiff > 0)
 		{
@@ -62,9 +64,9 @@ public class GreenMass {
 		else if (widthDiff < 0)
 		{
 			startMove = Math.abs(widthDiff);
-		}
+		}*/
 		int w = end-start+1;
-		int h = height;
+/*		int h = height;
 		
 //		System.out.println("h: " + h);
 //		System.out.println("w: " + w);
@@ -85,17 +87,19 @@ public class GreenMass {
 		}
 /*		for (int y = 0; y < h; y++)
 		{
-		System.out.println();
+			System.out.println();
 			for (int x = 0; x < w; x++)
 			{
 				System.out.print(newOutline[x][y] + ", ");
 			}
 			
-		}*/
+		}
+		System.out.println("---------------------------------------------");
+		System.out.println();*/
 		
 		xStart = start;
 		xEnd = end;
-		outline = newOutline;
+	//	outline = newOutline;
 		width = w;
 	}
 	/*
@@ -129,10 +133,10 @@ public class GreenMass {
 		{
 			yStart = gPiece.yStart;
 		}
-		int x1StartDiff = lastXStart - xStart;
+	/*	int x1StartDiff = lastXStart - xStart;
 		int x2StartDiff = gPiece.xStart - xStart;
 		int y1StartDiff = lastYStart - yStart;
-		int y2StartDiff = gPiece.yStart - yStart;
+		int y2StartDiff = gPiece.yStart - yStart;*/
 //		System.out.println("xStart: " + xStart + ", xEnd: " + xEnd + ", x1StartDiff " + x1StartDiff);
 		//...
 		w = xEnd-xStart+1;
@@ -145,12 +149,12 @@ public class GreenMass {
 			yEnd = yEndA;
 		}
 		h = yEnd-yStart+1;
-		newOutline = new int[w][h];
+	//	newOutline = new int[w][h];
 //		System.out.println("w: " + w + ", h: " + h);
 //		System.out.println("xStart: " + xStart + ", xEnd: " + xEnd + ", x1StartDiff " + x1StartDiff);
 //		System.out.println(width);
 		//...
-		for (int y = 0; y < height; y++)
+	/*	for (int y = 0; y < height; y++)
 		{//a first then b object (a will have the new overlapping line causing them to combine)
 			for (int x = 0; x < width; x++)
 			{
@@ -163,11 +167,11 @@ public class GreenMass {
 			{
 				newOutline[x+x2StartDiff][y+y2StartDiff] = gPiece.outline[x][y];
 			}
-		}
+		}*/
 		
 		width = w;
 		height = h;
-		outline = newOutline;
+	//	outline = newOutline;
 	}
 	
 	private int returnNonOverlap()

@@ -16,7 +16,11 @@ public class Camera {
 	public static void main( String[] args)
 	{
 		camRun = new CameraRun();
-		camRun.run();
+		camRun.CameraInit();
+//		while (true)
+		{
+			camRun.run();
+		}
 		/*
 		int[] testArray = {1,1,0,0,1};
 		greenMass = new GreenMass(3,0,testArray,(3+testArray.length-1));
