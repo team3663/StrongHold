@@ -43,7 +43,7 @@ public class CameraRun {
 	
 //	boolean foundObject = false;
 	
-	boolean inAutonomous,autoFindLeft,alreadyInCommand,centeringGoal,movingWithRadius;
+	boolean inAutonomous,autoFindLeft,alreadyInCommand,centeringGoal,movingWithRadius,okayToShoot;
 	
 	public void CameraInit()
 	{
@@ -62,7 +62,13 @@ public class CameraRun {
 		table = NetworkTable.getTable("Dog-NT");
 
 		setRedU();
-		
+
+		table.putBoolean("autoInitFindLeft: ",true);
+		table.putBoolean("commandRunning: ",false);//may not need
+		table.putBoolean("inAutonomous: ",false);//may not need
+		table.putBoolean("centeringGoal: ",false);
+		table.putBoolean("movingWithRadius: ",false);
+		table.putBoolean("okayToShoot: ",false);
 	}
 
 	int buffingCounter = 0;
@@ -108,17 +114,17 @@ public class CameraRun {
 					updateJFrame(mat);
 					
 					table.putBoolean("foundObject: ",(gPieceKey>-1));
-					
+					//make a put in Camera Init
 					autoFindLeft = table.getBoolean("autoInitFindLeft: ",true);
 					alreadyInCommand = table.getBoolean("commandRunning: ",false);//may not need
 					inAutonomous = table.getBoolean("inAutonomous: ",false);//may not need
-					centeringGoal = table.getBoolean("C_CenterGoal: ",false);
-					movingWithRadius = table.getBoolean("C_MoveWithRadius: ",false);
+					centeringGoal = table.getBoolean("centeringGoal: ",false);
+					movingWithRadius = table.getBoolean("movingWithRadius: ",false);
 					okayToShoot = table.getBoolean("okayToShoot: ",false);
 					
 					if (!movingWithRadius)
 					{
-						centeringGoal = centerGoal();
+						centeringGoal = centeringGoal();
 						table.putBoolean("centeringGoal: ", centeringGoal);
 					}
 					if (!centeringGoal)
@@ -188,7 +194,7 @@ public class CameraRun {
 		frame.add(label);
 		frame.repaint();
 	}
-	public BufferedImage getUsableImage(Mat input)
+	private BufferedImage getUsableImage(Mat input)
 	{
 		BufferedImage image = null;
 		image = new BufferedImage(input.width(), input.height(), BufferedImage.TYPE_3BYTE_BGR);
@@ -199,7 +205,7 @@ public class CameraRun {
         
 	    return convertToBlackGreenImage(image);
 	}
-	public BufferedImage convertToBlackGreenImage(BufferedImage img)
+	private BufferedImage convertToBlackGreenImage(BufferedImage img)
 	{
 	/*	rows = new int[img.getHeight()];
 		colmns = new int[img.getWidth()];*/
@@ -235,6 +241,41 @@ public class CameraRun {
 	}
 	
 	
+/*	public BufferedImage convertToBlackGreenImage(BufferedImage img)
+	{
+	/*	rows = new int[img.getHeight()];
+		colmns = new int[img.getWidth()];*./
+		Color c;
+		int width = img.getWidth();
+		int height = img.getHeight();
+		pic = new int[width][height];
+		int g = Color.GREEN.getRGB();
+		int r = Color.RED.getRGB();
+	//	int b = Color.black.getRGB();
+		for(int y = 0; y<height; y++)
+		{
+			for(int x = 0; x<width; x++)
+			{
+				c = new Color(img.getRGB(x,y));
+				if (c.getRed()<90/* && c.getBlue()<190*./ && c.getGreen()>=170)
+				//if (x == 1)
+				{
+					img.setRGB(x, y, g);
+					pic[x][y] = 1;				
+				}
+				else if (isRedU(x,y))
+				{
+					img.setRGB(x, y, r);
+				}
+				else
+				{
+			//		img.setRGB(x, y, b);
+				}
+			}
+		}
+		return img;
+	}*/
+
 	public boolean moveWithAngleRadius(int key)
 	{
 		double angle = getAngleTilt(key);
@@ -617,31 +658,6 @@ public class CameraRun {
 
 		if (gPieceKey > 0)
 		{
-		/*	int currControlMass = massObjectPointer.getGPiece(0).mass;
-			int compMass;
-			for (int o = 0; o <= gPieceKey; o++)
-			{//for now, just looking at biggest mass
-				compMass = massObjectPointer.getGPiece(o).mass;
-				if (currControlMass < compMass)
-				{
-					currControlMass = compMass;
-					bestPiece = o;
-				}
-			}
-			
-			int compWidth, controlWidth = massObjectPointer.getGPiece(0).width;
-			int compHeight, controlHeight = massObjectPointer.getGPiece(0).height;
-			for (int o = 0; o <= gPieceKey; o++)
-			{//for now, just looking at biggest mass
-				compWidth = massObjectPointer.getGPiece(o).width;
-				compHeight = massObjectPointer.getGPiece(o).height;
-				if (Math.abs((compWidth/compHeight)-1.63) < Math.abs((controlWidth/controlHeight)-1.63))
-				{
-					controlWidth = compWidth;
-					controlHeight = compHeight;
-					bestPiece = o;
-				}
-			}*/
 			boolean bestPieceChanged = false;
 			
 			int x = massObjectPointer.getGPiece(bestPiece).xStart,y = massObjectPointer.getGPiece(bestPiece).yStart,
@@ -695,15 +711,14 @@ public class CameraRun {
 			int yCenter = ((massObjectPointer.getGPiece(bestPiece).yStart)+(massObjectPointer.getGPiece(bestPiece).height/8));
 		//	int yCenter = ((massObjectPointer.getGPiece(bestPiece).yStart)+(massObjectPointer.getGPiece(bestPiece).height/2));
 			//use coordinates of best object and get center
+			
 			colorSquare(buffImg,massObjectPointer.getGPiece(bestPiece).xStart,massObjectPointer.getGPiece(bestPiece).yStart, Color.blue);
 			colorSquare(buffImg,massObjectPointer.getGPiece(bestPiece).xStart+massObjectPointer.getGPiece(bestPiece).width,massObjectPointer.getGPiece(bestPiece).yStart+massObjectPointer.getGPiece(bestPiece).height,Color.blue);
-
-	//		colorSquare(buffImg,xCenter,ycenter,Color.cyan);
 			
 			colorSquare(buffImg, xCenter, yCenter, Color.RED);
 			
-			table.putNumber("gMassK.Middle X: ", xCenter);
-			table.putNumber("gMassK.Middle Y: ", yCenter);
+			table.putNumber("bestGoal X: ", xCenter);
+			table.putNumber("bestGoal Y: ", yCenter);
 		//	massObjectPointer.dumpPast();
 			//	gPieceKey = -1;
 		}
@@ -783,24 +798,49 @@ public class CameraRun {
 		return mask;
 	}*/
 	
-	private boolean centerGoal()
+	private boolean centeringGoal()
 	{
-		boolean centered;
+		boolean needsTurning;
+		int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
+		//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
 		
 		if (gPieceKey > -1)
 		{
-			
+			if (xCenter < (pic.length/2)-15)
+			{
+				needsTurning = true;
+				table.putBoolean("turnLeft: ", true);
+			}
+			else if (xCenter > (pic.length/2)+15)
+			{
+				needsTurning = true;
+				table.putBoolean("turnLeft: ", false);
+			}
+			else
+			{
+				needsTurning = false;
+			}
 		}
 		else if (autoFindLeft)
 		{
-			
+			needsTurning = true;
+			table.putBoolean("leftTurn: ", true);
 		}
 		else
 		{
-			
+			needsTurning = true;
+			table.putBoolean("leftTurn: ", false);
 		}
 		
-		return centered;
+		return needsTurning;
+	}
+	
+	private boolean isFineAdjustedGoal()
+	{
+		int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
+		int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
+		
+		if (yCenter < )
 	}
 	
 /*	private int[][] newImgArray(BufferedImage img)
