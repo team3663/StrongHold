@@ -33,13 +33,14 @@ public class RobotMap {
 		public static int[] driveRightEncoder = new int[]{2, 3};
     
 /*******Solinoides*******/
-	    public static int[] pickUpSolenoid  = new int[]{4,5};    
-	    public static int[] shooterSolenoid = new int[]{6,7};
+	    public static int[] pickUpSolenoid  = new int[]{6,7};    
+	    public static int[] shooterSolenoid = new int[]{5,4};
 	    
 /****DriveControlles*****/
 	//driveTrain
-	    public static int driveAxisForward = 1;
-	    public static int driveAxisTurn    = 2;
+	    public static int driveAxisForward = 2;
+	    public static int driveAxisReverse = 3;
+	    public static int driveAxisTurn    = 0;
 	    
 /******ChangeValues******/
 	//DriveTrain

@@ -7,28 +7,26 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_PickupRunMotor extends Command {
+public class C_PickupFirePiston extends Command {
 
-	private double speed;
-    public C_PickupRunMotor(double pSpeed) {
-    	requires(Robot.ss_PickupArm);
-    	speed = pSpeed;
+	private boolean state;
+    public C_PickupFirePiston(boolean pState) {
+    	state = pState;
+        requires(Robot.ss_PickupArm);
     }
 
     protected void initialize() {
-    	
     }
 
     protected void execute() {
-    	Robot.ss_PickupArm.setPickupSpeed(speed);
+    	Robot.ss_PickupArm.firePickupSolenoid(state);
     }
 
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     protected void end() {
-    	Robot.ss_PickupArm.STOP();
     }
 
     protected void interrupted() {

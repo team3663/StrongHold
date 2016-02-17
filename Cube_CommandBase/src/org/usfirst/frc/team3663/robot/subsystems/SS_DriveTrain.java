@@ -20,7 +20,7 @@ public class SS_DriveTrain extends Subsystem {
 	private CANTalon driveMotorLeft1 = new CANTalon(Robot.robotMap.driveLeftMotor1);
 	private CANTalon driveMotorLeft2 = new CANTalon(Robot.robotMap.driveLeftMotor2);
 	private CANTalon driveMotorRight1 = new CANTalon(Robot.robotMap.driveRightMotor1);
-	private CANTalon driveMotorRight2 = new CANTalon(Robot.robotMap.driveRightMotor1);
+	private CANTalon driveMotorRight2 = new CANTalon(Robot.robotMap.driveRightMotor2);
 	
 	//DriveTrain
 	private RobotDrive driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
@@ -32,15 +32,16 @@ public class SS_DriveTrain extends Subsystem {
 	private Encoder rightEncoder = new Encoder(Robot.robotMap.driveRightEncoder[0], Robot.robotMap.driveRightEncoder[1]);
 	
 	//Carry values
-	private int finalEncoderDistance = 0;
+	private int finalEncoderDistance = 0;	
+	
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new C_DriveTrain());
     	driveGyro.reset();
     }
     
-    public void arcadeRobotDrive(Joystick pStick){		//Responsible for driving the robot
-    	driveTrain.arcadeDrive(pStick.getRawAxis(Robot.robotMap.driveAxisForward), pStick.getRawAxis(Robot.robotMap.driveAxisTurn));
+    public void arcadeRobotDrive(double pForwardSpeed, double pTurnSpeed){		//Responsible for driving the robot
+    	driveTrain.arcadeDrive(pForwardSpeed, pTurnSpeed);
     }
     
     public void autoArcadeDrive(double pYSpeed, double pXSpeed){
@@ -61,13 +62,11 @@ public class SS_DriveTrain extends Subsystem {
     	return false;
     }
     
-    public void setDistanceEncoder(int pInches){		//Sets the distance needed to travel
+    public int setDistanceEncoder(int pInches){		//Sets the distance needed to travel
     	leftEncoder.reset();
     	rightEncoder.reset();
-    	finalEncoderDistance = pInches * Robot.robotMap.encoderTicksPerInch;
-    }
-    
-    
+    	return pInches * Robot.robotMap.encoderTicksPerInch;
+    }    
     
     public boolean checkDistance(){						//Checks if the distance was hit
     	return false;

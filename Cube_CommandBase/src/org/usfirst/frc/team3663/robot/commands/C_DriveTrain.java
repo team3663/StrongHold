@@ -18,7 +18,8 @@ public class C_DriveTrain extends Command {
     }
     
     protected void execute() {
-    	Robot.ss_DriveTrain.arcadeRobotDrive(Robot.oi.driveJoystick);
+    	Robot.ss_DriveTrain.arcadeRobotDrive((Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisForward)- Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisReverse)), 
+    			Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisTurn));
     }
     
     protected boolean isFinished() {

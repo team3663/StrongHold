@@ -7,28 +7,29 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_PickupToggle extends Command {
+public class C_PickupSafteyArm extends Command {
 
-    public C_PickupToggle() {
-    	
+    public C_PickupSafteyArm() {
+    	requires(Robot.ss_PickupArm);
     }
 
     protected void initialize() {
     }
-
+    
     protected void execute() {
-    	Robot.ss_PickupArm.togglePickupSolenoid();
+    	if(Robot.ss_Dart.inPickupZone() && !Robot.ss_PickupArm.isDown()){
+    		Robot.ss_PickupArm.firePickupSolenoid(true);
+    	}
     }
 
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     protected void end() {
-    	 
     }
 
-    protected void interrupted() {
+   protected void interrupted() {
 	   end();
     }
 }
