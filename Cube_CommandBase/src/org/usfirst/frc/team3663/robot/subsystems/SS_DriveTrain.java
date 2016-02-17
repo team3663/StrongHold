@@ -66,7 +66,7 @@ public class SS_DriveTrain extends Subsystem {
     	leftEncoder.reset();
     	rightEncoder.reset();
     	return pInches * Robot.robotMap.encoderTicksPerInch;
-    }    
+    }
     
     public boolean checkDistance(){						//Checks if the distance was hit
     	return false;
@@ -91,6 +91,23 @@ public class SS_DriveTrain extends Subsystem {
     	driveMotorLeft2.set(0);
     	driveMotorRight1.set(0);
     	driveMotorRight2.set(0);
+    }
+    
+    public void controlIndMotor(int motor, double value){
+    	switch(motor){
+			case 0:
+				driveMotorLeft1.set(value);
+				break;
+			case 1:
+				driveMotorLeft2.set(value);
+				break;
+			case 2:
+				driveMotorRight1.set(value);
+				break;
+			case 3:
+				driveMotorRight2.set(value);
+				break;
+    	}
     }
     
     public void updateDashboard(){						//updates the dash board

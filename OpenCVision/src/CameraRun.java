@@ -105,7 +105,6 @@ public class CameraRun {
 			//frame.setSize(640+25, 480+25);
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
 			while (true)
 			{
 				if (cameraFound)
@@ -166,6 +165,7 @@ public class CameraRun {
 //			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle1.png"));
 //			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle2.png"));
 //			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle3.png"));
+//			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle4.png"));
 //			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle4.png"));
 			//castle5 will be trouble when too slanted
 //			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle5.png"));
