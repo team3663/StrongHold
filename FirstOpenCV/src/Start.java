@@ -1,16 +1,3 @@
-import java.awt.FlowLayout;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.videoio.VideoCapture;
-
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Start implements Runnable{

@@ -72,20 +72,6 @@ public class SS_DriveTrain extends Subsystem {
     	return false;
     }
     
-    public int getLeftEncoder()
-    {
-    	return leftEncoder.get();
-    }
-    public int getRightEncoder()
-    {
-    	return rightEncoder.get();
-    }
-    public void resetEncoders()
-    {
-    	leftEncoder.reset();
-    	rightEncoder.reset();
-    }
-    
     public void STOP(){									//Stops all of the wheels
     	driveMotorLeft1.set(0);
     	driveMotorLeft2.set(0);

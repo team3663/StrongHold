@@ -15,8 +15,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -35,6 +35,7 @@ public class Robot extends IterativeRobot {
 	public static SS_Dart ss_Dart;
 	public static SS_Winch ss_Winch;
 	public static SS_WheelyBar ss_WheelyBar;
+	
 	
 	public static SS_Test test;
 	public static NetworkTable visionTable;
@@ -55,7 +56,6 @@ public class Robot extends IterativeRobot {
 		ss_WheelyBar = new SS_WheelyBar();
 		ss_Camera = new SS_Camera();
 		oi = new OI();
-		
 		test = new SS_Test();
     	LiveWindow.setEnabled(false);
 		visionTable = NetworkTable.getTable("Dog-NT");

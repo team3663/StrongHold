@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Component;
 import java.awt.Image;
 
@@ -7,13 +9,12 @@ import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.video.Video;
 import org.opencv.videoio.VideoCapture;
-
 public class Camera {
 	
 	static CameraRun camRun;
 	static GreenMass greenMass;
 	
-	public static void main( String[] args)
+	public static void main(String[] args)
 	{
 		camRun = new CameraRun();
 		camRun.CameraInit();
