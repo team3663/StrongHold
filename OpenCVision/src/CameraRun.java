@@ -61,7 +61,7 @@ public class CameraRun {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		CameraInit();
 		boolean cameraFound = false;
-	//	if (camera.isOpened())
+		if (camera.isOpened())
 		{
 			cameraFound = true;
 			System.out.println("Yay! I see something  ");
@@ -73,15 +73,15 @@ public class CameraRun {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setRedU();
 		}
-	//	else 
+		else 
 		{
-		//	System.out.println("the camera doesn't exist!! yet...");
+			System.out.println("the camera doesn't exist!! yet...");
 		}
-	//	if (cameraFound)//while (cameraFound)
+	while (cameraFound)
 		{
 			mat = Mat.eye( 3, 3, CvType.CV_8UC1 );
-/*			camera.read(mat);
-			updateJFrame(mat);*/
+			camera.read(mat);
+			updateJFrame(mat);
 		}
 	}
 	public void resetVariables()
@@ -93,14 +93,14 @@ public class CameraRun {
 	{
 		resetVariables();
 //		frame.remove(label);//not sure this is needed?
-	//	buffImg = getUsableImage(Mat);
-		try {
+		buffImg = getUsableImage(Mat);
+/*		try {
 //			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\CutSS.png"));
 
-			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle0.png"));
-			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle1.png"));
-			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle2.png"));
-			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle3.png"));
+//			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle0.png"));
+//			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle1.png"));
+//			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle2.png"));
+//			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle3.png"));
 			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle4.png"));
 			//castle5 will be trouble when too slanted
 			buffImg = ImageIO.read(new File("C:\\Users\\angel_000\\Pictures\\Screenshots\\ForAngelique\\castle5.png"));
@@ -113,17 +113,17 @@ public class CameraRun {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		buffImg = convertToBlackGreenImage(buffImg);
 		//cleanImageToMass(buffImg);
 		//pic = newImgArray(buffImg);
 		//findRectangle(buffImg);//good for if tilted with right side higher, but will need to change findU to get that (overall better)
-		//findU(buffImg);
+		findU(buffImg);
 		System.out.println("--------------------printing New Image");
-		if (separateObjects()) ///To help Delay, lower res or slow down frames per sec!!!!!!!!!!!!!!!!!!!!!!!
+	/*	if (separateObjects()) ///To help Delay, lower res or slow down frames per sec!!!!!!!!!!!!!!!!!!!!!!!
 			{
 				getBestObjectMask();
-			}
+			}*/
 		image = new ImageIcon(buffImg);
 		label.setIcon(image);
 		frame.add(label);
@@ -164,7 +164,7 @@ public class CameraRun {
 				}
 				else
 				{
-					img.setRGB(x, y, b);
+		//			img.setRGB(x, y, b);
 				}
 			}
 		}
@@ -239,8 +239,8 @@ public class CameraRun {
 			avgX = 1;
 		}
 		colorSquare(img, avgX, avgY, Color.MAGENTA);
-		table.putNumber("Rect.Middle X: ", avgX);
-		table.putNumber("Rect.Middle Y: ", avgY);
+		table.putNumber("gMass.Middle X: ", avgX);
+		table.putNumber("gMass.Middle Y: ", avgY);
 	}
 	
 	public void findRectangle(BufferedImage img)

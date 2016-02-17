@@ -7,6 +7,11 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/angel_000/Downloads/opencv/build/java/x64"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/angel_000/wpilib/java/current/lib/NetworkTables3.0/NetworkTables-3-desktop.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OpenCV"/>
+	<classpathentry kind="lib" path="C:/Users/thash/wpilib/java/current/lib/NetworkTables3.0/NetworkTables-3-desktop.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/thash/wpilib/java/current/lib/NetworkTables3.0"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
