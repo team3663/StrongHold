@@ -40,6 +40,7 @@ public class CameraRun {
 	int gPieceKey = -1;
 	int bestPieceKey;
 	int[][] U = new int[640][480];//size[196][149];
+	double maxDistortedAngle = 20;
 	
 //	boolean foundObject = false;
 	
@@ -301,7 +302,7 @@ public class CameraRun {
 		table.putNumber("Moving/MoveAngle: ", angle);
 		table.putNumber("Moving/MoveRadius: ", distance);
 		
-		if (angle < 15 && angle > -15)
+		if (angle < maxDistortedAngle && angle > -maxDistortedAngle)
 		{
 			table.putBoolean("Moving/MoveSideways: ", false);//may not need
 			return false;
@@ -829,7 +830,7 @@ public class CameraRun {
 				needsTurning = false;
 			}
 		}
-		else if (autoFindLeft)
+		else if (autoFindLeft)//maybe put something that saved if seen object and which way it disappeared
 		{
 			needsTurning = true;
 			table.putBoolean("leftTurn: ", true);
@@ -868,7 +869,7 @@ public class CameraRun {
 		table.putBoolean("ShooterArm/moveShooterArm: ", moveShooterArm);
 		
 		double angle = getAngleTilt(bestPieceKey);
-		if ((angle < 15 && angle > -15) && !moveShooterArm)
+		if ((Math.abs(angle) < maxDistortedAngle) && !moveShooterArm)
 		{
 			return true;
 		}

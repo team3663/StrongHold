@@ -10,11 +10,12 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class C_EncoderCurveDrive extends Command {
 
-	int angle,dInches,currTicks,ticksPerSec, turningLeft = 1;
+	double angle,dInches;
+	int currTicks,ticksPerSec, turningLeft = 1;
 	
 	NetworkTable table;
 	
-    public C_EncoderCurveDrive(int Angle, int DistanceInches) {
+    public C_EncoderCurveDrive(double Angle, double DistanceInches) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ss_DriveTrain);
         angle = Angle;

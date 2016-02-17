@@ -1,24 +1,36 @@
 package org.usfirst.frc.team3663.robot.commands;
 
+import org.usfirst.frc.team3663.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  */
 public class CG_AutoVisionShooting extends CommandGroup {
     
+	NetworkTable table = Robot.visionTable;
+	
     public  CG_AutoVisionShooting() {
     	
+    	double angle;// = table.getNumber("Moving/MoveAngle: ",0);
+    	double dist;// = table.getNumber("Moving/MoveDistance: ",0);
     	//fix tomorrow
-    /*	addSequential(new C_VisionCenterGoal());
-    	addSequential(new C_EncoderCurveDrive());
-    	addParallel(new C_VisionCenterGoal());
-    	if (Math.abs(table.getNumber("Moving/MoveAngle: ",0)) > 15)
+    	addSequential(new C_VisionCenterGoal());
+    	while (table.getBoolean("Moving/MoveSideways: ",false))
     	{
-    		addSequential (C_EncoderCurveDrive());
+        	angle = table.getNumber("Moving/MoveAngle: ",0);
+        	dist = table.getNumber("Moving/MoveDistance: ",0);
+	    	addSequential(new TC_TurnByGyro(angle/Math.abs(angle)*90));//+-1*90
+	    	addSequential(new C_EncoderCurveDrive(angle,dist));
+	    	addSequential(new C_VisionCenterGoal());
     	}
-		addSequential(new CG_VisionFineAdjust);
-		*/
+    	if (table.getBoolean("ShooterArm/moveShooterArm: ", false))
+    	{
+    		addSequential(new C_VisionFineAdjust());
+    	}
+		
 		
         // Add Commands here:
         // e.g. addSequential(new Command1());

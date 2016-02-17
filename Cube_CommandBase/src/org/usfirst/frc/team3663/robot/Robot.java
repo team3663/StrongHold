@@ -49,7 +49,6 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		
 		visionTable = NetworkTable.getTable("Dog-NT");
-		ss_Camera.setLight(true);
     }
 	
 	/**
@@ -87,6 +86,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
     	C_DriveControllerDPad test = new C_DriveControllerDPad();
     	test.start();
+		ss_Camera.setLight(true);
     }
 
     /**
