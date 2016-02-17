@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
@@ -145,6 +147,10 @@ public class CameraRun {
 					checkCameraStillFound();
 				}
 			}
+		}
+		else
+		{
+			System.out.println("camera not found!");
 		}
 	}
 	public void resetVariables()
