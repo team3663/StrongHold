@@ -26,7 +26,7 @@ public class MassObjectHolder {
 	{
 		//combine two masses
 	    pointer.get(keyA).combineWith(pointer.get(keyB));
-		//remove gB
+		//remove second mass
 	    pointer.remove(keyB);
 	}
 	
