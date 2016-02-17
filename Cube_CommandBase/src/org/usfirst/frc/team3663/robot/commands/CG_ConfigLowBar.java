@@ -11,6 +11,7 @@ public class CG_ConfigLowBar extends CommandGroup {
     
     public  CG_ConfigLowBar() {
     	addSequential(new C_PickupFirePiston(true));
+    	addParallel(new C_WheelyBarAutoMove(Robot.ss_WheelyBar.maxDistance(), 1));
     	addSequential(new C_DartAutoMove(Robot.ss_Dart.minDistance()));
     }
 }

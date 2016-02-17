@@ -6,6 +6,9 @@ import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
+import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
+import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafty;
+import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
 import org.usfirst.frc.team3663.robot.commands.TC_TurnByGyro;
 import org.usfirst.frc.team3663.robot.commands.TestC_Cycle;
 import org.usfirst.frc.team3663.robot.commands.TestC_ToggleTestMode;
@@ -33,8 +36,13 @@ public class OI {
 	private JoystickButton shooterMotorsFullPower 	= new JoystickButton(driveJoystick, 1);
 	private JoystickButton shooterFirePistonNoWait 	= new JoystickButton(driveJoystick, 7);
 	private JoystickButton shooterFirerPistonWait	= new JoystickButton(driveJoystick, 2);
+  //Winch Buttons
+	private JoystickButton winchToHoist = 	  new JoystickButton(buttonJoystick, 1);
+	private JoystickButton winchNotSafeMove = new JoystickButton(buttonJoystick, 7);
+  //Wheely Bar Buttons
+	private JoystickButton wheelyBarMoveToZero = new JoystickButton(buttonJoystick, 4);
 	
-	//Test Joystick Buttons
+  //Test Joystick Buttons
 	private JoystickButton turn90Degrees 	= new JoystickButton(testJoystickCurtis, 4);
 	private JoystickButton toggleTestMode	= new JoystickButton(testJoystick, 7);
 	private JoystickButton cycleUp			= new JoystickButton(testJoystick, 2);
@@ -50,16 +58,17 @@ public class OI {
 		shooterMotorsFullPower.whileHeld(new C_ShooterRunMotors(1));
 		shooterFirePistonNoWait.whenPressed(new C_ShooterFirePiston());
 		shooterFirerPistonWait.whenPressed(new CG_WaitForShooterThenShoot());
+	  //Winch Buttons
+		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
+		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafty());
+	  //Wheely Bar Buttons
+		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
 		
 		//Test Buttons
 		turn90Degrees.whenPressed(new TC_TurnByGyro(90));
 		toggleTestMode.whenPressed(new TestC_ToggleTestMode());
 		cycleUp.whenPressed(new TestC_Cycle(true));
 		cycleDown.whenPressed(new TestC_Cycle(false));
-		
-		
-		
-		
 		
 	}
 //	public void canTest(boolean inTestMode){
