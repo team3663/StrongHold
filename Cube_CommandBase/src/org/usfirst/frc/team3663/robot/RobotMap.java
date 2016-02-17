@@ -43,7 +43,7 @@ public class RobotMap {
 /*********Relays*********/
 	//Camera
 		public static int cameraRelay = 0;
-/*******Solinoides*******/
+/*******Solenoids*******/
 	    public static int[] pickUpSolenoid  = new int[]{6,7};    
 	    public static int[] shooterSolenoid = new int[]{5,4};
 	    
