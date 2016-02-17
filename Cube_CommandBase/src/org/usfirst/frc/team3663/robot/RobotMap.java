@@ -32,7 +32,7 @@ public class RobotMap {
 		public static int[] driveLeftEncoder  = new int[]{0, 1};
 		public static int[] driveRightEncoder = new int[]{2, 3};
     
-/*******Solinoides*******/
+/*******Solenoids*******/
 	    public static int[] pickUpSolenoid  = new int[]{4,5};    
 	    public static int[] shooterSolenoid = new int[]{6,7};
 	    

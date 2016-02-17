@@ -20,7 +20,7 @@ public class SS_DriveTrain extends Subsystem {
 	private CANTalon driveMotorLeft1 = new CANTalon(Robot.robotMap.driveLeftMotor1);
 	private CANTalon driveMotorLeft2 = new CANTalon(Robot.robotMap.driveLeftMotor2);
 	private CANTalon driveMotorRight1 = new CANTalon(Robot.robotMap.driveRightMotor1);
-	private CANTalon driveMotorRight2 = new CANTalon(Robot.robotMap.driveRightMotor1);
+	private CANTalon driveMotorRight2 = new CANTalon(Robot.robotMap.driveRightMotor2);
 	
 	//DriveTrain
 	private RobotDrive driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
@@ -67,8 +67,6 @@ public class SS_DriveTrain extends Subsystem {
     	finalEncoderDistance = pInches * Robot.robotMap.encoderTicksPerInch;
     }
     
-    
-    
     public boolean checkDistance(){						//Checks if the distance was hit
     	return false;
     }
@@ -78,6 +76,23 @@ public class SS_DriveTrain extends Subsystem {
     	driveMotorLeft2.set(0);
     	driveMotorRight1.set(0);
     	driveMotorRight2.set(0);
+    }
+    
+    public void controlIndMotor(int motor, double value){
+    	switch(motor){
+			case 0:
+				driveMotorLeft1.set(value);
+				break;
+			case 1:
+				driveMotorLeft2.set(value);
+				break;
+			case 2:
+				driveMotorRight1.set(value);
+				break;
+			case 3:
+				driveMotorRight2.set(value);
+				break;
+    	}
     }
     
     public void updateDashboard(){						//updates the dash board

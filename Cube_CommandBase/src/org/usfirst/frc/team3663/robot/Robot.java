@@ -5,6 +5,7 @@ import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
 import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
 import org.usfirst.frc.team3663.robot.subsystems.SS_PickupArm;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Shooter;
+import org.usfirst.frc.team3663.robot.subsystems.SS_Test;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -27,6 +28,8 @@ public class Robot extends IterativeRobot {
 	public static SS_Shooter ss_Shooter;
 	public static SS_PickupArm ss_PickupArm;
 	public static SS_Dart ss_Dart;
+	
+	public static SS_Test test;
 
 
     /**
@@ -40,6 +43,9 @@ public class Robot extends IterativeRobot {
 		ss_PickupArm = new SS_PickupArm();
 		ss_Dart = new SS_Dart();
 		oi = new OI();
+		
+		test = new SS_Test();
+    	LiveWindow.setEnabled(false);
     }
 	
 	/**
@@ -48,7 +54,8 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
+    	SmartDashboard.putBoolean("TestModeEnabled", false);
+    	//oi.canTest(false);
     }
 	
 	public void disabledPeriodic() {
@@ -64,9 +71,9 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
-    public void autonomousInit() {
-    	
-    }
+//    public void autonomousInit() {
+//    	
+//    }
     /**
      * This function is called periodically during autonomous
      */
@@ -92,8 +99,15 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    public void testInit(){
+    	//SmartDashboard.putBoolean("TestModeEnabled", true);
+    	LiveWindow.setEnabled(false);
+    	//oi.canTest(true);
+    }
     public void testPeriodic() {
-        LiveWindow.run();
+//    	SmartDashboard.putBoolean("TestModeEnabled", true);
+//    	LiveWindow.setEnabled(false);
+    	//oi.canTest(true);
     }
     
     private void updateDashboard(){					//responsible for updating the dash board
