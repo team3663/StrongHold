@@ -37,6 +37,18 @@ public class SS_Dart extends Subsystem {
     	return minPotentiometer;
     }
     
+    public int maxDistance(){
+    	return maxPotentiometer;
+    }
+    
+    public int minPickupSafe(){
+    	return minPickup;
+    }
+    
+    public int maxPickupSafe(){
+    	return maxPickup;
+    }
+    
     public double findSpeed(int pFinalDist){ 		//finds the speed needed to hit the target
     	int distValue = dartPotentiometer.getAverageValue();
     	if(distValue < pFinalDist){

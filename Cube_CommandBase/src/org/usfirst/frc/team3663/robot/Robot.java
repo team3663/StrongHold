@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team3663.robot;
 
+import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
+import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
 import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
 import org.usfirst.frc.team3663.robot.subsystems.SS_PickupArm;
@@ -27,6 +29,7 @@ public class Robot extends IterativeRobot {
 	public static SS_Shooter ss_Shooter;
 	public static SS_PickupArm ss_PickupArm;
 	public static SS_Dart ss_Dart;
+	public static SS_Camera ss_Camera;
 
 
     /**
@@ -39,7 +42,10 @@ public class Robot extends IterativeRobot {
 		ss_Shooter = new SS_Shooter();
 		ss_PickupArm = new SS_PickupArm();
 		ss_Dart = new SS_Dart();
+		ss_Camera = new SS_Camera();
 		oi = new OI();
+		
+		ss_Camera.setLight(true);
     }
 	
 	/**
@@ -75,10 +81,8 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
+    	C_DriveControllerDPad test = new C_DriveControllerDPad();
+    	test.start();
     }
 
     /**
