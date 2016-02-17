@@ -25,7 +25,6 @@ public class TC_TurnByGyro extends Command {
     }
 
     protected void end() {
-    	Robot.ss_DriveTrain.autoArcadeDrive(0, -1);
     }
     
     protected void interrupted() {

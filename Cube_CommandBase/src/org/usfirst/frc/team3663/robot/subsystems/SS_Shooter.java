@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
-
+//
 
 public class SS_Shooter extends Subsystem {
 	
@@ -18,10 +17,19 @@ public class SS_Shooter extends Subsystem {
 	//Solenoids
 	private DoubleSolenoid shooterSolenoid = new DoubleSolenoid(Robot.robotMap.shooterSolenoid[0], Robot.robotMap.shooterSolenoid[1]);
 	//Sensors
-	//Will have Encoders
+	
 	
     public void initDefaultCommand() {
     	
+    }
+    
+    public boolean aboveWantedSpeed(int pTarget){
+    	return (shooterTop.getEncVelocity() > pTarget && shooterBottom.getEncVelocity() > pTarget);
+    }
+    
+    public boolean isMotorRunning(){
+    	double value = shooterTop.getSpeed() + shooterBottom.getSpeed();
+    	return value == 0;
     }
     
     public void setShooterMotorBottom(double pSpeed){						//sets the speed of the bottom
@@ -33,7 +41,7 @@ public class SS_Shooter extends Subsystem {
     }
     
     public void setShooterMotorsSpeed(double pSpeed){						//Sets the speed of both motors
-    	shooterTop.set(pSpeed);
+    	shooterTop.set(-pSpeed);
     	shooterBottom.set(pSpeed);
     }
 
@@ -46,13 +54,18 @@ public class SS_Shooter extends Subsystem {
     	}
     }
     
-    public void fireShooterSolenoid(boolean pFire){						//Manually sets the location of the shooter solenoid
+    public void fireShooterSolenoid(boolean pFire){							//Manually sets the location of the shooter solenoid
     	if(pFire){
     		shooterSolenoid.set(DoubleSolenoid.Value.kForward);
     	}
     	else{
     		shooterSolenoid.set(DoubleSolenoid.Value.kReverse);
     	}
+    }
+    
+    public void STOP(){
+    	shooterBottom.set(0);
+    	shooterTop.set(0);
     }
     
     public void updateDashboard(){							//sends a update to the dashboard

@@ -7,20 +7,19 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_PickupRunMotor extends Command {
+public class C_DartMove extends Command {
 
-	private double speed;
-    public C_PickupRunMotor(double pSpeed) {
-    	requires(Robot.ss_PickupArm);
-    	speed = pSpeed;
+    public C_DartMove() {
+        // Use requires() here to declare subsystem dependencies
+    	requires(Robot.ss_Dart);
     }
 
+    // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     protected void execute() {
-    	Robot.ss_PickupArm.setPickupSpeed(speed);
+    	Robot.ss_Dart.moveDart(Robot.oi.driveJoystick.getRawAxis(5));
     }
 
     protected boolean isFinished() {
@@ -28,7 +27,7 @@ public class C_PickupRunMotor extends Command {
     }
 
     protected void end() {
-    	Robot.ss_PickupArm.STOP();
+    	Robot.ss_Dart.STOP();
     }
 
     protected void interrupted() {

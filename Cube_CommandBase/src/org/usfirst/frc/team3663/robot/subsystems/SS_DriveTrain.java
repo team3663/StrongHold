@@ -32,15 +32,16 @@ public class SS_DriveTrain extends Subsystem {
 	private Encoder rightEncoder = new Encoder(Robot.robotMap.driveRightEncoder[0], Robot.robotMap.driveRightEncoder[1]);
 	
 	//Carry values
-	private int finalEncoderDistance = 0;
+	private int finalEncoderDistance = 0;	
+	
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new C_DriveTrain());
     	driveGyro.reset();
     }
     
-    public void arcadeRobotDrive(Joystick pStick){		//Responsible for driving the robot
-    	driveTrain.arcadeDrive(pStick.getRawAxis(Robot.robotMap.driveAxisForward), pStick.getRawAxis(Robot.robotMap.driveAxisTurn));
+    public void arcadeRobotDrive(double pForwardSpeed, double pTurnSpeed){		//Responsible for driving the robot
+    	driveTrain.arcadeDrive(pForwardSpeed, pTurnSpeed);
     }
     
     public void autoArcadeDrive(double pYSpeed, double pXSpeed){
@@ -61,14 +62,28 @@ public class SS_DriveTrain extends Subsystem {
     	return false;
     }
     
-    public void setDistanceEncoder(int pInches){		//Sets the distance needed to travel
+    public int setDistanceEncoder(int pInches){		//Sets the distance needed to travel
     	leftEncoder.reset();
     	rightEncoder.reset();
-    	finalEncoderDistance = pInches * Robot.robotMap.encoderTicksPerInch;
+    	return pInches * Robot.robotMap.encoderTicksPerInch;
     }
     
     public boolean checkDistance(){						//Checks if the distance was hit
     	return false;
+    }
+    
+    public int getLeftEncoder()
+    {
+    	return leftEncoder.get();
+    }
+    public int getRightEncoder()
+    {
+    	return rightEncoder.get();
+    }
+    public void resetEncoders()
+    {
+    	leftEncoder.reset();
+    	rightEncoder.reset();
     }
     
     public void STOP(){									//Stops all of the wheels
