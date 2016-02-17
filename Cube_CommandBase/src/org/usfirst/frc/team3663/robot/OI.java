@@ -2,6 +2,7 @@ package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
+import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
@@ -43,6 +44,7 @@ public class OI {
 		shooterMotorsFullPower.whileHeld(new C_ShooterRunMotors(1));
 		shooterFirePistonNoWait.whenPressed(new C_ShooterFirePiston());
 		shooterFirerPistonWait.whenPressed(new CG_WaitForShooterThenShoot());
+		
 	//Test Buttons
 		turn90Degrees.whenPressed(new TC_TurnByGyro());
 		
