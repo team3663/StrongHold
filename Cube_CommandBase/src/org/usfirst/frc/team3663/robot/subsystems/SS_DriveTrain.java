@@ -85,6 +85,8 @@ public class SS_DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("Right Drive Motor 1 : ", driveMotorRight1.getSpeed());
     	SmartDashboard.putNumber("Right Drive Motor 2 : ", driveMotorRight2.getSpeed());
     	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
+    	SmartDashboard.putNumber("LeftEncoder : ", leftEncoder.getRaw());
+    	SmartDashboard.putNumber("RightEncoder : ", rightEncoder.getRaw());
     }
 }
 

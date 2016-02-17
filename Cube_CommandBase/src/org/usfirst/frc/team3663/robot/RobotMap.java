@@ -23,6 +23,11 @@ public class RobotMap {
 		public static int pickUpMotor = 7;
 	//dart
 		public static int dartMotor = 8;
+	//Winch
+		public static int winchMotor = 9;
+	//wheely bar
+		public static int wheelyBarMotor = 10;
+		
 	
 /*********Sensors********/
 	//Analog
@@ -31,6 +36,9 @@ public class RobotMap {
 	//Digital IO
 		public static int[] driveLeftEncoder  = new int[]{0, 1};
 		public static int[] driveRightEncoder = new int[]{2, 3};
+		public static int[] winchEncoder = 		new int[]{4, 5};
+		public static int[] wheelyBarEncoder = 	new int[]{6, 7};
+		public static int wheelyBarLimitSwitch = 			  8;
     
 /*********Relays*********/
 	//Camera
