@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
+import org.usfirst.frc.team3663.robot.commands.C_WinchJoystickUse;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
@@ -18,7 +19,11 @@ public class SS_Winch extends Subsystem {
 	private int maxEncoderTicks = 2000;
 	
     public void initDefaultCommand() {
-    	
+    	setDefaultCommand(new C_WinchJoystickUse());
+    }
+    
+    public void setWinchSpeedNOTSAFE(double pSpeed){
+    	winchMotor.set(pSpeed);
     }
     
     public boolean runMotorAutoToTarget(int pTarget, double pSpeed){	//code written to run the winch in auto	
@@ -35,11 +40,11 @@ public class SS_Winch extends Subsystem {
     		winchMotor.set(pSpeed);
     	}
     	else{
-    		winchMotor.set(0);
+    		STOP();
     	}
     }
     
-    public void STOP(){
+    public void STOP(){													//stops running the motor
     	winchMotor.set(0);
     }
     

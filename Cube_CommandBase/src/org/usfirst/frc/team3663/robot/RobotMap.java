@@ -12,12 +12,12 @@ public class RobotMap {
 	
 /********CANTalons*******/
 	//drive
-		public static int driveLeftMotor1  = 1;
-		public static int driveLeftMotor2  = 2;
+		public static int driveLeftMotor1 =  1;
+		public static int driveLeftMotor2 =  2;
 		public static int driveRightMotor1 = 3;
 		public static int driveRightMotor2 = 4;
 	//shooter
-		public static int shooterMotorTop    = 5;
+		public static int shooterMotorTop =    5;
 		public static int shooterMotorBottom = 6;
 	//pickup
 		public static int pickUpMotor = 7;
@@ -32,7 +32,7 @@ public class RobotMap {
 /*********Sensors********/
 	//Analog
 		public static int dartPotentiometer = 0;
-		public static int driveGyro  		= 1;
+		public static int driveGyro = 		  1;
 	//Digital IO
 		public static int[] driveLeftEncoder  = new int[]{0, 1};
 		public static int[] driveRightEncoder = new int[]{2, 3};
@@ -51,7 +51,9 @@ public class RobotMap {
 	//driveTrain
 	    public static int driveAxisForward = 2;
 	    public static int driveAxisReverse = 3;
-	    public static int driveAxisTurn    = 0;
+	    public static int driveAxisTurn =	 0;
+	//winch
+	    public static int winchAxis = 5;
 	    
 /******ChangeValues******/
 	//DriveTrain

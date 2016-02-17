@@ -8,6 +8,8 @@ import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
 import org.usfirst.frc.team3663.robot.subsystems.SS_PickupArm;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Shooter;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Test;
+import org.usfirst.frc.team3663.robot.subsystems.SS_WheelyBar;
+import org.usfirst.frc.team3663.robot.subsystems.SS_Winch;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -31,6 +33,8 @@ public class Robot extends IterativeRobot {
 	public static SS_Shooter ss_Shooter;
 	public static SS_PickupArm ss_PickupArm;
 	public static SS_Dart ss_Dart;
+	public static SS_Winch ss_Winch;
+	public static SS_WheelyBar ss_WheelyBar;
 	
 	public static SS_Test test;
 	public static NetworkTable visionTable;
@@ -47,6 +51,8 @@ public class Robot extends IterativeRobot {
 		ss_Shooter = new SS_Shooter();
 		ss_PickupArm = new SS_PickupArm();
 		ss_Dart = new SS_Dart();
+		ss_Winch = new SS_Winch();
+		ss_WheelyBar = new SS_WheelyBar();
 		ss_Camera = new SS_Camera();
 		oi = new OI();
 		

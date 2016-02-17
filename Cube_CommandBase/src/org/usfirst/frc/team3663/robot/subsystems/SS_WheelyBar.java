@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
+import org.usfirst.frc.team3663.robot.commands.C_WheelyBarMove;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -20,10 +21,15 @@ public class SS_WheelyBar extends Subsystem {
 	private int accptance = 10;
 	
     public void initDefaultCommand() {
+    	setDefaultCommand(new C_WheelyBarMove());
     }
     
     public int grabEncoder(){										//gets the value of the encoder
     	return wheelyBarEncoder.getRaw();
+    }
+    
+    public int maxDistance(){										//returns the max value
+    	return maxEncoderTicks;
     }
     
     public void resetEncoder(){										//resets the encoder
@@ -33,7 +39,10 @@ public class SS_WheelyBar extends Subsystem {
     public boolean moveWheelyBarAuto(int pTarget, double pSpeed){	//moves to a set distance on the encoder
     	int distValue = grabEncoder();
     	int direction = 0;
-    	if((distValue > pTarget - accptance && distValue < pTarget + accptance) || !(distValue < maxEncoderTicks && pSpeed > 0) || !(distValue > 0 && pSpeed < 0)){
+    	if((distValue > pTarget - accptance && distValue < pTarget + accptance) || 
+    			!(distValue < maxEncoderTicks && pSpeed > 0) || 
+    			!(distValue > 0 && pSpeed < 0) ||
+    			pSpeed < 0){
     		return true;
     	}
     	if(pTarget > distValue){
