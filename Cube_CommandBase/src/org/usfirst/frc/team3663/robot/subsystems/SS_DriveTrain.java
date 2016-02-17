@@ -68,22 +68,23 @@ public class SS_DriveTrain extends Subsystem {
     	return pInches * Robot.robotMap.encoderTicksPerInch;
     }
     
-    public boolean checkDistance(){						//Checks if the distance was hit
-    	return false;
-    }
-    
-    public int getLeftEncoder()
-    {
-    	return leftEncoder.get();
-    }
     public int getRightEncoder()
     {
     	return rightEncoder.get();
     }
+    public int getLeftEncoder()
+    {
+    	return leftEncoder.get();
+    }
+    
     public void resetEncoders()
     {
     	leftEncoder.reset();
     	rightEncoder.reset();
+    }
+    
+    public boolean checkDistance(){						//Checks if the distance was hit
+    	return false;
     }
     
     public void STOP(){									//Stops all of the wheels
@@ -116,6 +117,8 @@ public class SS_DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("Right Drive Motor 1 : ", driveMotorRight1.getSpeed());
     	SmartDashboard.putNumber("Right Drive Motor 2 : ", driveMotorRight2.getSpeed());
     	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
+    	SmartDashboard.putNumber("LeftEncoder : ", leftEncoder.getRaw());
+    	SmartDashboard.putNumber("RightEncoder : ", rightEncoder.getRaw());
     }
 }
 

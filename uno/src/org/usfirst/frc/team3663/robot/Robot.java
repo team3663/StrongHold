@@ -5,16 +5,15 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team3663.robot.commands.C_PrintLidar;
-import org.usfirst.frc.team3663.robot.commands.ExampleCommand;
 import org.usfirst.frc.team3663.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team3663.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3663.robot.subsystems.Gui;
 import org.usfirst.frc.team3663.robot.subsystems.GyroScope;
 import org.usfirst.frc.team3663.robot.subsystems.Lidar;
-//import org.usfirst.frc.team3663.robot.subsystems.TheAccel;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team3663.robot.subsystems.TheAccel;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,12 +24,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static DriveTrain dTrain;
 	public static GyroScope gScope;
-	//public static TheAccel accelero;
+	public static TheAccel accelero;
 	public static Lidar lidar;
 	public static OI oi;
+	public static NetworkTable dogNT;
+	public static Gui gui;
 
     Command autonomousCommand;
 
@@ -42,10 +42,10 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		dTrain = new DriveTrain();
 		gScope = new GyroScope();
-		//accelero = new TheAccel();
+		accelero = new TheAccel();
 		lidar = new Lidar();
-		Command lidarUpdate = new C_PrintLidar();
-		lidarUpdate.start();
+		dogNT = NetworkTable.getTable("Dog-NT");
+		gui = new Gui();
     }
 	
 	/**
@@ -87,6 +87,8 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        new C_PrintLidar().start();
+        SmartDashboard.putString("C_Following", "not started");
     }
 
     /**

@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team3663.robot.subsystems;
 
+import org.usfirst.frc.team3663.robot.Robot;
 import org.usfirst.frc.team3663.robot.commands.C_PrintGyro;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -26,6 +27,7 @@ public class GyroScope extends Subsystem {
         setDefaultCommand(new C_PrintGyro());
     }
     public void update(){
+		Robot.gui.sendNumber("sensor/Gyro", Math.round(gScope.getAngle()*100.0)/100.0);
     	SmartDashboard.putNumber("GYRO:",angle());
     }
 }

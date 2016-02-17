@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
@@ -124,14 +126,14 @@ public class CameraRun {
 					
 					if (gPieceKey>-1)
 					{
-						if (!movingWithRadius)
+						//if (!movingWithRadius)
 						{
 							centeringGoal = centeringGoal();
 						}
-						if (!centeringGoal)
+						//if (!centeringGoal)
 						{
 							movingWithRadius = moveWithAngleRadius(bestPieceKey);
-							if (Math.abs(table.getNumber("Moving/MoveAngle: ", 0)) > 15)
+						//	if (!movingWithRadius)
 							{
 								okayToShoot = isFineAdjustedGoal();
 							}
@@ -146,6 +148,10 @@ public class CameraRun {
 					checkCameraStillFound();
 				}
 			}
+		}
+		else
+		{
+			System.out.println("camera not found!");
 		}
 	}
 	public void resetVariables()
@@ -188,6 +194,7 @@ public class CameraRun {
 		resetVariables();
 		separateObjects();
 		removeSmallObjects();//remember later to get rid of extra removeSmallObject() methods
+		table.putNumber("gPieceKey: ", gPieceKey);
 		if (gPieceKey>-1) ///To help Delay, lower res or slow down frames per sec!!!!!!!!!!!!!!!!!!!!!!!
 		{
 	//		getMostMassObject();
@@ -221,16 +228,17 @@ public class CameraRun {
 		int g = Color.GREEN.getRGB();
 		int r = Color.RED.getRGB();
 		int b = Color.black.getRGB();
-		int random = Color.getHSBColor((float)Math.random(), (float)Math.random(), (float)Math.random()).getRGB();
-;
+		int random;
 		for(int y = 0; y<height; y++)
 		{
+			random = Color.getHSBColor((float)Math.random(), (float)Math.random(), (float)Math.random()).getRGB();
 			for(int x = 0; x<width; x++)
 			{
 				c = new Color(img.getRGB(x,y));
-				if (c.getRed()<90/* && c.getBlue()<190*/ && c.getGreen()>=170)
+				if (c.getRed()<160/* && c.getBlue()<190*/ && c.getGreen()>=170)
 				{
 					img.setRGB(x, y, g);
+					//img.setRGB(x, y, random);
 					pic[x][y] = 1;				
 				}
 				else if (isRedU(x,y))
@@ -239,7 +247,7 @@ public class CameraRun {
 				}
 				else
 				{
-					//img.setRGB(x, y, b);
+			//		img.setRGB(x, y, b);
 				}
 			}
 		//	for (double counter = -9.0; counter < 9999.0; counter+=0.1)
