@@ -33,12 +33,12 @@ public class C_EncoderCurveDrive extends Command {
     protected void execute() {
     	if (angle > 0)
     	{
-    		currTicks = Robot.ss_DriveTrain.getRightEncoder();
+    		currTicks = Robot.ss_DriveTrain.getRightEnc();
     		ticksPerSec = 65*43;
     	}
     	else if (angle < 0)
     	{
-    		currTicks = Robot.ss_DriveTrain.getLeftEncoder();
+    		currTicks = Robot.ss_DriveTrain.getLeftEnc();
     		ticksPerSec = 65;
     		turningLeft = -1;
     	}
