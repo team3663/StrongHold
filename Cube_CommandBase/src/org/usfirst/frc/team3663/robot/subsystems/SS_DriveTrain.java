@@ -68,6 +68,21 @@ public class SS_DriveTrain extends Subsystem {
     	return pInches * Robot.robotMap.encoderTicksPerInch;
     }
     
+    public int getRightEncoder()
+    {
+    	return rightEncoder.get();
+    }
+    public int getLeftEncoder()
+    {
+    	return leftEncoder.get();
+    }
+    
+    public void resetEncoders()
+    {
+    	leftEncoder.reset();
+    	rightEncoder.reset();
+    }
+    
     public boolean checkDistance(){						//Checks if the distance was hit
     	return false;
     }

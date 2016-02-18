@@ -65,7 +65,7 @@ public class OI {
 		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
 		
 		//Test Buttons
-		turn90Degrees.whenPressed(new TC_TurnByGyro());
+		turn90Degrees.whenPressed(new TC_TurnByGyro(90));
 		toggleTestMode.whenPressed(new TestC_ToggleTestMode());
 		cycleUp.whenPressed(new TestC_Cycle(true));
 		cycleDown.whenPressed(new TestC_Cycle(false));
