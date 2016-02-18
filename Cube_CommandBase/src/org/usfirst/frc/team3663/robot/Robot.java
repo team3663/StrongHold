@@ -2,6 +2,7 @@
 package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
+import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
 import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
@@ -35,6 +36,7 @@ public class Robot extends IterativeRobot {
 	public static SS_Dart ss_Dart;
 	public static SS_Winch ss_Winch;
 	public static SS_WheelyBar ss_WheelyBar;
+	public static SS_AutoChooser ss_AutoChooser;
 	
 	
 	public static SS_Test test;
@@ -55,6 +57,7 @@ public class Robot extends IterativeRobot {
 		ss_Winch = new SS_Winch();
 		ss_WheelyBar = new SS_WheelyBar();
 		ss_Camera = new SS_Camera();
+		ss_AutoChooser = new SS_AutoChooser();
 		oi = new OI();
 		test = new SS_Test();
     	LiveWindow.setEnabled(false);
@@ -85,9 +88,11 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
-//    public void autonomousInit() {
-//    	
-//    }
+    public void autonomousInit() {
+    	if(ss_AutoChooser.autoType() == 0){
+    		//this uses the switches on board to find which one to run
+    	}
+    }
     /**
      * This function is called periodically during autonomous
      */

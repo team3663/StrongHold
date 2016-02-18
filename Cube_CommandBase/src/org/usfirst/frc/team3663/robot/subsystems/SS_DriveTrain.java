@@ -28,12 +28,11 @@ public class SS_DriveTrain extends Subsystem {
 	//Sensors
 	private AnalogGyro driveGyro = new AnalogGyro(Robot.robotMap.driveGyro);
 	
-	private Encoder leftEncoder = new Encoder(Robot.robotMap.driveLeftEncoder[0], Robot.robotMap.driveLeftEncoder[1]);
-	private Encoder rightEncoder = new Encoder(Robot.robotMap.driveRightEncoder[0], Robot.robotMap.driveRightEncoder[1]);
 	
 	//Carry values
-	private int finalEncoderDistance = 0;	
-	
+	private int currentRunNumber = 0;
+	private int lastEncoderTicks = -0;
+	private int currentSpeed = 0;
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new C_DriveTrain());
@@ -52,6 +51,14 @@ public class SS_DriveTrain extends Subsystem {
     	driveGyro.reset();
     }
     
+    public int getLeftEnc(){
+    	return driveMotorLeft1.getEncPosition();
+    }
+    
+    public int getRightEnc(){
+    	return driveMotorRight1.getEncPosition();
+    }
+    
     public boolean spinByGyro(int pDegrees){			//Spins the robot the passed in value returning if the action was complete
     	if(pDegrees > driveGyro.getAngle()){
     		driveTrain.arcadeDrive(0, .5);
@@ -63,16 +70,30 @@ public class SS_DriveTrain extends Subsystem {
     }
     
     public int setDistanceEncoder(int pInches){		//Sets the distance needed to travel
-    	leftEncoder.reset();
-    	rightEncoder.reset();
+    	driveMotorLeft1.reset();
+    	driveMotorRight1.reset();
     	return pInches * Robot.robotMap.encoderTicksPerInch;
     }
     
-    public boolean checkDistance(){						//Checks if the distance was hit
-    	return false;
+    public void driveByEncoder(double pMaxSpeed, int pTarget, double pTurnValue){
+    	int distValueLeft = getLeftEnc();
+    	int distValueRight = getRightEnc();
+    	if(((distValueLeft - lastEncoderTicks) * currentSpeed * 20 > pTarget) && (currentSpeed > 0)){
+    		currentSpeed -= .05;
+    	}
+    	else if(currentSpeed < pMaxSpeed && currentRunNumber > 10){
+    		currentRunNumber = 0;
+    		currentSpeed += .05;
+    	}
+    	double ratio = (distValueLeft/distValueRight) - 1;
+    	driveTrain.arcadeDrive(currentSpeed, pTurnValue*ratio*currentSpeed);
     }
     
-    public void STOP(){									//Stops all of the wheels
+    public boolean checkDistance(int pTarget){						//Checks if the distance was hit
+    	return getLeftEnc() > pTarget;
+    }
+    
+    public void STOP(){												//Stops all of the wheels
     	driveMotorLeft1.set(0);
     	driveMotorLeft2.set(0);
     	driveMotorRight1.set(0);
@@ -102,8 +123,8 @@ public class SS_DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("Right Drive Motor 1 : ", driveMotorRight1.getSpeed());
     	SmartDashboard.putNumber("Right Drive Motor 2 : ", driveMotorRight2.getSpeed());
     	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
-    	SmartDashboard.putNumber("LeftEncoder : ", leftEncoder.getRaw());
-    	SmartDashboard.putNumber("RightEncoder : ", rightEncoder.getRaw());
+    	SmartDashboard.putNumber("LeftEncoder : ", driveMotorLeft1.getEncPosition());
+    	SmartDashboard.putNumber("RightEncoder : ", driveMotorRight1.getEncPosition());
     }
 }
 
