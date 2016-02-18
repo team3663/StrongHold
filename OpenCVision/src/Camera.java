@@ -1,4 +1,4 @@
-package src;
+//package src;
 
 import java.awt.Component;
 import java.awt.Image;
