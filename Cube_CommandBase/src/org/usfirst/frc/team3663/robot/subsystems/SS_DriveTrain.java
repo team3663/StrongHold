@@ -28,6 +28,7 @@ public class SS_DriveTrain extends Subsystem {
 	//Sensors
 	private AnalogGyro driveGyro = new AnalogGyro(Robot.robotMap.driveGyro);
 	
+	//encoders are now from CANTalons
 	private Encoder leftEncoder = new Encoder(Robot.robotMap.driveLeftEncoder[0], Robot.robotMap.driveLeftEncoder[1]);
 	private Encoder rightEncoder = new Encoder(Robot.robotMap.driveRightEncoder[0], Robot.robotMap.driveRightEncoder[1]);
 	

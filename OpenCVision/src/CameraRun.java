@@ -133,7 +133,7 @@ public class CameraRun {
 						//if (!centeringGoal)
 						{
 							movingWithRadius = moveWithAngleRadius(bestPieceKey);
-						//	if (!movingWithRadius)
+							//if (!movingWithRadius)
 							{
 								okayToShoot = isFineAdjustedGoal();
 							}
@@ -862,12 +862,12 @@ public class CameraRun {
 		if (yCenter < (pic[0].length/2)-15)
 		{
 			moveShooterArm = true;
-			raiseShooterArm = false;
+			raiseShooterArm = true;
 		}
 		else if (yCenter > (pic[0].length/2)+15)
 		{
 			moveShooterArm = true;
-			raiseShooterArm = true;
+			raiseShooterArm = false;
 		}
 
 		if (moveShooterArm)
