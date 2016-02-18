@@ -1,4 +1,4 @@
-package src;
+//package src;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -42,6 +42,7 @@ public class CameraRun {
 	int gPieceKey = -1;
 	int bestPieceKey;
 	int[][] U = new int[640][480];//size[196][149];
+	double maxDistortedAngle = 20;
 	
 //	boolean foundObject = false;
 	
@@ -125,14 +126,14 @@ public class CameraRun {
 					
 					if (gPieceKey>-1)
 					{
-						if (!movingWithRadius)
+						//if (!movingWithRadius)
 						{
 							centeringGoal = centeringGoal();
 						}
-						if (!centeringGoal)
+						//if (!centeringGoal)
 						{
 							movingWithRadius = moveWithAngleRadius(bestPieceKey);
-							if (!movingWithRadius)
+							//if (!movingWithRadius)
 							{
 								okayToShoot = isFineAdjustedGoal();
 							}
@@ -234,7 +235,7 @@ public class CameraRun {
 			for(int x = 0; x<width; x++)
 			{
 				c = new Color(img.getRGB(x,y));
-				if (c.getRed()<90/* && c.getBlue()<190*/ && c.getGreen()>=170)
+				if (c.getRed()<160/* && c.getBlue()<190*/ && c.getGreen()>=170)
 				{
 					img.setRGB(x, y, g);
 					//img.setRGB(x, y, random);
@@ -246,7 +247,7 @@ public class CameraRun {
 				}
 				else
 				{
-					img.setRGB(x, y, b);
+			//		img.setRGB(x, y, b);
 				}
 			}
 		//	for (double counter = -9.0; counter < 9999.0; counter+=0.1)
@@ -309,7 +310,7 @@ public class CameraRun {
 		table.putNumber("Moving/MoveAngle: ", angle);
 		table.putNumber("Moving/MoveRadius: ", distance);
 		
-		if (angle < 15 && angle > -15)
+		if (angle < maxDistortedAngle && angle > -maxDistortedAngle)
 		{
 			table.putBoolean("Moving/MoveSideways: ", false);//may not need
 			return false;
@@ -837,7 +838,7 @@ public class CameraRun {
 				needsTurning = false;
 			}
 		}
-		else if (autoFindLeft)
+		else if (autoFindLeft)//maybe put something that saved if seen object and which way it disappeared
 		{
 			needsTurning = true;
 			table.putBoolean("leftTurn: ", true);
@@ -861,12 +862,12 @@ public class CameraRun {
 		if (yCenter < (pic[0].length/2)-15)
 		{
 			moveShooterArm = true;
-			raiseShooterArm = false;
+			raiseShooterArm = true;
 		}
 		else if (yCenter > (pic[0].length/2)+15)
 		{
 			moveShooterArm = true;
-			raiseShooterArm = true;
+			raiseShooterArm = false;
 		}
 
 		if (moveShooterArm)
@@ -876,7 +877,7 @@ public class CameraRun {
 		table.putBoolean("ShooterArm/moveShooterArm: ", moveShooterArm);
 		
 		double angle = getAngleTilt(bestPieceKey);
-		if ((angle < 15 && angle > -15) && !moveShooterArm)
+		if ((Math.abs(angle) < maxDistortedAngle) && !moveShooterArm)
 		{
 			return true;
 		}

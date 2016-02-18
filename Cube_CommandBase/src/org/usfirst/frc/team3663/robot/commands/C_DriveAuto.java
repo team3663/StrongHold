@@ -20,6 +20,7 @@ public class C_DriveAuto extends Command {
     }
 
     protected void initialize() {
+    	target = Robot.ss_DriveTrain.setDistanceEncoder(target);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -28,7 +29,7 @@ public class C_DriveAuto extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return Robot.ss_DriveTrain.checkDistance(target);
     }
 
     // Called once after isFinished returns true

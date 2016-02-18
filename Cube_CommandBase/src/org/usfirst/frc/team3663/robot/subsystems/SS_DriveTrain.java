@@ -27,7 +27,8 @@ public class SS_DriveTrain extends Subsystem {
 	
 	//Sensors
 	private AnalogGyro driveGyro = new AnalogGyro(Robot.robotMap.driveGyro);
-	
+
+	//encoders are now from CANTalons
 	
 	//Carry values
 	private int currentRunNumber = 0;
@@ -72,9 +73,11 @@ public class SS_DriveTrain extends Subsystem {
     public int setDistanceEncoder(int pInches){		//Sets the distance needed to travel
     	driveMotorLeft1.reset();
     	driveMotorRight1.reset();
+    	lastEncoderTicks = -0;
     	return pInches * Robot.robotMap.encoderTicksPerInch;
     }
     
+    //THIS IS NOT COMPLETE
     public void driveByEncoder(double pMaxSpeed, int pTarget, double pTurnValue){
     	int distValueLeft = getLeftEnc();
     	int distValueRight = getRightEnc();
@@ -90,7 +93,12 @@ public class SS_DriveTrain extends Subsystem {
     }
     
     public boolean checkDistance(int pTarget){						//Checks if the distance was hit
-    	return getLeftEnc() > pTarget;
+    	return getLeftEnc() > pTarget-10;
+    }
+    
+    public void resetEncoders(){
+    	driveMotorLeft1.reset();
+    	driveMotorRight1.reset();
     }
     
     public void STOP(){												//Stops all of the wheels

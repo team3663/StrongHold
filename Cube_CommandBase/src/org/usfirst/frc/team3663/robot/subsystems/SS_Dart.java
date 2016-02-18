@@ -69,6 +69,12 @@ public class SS_Dart extends Subsystem {
     	}
     }
     
+/*    public boolean atLocation(int pLocation)
+    {
+    	int currValue = dartPotentiometer.getAverageValue();
+    	return (currValue < pLocation+4 && currValue > pLocation-4);
+    }*///may not need
+    
     public boolean hitLocation(double pSpeed, int pFinalLocation){
     	int distValue = dartPotentiometer.getAverageValue();
     	if(pSpeed < 0 && distValue < pFinalLocation){

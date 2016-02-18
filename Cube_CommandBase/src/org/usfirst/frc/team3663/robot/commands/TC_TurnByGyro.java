@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TC_TurnByGyro extends Command {
 
-    public TC_TurnByGyro() {
+	double degrees;
+    public TC_TurnByGyro(double angle) {
         requires(Robot.ss_DriveTrain);
+        degrees = angle;//assuming positive is to the right
     }
 
     protected void initialize() {
@@ -21,7 +23,7 @@ public class TC_TurnByGyro extends Command {
     }
     
     protected boolean isFinished() {
-        return Robot.ss_DriveTrain.spinByGyro(90);
+        return Robot.ss_DriveTrain.spinByGyro((int)degrees);
     }
 
     protected void end() {
