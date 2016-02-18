@@ -6,6 +6,7 @@ import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
+import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafty;
 import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
@@ -34,8 +35,8 @@ public class OI {
 	private JoystickButton pickupLowerArm 	= new JoystickButton(driveJoystick, 5);
   //Shooter Buttons
 	private JoystickButton shooterMotorsFullPower 	= new JoystickButton(driveJoystick, 1);
-	private JoystickButton shooterFirePistonNoWait 	= new JoystickButton(driveJoystick, 7);
-	private JoystickButton shooterFirerPistonWait	= new JoystickButton(driveJoystick, 2);
+	public int shooterFirePistonNoWait 	= 7;
+	public int shooterFirerPistonWait	= 2;
   //Winch Buttons
 	private JoystickButton winchToHoist = 	  new JoystickButton(buttonJoystick, 1);
 	private JoystickButton winchNotSafeMove = new JoystickButton(buttonJoystick, 7);
@@ -55,9 +56,7 @@ public class OI {
 		pickupRaiseArm.whenPressed(new C_PickupFirePiston(false));
 		pickupLowerArm.whenPressed(new C_PickupFirePiston(true));
 	  //Shooter Buttons
-		shooterMotorsFullPower.whileHeld(new C_ShooterRunMotors(1));
-		shooterFirePistonNoWait.whenPressed(new C_ShooterFirePiston());
-		shooterFirerPistonWait.whenPressed(new CG_WaitForShooterThenShoot());
+		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafty());
