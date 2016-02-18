@@ -78,7 +78,7 @@ public class Lidar extends SensorBase {
 		SmartDashboard.putNumber("Lidar:", distance);
 		SmartDashboard.putNumber("Lidar (in):", distance/2.75);
 		int feet = (int)(distance/2.75)/12;
-		Robot.gui.sendString("sensor/Lidar(ft-in)", feet + "\"" + (int)Math.round(distance/2.75 - feet*12));
+		Robot.gui.sendString("sensor/Lidar(ft-in)", feet + "\"" + (int)Math.round(distance/2.75 - feet*12) + "'");
 		Robot.gui.sendNumber("sensor/Lidar", distance);
 	}
     
