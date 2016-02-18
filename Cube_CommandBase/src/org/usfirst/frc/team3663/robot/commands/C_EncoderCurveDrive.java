@@ -2,7 +2,7 @@ package org.usfirst.frc.team3663.robot.commands;
 
 import org.usfirst.frc.team3663.robot.Robot;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -55,6 +55,9 @@ public class C_EncoderCurveDrive extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	//temp thing
+    	Timer.delay(1);
+    	
         table.putBoolean("Mode/commandRunning: ", false);
     }
 

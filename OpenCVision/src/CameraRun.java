@@ -43,6 +43,9 @@ public class CameraRun {
 	int bestPieceKey;
 	int[][] U = new int[640][480];//size[196][149];
 	double maxDistortedAngle = 20;
+	int goalCenterX,goalCenterY;
+	int fixWidth = 640;
+	int fixHeight = 480;
 	
 //	boolean foundObject = false;
 	
@@ -61,10 +64,13 @@ public class CameraRun {
 		massObjectPointer = new MassObjectHolder();
 		
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.78");
+		NetworkTable.setIPAddress("10.36.63.20");//78");
 		table = NetworkTable.getTable("Dog-NT");
 
 		setRedU();
+		
+		goalCenterX = (fixWidth/2)+20;//
+		goalCenterY = (fixHeight/2)+35;
 
 		table.putBoolean("autoInitFindLeft: ",true);
 		table.putBoolean("Mode/commandRunning: ",false);//may not need
@@ -823,12 +829,12 @@ public class CameraRun {
 		
 		if (gPieceKey > -1)
 		{
-			if (xCenter < (pic.length/2)-15)
+			if (xCenter < goalCenterX-15)
 			{
 				needsTurning = true;
 				table.putBoolean("turnLeft: ", true);
 			}
-			else if (xCenter > (pic.length/2)+15)
+			else if (xCenter > goalCenterX+15)
 			{
 				needsTurning = true;
 				table.putBoolean("turnLeft: ", false);
@@ -859,12 +865,12 @@ public class CameraRun {
 	//	int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
 		int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
 
-		if (yCenter < (pic[0].length/2)-15)
+		if (yCenter < goalCenterY-15)
 		{
 			moveShooterArm = true;
 			raiseShooterArm = true;
 		}
-		else if (yCenter > (pic[0].length/2)+15)
+		else if (yCenter > goalCenterY+15)
 		{
 			moveShooterArm = true;
 			raiseShooterArm = false;
