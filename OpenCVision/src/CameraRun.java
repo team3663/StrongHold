@@ -85,7 +85,7 @@ public class CameraRun {
 	
 	private void checkCameraStillFound()
 	{
-		if (buffingCounter++%1000 == 999)
+		if (buffingCounter++%100 == 99)
 		{
 			if (camera.isOpened())
 			{
@@ -241,7 +241,7 @@ public class CameraRun {
 			for(int x = 0; x<width; x++)
 			{
 				c = new Color(img.getRGB(x,y));
-				if (c.getRed()<160/* && c.getBlue()<190*/ && c.getGreen()>=170)
+				if (c.getRed()<70/* && c.getBlue()<190*/ && c.getGreen()>=210)
 				{
 					img.setRGB(x, y, g);
 					//img.setRGB(x, y, random);
@@ -567,8 +567,10 @@ public class CameraRun {
 		double d = 0;
 		
 		double mass = (double)massObjectPointer.getGPiece(keyNum).mass;
+		table.putNumber("mass: ",mass);
 		
 		d = ((-0.067*mass)+351.24)*mass/4000;//4048.36;
+		//distance direct real time d = 0.000003*mass^2 - 0.0374*mass + 201.84
 		
 		return d;
 	}
@@ -882,8 +884,9 @@ public class CameraRun {
 		}
 		table.putBoolean("ShooterArm/moveShooterArm: ", moveShooterArm);
 		
+		double dist = getDistanceMass(bestPieceKey);
 		double angle = getAngleTilt(bestPieceKey);
-		if ((Math.abs(angle) < maxDistortedAngle) && !moveShooterArm)
+		if ((Math.abs(angle) < maxDistortedAngle) && !moveShooterArm && !centeringGoal && dist < 14*12)
 		{
 			return true;
 		}

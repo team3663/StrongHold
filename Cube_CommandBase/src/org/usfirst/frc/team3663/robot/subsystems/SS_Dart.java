@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SS_Dart extends Subsystem {
 	
 	private int maxPotentiometer = 2120;
-	private int minPotentiometer = 660;
-	private int minPickup = 761;
-	private int maxPickup = 1789;
+	private int minPotentiometer = 580;
+	private int minPickup = 600;
+	private int maxPickup = 1840;
 	
 	//Motor
 	private CANTalon dartMotor = new CANTalon(Robot.robotMap.dartMotor);
@@ -30,6 +30,7 @@ public class SS_Dart extends Subsystem {
 	private int lastRunPotentiometer = -10000;
 	
     public void initDefaultCommand() {
+    	dartMotor.enableBrakeMode(true);
     	setDefaultCommand(new C_DartMove());
     }
     
@@ -77,10 +78,10 @@ public class SS_Dart extends Subsystem {
     
     public boolean hitLocation(double pSpeed, int pFinalLocation){
     	int distValue = dartPotentiometer.getAverageValue();
-    	if(pSpeed < 0 && distValue < pFinalLocation){
+    	if(pSpeed < 0 && distValue < pFinalLocation+10){
     		 return true;
     	}
-    	if(pSpeed > 0 && distValue > pFinalLocation){
+    	if(pSpeed > 0 && distValue > pFinalLocation-10){
     		return true;
     	}
     	return false;
@@ -88,7 +89,7 @@ public class SS_Dart extends Subsystem {
     
     public boolean inPickupZone(){					//checks to see if the pickup arm is in the way
     	int distValue = dartPotentiometer.getAverageValue();
-    	return (distValue < maxPickup + 50 && distValue > minPickup - 50); 	
+    	return (distValue < maxPickup && distValue > minPickup); 	
     }
     
     public boolean outOfSafeZone(){					//checks to see if the dart is in a safe location
