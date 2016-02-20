@@ -61,8 +61,11 @@ public class SS_DriveTrain extends Subsystem {
     }
     
     public boolean spinByGyro(int pDegrees){			//Spins the robot the passed in value returning if the action was complete
-    	if(pDegrees > driveGyro.getAngle()){
+    	if(pDegrees > driveGyro.getAngle() && pDegrees > 0){
     		driveTrain.arcadeDrive(-1, 0);
+    	}
+    	else if(pDegrees < driveGyro.getAngle() && pDegrees < 0){
+    		driveTrain.arcadeDrive(1, 0);    		
     	}
     	else{
     		return true;
@@ -90,6 +93,7 @@ public class SS_DriveTrain extends Subsystem {
     	}
     	double ratio = (distValueLeft/distValueRight) - 1;
     	driveTrain.arcadeDrive(currentSpeed, pTurnValue*ratio*currentSpeed);
+    	currentRunNumber ++;
     }
     
     public boolean checkDistance(int pTarget){						//Checks if the distance was hit
