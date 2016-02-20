@@ -239,7 +239,7 @@ public class CameraRun {
 			for(int x = 0; x<width; x++)
 			{
 				c = new Color(img.getRGB(x,y));
-				if (c.getRed()<70/* && c.getBlue()<190*/ && c.getGreen()>=210)
+				if (c.getRed()<60/* && c.getBlue()<190*/ && c.getGreen()>=210)
 				{
 					if (okayToShoot)
 					{
@@ -507,7 +507,7 @@ public class CameraRun {
 	{
 		for (int o = 0; o <= gPieceKey; o++)
 		{
-			if (massObjectPointer.getGPiece(o).mass < 400)
+			if (massObjectPointer.getGPiece(o).mass < 500)
 			{
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
@@ -907,7 +907,7 @@ public class CameraRun {
 	
 	private boolean isFineAdjustedGoal()
 	{
-		boolean raiseShooterArm = true;
+/*		boolean raiseShooterArm = true;
 		boolean moveShooterArm = false;
 	//	int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
 		int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
@@ -928,10 +928,10 @@ public class CameraRun {
 			table.putBoolean("ShooterArm/raiseShooterArm: ", raiseShooterArm);
 		}
 		table.putBoolean("ShooterArm/moveShooterArm: ", moveShooterArm);
-		
-		double dist = getDistanceMass(bestPieceKey);
-		double angle = getAngleTilt(bestPieceKey);
-		if (/*(Math.abs(angle) < maxDistortedAngle) && !moveShooterArm &&*/table.getBoolean("finishedMovingPot: ",false) && !centeringGoal && dist < 15*12)
+		*/
+		/*double dist = getDistanceMass(bestPieceKey);
+		double angle = getAngleTilt(bestPieceKey);*/
+		if (/*(Math.abs(angle) < maxDistortedAngle) && !moveShooterArm &&*/table.getBoolean("finishedMovingPot: ",false) && !centeringGoal && distance < 15*12)
 		{
 			return true;
 		}
