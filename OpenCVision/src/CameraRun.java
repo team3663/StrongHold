@@ -43,6 +43,9 @@ public class CameraRun {
 	int bestPieceKey;
 	int[][] U = new int[640][480];//size[196][149];
 	double maxDistortedAngle = 20;
+	int goalCenterX,goalCenterY;
+	int fixWidth = 640;
+	int fixHeight = 480;
 	
 //	boolean foundObject = false;
 	
@@ -61,10 +64,13 @@ public class CameraRun {
 		massObjectPointer = new MassObjectHolder();
 		
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.78");
+		NetworkTable.setIPAddress("10.36.63.20");//78");
 		table = NetworkTable.getTable("Dog-NT");
 
 		setRedU();
+		
+		goalCenterX = (fixWidth/2)+20;//
+		goalCenterY = (fixHeight/2)+35;
 
 		table.putBoolean("autoInitFindLeft: ",true);
 		table.putBoolean("Mode/commandRunning: ",false);//may not need
@@ -79,7 +85,7 @@ public class CameraRun {
 	
 	private void checkCameraStillFound()
 	{
-		if (buffingCounter++%1000 == 999)
+		if (buffingCounter++%100 == 99)
 		{
 			if (camera.isOpened())
 			{
@@ -133,7 +139,7 @@ public class CameraRun {
 						//if (!centeringGoal)
 						{
 							movingWithRadius = moveWithAngleRadius(bestPieceKey);
-						//	if (!movingWithRadius)
+							//if (!movingWithRadius)
 							{
 								okayToShoot = isFineAdjustedGoal();
 							}
@@ -235,7 +241,7 @@ public class CameraRun {
 			for(int x = 0; x<width; x++)
 			{
 				c = new Color(img.getRGB(x,y));
-				if (c.getRed()<160/* && c.getBlue()<190*/ && c.getGreen()>=170)
+				if (c.getRed()<70/* && c.getBlue()<190*/ && c.getGreen()>=210)
 				{
 					img.setRGB(x, y, g);
 					//img.setRGB(x, y, random);
@@ -561,8 +567,10 @@ public class CameraRun {
 		double d = 0;
 		
 		double mass = (double)massObjectPointer.getGPiece(keyNum).mass;
+		table.putNumber("mass: ",mass);
 		
 		d = ((-0.067*mass)+351.24)*mass/4000;//4048.36;
+		//distance direct real time d = 0.000003*mass^2 - 0.0374*mass + 201.84
 		
 		return d;
 	}
@@ -823,12 +831,12 @@ public class CameraRun {
 		
 		if (gPieceKey > -1)
 		{
-			if (xCenter < (pic.length/2)-15)
+			if (xCenter < goalCenterX-15)
 			{
 				needsTurning = true;
 				table.putBoolean("turnLeft: ", true);
 			}
-			else if (xCenter > (pic.length/2)+15)
+			else if (xCenter > goalCenterX+15)
 			{
 				needsTurning = true;
 				table.putBoolean("turnLeft: ", false);
@@ -859,15 +867,15 @@ public class CameraRun {
 	//	int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
 		int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
 
-		if (yCenter < (pic[0].length/2)-15)
-		{
-			moveShooterArm = true;
-			raiseShooterArm = false;
-		}
-		else if (yCenter > (pic[0].length/2)+15)
+		if (yCenter < goalCenterY-15)
 		{
 			moveShooterArm = true;
 			raiseShooterArm = true;
+		}
+		else if (yCenter > goalCenterY+15)
+		{
+			moveShooterArm = true;
+			raiseShooterArm = false;
 		}
 
 		if (moveShooterArm)
@@ -876,8 +884,9 @@ public class CameraRun {
 		}
 		table.putBoolean("ShooterArm/moveShooterArm: ", moveShooterArm);
 		
+		double dist = getDistanceMass(bestPieceKey);
 		double angle = getAngleTilt(bestPieceKey);
-		if ((Math.abs(angle) < maxDistortedAngle) && !moveShooterArm)
+		if ((Math.abs(angle) < maxDistortedAngle) && !moveShooterArm && !centeringGoal && dist < 14*12)
 		{
 			return true;
 		}

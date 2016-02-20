@@ -19,6 +19,7 @@ public class SS_WheelyBar extends Subsystem {
 	
 	private int maxEncoderTicks = 1000;
 	private int accptance = 10;
+	private boolean setToZero = false;
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new C_WheelyBarMove());
@@ -33,6 +34,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void resetEncoder(){										//resets the encoder
+		setToZero = true;
     	wheelyBarEncoder.reset();
     }
     
@@ -42,7 +44,7 @@ public class SS_WheelyBar extends Subsystem {
     	if((distValue > pTarget - accptance && distValue < pTarget + accptance) || 
     			!(distValue < maxEncoderTicks && pSpeed > 0) || 
     			!(distValue > 0 && pSpeed < 0) ||
-    			pSpeed < 0){
+    			pSpeed < 0 || setToZero){
     		return true;
     	}
     	if(pTarget > distValue){
@@ -73,7 +75,7 @@ public class SS_WheelyBar extends Subsystem {
     	if(wheelyBarLimit.get()){
     		resetEncoder();
     	}
-    	if((distValue < maxEncoderTicks && pSpeed > 0) || (distValue > 0 && pSpeed < 0)){
+    	if(((distValue < maxEncoderTicks && pSpeed > 0) || (distValue > 0 && pSpeed < 0)) && setToZero){
     		wheelyBarMotor.set(pSpeed);
     	}
     	else{

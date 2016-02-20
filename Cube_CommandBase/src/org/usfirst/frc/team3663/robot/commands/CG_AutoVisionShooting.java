@@ -24,6 +24,7 @@ public class CG_AutoVisionShooting extends CommandGroup {
         	dist = table.getNumber("Moving/MoveDistance: ",0);
 	    	addSequential(new TC_TurnByGyro(angle/Math.abs(angle)*90));//+-1*90
 	    	addSequential(new C_EncoderCurveDrive(angle,dist));
+	    	addSequential(new TC_TurnByGyro(-angle/Math.abs(angle)*90));
 	    	addSequential(new C_VisionCenterGoal());
     	}
     	if (table.getBoolean("ShooterArm/moveShooterArm: ", false))
