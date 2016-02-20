@@ -3,15 +3,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
 
 public class messageBoard extends JPanel{
-	JTextPane txt;
+	JLabel txt;
 	public messageBoard(){
 		setBackground(Color.BLACK);
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		txt = new JTextPane();
+		txt = new JLabel("hello");
 		txt.setSize(new Dimension(500,500));
 		add(txt, BorderLayout.SOUTH);
 		txt.setAlignmentX(LEFT_ALIGNMENT);
