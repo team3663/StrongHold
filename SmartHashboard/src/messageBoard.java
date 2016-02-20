@@ -14,7 +14,8 @@ public class messageBoard extends JPanel{
 		txt = new JTextPane();
 		txt.setSize(new Dimension(500,500));
 		add(txt, BorderLayout.SOUTH);
-		txt.setAlignmentX(BOTTOM_ALIGNMENT);
+		txt.setAlignmentX(LEFT_ALIGNMENT);
+		txt.setAlignmentY(BOTTOM_ALIGNMENT);
 	}
 	public void say(String msg){
 		txt.setText(msg);
