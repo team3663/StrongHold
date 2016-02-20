@@ -16,7 +16,6 @@ public class SubTablePanel extends JPanel implements Runnable{
 	Set<String> guiElements;
 	String[] sList;
 	JLabel[] jList;
-	JPanel grid;
 	String subTable;
 	Color bckg;
 	
@@ -27,12 +26,10 @@ public class SubTablePanel extends JPanel implements Runnable{
 		bckg = bckgc;
 	}
 	public void init(){
-        grid = new JPanel(new FlowLayout());
         getNames();
         fillJLabels();
         fillJFrame();
         setLayout(new GridLayout(10,3,0,0));
-        add(grid);
         setVisible(true);
 	}
 	public void organizeElements(){
@@ -46,7 +43,6 @@ public class SubTablePanel extends JPanel implements Runnable{
         getNames();
         fillJLabels();
         fillJFrame();
-        add(grid);
 	}
 	public void fillJLabels(){
 		for(int i=0;i<sList.length;i++){

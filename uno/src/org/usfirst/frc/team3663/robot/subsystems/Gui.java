@@ -16,4 +16,13 @@ public class Gui {
 	public void sendBoolean(String label, boolean value){
 		table.putBoolean(label, value);
 	}
+	public double getNumber(String label){
+		return table.getNumber(label,3663);
+	}
+	public String getString(String label){
+		return table.getString(label,"3663");
+	}
+	public boolean getBoolean(String label){
+		return table.getBoolean(label,false);
+	}
 }
