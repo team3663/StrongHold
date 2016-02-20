@@ -13,6 +13,7 @@ import org.usfirst.frc.team3663.robot.subsystems.SS_WheelyBar;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Winch;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -40,15 +41,19 @@ public class Robot extends IterativeRobot {
 	
 	
 	public static SS_Test test;
-	public static NetworkTable visionTable;
 	public static SS_Camera ss_Camera;
 
+
+	public static NetworkTable visionTable;// = NetworkTable.getTable("Dog-NT");
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+
+		visionTable = NetworkTable.getTable("Dog-NT");
+		
 		robotMap = new RobotMap();
 		ss_DriveTrain = new SS_DriveTrain();
 		ss_Shooter = new SS_Shooter();
@@ -61,7 +66,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		test = new SS_Test();
     	LiveWindow.setEnabled(false);
-		visionTable = NetworkTable.getTable("Dog-NT");
+
     }
 	
 	/**

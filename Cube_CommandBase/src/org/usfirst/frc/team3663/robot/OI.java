@@ -7,6 +7,8 @@ import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafty;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
+import org.usfirst.frc.team3663.robot.commands.C_VisionCenterGoal;
+import org.usfirst.frc.team3663.robot.commands.C_VisionFineAdjust;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafty;
@@ -17,6 +19,7 @@ import org.usfirst.frc.team3663.robot.commands.TestC_ToggleTestMode;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import org.usfirst.frc.team3663.robot.commands.C_EncoderCurveDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -28,6 +31,8 @@ public class OI {
 	public Joystick buttonJoystick = new Joystick(1);
 	public Joystick testJoystickCurtis = new Joystick(5);
 	public Joystick testJoystick = new Joystick(4);
+	
+	public Joystick visionTestStick = new Joystick(3);
 
 //Buttons
   //Pickup Buttons
@@ -51,6 +56,11 @@ public class OI {
 	private JoystickButton cycleUp			= new JoystickButton(testJoystick, 2);
 	private JoystickButton cycleDown		= new JoystickButton(testJoystick, 1);
 	
+  //visionTestStick Buttons
+	private JoystickButton testEncoderCurve = new JoystickButton(visionTestStick,2);
+	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
+	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
+	
 	public OI(){
 	//Real Buttons
 	  //Pickup Buttons
@@ -72,6 +82,10 @@ public class OI {
 		cycleUp.whenPressed(new TestC_Cycle(true));
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
+		//VisionTestButtons
+		testEncoderCurve.whileHeld(new C_EncoderCurveDrive(45,36));
+		testCenterGoal.whileHeld(new C_VisionCenterGoal());
+		testFineAdjust.whileHeld(new C_VisionFineAdjust());
 	}
 //	public void canTest(boolean inTestMode){
 //		if(inTestMode) testJoystick = new Joystick(1);
