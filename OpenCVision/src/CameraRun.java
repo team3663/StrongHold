@@ -110,7 +110,7 @@ public class CameraRun {
 			camera.read(mat);
 			updateJFrame(mat);
 
-			frame.setSize(mat.width()+30,mat.height()+30);
+			frame.setSize(mat.width()+25,mat.height()+35);
 			//frame.setSize(640+25, 480+25);
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,11 +140,7 @@ public class CameraRun {
 						}
 						//if (!centeringGoal)
 						{
-							//movingWithRadius = moveWithAngleRadius(bestPieceKey);
-							//if (!movingWithRadius)
-							{
-								okayToShoot = isFineAdjustedGoal();
-							}
+							okayToShoot = isFineAdjustedGoal();
 						}
 						table.putBoolean("C_/centeringGoal: ", centeringGoal);
 						//table.putBoolean("C_/movingWithRadius: ", movingWithRadius);
@@ -869,7 +865,7 @@ public class CameraRun {
 		}
 		else//321//322
 		{
-			goalCenterX = 312;//sfjj
+			goalCenterX = 312;
 			//goalCenterY = 
 		}
 	}
@@ -935,7 +931,7 @@ public class CameraRun {
 		
 		double dist = getDistanceMass(bestPieceKey);
 		double angle = getAngleTilt(bestPieceKey);
-		if (/*(Math.abs(angle) < maxDistortedAngle) &&*/ !moveShooterArm && !centeringGoal && dist < 14*12)
+		if (/*(Math.abs(angle) < maxDistortedAngle) && !moveShooterArm &&*/table.getBoolean("finishedMovingPot: ",false) && !centeringGoal && dist < 15*12)
 		{
 			return true;
 		}
