@@ -110,7 +110,7 @@ public class CameraRun {
 			camera.read(mat);
 			updateJFrame(mat);
 
-			frame.setSize(mat.width()+30,mat.height()+30);
+			frame.setSize(mat.width()+25,mat.height()+35);
 			//frame.setSize(640+25, 480+25);
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -140,11 +140,7 @@ public class CameraRun {
 						}
 						//if (!centeringGoal)
 						{
-							//movingWithRadius = moveWithAngleRadius(bestPieceKey);
-							//if (!movingWithRadius)
-							{
-								okayToShoot = isFineAdjustedGoal();
-							}
+							okayToShoot = isFineAdjustedGoal();
 						}
 						table.putBoolean("C_/centeringGoal: ", centeringGoal);
 						//table.putBoolean("C_/movingWithRadius: ", movingWithRadius);
@@ -243,7 +239,7 @@ public class CameraRun {
 			for(int x = 0; x<width; x++)
 			{
 				c = new Color(img.getRGB(x,y));
-				if (c.getRed()<70/* && c.getBlue()<190*/ && c.getGreen()>=210)
+				if (c.getRed()<60/* && c.getBlue()<190*/ && c.getGreen()>=210)
 				{
 					if (okayToShoot)
 					{
@@ -511,7 +507,7 @@ public class CameraRun {
 	{
 		for (int o = 0; o <= gPieceKey; o++)
 		{
-			if (massObjectPointer.getGPiece(o).mass < 400)
+			if (massObjectPointer.getGPiece(o).mass < 500)
 			{
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
@@ -869,7 +865,7 @@ public class CameraRun {
 		}
 		else//321//322
 		{
-			goalCenterX = 312;//sfjj
+			goalCenterX = 312;
 			//goalCenterY = 
 		}
 	}
@@ -911,7 +907,7 @@ public class CameraRun {
 	
 	private boolean isFineAdjustedGoal()
 	{
-		boolean raiseShooterArm = true;
+/*		boolean raiseShooterArm = true;
 		boolean moveShooterArm = false;
 	//	int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
 		int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
@@ -932,10 +928,10 @@ public class CameraRun {
 			table.putBoolean("ShooterArm/raiseShooterArm: ", raiseShooterArm);
 		}
 		table.putBoolean("ShooterArm/moveShooterArm: ", moveShooterArm);
-		
-		double dist = getDistanceMass(bestPieceKey);
-		double angle = getAngleTilt(bestPieceKey);
-		if (/*(Math.abs(angle) < maxDistortedAngle) &&*/ !moveShooterArm && !centeringGoal && dist < 14*12)
+		*/
+		/*double dist = getDistanceMass(bestPieceKey);
+		double angle = getAngleTilt(bestPieceKey);*/
+		if (/*(Math.abs(angle) < maxDistortedAngle) && !moveShooterArm &&*/table.getBoolean("finishedMovingPot: ",false) && !centeringGoal && distance < 15*12)
 		{
 			return true;
 		}
