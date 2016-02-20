@@ -22,7 +22,7 @@ public class C_DartAutoMove extends Command {
     }
 
     protected void execute() {
-    	Robot.ss_Dart.moveDart(-speed);
+    	Robot.ss_Dart.moveDart(-speed, Robot.ss_PickupArm.isDown());
     }
 
     protected boolean isFinished() {

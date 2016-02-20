@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SS_Winch extends Subsystem {
 
 	private CANTalon winchMotor = new CANTalon(Robot.robotMap.winchMotor);
-	private Encoder winchEncoder = new Encoder(Robot.robotMap.winchEncoder[0], Robot.robotMap.winchEncoder[1]);
 	
 	private int maxEncoderTicks = 2000;
 	
@@ -27,7 +26,7 @@ public class SS_Winch extends Subsystem {
     }
     
     public boolean runMotorAutoToTarget(int pTarget, double pSpeed){	//code written to run the winch in auto	
-    	if(winchEncoder.getRaw() < pTarget){
+    	if(0< pTarget){
     		winchMotor.set(pSpeed);
     		return false;
     	}
@@ -35,7 +34,7 @@ public class SS_Winch extends Subsystem {
     }
     
     public void runMotorTeleop(double pSpeed){							//for human use with built in safty
-    	int distValue = winchEncoder.getRaw();
+    	int distValue = 0;
     	if((distValue > maxEncoderTicks && pSpeed < 0) || (distValue < 0 && pSpeed > 0)){
     		winchMotor.set(pSpeed);
     	}

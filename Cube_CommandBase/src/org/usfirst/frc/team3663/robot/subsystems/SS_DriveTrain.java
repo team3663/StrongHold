@@ -62,7 +62,7 @@ public class SS_DriveTrain extends Subsystem {
     
     public boolean spinByGyro(int pDegrees){			//Spins the robot the passed in value returning if the action was complete
     	if(pDegrees > driveGyro.getAngle()){
-    		driveTrain.arcadeDrive(0, .5);
+    		driveTrain.arcadeDrive(-1, 0);
     	}
     	else{
     		return true;
