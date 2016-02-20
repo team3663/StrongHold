@@ -46,10 +46,11 @@ public class CameraRun {
 	int goalCenterX,goalCenterY;
 	int fixWidth = 640;
 	int fixHeight = 480;
+	double angle, distance;
 	
 //	boolean foundObject = false;
 	
-	boolean inAutonomous,autoFindLeft,alreadyInCommand,centeringGoal,movingWithRadius,okayToShoot;
+	boolean inAutonomous,autoFindLeft,alreadyInCommand,centeringGoal/*,movingWithRadius*/,okayToShoot;
 	
 	public void CameraInit()
 	{
@@ -69,14 +70,14 @@ public class CameraRun {
 
 		setRedU();
 		
-		goalCenterX = (fixWidth/2)+20;//
-		goalCenterY = (fixHeight/2)+35;
-
+		goalCenterX = 359;//
+		goalCenterY = 260;//temp
+		
 		table.putBoolean("autoInitFindLeft: ",true);
 		table.putBoolean("Mode/commandRunning: ",false);//may not need
 		table.putBoolean("Mode/inAutonomous: ",false);//may not need
 		table.putBoolean("C_/centeringGoal: ",false);
-		table.putBoolean("C_/movingWithRadius: ",false);
+		//table.putBoolean("C_/movingWithRadius: ",false);
 		table.putBoolean("C_/okayToShoot: ",false);
 	}
 
@@ -127,25 +128,26 @@ public class CameraRun {
 					alreadyInCommand = table.getBoolean("Mode/commandRunning: ",false);//may not need
 					inAutonomous = table.getBoolean("Mode/inAutonomous: ",false);//may not need
 					centeringGoal = table.getBoolean("C_/centeringGoal: ",false);
-					movingWithRadius = table.getBoolean("C_/movingWithRadius: ",false);
+					//movingWithRadius = table.getBoolean("C_/movingWithRadius: ",false);
 					okayToShoot = table.getBoolean("C_/okayToShoot: ",false);
 					
 					if (gPieceKey>-1)
 					{
+						findCenterGoal();
 						//if (!movingWithRadius)
 						{
 							centeringGoal = centeringGoal();
 						}
 						//if (!centeringGoal)
 						{
-							movingWithRadius = moveWithAngleRadius(bestPieceKey);
+							//movingWithRadius = moveWithAngleRadius(bestPieceKey);
 							//if (!movingWithRadius)
 							{
 								okayToShoot = isFineAdjustedGoal();
 							}
 						}
 						table.putBoolean("C_/centeringGoal: ", centeringGoal);
-						table.putBoolean("C_/movingWithRadius: ", movingWithRadius);
+						//table.putBoolean("C_/movingWithRadius: ", movingWithRadius);
 						table.putBoolean("C_/okayToShoot: ", okayToShoot);
 					}
 				}
@@ -232,19 +234,29 @@ public class CameraRun {
 		int height = img.getHeight();
 		pic = new int[width][height];
 		int g = Color.GREEN.getRGB();
+		int cy = Color.CYAN.getRGB();
+		int bl = Color.BLUE.getRGB();
 		int r = Color.RED.getRGB();
 		int b = Color.black.getRGB();
-		int random;
 		for(int y = 0; y<height; y++)
 		{
-			random = Color.getHSBColor((float)Math.random(), (float)Math.random(), (float)Math.random()).getRGB();
 			for(int x = 0; x<width; x++)
 			{
 				c = new Color(img.getRGB(x,y));
 				if (c.getRed()<70/* && c.getBlue()<190*/ && c.getGreen()>=210)
 				{
-					img.setRGB(x, y, g);
-					//img.setRGB(x, y, random);
+					if (okayToShoot)
+					{
+						img.setRGB(x, y, g);
+					}
+					else if (centeringGoal)
+					{
+						img.setRGB(x, y, cy);
+					}
+					else
+					{
+						img.setRGB(x, y, bl);
+					}
 					pic[x][y] = 1;				
 				}
 				else if (isRedU(x,y))
@@ -499,7 +511,7 @@ public class CameraRun {
 	{
 		for (int o = 0; o <= gPieceKey; o++)
 		{
-			if (massObjectPointer.getGPiece(o).mass < 75)
+			if (massObjectPointer.getGPiece(o).mass < 400)
 			{
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
@@ -569,7 +581,8 @@ public class CameraRun {
 		double mass = (double)massObjectPointer.getGPiece(keyNum).mass;
 		table.putNumber("mass: ",mass);
 		
-		d = ((-0.067*mass)+351.24)*mass/4000;//4048.36;
+		d = (-93.5*Math.log(mass)) + 858.41;
+		//distance dog d = ((-0.067*mass)+351.24)*mass/4000;//4048.36;
 		//distance direct real time d = 0.000003*mass^2 - 0.0374*mass + 201.84
 		
 		return d;
@@ -823,41 +836,77 @@ public class CameraRun {
 		return mask;
 	}*/
 	
-	private boolean centeringGoal()
+	private void findCenterGoal()//range of x: 308/310-361/360 through 30"(2'6")-204"(17')
 	{
-		boolean needsTurning;
+		angle = getAngleTilt(bestPieceKey);
+		distance = getDistanceMass(bestPieceKey);
+		table.putNumber("distanceByMass: ", distance);
+		
+		if (distance < 60)
+		{
+			goalCenterX = 355;
+			//goalCenterY = 
+		}
+		else if (distance < 74)
+		{
+			goalCenterX = 345;
+			//goalCenterY = 
+		}
+		else if (distance < 94)
+		{
+			goalCenterX = 335;
+			//goalCenterY = 
+		}
+		else if (distance < 156)
+		{
+			goalCenterX = 325;
+			//goalCenterY = 
+		}
+		else if (distance < 186)
+		{
+			goalCenterX = 317;
+			//goalCenterY = 
+		}
+		else//321//322
+		{
+			goalCenterX = 312;//sfjj
+			//goalCenterY = 
+		}
+	}
+	
+	private boolean centeringGoal()
+	{//can compress alot more later
 		int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
 		//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
 		
 		if (gPieceKey > -1)
 		{
-			if (xCenter < goalCenterX-15)
+			if (xCenter < goalCenterX-10)
 			{
-				needsTurning = true;
-				table.putBoolean("turnLeft: ", true);
+				table.putString("needsTurning: ", "TurnLeft");
+				return true;
 			}
-			else if (xCenter > goalCenterX+15)
+			else if (xCenter > goalCenterX+10)
 			{
-				needsTurning = true;
-				table.putBoolean("turnLeft: ", false);
+				table.putString("needsTurning: ", "TurnRight");
+				return true;
 			}
 			else
 			{
-				needsTurning = false;
+				table.putString("needsTurning: ", "StopTurning");
+				return false;
 			}
 		}
 		else if (autoFindLeft)//maybe put something that saved if seen object and which way it disappeared
 		{
-			needsTurning = true;
 			table.putBoolean("leftTurn: ", true);
+			return true;
 		}
 		else
 		{
-			needsTurning = true;
 			table.putBoolean("leftTurn: ", false);
+			return true;
 		}
-		
-		return needsTurning;
 	}
 	
 	private boolean isFineAdjustedGoal()
@@ -886,7 +935,7 @@ public class CameraRun {
 		
 		double dist = getDistanceMass(bestPieceKey);
 		double angle = getAngleTilt(bestPieceKey);
-		if ((Math.abs(angle) < maxDistortedAngle) && !moveShooterArm && !centeringGoal && dist < 14*12)
+		if (/*(Math.abs(angle) < maxDistortedAngle) &&*/ !moveShooterArm && !centeringGoal && dist < 14*12)
 		{
 			return true;
 		}

@@ -105,8 +105,9 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
-    	C_DriveControllerDPad test = new C_DriveControllerDPad();
-    	test.start();
+    	C_DriveControllerDPad DpadControlls = new C_DriveControllerDPad();
+    	DpadControlls.start();
+    	ss_DriveTrain.resetGyro();
 		ss_Camera.setLight(true);
     }
 

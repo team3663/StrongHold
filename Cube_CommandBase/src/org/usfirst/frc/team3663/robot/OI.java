@@ -3,6 +3,7 @@ package org.usfirst.frc.team3663.robot;
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
+import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafty;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
@@ -38,6 +39,7 @@ public class OI {
 	private JoystickButton pickUpBall 		= new JoystickButton(driveJoystick, 4);
 	private JoystickButton pickupRaiseArm 	= new JoystickButton(driveJoystick, 6);
 	private JoystickButton pickupLowerArm 	= new JoystickButton(driveJoystick, 5);
+	private JoystickButton pickupCycleSafty = new JoystickButton(driveJoystick, 8);
   //Shooter Buttons
 	private JoystickButton shooterMotorsFullPower 	= new JoystickButton(driveJoystick, 1);
 	public int shooterFirePistonNoWait 	= 7;
@@ -55,7 +57,6 @@ public class OI {
 	private JoystickButton cycleDown		= new JoystickButton(testJoystick, 1);
 	
   //visionTestStick Buttons
-	private JoystickButton testEncoderCurve = new JoystickButton(visionTestStick,2);
 	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
 	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
 	
@@ -65,6 +66,7 @@ public class OI {
 		pickUpBall.whileHeld(new CG_DriverPickupBall());
 		pickupRaiseArm.whenPressed(new C_PickupFirePiston(false));
 		pickupLowerArm.whenPressed(new C_PickupFirePiston(true));
+		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafty());
 	  //Shooter Buttons
 		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
@@ -80,7 +82,6 @@ public class OI {
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
 		//VisionTestButtons
-		testEncoderCurve.whileHeld(new C_EncoderCurveDrive(45,36));
 		testCenterGoal.whileHeld(new C_VisionCenterGoal());
 		testFineAdjust.whileHeld(new C_VisionFineAdjust());
 	}

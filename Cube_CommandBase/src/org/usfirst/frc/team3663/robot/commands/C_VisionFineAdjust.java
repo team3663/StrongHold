@@ -29,11 +29,11 @@ public class C_VisionFineAdjust extends Command {
     protected void execute() {
     	if (table.getBoolean("ShooterArm/raiseShooterArm: ",false))
     	{
-        	hitEnd = Robot.ss_Dart.hitLocation(1.0,Robot.ss_Dart.maxDistance());
+    //    	hitEnd = Robot.ss_Dart.hitLocation(1.0,Robot.ss_Dart.maxDistance());
     	}
     	else
     	{
-        	hitEnd = Robot.ss_Dart.hitLocation(-1.0,Robot.ss_Dart.minDistance());
+    //    	hitEnd = Robot.ss_Dart.hitLocation(-1.0,Robot.ss_Dart.minDistance());
     	}
     }
 
