@@ -34,11 +34,8 @@ public class RobotMap {
 		public static int dartPotentiometer = 0;
 		public static int driveGyro = 		  1;
 	//Digital IO
-		public static int[] driveLeftEncoder  = new int[]{0, 9};
-		public static int[] driveRightEncoder = new int[]{10, 11};
-		public static int[] winchEncoder = 		new int[]{12, 5};
-		public static int[] wheelyBarEncoder = 	new int[]{6, 7};
-		public static int wheelyBarLimitSwitch = 			  8;
+		public static int wheelyBarLimitSwitch = 8;
+		public static int pickupLowerLimit = 	 9;
 		
 		public static int[] autoSwitchs = new int[]{1, 2, 3, 4};
     

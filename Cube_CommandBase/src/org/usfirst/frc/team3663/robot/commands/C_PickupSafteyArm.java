@@ -17,7 +17,7 @@ public class C_PickupSafteyArm extends Command {
     }
     
     protected void execute() {
-    	if(Robot.ss_Dart.inPickupZone() && !Robot.ss_PickupArm.isDown()){
+    	if(!Robot.ss_PickupArm.isDown() && Robot.ss_Dart.getMoveArm()){
     		Robot.ss_PickupArm.firePickupSolenoid(true);
     	}
     }

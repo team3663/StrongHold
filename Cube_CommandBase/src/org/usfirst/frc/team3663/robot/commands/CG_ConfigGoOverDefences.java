@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CG_ConfigGoOverDefences extends CommandGroup {
     
     public  CG_ConfigGoOverDefences() {
-    	addSequential(new C_DartAutoMove(Robot.ss_Dart.maxPickupSafe()));
+    	addSequential(new C_DartAutoMove(1000));
     	addParallel(new C_WheelyBarAutoMove(0, 1));
     	addSequential(new C_PickupFirePiston(false));
     }

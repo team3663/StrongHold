@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class SS_WheelyBar extends Subsystem {
     
 	private CANTalon wheelyBarMotor = new CANTalon(Robot.robotMap.wheelyBarMotor);
-	private Encoder wheelyBarEncoder = new Encoder(Robot.robotMap.wheelyBarEncoder[0], Robot.robotMap.wheelyBarEncoder[1]);
 	private DigitalInput wheelyBarLimit = new DigitalInput(Robot.robotMap.wheelyBarLimitSwitch);
 	
 	private int maxEncoderTicks = 1000;
@@ -26,7 +25,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public int grabEncoder(){										//gets the value of the encoder
-    	return wheelyBarEncoder.getRaw();
+    	return 0;
     }
     
     public int maxDistance(){										//returns the max value
@@ -35,7 +34,6 @@ public class SS_WheelyBar extends Subsystem {
     
     public void resetEncoder(){										//resets the encoder
 		setToZero = true;
-    	wheelyBarEncoder.reset();
     }
     
     public boolean moveWheelyBarAuto(int pTarget, double pSpeed){	//moves to a set distance on the encoder

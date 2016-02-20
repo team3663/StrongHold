@@ -840,6 +840,7 @@ public class CameraRun {
 	{
 		angle = getAngleTilt(bestPieceKey);
 		distance = getDistanceMass(bestPieceKey);
+		table.putNumber("distanceByMass: ", distance);
 		
 		if (distance < 60)
 		{
