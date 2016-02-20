@@ -2,6 +2,7 @@ package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
+import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafty;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
@@ -83,7 +84,7 @@ public class OI {
 		
 		//VisionTestButtons
 		testCenterGoal.whileHeld(new C_VisionCenterGoal());
-		testFineAdjust.whileHeld(new C_VisionFineAdjust());
+		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
 	}
 //	public void canTest(boolean inTestMode){
 //		if(inTestMode) testJoystick = new Joystick(1);
