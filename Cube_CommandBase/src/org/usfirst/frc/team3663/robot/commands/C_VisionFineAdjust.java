@@ -12,7 +12,7 @@ public class C_VisionFineAdjust extends Command {
 
 	NetworkTable table;
 	boolean raiseShooterArm;
-	boolean hitEnd;
+	boolean tryHitEnd;
 	
     public C_VisionFineAdjust() {
         // Use requires() here to declare subsystem dependencies
@@ -29,17 +29,17 @@ public class C_VisionFineAdjust extends Command {
     protected void execute() {
     	if (table.getBoolean("ShooterArm/raiseShooterArm: ",false))
     	{
-    //    	hitEnd = Robot.ss_Dart.hitLocation(1.0,Robot.ss_Dart.maxDistance());
+        	tryHitEnd = Robot.ss_Dart.hitLocation(1.0,Robot.ss_Dart.maxDistance());
     	}
     	else
     	{
-    //    	hitEnd = Robot.ss_Dart.hitLocation(-1.0,Robot.ss_Dart.minDistance());
+        	tryHitEnd = Robot.ss_Dart.hitLocation(-1.0,Robot.ss_Dart.minDistance());
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (hitEnd || !table.getBoolean("ShooterArm/moveShooterArm: ",false));
+        return (tryHitEnd || !table.getBoolean("ShooterArm/moveShooterArm: ",false));
     }
 
     // Called once after isFinished returns true
@@ -51,6 +51,6 @@ public class C_VisionFineAdjust extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        table.putBoolean("Mode/commandRunning: ", false);
+    	end();
     }
 }
