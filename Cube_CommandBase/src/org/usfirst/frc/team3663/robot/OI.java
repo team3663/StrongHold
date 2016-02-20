@@ -55,7 +55,6 @@ public class OI {
 	private JoystickButton cycleDown		= new JoystickButton(testJoystick, 1);
 	
   //visionTestStick Buttons
-	private JoystickButton testEncoderCurve = new JoystickButton(visionTestStick,2);
 	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
 	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
 	
@@ -80,7 +79,6 @@ public class OI {
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
 		//VisionTestButtons
-		testEncoderCurve.whileHeld(new C_EncoderCurveDrive(45,36));
 		testCenterGoal.whileHeld(new C_VisionCenterGoal());
 		testFineAdjust.whileHeld(new C_VisionFineAdjust());
 	}

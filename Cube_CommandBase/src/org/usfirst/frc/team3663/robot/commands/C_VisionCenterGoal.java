@@ -27,11 +27,11 @@ public class C_VisionCenterGoal extends Command {
     protected void execute() {
 		if (table.getBoolean("turnLeft: ", false))
 		{
-			Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.6);
+			Robot.ss_DriveTrain.autoArcadeDrive(0, -0.6);
 		}
 		else
 		{
-			Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.6);
+			Robot.ss_DriveTrain.autoArcadeDrive(0, 0.6);
 		}
     }
 
@@ -43,11 +43,12 @@ public class C_VisionCenterGoal extends Command {
     // Called once after isFinished returns true
     protected void end() {
         table.putBoolean("Mode/commandRunning: ", false);
+        Robot.ss_DriveTrain.STOP();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        table.putBoolean("Mode/commandRunning: ", false);
+        end();
     }
 }
