@@ -20,44 +20,21 @@ public class Frame{
 	public static void main(String[] args) {
 		Frame hi = new Frame();
 	}
-	
 	SubTablePanel[] subs;
+	NetworkTable table;
+	JFrame frame;
+	
 	public Frame(){
-		NetworkTable table;
-		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.78");
-		table = NetworkTable.getTable("Gui");
-		
-		sleep(2000);
-		
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		JFrame frame = new JFrame("Smart Hashboard");
-		frame.setVisible(true);
-		frame.setBounds(-2,0,640,480); //my computer screen puts it at +2, so...
-//		frame.setBounds(0,0,640,480);
-		frame.setBackground(Color.white);
-		frame.getContentPane().setBackground(Color.white);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		initNetworkTable();
+		setWindowsLookAndFeel();
+		initJFrame();
 		
 		JButton refresh = new JButton("Refresh");
 		initRefreshButton(refresh);
 		refresh.setPreferredSize(new Dimension(10,75));
 		
 		messageBoard msgBoard = new messageBoard();
+		Archiver archie = new Archiver();
 		
 		Set<String> tableList;
 
@@ -70,7 +47,7 @@ public class Frame{
 		
 		int count = 0;
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(0.6f, 0.6f, 0.8f));
+			subs[count] = new SubTablePanel(k,table,Color.getHSBColor((float)Math.random(), (float)(Math.random()/1.5), 0.6f + (float)(Math.random()/2.5)),archie);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
@@ -88,8 +65,43 @@ public class Frame{
 		frame.getContentPane().add(refresh, BorderLayout.SOUTH);
 		///////////////////////////////////////////////////////
 		msgBoard.say("Hello World");
-		sleep(500);
+		sleep(5000);
+		System.out.println("Finished");
 		msgBoard.say("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+		archie.writeFile("uuhhh");
+	}
+	public void initNetworkTable(){
+		NetworkTable.setClientMode();
+		NetworkTable.setIPAddress("10.36.63.78");
+		table = NetworkTable.getTable("Gui");
+		
+		sleep(2000);
+	}
+	public void setWindowsLookAndFeel(){
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void initJFrame(){
+		frame = new JFrame("Smart Hashboard");
+		frame.setVisible(true);
+		frame.setBounds(-2,0,640,480); //my computer screen puts it at +2, so...
+//		frame.setBounds(0,0,640,480);
+		frame.setBackground(Color.white);
+		frame.getContentPane().setBackground(Color.white);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	public void initRefreshButton(JButton b){
 		b.addActionListener(new ActionListener() {
