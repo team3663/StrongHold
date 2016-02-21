@@ -13,12 +13,10 @@ public class CG_TeleopVisionShooting extends CommandGroup {
 	NetworkTable table = Robot.visionTable;
 	
     public  CG_TeleopVisionShooting() {
+		addSequential(new C_VisionCenterGoal());
+		addSequential(new C_VisionFineAdjust());
+    	addSequential(new C_ShooterShoot());
     	
-    	addSequential(new C_VisionCenterGoal());
-    	if (table.getBoolean("ShooterArm/moveShooterArm: ", false))
-    	{
-    		addSequential(new C_VisionFineAdjust());
-    	}
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

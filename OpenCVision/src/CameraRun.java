@@ -239,9 +239,9 @@ public class CameraRun {
 			for(int x = 0; x<width; x++)
 			{
 				c = new Color(img.getRGB(x,y));
-				if (c.getRed()<60/* && c.getBlue()<190*/ && c.getGreen()>=210)
+				if (c.getRed()<60 && /*c.getBlue()<210 &&*/ c.getGreen()>=210)
 				{
-					if (okayToShoot)
+					if (okayToShoot && !centeringGoal)
 					{
 						img.setRGB(x, y, g);
 					}
@@ -507,7 +507,7 @@ public class CameraRun {
 	{
 		for (int o = 0; o <= gPieceKey; o++)
 		{
-			if (massObjectPointer.getGPiece(o).mass < 500)
+			if (massObjectPointer.getGPiece(o).mass < 1000)
 			{
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
@@ -569,12 +569,29 @@ public class CameraRun {
 		
 		return angle;
 	}
-	
+	boolean firstTime;
+	double[] massArr = new double[5];
+	int counter = 0;
 	private double getDistanceMass(int keyNum)
 	{
 		double d = 0;
 		
-		double mass = (double)massObjectPointer.getGPiece(keyNum).mass;
+		massArr[counter%5] = (double)massObjectPointer.getGPiece(keyNum).mass;
+		table.putNumber("massB: ",massArr[counter%5]);
+		if (firstTime)
+		{
+			for (int i = 0; i < 5; i++)
+			{
+				massArr[i] = massArr[0];
+			}
+		}counter++;
+		
+		table.putNumber("0mass: ", massArr[0]);
+		table.putNumber("1mass: ", massArr[1]);
+		table.putNumber("2mass: ", massArr[2]);
+		table.putNumber("3mass: ", massArr[3]);
+		table.putNumber("4mass: ", massArr[4]);
+		double mass = ((massArr[0]+massArr[1]+massArr[2]+massArr[3]+massArr[4])/5)*27.5/21.0;
 		table.putNumber("mass: ",mass);
 		
 		d = (-93.5*Math.log(mass)) + 858.41;
@@ -716,12 +733,14 @@ public class CameraRun {
 	//				System.out.println("percentOverlap: " + maskOverlap);
 		//			System.out.println("x: " + cX + ", y: " + cY + ", w: " + cW + ", h: " + cH);
 					//		System.out.println("pO: " + maskOverlap);
+					table.putNumber("cMaskOverlap: ", cMaskOverlap);
+					table.putNumber("MaskOverlap: ", maskOverlap);
 					if (cMaskOverlap > maskOverlap)
 					{
 						bestPiece = o;
 						bestPieceChanged = true;
 					}
-					else if ((cMaskOverlap == maskOverlap) && (massObjectPointer.getGPiece(bestPiece).mass < massObjectPointer.getGPiece(o).mass))
+					else if (((cMaskOverlap <= maskOverlap+10)&&(cMaskOverlap >= maskOverlap-10) || (maskOverlap <= cMaskOverlap+10)&&(maskOverlap >= cMaskOverlap-10)) && (massObjectPointer.getGPiece(bestPiece).mass < massObjectPointer.getGPiece(o).mass))
 					{
 						bestPiece = o;
 						bestPieceChanged = true;
@@ -838,34 +857,34 @@ public class CameraRun {
 		distance = getDistanceMass(bestPieceKey);
 		table.putNumber("distanceByMass: ", distance);
 		
-		if (distance < 60)
+		if (distance < 64)
 		{
-			goalCenterX = 355;
+			goalCenterX = 356;
 			//goalCenterY = 
 		}
-		else if (distance < 74)
+		else if (distance < 78)
 		{
-			goalCenterX = 345;
+			goalCenterX = 347;
 			//goalCenterY = 
 		}
-		else if (distance < 94)
+		else if (distance < 97)
 		{
-			goalCenterX = 335;
+			goalCenterX = 340;
 			//goalCenterY = 
 		}
-		else if (distance < 156)
+		else if (distance < 160)
 		{
-			goalCenterX = 325;
+			goalCenterX = 330;
 			//goalCenterY = 
 		}
 		else if (distance < 186)
 		{
-			goalCenterX = 317;
+			goalCenterX = 325;
 			//goalCenterY = 
 		}
 		else//321//322
 		{
-			goalCenterX = 312;
+			goalCenterX = 315;
 			//goalCenterY = 
 		}
 	}
@@ -875,24 +894,30 @@ public class CameraRun {
 		int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
 		//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
 		
+		double moveAngle = 45.0*((double)xCenter-320.0)/320.0;//*6;
+		
 		if (gPieceKey > -1)
 		{
 			if (xCenter < goalCenterX-10)
 			{
+				table.putNumber("cameraMoveAngle: ", moveAngle);
+				table.putBoolean("turnLeft: ", true);
 				table.putString("needsTurning: ", "TurnLeft");
-				return true;
 			}
 			else if (xCenter > goalCenterX+10)
 			{
+				table.putNumber("cameraMoveAngle: ", moveAngle);
+				table.putBoolean("turnLeft: ", false);
 				table.putString("needsTurning: ", "TurnRight");
 				return true;
 			}
 			else
 			{
+				table.putNumber("cameraMoveAngle: ", 0);
 				table.putString("needsTurning: ", "StopTurning");
 				return false;
 			}
-		}
+		}/*
 		else if (autoFindLeft)//maybe put something that saved if seen object and which way it disappeared
 		{
 			table.putBoolean("leftTurn: ", true);
@@ -902,7 +927,8 @@ public class CameraRun {
 		{
 			table.putBoolean("leftTurn: ", false);
 			return true;
-		}
+		}*/
+		return table.getBoolean("turnLeft: ",true);
 	}
 	
 	private boolean isFineAdjustedGoal()
