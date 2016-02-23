@@ -21,7 +21,9 @@ public class C_DartPrepareForShot extends Command {
         table = Robot.visionTable;
     }													
     													
-    protected void initialize() {							
+    protected void initialize() {
+
+    	table.putBoolean("finishedMovingPot: ", false);
     	 pInches = table.getNumber("distanceByMass: ", 0);
     	 target = Robot.ss_Dart.ConvertInchesToTicks((int)pInches);
     	 speed = Robot.ss_Dart.findSpeed(target);
@@ -37,6 +39,7 @@ public class C_DartPrepareForShot extends Command {
 
      
     protected void end() {
+    	table.putBoolean("finishedMovingPot: ", true);
     	Robot.ss_Dart.STOP();
     }
 
