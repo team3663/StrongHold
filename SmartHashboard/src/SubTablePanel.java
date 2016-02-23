@@ -74,9 +74,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 		organizeElements();
 		sList[0] = subTable;
 		for(int i=1;i<sList.length;i++){
-			if(!archy.alreadyContains(sList[i])){
-				archy.addNewColumn(sList[i]);
-			}
+			archy.addNewColumn(sList[i]);
 		}
 		return count-1;
 	}
@@ -89,6 +87,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 		double b = 0;
 		int changing = 0;
 		while(true){
+			sleep(2); //necessary to not blow up your CPU
 			//rainbow code//
 //			b=255;
 //			if(count%1000 == 0){
@@ -139,12 +138,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 					int oldSize = guiElements.size();
 					guiElements = table.getSubTable(subTable).getKeys();
 					int newSize = guiElements.size();
-					if(oldSize == newSize){
-						break;
-					}
-					else{
-						System.out.println("Refreshed because size changed from " + oldSize + " to " + newSize);
-					}
+					if(oldSize == newSize) break;
 					refresh();
 				}while(false);
 			}
@@ -174,5 +168,8 @@ public class SubTablePanel extends JPanel implements Runnable{
 				jList[i].setText("---------" + subTable.toUpperCase() + "---------");
 			}
 		}
+	}
+	public String get(int index){
+		return (table.getSubTable(subTable).getValue(sList[index],3663).toString());
 	}
 }

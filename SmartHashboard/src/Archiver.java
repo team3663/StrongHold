@@ -1,18 +1,22 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Archiver {
-	ArrayList<ArrayList<String>> rows;
+	CopyOnWriteArrayList<ArrayList<String>> rows;
 	
 	public Archiver(){
-		rows = new ArrayList<ArrayList<String>>();
+		rows = new CopyOnWriteArrayList<ArrayList<String>>();
 	}
 	public void addNewColumn(String key){
-		ArrayList<String> temp = new ArrayList<String>();
-		temp.add(key);
-		rows.add(temp);
+		if(!alreadyContains(key)){
+			ArrayList<String> temp = new ArrayList<String>();
+			temp.add(key);
+			rows.add(temp);
+		}
 	}
 	public void addValue(String key, String value){
 		for(ArrayList<String> a:rows){
@@ -30,20 +34,38 @@ public class Archiver {
 		}
 		return false;
 	}
-	public void writeFile(String name){
+	public void alphabetize(){
+		
+	}
+	public void writeFile(String day, String run){
+		alphabetize();
 		PrintWriter writer = null;
+		new File("C:\\logFiles\\"+day).mkdir();
 		try {
-			writer = new PrintWriter("C:\\logFiles\\" + name + ".txt","UTF-8");
+			writer = new PrintWriter("C:\\logFiles\\" + day + "\\" + run + ".csv","UTF-8");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 		}
 		
-		int maxLength = rows.get(0).size();
-		System.out.println(maxLength);
+		int maxLength = (rows.get(0).size())-1;
+		//the minus 1 is to cut off one row off the bottom of every column to prevent
+		//null pointer exceptions (not all columns are the same height)
+		String currentLine = "";
+		String lastLine = "";
+		String tempTime = "";
 		for(int i=0;i<maxLength;i++){
 			for(ArrayList<String> a:rows){
-				writer.print(a.get(i) + ",");
+				if(!a.get(0).equals("aa_time")){ //if the column isn't aa_time
+					currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine
+				}else{ //if this is aa_time
+					tempTime = a.get(i); //temp holds onto aa_time's value
+				}
 			}
-			writer.println();
+			if(!currentLine.equals(lastLine)){ //if this line isn't exactly the same as the previous
+				writer.println(tempTime + "," + currentLine);
+			}
+			lastLine = currentLine;
+			currentLine = "";
 		}
 		writer.close();
 	}

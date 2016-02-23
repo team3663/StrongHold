@@ -6,6 +6,7 @@ import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
 import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
+import org.usfirst.frc.team3663.robot.subsystems.SS_Gui;
 import org.usfirst.frc.team3663.robot.subsystems.SS_PickupArm;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Shooter;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Test;
@@ -38,6 +39,7 @@ public class Robot extends IterativeRobot {
 	public static SS_Winch ss_Winch;
 	public static SS_WheelyBar ss_WheelyBar;
 	public static SS_AutoChooser ss_AutoChooser;
+	public static SS_Gui gui;
 	
 	
 	public static SS_Test test;
@@ -63,6 +65,7 @@ public class Robot extends IterativeRobot {
 		ss_WheelyBar = new SS_WheelyBar();
 		ss_Camera = new SS_Camera();
 		ss_AutoChooser = new SS_AutoChooser();
+		gui = new SS_Gui();
 		oi = new OI();
 		test = new SS_Test();
     	LiveWindow.setEnabled(false);
@@ -77,6 +80,8 @@ public class Robot extends IterativeRobot {
     public void disabledInit(){
     	SmartDashboard.putBoolean("TestModeEnabled", false);
     	//oi.canTest(false);
+        gui.sendBoolean("operation/Enabled", false);
+        gui.sendString("operation/Mode", "Disabled");
     }
 	
 	public void disabledPeriodic() {
@@ -96,6 +101,8 @@ public class Robot extends IterativeRobot {
     	if(ss_AutoChooser.autoType() == 0){
     		//this uses the switches on board to find which one to run
     	}
+        gui.sendBoolean("operation/Enabled", true);
+        gui.sendString("operation/Mode", "Autonomous");
     }
     /**
      * This function is called periodically during autonomous
@@ -109,6 +116,8 @@ public class Robot extends IterativeRobot {
     	DpadControlls.start();
     	ss_DriveTrain.resetGyro();
 		ss_Camera.setLight(true);
+        gui.sendBoolean("operation/Enabled", true);
+        gui.sendString("operation/Mode", "Teleop");
     }
 
     /**
@@ -126,6 +135,8 @@ public class Robot extends IterativeRobot {
     	//SmartDashboard.putBoolean("TestModeEnabled", true);
     	LiveWindow.setEnabled(false);
     	//oi.canTest(true);
+        gui.sendBoolean("operation/Enabled", true);
+        gui.sendString("operation/Mode", "Test");
     }
     public void testPeriodic() {
 //    	SmartDashboard.putBoolean("TestModeEnabled", true);

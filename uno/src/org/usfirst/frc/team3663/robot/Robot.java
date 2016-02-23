@@ -54,7 +54,8 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
+        gui.sendBoolean("operation/Enabled", false);
+        gui.sendString("operation/Mode", "Disabled");
     }
 	
 	public void disabledPeriodic() {
@@ -71,7 +72,8 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        
+        gui.sendBoolean("operation/Enabled", true);
+        gui.sendString("operation/Mode", "Autonomous");
     }
 
     /**
@@ -89,6 +91,8 @@ public class Robot extends IterativeRobot {
         if (autonomousCommand != null) autonomousCommand.cancel();
         new C_PrintLidar().start();
         SmartDashboard.putString("C_Following", "not started");
+        gui.sendBoolean("operation/Enabled", true);
+        gui.sendString("operation/Mode", "Teleop");
     }
 
     /**
@@ -101,7 +105,11 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during test mode
      */
+    public void testInit(){
+    	LiveWindow.setEnabled(false);
+        gui.sendBoolean("operation/Enabled", true);
+        gui.sendString("operation/Mode", "Test");
+    }
     public void testPeriodic() {
-        LiveWindow.run();
     }
 }

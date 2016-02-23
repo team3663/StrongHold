@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 import javax.swing.JButton;
@@ -16,13 +18,10 @@ import javax.swing.UnsupportedLookAndFeelException;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Frame{
-
-	public static void main(String[] args) {
-		Frame hi = new Frame();
-	}
 	SubTablePanel[] subs;
 	NetworkTable table;
 	JFrame frame;
+	OperationWatchAndTimer owat;
 	
 	public Frame(){
 		initNetworkTable();
@@ -44,10 +43,13 @@ public class Frame{
 			System.out.println("Table size: " + tableList.size());
 			sleep(1300);
 		}while(subs.length == 0);
-		
+
 		int count = 0;
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.getHSBColor((float)Math.random(), (float)(Math.random()/1.5), 0.6f + (float)(Math.random()/2.5)),archie);
+			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
+					(float)Math.random(), 
+					(float)(Math.random()/1.5), 
+					(float)(0.6f + (Math.random()/2.5))),archie);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
@@ -56,6 +58,10 @@ public class Frame{
 			systems.add(subs[i]);
 			subs[i].init();
 			new Thread(subs[i]).start();
+			if(tableList.toArray()[i].equals("operation")){
+				owat = new OperationWatchAndTimer(subs[i],archie);
+				new Thread(owat).start();
+			}
 		}
 		systems.setLayout(new GridLayout(0,subs.length));
 		systems.setPreferredSize(new Dimension(0,200));
@@ -66,9 +72,7 @@ public class Frame{
 		///////////////////////////////////////////////////////
 		msgBoard.say("Hello World");
 		sleep(5000);
-		System.out.println("Finished");
 		msgBoard.say("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-		archie.writeFile("uuhhh");
 	}
 	public void initNetworkTable(){
 		NetworkTable.setClientMode();
@@ -101,7 +105,16 @@ public class Frame{
 //		frame.setBounds(0,0,640,480);
 		frame.setBackground(Color.white);
 		frame.getContentPane().setBackground(Color.white);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	if(owat != null){
+		    		owat.export();
+		    	}
+		        System.exit(0);
+		    }
+		});
 	}
 	public void initRefreshButton(JButton b){
 		b.addActionListener(new ActionListener() {
