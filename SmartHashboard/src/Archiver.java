@@ -7,22 +7,30 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Archiver {
 	CopyOnWriteArrayList<ArrayList<String>> rows;
-	
+	boolean acceptingValues = true;
 	public Archiver(){
 		rows = new CopyOnWriteArrayList<ArrayList<String>>();
 	}
 	public void addNewColumn(String key){
-		if(!alreadyContains(key)){
-			ArrayList<String> temp = new ArrayList<String>();
-			temp.add(key);
-			rows.add(temp);
+		if(acceptingValues){
+			if(!alreadyContains(key)){
+				ArrayList<String> temp = new ArrayList<String>();
+				temp.add(key);
+				rows.add(temp);
+			}
 		}
 	}
 	public void addValue(String key, String value){
-		for(ArrayList<String> a:rows){
-			if(a.get(0).contains(key)){
-				a.add(value);
-				break;
+		if(acceptingValues){
+			for(ArrayList<String> a:rows){
+				try{
+					if(a.get(0).contains(key)){
+						a.add(value);
+						break;
+					}
+				}catch(NullPointerException e){
+					 System.err.println("Archiver: addValue: NullPointerException");
+				}
 			}
 		}
 	}
@@ -37,6 +45,15 @@ public class Archiver {
 	public void alphabetize(){
 		
 	}
+	public void reset(){
+		acceptingValues = false;
+		for(ArrayList<String> a:rows){
+			String title = a.get(0);
+			a.clear();
+			a.add(title);
+		}
+		acceptingValues = true;
+	}
 	public void writeFile(String day, String run){
 		alphabetize();
 		PrintWriter writer = null;
@@ -47,7 +64,7 @@ public class Archiver {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 		}
 		
-		int maxLength = (rows.get(0).size())-1;
+		int maxLength = rows.get(0).size();
 		//the minus 1 is to cut off one row off the bottom of every column to prevent
 		//null pointer exceptions (not all columns are the same height)
 		String currentLine = "";
@@ -58,7 +75,11 @@ public class Archiver {
 				if(!a.get(0).equals("aa_time")){ //if the column isn't aa_time
 					currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine
 				}else{ //if this is aa_time
-					tempTime = a.get(i); //temp holds onto aa_time's value
+					try{
+						tempTime = a.get(i); //temp holds onto aa_time's value
+					}catch(IndexOutOfBoundsException e){
+						tempTime = "";
+					}
 				}
 			}
 			if(!currentLine.equals(lastLine)){ //if this line isn't exactly the same as the previous
@@ -67,6 +88,8 @@ public class Archiver {
 			lastLine = currentLine;
 			currentLine = "";
 		}
+		System.out.println("Exported log file to C:\\logFiles\\" + day + "\\" + run + ".csv");
+		reset();
 		writer.close();
 	}
 	

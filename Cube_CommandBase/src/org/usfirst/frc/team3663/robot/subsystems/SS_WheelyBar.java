@@ -84,5 +84,8 @@ public class SS_WheelyBar extends Subsystem {
     public void STOP(){												//stops the motor
     	wheelyBarMotor.set(0);
     }
+    public void updateDashboard(){
+    	Robot.gui.sendNumber("wheelyBar/Wheely Motor",wheelyBarMotor.getSpeed());
+    }
 }
 

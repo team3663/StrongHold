@@ -17,11 +17,12 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-public class Frame{
+public class Frame implements Runnable{
 	SubTablePanel[] subs;
 	NetworkTable table;
 	JFrame frame;
 	OperationWatchAndTimer owat;
+	Set<String> tableList;
 	
 	public Frame(){
 		initNetworkTable();
@@ -34,8 +35,6 @@ public class Frame{
 		
 		messageBoard msgBoard = new messageBoard();
 		Archiver archie = new Archiver();
-		
-		Set<String> tableList;
 
 		do{
 			tableList = table.getSubTables();
@@ -70,9 +69,28 @@ public class Frame{
 		frame.getContentPane().add(msgBoard, BorderLayout.CENTER);
 		frame.getContentPane().add(refresh, BorderLayout.SOUTH);
 		///////////////////////////////////////////////////////
-		msgBoard.say("Hello World");
-		sleep(5000);
-		msgBoard.say("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+	}
+	@Override
+	public void run(){
+		//periodically scan the table for new systems
+		//if new system is found, update subs, add it to the frame, refresh the frame
+		//figure out a way to tell the Archiver to offset the log by a certain amount
+		//(b/c it started later than the systems at init)
+		sleep(1500);
+		while(true){
+			//if the tableList has changed
+			if(!tableList.equals(table.getSubTables())){
+				System.out.println("~~~~~New SubTable found~~~~~~");
+				do{
+					tableList = table.getSubTables();
+					subs = new SubTablePanel[tableList.size()];
+					System.out.println("Table size: " + tableList.size());
+					sleep(1300);
+				}while(subs.length == 0);
+				
+			}
+			sleep(3000);
+		}
 	}
 	public void initNetworkTable(){
 		NetworkTable.setClientMode();

@@ -168,6 +168,10 @@ public class SS_Dart extends Subsystem {
     	SmartDashboard.putNumber("Dart Potentiometer : ", dartPotentiometer.getAverageValue());
     	SmartDashboard.putNumber("Dart Motor : ", dartMotor.getSpeed());
     	SmartDashboard.putBoolean("SafeToRaisePickup : ", getMoveArm());
+    	
+    	Robot.gui.sendNumber("dart/Dart Potentiometer : ", dartPotentiometer.getAverageValue());
+    	Robot.gui.sendNumber("dart/Dart Motor : ", dartMotor.getSpeed());
+    	Robot.gui.sendBoolean("dart/SafeToRaisePickup : ", getMoveArm());
     }
 }
 
