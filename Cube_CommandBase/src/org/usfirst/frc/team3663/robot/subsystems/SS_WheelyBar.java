@@ -79,7 +79,6 @@ public class SS_WheelyBar extends Subsystem {
     
     public void updateDashboard(){
     	SmartDashboard.putNumber("WheelyBar Encoder", wheelyBarMotor.getEncPosition());
-    	Robot.gui.sendNumber("wheelyBar/Wheely Motor",wheelyBarMotor.getSpeed());
     	Robot.gui.sendNumber("wheelyBar/Wheely Encoder",wheelyBarMotor.getEncPosition());
     }
 }
