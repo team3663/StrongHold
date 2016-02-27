@@ -58,12 +58,12 @@ public class SS_DriveTrain extends Subsystem {
     	return driveMotorRight1.getEncPosition();
     }
     
-    public boolean spinByGyro(int pDegrees){			//Spins the robot the passed in value returning if the action was complete
+    public boolean spinByGyro(int pDegrees, double posSpeed){			//Spins the robot the passed in value returning if the action was complete
     	if(pDegrees - bufferZoneGyro > driveGyro.getAngle() && pDegrees > 0){
-    		driveTrain.arcadeDrive(-1, 0);
+    		driveTrain.arcadeDrive(-posSpeed, 0);
     	}
     	else if(pDegrees + bufferZoneGyro < driveGyro.getAngle() && pDegrees < 0){
-    		driveTrain.arcadeDrive(1, 0);    		
+    		driveTrain.arcadeDrive(posSpeed, 0);    		
     	}
     	else{
     		return true;
