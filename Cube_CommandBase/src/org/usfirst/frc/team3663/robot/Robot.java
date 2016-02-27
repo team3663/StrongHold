@@ -4,6 +4,7 @@ package org.usfirst.frc.team3663.robot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
+import org.usfirst.frc.team3663.robot.subsystems.SS_ConfigReader;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
 import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Hook;
@@ -44,6 +45,7 @@ public class Robot extends IterativeRobot {
 	public static SS_Hook ss_Hook;
 	public static SS_PowerDistributionBoard ss_PDB;
 	public static SS_Gui gui;
+	public static SS_ConfigReader ss_config;
 	
 	
 	public static SS_Test test;
@@ -57,10 +59,11 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-
+		robotMap = new RobotMap();
+    	ss_config = new SS_ConfigReader();
+    	
 		visionTable = NetworkTable.getTable("Dog-NT");
 		
-		robotMap = new RobotMap();
 		ss_DriveTrain = new SS_DriveTrain();
 		ss_Shooter = new SS_Shooter();
 		ss_PickupArm = new SS_PickupArm();

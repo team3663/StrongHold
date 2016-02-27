@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 public class messageBoard extends JPanel{
 	JLabel txt;
 	public messageBoard(){
-		setBackground(Color.CYAN);
+		setBackground(Color.DARK_GRAY);
 		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		txt = new JLabel("hello");
 	}

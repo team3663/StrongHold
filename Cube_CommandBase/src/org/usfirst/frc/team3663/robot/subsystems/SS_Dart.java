@@ -175,6 +175,7 @@ public class SS_Dart extends Subsystem {
     	Robot.gui.sendNumber("dart/Dart Potentiometer", dartPotentiometer.getAverageValue());
     	Robot.gui.sendNumber("dart/Dart Motor", dartMotor.getSpeed());
     	Robot.gui.sendBoolean("dart/SafeToRaisePickup", getMoveArm());
+    	Robot.visionTable.putBoolean("dartBelowThreshold: ", (dartPotentiometer.getAverageValue() < 480));
     }
 }
 

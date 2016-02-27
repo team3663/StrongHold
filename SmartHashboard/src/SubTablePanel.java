@@ -32,7 +32,7 @@ public class SubTablePanel extends JPanel implements Runnable{
         getNames();
         fillJLabels();
         fillJFrame();
-        setLayout(new GridLayout(10,3,0,0));
+        setLayout(new GridLayout(10,0,0,0));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
 	}

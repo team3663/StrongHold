@@ -107,8 +107,7 @@ public class CameraRun {
 			camera.read(mat);
 			updateJFrame(mat);
 
-			frame.setSize(mat.width()+25,mat.height()+35);
-			//frame.setSize(640+25, 480+25);
+			frame.setSize(mat.width()+20,mat.height()+45);
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			while (true)
@@ -236,30 +235,34 @@ public class CameraRun {
 		{
 			for(int x = 0; x<width; x++)//make it ignore left corner!!!!!!!!!!!
 			{
-				c = new Color(img.getRGB(x,y));
-				if (c.getRed()<60 && /*c.getBlue()<210 &&*/ c.getGreen()>=210)
+				boolean dartBlwThrsh = table.getBoolean("dartBelowThreshold: ",false);
+				if (!(x < 104 && y  < 377) && (!dartBlwThrsh || (dartBlwThrsh && y < 374)))
 				{
-					if (okayToShoot && !centeringGoal)
+					c = new Color(img.getRGB(x,y));
+					if (c.getRed()<60 && /*c.getBlue()<210 &&*/ c.getGreen()>=210)
 					{
-						img.setRGB(x, y, g);
+						if (okayToShoot && !centeringGoal)
+						{
+							img.setRGB(x, y, g);
+						}
+						else if (centeringGoal)
+						{
+							img.setRGB(x, y, cy);
+						}
+						else
+						{
+							img.setRGB(x, y, bl);
+						}
+						pic[x][y] = 1;				
 					}
-					else if (centeringGoal)
+					else if (isRedLine(x))//isRedU(x,y))
 					{
-						img.setRGB(x, y, cy);
+						img.setRGB(x, y, r);
 					}
 					else
 					{
-						img.setRGB(x, y, bl);
+				//		img.setRGB(x, y, b);
 					}
-					pic[x][y] = 1;				
-				}
-				else if (isRedLine(x))//isRedU(x,y))
-				{
-					img.setRGB(x, y, r);
-				}
-				else
-				{
-			//		img.setRGB(x, y, b);
 				}
 			}
 		//	for (double counter = -9.0; counter < 9999.0; counter+=0.1)
@@ -584,13 +587,8 @@ public class CameraRun {
 			}
 		}counter++;
 		
-		table.putNumber("0mass: ", massArr[0]);
-		table.putNumber("1mass: ", massArr[1]);
-		table.putNumber("2mass: ", massArr[2]);
-		table.putNumber("3mass: ", massArr[3]);
-		table.putNumber("4mass: ", massArr[4]);
 		double mass = ((massArr[0]+massArr[1]+massArr[2]+massArr[3]+massArr[4])/5)*27.5/21.0;
-		table.putNumber("mass: ",mass);
+		//table.putNumber("mass: ",mass);
 		
 		d = (-93.5*Math.log(mass)) + 858.41;
 		//distance dog d = ((-0.067*mass)+351.24)*mass/4000;//4048.36;
