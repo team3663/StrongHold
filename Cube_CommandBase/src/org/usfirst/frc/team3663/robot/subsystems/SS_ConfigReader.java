@@ -90,6 +90,18 @@ public class SS_ConfigReader extends Subsystem{
 			    		Robot.robotMap.maxDistanceValue = Integer.parseInt(keyValue[1]);
 			    	}else if(keyValue[0].equals("minDistanceValue")){
 			    		Robot.robotMap.minDistanceValue = Integer.parseInt(keyValue[1]);
+			    	}else if(keyValue[0].equals("soft1")){
+			    		Robot.robotMap.soft1 = Integer.parseInt(keyValue[1]);
+			    	}else if(keyValue[0].equals("soft2")){
+			    		Robot.robotMap.soft2 = Integer.parseInt(keyValue[1]);
+			    	}else if(keyValue[0].equals("hard1")){
+			    		Robot.robotMap.hard1 = Integer.parseInt(keyValue[1]);
+			    	}else if(keyValue[0].equals("hard2")){
+			    		Robot.robotMap.hard2 = Integer.parseInt(keyValue[1]);
+			    	}else if(keyValue[0].equals("touch1")){
+			    		Robot.robotMap.touch1 = Integer.parseInt(keyValue[1]);
+			    	}else if(keyValue[0].equals("touch2")){
+			    		Robot.robotMap.touch2 = Integer.parseInt(keyValue[1]);
 			    	}
 			    }
 			} catch (IOException x) {

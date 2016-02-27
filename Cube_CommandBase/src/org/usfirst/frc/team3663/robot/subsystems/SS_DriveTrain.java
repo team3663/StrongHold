@@ -144,7 +144,7 @@ public class SS_DriveTrain extends Subsystem {
     	Robot.gui.sendNumber("drive/Left Drive Motor 2", driveMotorLeft2.getSpeed());
     	Robot.gui.sendNumber("drive/Right Drive Motor 1", driveMotorRight1.getSpeed());
     	Robot.gui.sendNumber("drive/Right Drive Motor 2", driveMotorRight2.getSpeed());
-    	Robot.gui.sendNumber("drive/Drive Gyro Angle", driveGyro.getAngle());
+    	Robot.gui.sendNumber("drive/Drive Gyro Angle", Math.round(driveGyro.getAngle()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Left Encoder", driveMotorLeft1.getEncPosition());
     	Robot.gui.sendNumber("drive/Right Encoder", driveMotorRight1.getEncPosition());
     }

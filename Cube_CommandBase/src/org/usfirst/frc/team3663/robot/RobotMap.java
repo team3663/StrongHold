@@ -65,10 +65,10 @@ public class RobotMap {
 	//Dart
 	    public int minDistanceValue = 410;
 	    public int maxDistanceValue = minDistanceValue + 1790;
-	    public int soft1;
-	    public int soft2;
-	    public int hard1;
-	    public int hard2;
-	    public int touch1;
-	    public int touch2;
+	    public int soft1 = 410;
+	    public int soft2 = 410;
+	    public int hard1 = 410;
+	    public int hard2 = 410;
+	    public int touch1 = 410;
+	    public int touch2 = 410;
 }

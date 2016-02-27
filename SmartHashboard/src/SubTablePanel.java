@@ -32,7 +32,7 @@ public class SubTablePanel extends JPanel implements Runnable{
         getNames();
         fillJLabels();
         fillJFrame();
-        setLayout(new GridLayout(10,0,0,0));
+        setLayout(new GridLayout(10,1,0,0));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
 	}
@@ -115,9 +115,9 @@ public class SubTablePanel extends JPanel implements Runnable{
 //						break;
 //				}
 //			}
-			if(subTable.contains("drive")){
-				double speedLeft = table.getSubTable(subTable).getNumber(sList[1],3663);
-				double speedRight = table.getSubTable(subTable).getNumber(sList[2],3663);
+			if(subTable.equals("drive")){
+				double speedLeft = table.getSubTable(subTable).getNumber(sList[2],3663);
+				double speedRight = table.getSubTable(subTable).getNumber(sList[5],3663);
 				g = (((speedLeft + speedRight)/2)+1)*127.5;
 				r = 255 - g;
 				if(g<r)b=g;
