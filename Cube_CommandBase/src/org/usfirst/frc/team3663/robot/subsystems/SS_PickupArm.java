@@ -70,11 +70,9 @@ public class SS_PickupArm extends Subsystem {
     }
     
     public void updateDashboard(){							//Updates the dash board
-    	SmartDashboard.putNumber("Pickup Speed : ", pickupMotor.getSpeed());
     	SmartDashboard.putBoolean("Pickup Lower Limit : ", !lowerLimit.get());
     	SmartDashboard.putBoolean("Pickup Safe Setting : ", stayInSafeZone);
     	SmartDashboard.putBoolean("is down : ", isDown());
-    	Robot.gui.sendNumber("pickUp/Pickup Speed", pickupMotor.getSpeed());
     	Robot.gui.sendBoolean("pickUp/Pickup Lower Limit", !lowerLimit.get());
     	Robot.gui.sendBoolean("pickUp/Pickup Safe Setting", stayInSafeZone);
     	Robot.gui.sendBoolean("pickUp/is down", isDown());

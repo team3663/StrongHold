@@ -94,8 +94,8 @@ public class Frame implements Runnable{
 	}
 	public void initNetworkTable(){
 		NetworkTable.setClientMode();
-//		NetworkTable.setIPAddress("10.36.63.78");
-		NetworkTable.setIPAddress("10.36.63.20");
+		NetworkTable.setIPAddress("10.36.63.78");
+//		NetworkTable.setIPAddress("10.36.63.20");
 		table = NetworkTable.getTable("Gui");
 		
 		sleep(2000);
@@ -120,7 +120,7 @@ public class Frame implements Runnable{
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
 		frame.setVisible(true);
-		frame.setBounds(-2,0,640,480); //my computer screen puts it at +2, so...
+		frame.setBounds(-7,0,1619,480); //my computer screen puts it at +2, so...
 //		frame.setBounds(0,0,640,480);
 		frame.setBackground(Color.white);
 		frame.getContentPane().setBackground(Color.white);

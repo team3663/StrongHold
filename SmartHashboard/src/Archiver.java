@@ -64,7 +64,7 @@ public class Archiver {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 		}
 		
-		int maxLength = rows.get(0).size()-1;
+		int maxLength = rows.get(0).size();
 		//the minus 1 is to cut off one row off the bottom of every column to prevent
 		//null pointer exceptions (not all columns are the same height)
 		String currentLine = "";
@@ -73,7 +73,11 @@ public class Archiver {
 		for(int i=0;i<maxLength;i++){
 			for(ArrayList<String> a:rows){
 				if(!a.get(0).equals("aa_time")){ //if the column isn't aa_time
-					currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine
+					try{
+						currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine
+					}catch(IndexOutOfBoundsException e){
+						currentLine = currentLine + ",";
+					}
 				}else{ //if this is aa_time
 					try{
 						tempTime = a.get(i); //temp holds onto aa_time's value

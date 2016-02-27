@@ -23,7 +23,6 @@ public class SS_Hook extends Subsystem {
     }
     
     public void updateDashboard(){
-    	SmartDashboard.putNumber("Hook Motor Speed : ", hookMotor.getSpeed());
     }
 }
 
