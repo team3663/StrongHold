@@ -81,10 +81,10 @@ public class CameraRun {
 	int buffingCounter = 0;
 	boolean cameraFound = false;
 	
-	private void checkCameraStillFound()
+	private boolean checkCameraStillFound()
 	{
 		//if (buffingCounter++%100 == 99)
-		{
+		/*{
 			if (camera.isOpened())
 			{
 				cameraFound = true;
@@ -93,7 +93,8 @@ public class CameraRun {
 			{
 				cameraFound = false;
 			}
-		}
+		}*/
+		return camera.isOpened();
 	}
 	
 	public void run()
@@ -113,7 +114,7 @@ public class CameraRun {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			while (true)
 			{
-				checkCameraStillFound();
+				cameraFound = checkCameraStillFound();
 				if (cameraFound)
 				{
 					camera.read(mat);
