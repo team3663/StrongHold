@@ -36,10 +36,7 @@ public class SS_Dart extends Subsystem {
 	
 	//Past Values
 	private boolean movePickup = false;
-	
-	private int countDown = 3;
-	private int lastRunPotentiometer = -10000;
-	
+		
     public void initDefaultCommand() {
     	dartMotor.enableBrakeMode(true);
     	setDefaultCommand(new C_DartMove());
