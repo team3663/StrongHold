@@ -2,9 +2,9 @@ package org.usfirst.frc.team3663.robot.subsystems;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-public class Gui {
+public class SS_Gui {
 	NetworkTable table;
-	public Gui(){
+	public SS_Gui(){
 		table = NetworkTable.getTable("Gui");
 	}
 	public void sendNumber(String label, double value){

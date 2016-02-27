@@ -14,25 +14,11 @@ public class CG_AutoVisionShooting extends CommandGroup {
 	
     public  CG_AutoVisionShooting() {
     	
-    	double angle;// = table.getNumber("Moving/MoveAngle: ",0);
-    	double dist;// = table.getNumber("Moving/MoveDistance: ",0);
-    	//fix tomorrow
-    	addSequential(new C_DriveVisionCenterGoal());
-    	if (table.getBoolean("Moving/MoveSideways: ",false))
-    	{
-        	angle = table.getNumber("Moving/MoveAngle: ",0);
-        	dist = table.getNumber("Moving/MoveDistance: ",0);
-	    	addSequential(new TC_TurnByGyro(angle/Math.abs(angle)*90));//+-1*90
-	    	addSequential(new C_DriveEncoderCurve(angle,dist));
-	    	addSequential(new TC_TurnByGyro(-angle/Math.abs(angle)*90));
-	    	addSequential(new C_DriveVisionCenterGoal());
-    	}
-    	if (table.getBoolean("ShooterArm/moveShooterArm: ", false))
-    	{
-    		addSequential(new C_DriveVisionFineAdjust());
-    	}
+		addSequential(new C_DriveVisionCenterGoal());
+		addSequential(new C_DriveVisionFineAdjust());
+	//	addSequential(new C_ShooterShoot());
 		
-		
+		//----------------------------------------------
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

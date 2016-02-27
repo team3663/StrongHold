@@ -44,6 +44,7 @@ public class C_DriveVisionFineAdjust extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	table.putBoolean("finishedMovingPot: ", true);
     	Robot.ss_Dart.STOP();
         table.putBoolean("Mode/commandRunning: ", false);
     }

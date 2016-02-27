@@ -135,6 +135,14 @@ public class SS_DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
     	SmartDashboard.putNumber("LeftEncoder : ", driveMotorLeft1.getEncPosition());
     	SmartDashboard.putNumber("RightEncoder : ", driveMotorRight1.getEncPosition());
+
+    	Robot.gui.sendNumber("drive/Left Drive Motor 1 : ", driveMotorLeft1.getSpeed());
+    	Robot.gui.sendNumber("drive/Left Drive Motor 2 : ", driveMotorLeft2.getSpeed());
+    	Robot.gui.sendNumber("drive/Right Drive Motor 1 : ", driveMotorRight1.getSpeed());
+    	Robot.gui.sendNumber("drive/Right Drive Motor 2 : ", driveMotorRight2.getSpeed());
+    	Robot.gui.sendNumber("drive/Drive Gyro Angle : ", driveGyro.getAngle());
+    	Robot.gui.sendNumber("drive/Left Encoder : ", driveMotorLeft1.getEncPosition());
+    	Robot.gui.sendNumber("drive/Right Encoder : ", driveMotorRight1.getEncPosition());
     }
 }
 

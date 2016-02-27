@@ -34,7 +34,7 @@ public class DriveTrain extends Subsystem {
     }
 
     public void initDefaultCommand() {
-        setDefaultCommand(new C_ArcadeDrive());
+//        setDefaultCommand(new C_ArcadeDrive());
     }
     public void update(){
     	SmartDashboard.putNumber("DriveLeftMotor:", left.get());

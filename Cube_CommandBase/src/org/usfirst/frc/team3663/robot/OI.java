@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
+import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
 import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
@@ -20,13 +21,16 @@ import org.usfirst.frc.team3663.robot.commands.TestC_ToggleTestMode;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import org.usfirst.frc.team3663.robot.commands.C_DriveEncoderCurve;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
+	NetworkTable table = Robot.visionTable;
+	
 	//Joysticks	
 	public Joystick driveJoystick = new Joystick(0);
 	public Joystick buttonJoystick = new Joystick(1);
@@ -59,6 +63,8 @@ public class OI {
   //visionTestStick Buttons
 	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
 	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
+	private JoystickButton testTeleopVisionShooting = new JoystickButton(visionTestStick,2);
+	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
 	
 	public OI(){
 	//Real Buttons
@@ -82,7 +88,9 @@ public class OI {
 		
 		//VisionTestButtons
 		testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
+		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
+		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());
 	}
 //	public void canTest(boolean inTestMode){
 //		if(inTestMode) testJoystick = new Joystick(1);

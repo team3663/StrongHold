@@ -18,12 +18,14 @@ public class SubTablePanel extends JPanel implements Runnable{
 	JLabel[] jList;
 	String subTable;
 	Color bckg;
+	Archiver archy;
 	
-	public SubTablePanel(String st, NetworkTable table, Color bckgc){
+	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy){
 		this.table = table;
-		subTable = st;
-		setBackground(bckgc);
-		bckg = bckgc;
+		this.subTable = subTable;
+		this.bckg = bckg;
+		this.archy = archy;
+		setBackground(bckg);
 	}
 	public void init(){
         getNames();
@@ -71,6 +73,9 @@ public class SubTablePanel extends JPanel implements Runnable{
 		}
 		organizeElements();
 		sList[0] = subTable;
+		for(int i=1;i<sList.length;i++){
+			archy.addNewColumn(sList[i]);
+		}
 		return count-1;
 	}
 	@Override
@@ -82,6 +87,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 		double b = 0;
 		int changing = 0;
 		while(true){
+			sleep(2); //necessary to not blow up your CPU
 			//rainbow code//
 //			b=255;
 //			if(count%1000 == 0){
@@ -132,12 +138,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 					int oldSize = guiElements.size();
 					guiElements = table.getSubTable(subTable).getKeys();
 					int newSize = guiElements.size();
-					if(oldSize == newSize){
-						break;
-					}
-					else{
-						System.out.println("Refreshed because size changed from " + oldSize + " to " + newSize);
-					}
+					if(oldSize == newSize) break;
 					refresh();
 				}while(false);
 			}
@@ -159,11 +160,16 @@ public class SubTablePanel extends JPanel implements Runnable{
 		setBackground(c);
 		for(int i=0;i<sList.length;i++){
 			if(i != 0){
-				jList[i].setText(sList[i] + ": " + table.getSubTable(subTable).getValue(sList[i],3663));
+				Object o = table.getSubTable(subTable).getValue(sList[i],3663);
+				jList[i].setText(sList[i] + ": " + o);
+				archy.addValue(sList[i], o.toString());
 			}else{
 				//titles
 				jList[i].setText("---------" + subTable.toUpperCase() + "---------");
 			}
 		}
+	}
+	public String get(int index){
+		return (table.getSubTable(subTable).getValue(sList[index],3663).toString());
 	}
 }

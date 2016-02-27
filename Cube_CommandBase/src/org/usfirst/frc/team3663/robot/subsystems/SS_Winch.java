@@ -60,8 +60,8 @@ public class SS_Winch extends Subsystem {
 		winchMotor1.set(0);
     }
     
-    public void updateDashboard(){										//updates the dash board
-    	SmartDashboard.putNumber("Winch Encoder : ", winchMotor1.getSpeed());
+    public void updateDashboard(){								
+    	Robot.gui.sendNumber("winch/Winch Encoder",winchMotor1.getSpeed());
     }
 }
 
