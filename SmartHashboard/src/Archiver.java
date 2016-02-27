@@ -64,7 +64,7 @@ public class Archiver {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 		}
 		
-		int maxLength = rows.get(0).size();
+		int maxLength = rows.get(0).size()-1;
 		//the minus 1 is to cut off one row off the bottom of every column to prevent
 		//null pointer exceptions (not all columns are the same height)
 		String currentLine = "";

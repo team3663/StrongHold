@@ -94,7 +94,8 @@ public class Frame implements Runnable{
 	}
 	public void initNetworkTable(){
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.78");
+//		NetworkTable.setIPAddress("10.36.63.78");
+		NetworkTable.setIPAddress("10.36.63.20");
 		table = NetworkTable.getTable("Gui");
 		
 		sleep(2000);

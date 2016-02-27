@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.util.Arrays;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,6 +33,7 @@ public class SubTablePanel extends JPanel implements Runnable{
         fillJLabels();
         fillJFrame();
         setLayout(new GridLayout(10,3,0,0));
+		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
 	}
 	public void organizeElements(){
@@ -114,13 +116,17 @@ public class SubTablePanel extends JPanel implements Runnable{
 //				}
 //			}
 			if(subTable.contains("drive")){
-				double speedLeft = table.getSubTable(subTable).getNumber(sList[1],3663);
-				double speedRight = table.getSubTable(subTable).getNumber(sList[2],3663);
+				double speedLeft = table.getSubTable(subTable).getNumber(sList[2],3663);
+				double speedRight = table.getSubTable(subTable).getNumber(sList[5],3663);
 				g = (((speedLeft + speedRight)/2)+1)*127.5;
 				r = 255 - g;
 				if(g<r)b=g;
 				else b=r;
-				update(new Color((int)r,(int)g,(int)b));
+				try{
+					update(new Color((int)r,(int)g,(int)b));
+				}catch(Exception e){
+					System.err.println("Color error in " + subTable);
+				}
 			}
 			else{
 				update(bckg);

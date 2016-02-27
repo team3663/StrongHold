@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
+import org.usfirst.frc.team3663.robot.Robot;
 import org.usfirst.frc.team3663.robot.commands.TestC_Test;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -17,6 +18,9 @@ public class SS_Test extends Subsystem {
 		SmartDashboard.putNumber("Testing #:", testNumber);
     	SmartDashboard.putBoolean("Test Mode:", isTesting);
     	SmartDashboard.putString("Testing:", testName);
+    	Robot.gui.sendNumber("operation/Testing", testNumber);
+    	Robot.gui.sendBoolean("operation/TestMode", isTesting);
+    	Robot.gui.sendString("operation/Testing", testName);
 	}
 	public void incrementBy(int value){
 		testNumber += value;
@@ -29,5 +33,8 @@ public class SS_Test extends Subsystem {
     	SmartDashboard.putNumber("Testing #:", testNumber);
     	SmartDashboard.putBoolean("Test Mode:", isTesting);
     	SmartDashboard.putString("Testing:", testName);
+    	Robot.gui.sendNumber("operation/Testing", testNumber);
+    	Robot.gui.sendBoolean("operation/TestMode", isTesting);
+    	Robot.gui.sendString("operation/Testing", testName);
     }
 }
