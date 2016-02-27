@@ -25,6 +25,7 @@ public class C_DriveVisionCenterGoal extends Command {
 
     boolean stop;
     boolean objectFound;
+    double speed;
     
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -34,19 +35,23 @@ public class C_DriveVisionCenterGoal extends Command {
     	stop = !table.getBoolean("C_/centeringGoal: ",false);
     	startTime = Timer.getFPGATimestamp();
     	*/
-		degrees = table.getNumber("cameraMoveAngle: ",90);
+    	
+		degrees = table.getNumber("cameraMoveAngle: ",360);
     	Robot.ss_DriveTrain.resetGyro();
     	table.putBoolean("Mode/commandRunning: ", true);
+    	speed = 0.6;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//stop = Robot.ss_DriveTrain.spinByGyro((int)degrees);
     	
-    	if (!objectFound)
+    	objectFound = table.getBoolean("foundObject: ",false);
+    	if (objectFound)
     	{
     		Robot.ss_DriveTrain.resetGyro();
     		degrees = table.getNumber("cameraMoveAngle: ", 360);
+    		speed = 1.0;
     	}
     	
     	/*boolean turnLeft = table.getBoolean("turnLeft: ",false);
@@ -79,7 +84,7 @@ public class C_DriveVisionCenterGoal extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//work on this on Monday!!!
-        return (Robot.ss_DriveTrain.spinByGyro((int)degrees));
+        return (Robot.ss_DriveTrain.spinByGyro((int)degrees, speed));
     	//return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
     }
 
@@ -92,6 +97,7 @@ public class C_DriveVisionCenterGoal extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	
         end();
     }
 }

@@ -23,7 +23,7 @@ public class TC_TurnByGyro extends Command {
     }
     
     protected boolean isFinished() {
-        return Robot.ss_DriveTrain.spinByGyro((int)degrees);
+        return Robot.ss_DriveTrain.spinByGyro((int)degrees, 1);
     }
 
     protected void end() {
