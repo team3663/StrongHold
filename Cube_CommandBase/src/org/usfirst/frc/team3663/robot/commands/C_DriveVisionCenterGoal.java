@@ -26,6 +26,7 @@ public class C_DriveVisionCenterGoal extends Command {
     boolean stop;
     boolean objectFound;
     double speed;
+    boolean firstTime;
     
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -40,6 +41,7 @@ public class C_DriveVisionCenterGoal extends Command {
     	Robot.ss_DriveTrain.resetGyro();
     	table.putBoolean("Mode/commandRunning: ", true);
     	speed = 0.6;
+    	firstTime = true;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -49,9 +51,13 @@ public class C_DriveVisionCenterGoal extends Command {
     	objectFound = table.getBoolean("foundObject: ",false);
     	if (objectFound)
     	{
-    		Robot.ss_DriveTrain.resetGyro();
+    		if (firstTime)
+    		{
+    			Robot.ss_DriveTrain.resetGyro();
+    		}
     		degrees = table.getNumber("cameraMoveAngle: ", 360);
-    		speed = 1.0;
+    		speed = 0.5;
+    		firstTime = false;
     	}
     	
     	/*boolean turnLeft = table.getBoolean("turnLeft: ",false);
