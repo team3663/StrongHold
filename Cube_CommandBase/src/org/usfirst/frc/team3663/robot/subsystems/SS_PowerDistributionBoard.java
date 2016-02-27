@@ -22,7 +22,7 @@ public class SS_PowerDistributionBoard extends Subsystem {
     	SmartDashboard.putNumber("Drive Train Front Right Voltage : ",	 pdp.getCurrent(0));
     	SmartDashboard.putNumber("Drive Train Rear Right Voltage : ",	 pdp.getCurrent(1));
     	SmartDashboard.putNumber("Drive Train Front Left Voltage : ",	 pdp.getCurrent(2));
-    	SmartDashboard.putNumber("Drive Train Rear Right Voltage : ",	 pdp.getCurrent(3));
+    	SmartDashboard.putNumber("Drive Train Rear Left Voltage : ",	 pdp.getCurrent(3));
     	SmartDashboard.putNumber("Winch Motor One Voltage : ",			 pdp.getCurrent(4));
     	SmartDashboard.putNumber("Winch Motor Two Voltage : ",			 pdp.getCurrent(5));
     	SmartDashboard.putNumber("Shooter Motor One Voltage : ",		 pdp.getCurrent(6));

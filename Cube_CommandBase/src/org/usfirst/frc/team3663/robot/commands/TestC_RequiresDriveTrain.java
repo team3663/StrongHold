@@ -21,10 +21,8 @@ public class TestC_RequiresDriveTrain extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    private int asldf = 0;
     protected void execute() {
 
-    	SmartDashboard.putString("asdfasdfalsdfkjasdlfjalsdjflasjdfljsdkfjlasdjf", ""+asldf++);
     }
 
     // Make this return true when this Command no longer needs to run execute()

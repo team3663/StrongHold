@@ -46,7 +46,6 @@ public class SS_DriveTrain extends Subsystem {
     		
     		driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
     	}
-    	SmartDashboard.putNumber("drive asdf", currentRunNumber++);
     	driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed);
     }
     
@@ -137,10 +136,6 @@ public class SS_DriveTrain extends Subsystem {
     }
     
     public void updateDashboard(){						//updates the dash board
-    	SmartDashboard.putNumber("Left Drive Motor 1 : ", driveMotorLeft1.getSpeed());
-    	SmartDashboard.putNumber("Left Drive Motor 2 : ", driveMotorLeft2.getSpeed());
-    	SmartDashboard.putNumber("Right Drive Motor 1 : ", driveMotorRight1.getSpeed());
-    	SmartDashboard.putNumber("Right Drive Motor 2 : ", driveMotorRight2.getSpeed());
     	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
     	SmartDashboard.putNumber("LeftEncoder : ", driveMotorLeft1.getEncPosition());
     	SmartDashboard.putNumber("RightEncoder : ", driveMotorRight1.getEncPosition());
