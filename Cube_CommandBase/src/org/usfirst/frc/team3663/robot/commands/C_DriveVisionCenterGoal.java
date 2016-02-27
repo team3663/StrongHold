@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_VisionCenterGoal extends Command {
+public class C_DriveVisionCenterGoal extends Command {
 
 	NetworkTable table;
 	double startTime;
@@ -17,7 +17,7 @@ public class C_VisionCenterGoal extends Command {
 		
 	double degrees;
 	
-    public C_VisionCenterGoal() {
+    public C_DriveVisionCenterGoal() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ss_DriveTrain);
         table = Robot.visionTable;
@@ -74,7 +74,7 @@ public class C_VisionCenterGoal extends Command {
 	        //Robot.ss_DriveTrain.STOP();
 	        Timer.delay(1.0);
 		}*/
-    }
+ }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

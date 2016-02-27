@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
-import org.usfirst.frc.team3663.robot.commands.C_DriveTrain;
+import org.usfirst.frc.team3663.robot.commands.C_DriveTrainArcade;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -34,9 +34,11 @@ public class SS_DriveTrain extends Subsystem {
 	private int currentRunNumber = 0;
 	private int lastEncoderTicks = -0;
 	private int currentSpeed = 0;
-	
+	private int bufferZoneEnc = 10;
+	private int bufferZoneGyro = 5;
+
     public void initDefaultCommand() {
-    	setDefaultCommand(new C_DriveTrain());
+    	setDefaultCommand(new C_DriveTrainArcade());
     	driveGyro.reset();
     }
     
@@ -44,27 +46,23 @@ public class SS_DriveTrain extends Subsystem {
     	driveTrain.arcadeDrive(pForwardSpeed, pTurnSpeed);
     }
     
-    public void autoArcadeDrive(double pYSpeed, double pXSpeed){
-    	driveTrain.arcadeDrive(pYSpeed, pXSpeed);
-    }
-    
     public void resetGyro(){							//Resets the Gyro
     	driveGyro.reset();
     }
     
-    public int getLeftEnc(){
+    public int getLeftEnc(){							//gets the left Encoder
     	return driveMotorLeft1.getEncPosition();
     }
     
-    public int getRightEnc(){
+    public int getRightEnc(){							//gets the right encoder
     	return driveMotorRight1.getEncPosition();
     }
     
     public boolean spinByGyro(int pDegrees){			//Spins the robot the passed in value returning if the action was complete
-    	if(pDegrees > driveGyro.getAngle() && pDegrees > 0){
+    	if(pDegrees - bufferZoneGyro > driveGyro.getAngle() && pDegrees > 0){
     		driveTrain.arcadeDrive(-1, 0);
     	}
-    	else if(pDegrees < driveGyro.getAngle() && pDegrees < 0){
+    	else if(pDegrees + bufferZoneGyro < driveGyro.getAngle() && pDegrees < 0){
     		driveTrain.arcadeDrive(1, 0);    		
     	}
     	else{
@@ -80,8 +78,7 @@ public class SS_DriveTrain extends Subsystem {
     	return pInches * Robot.robotMap.encoderTicksPerInch;
     }
     
-    //THIS IS NOT COMPLETE
-    public void driveByEncoder(double pMaxSpeed, int pTarget, double pTurnValue){
+    public void driveByEncoder(double pMaxSpeed, int pTarget, double pTurnValue){			//drives the robot based on encoders
     	int distValueLeft = getLeftEnc();
     	int distValueRight = getRightEnc();
     	if(((distValueLeft - lastEncoderTicks) * currentSpeed * 20 > pTarget) && (currentSpeed > 0)){
@@ -97,10 +94,10 @@ public class SS_DriveTrain extends Subsystem {
     }
     
     public boolean checkDistance(int pTarget){						//Checks if the distance was hit
-    	return getLeftEnc() > pTarget-10;
+    	return getLeftEnc() > pTarget-bufferZoneEnc;
     }
     
-    public void resetEncoders(){
+    public void resetEncoders(){									//resets the encoders
     	driveMotorLeft1.reset();
     	driveMotorRight1.reset();
     }
@@ -125,6 +122,7 @@ public class SS_DriveTrain extends Subsystem {
 				break;
 			case 3:
 				driveMotorRight2.set(value);
+				
 				break;
     	}
     }

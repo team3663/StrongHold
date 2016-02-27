@@ -7,17 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_WinchJoystickUse extends Command {
+public class C_HookMove extends Command {
 
-    public C_WinchJoystickUse() {
-        requires(Robot.ss_Winch);
+    public C_HookMove() {
+    	requires(Robot.ss_Hook);
     }
 
     protected void initialize() {
     }
 
     protected void execute() {
-    	Robot.ss_Winch.runMotorTeleop(Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.winchAxis));
+    	Robot.ss_Hook.MoveHook(Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.hookAxis));
     }
 
     protected boolean isFinished() {
@@ -25,10 +25,8 @@ public class C_WinchJoystickUse extends Command {
     }
 
     protected void end() {
-    	Robot.ss_Winch.STOP();
     }
 
     protected void interrupted() {
-    	end();
     }
 }

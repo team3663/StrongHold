@@ -5,15 +5,15 @@ import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
 import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
-import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafty;
+import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafety;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
-import org.usfirst.frc.team3663.robot.commands.C_VisionCenterGoal;
-import org.usfirst.frc.team3663.robot.commands.C_VisionFineAdjust;
+import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
+import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
-import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafty;
+import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafety;
 import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
 import org.usfirst.frc.team3663.robot.commands.TC_TurnByGyro;
 import org.usfirst.frc.team3663.robot.commands.TestC_Cycle;
@@ -22,8 +22,6 @@ import org.usfirst.frc.team3663.robot.commands.TestC_ToggleTestMode;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-
-import org.usfirst.frc.team3663.robot.commands.C_EncoderCurveDrive;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -36,7 +34,7 @@ public class OI {
 	//Joysticks	
 	public Joystick driveJoystick = new Joystick(0);
 	public Joystick buttonJoystick = new Joystick(1);
-	public Joystick testJoystickCurtis = new Joystick(5);
+	public Joystick testJoystick1= new Joystick(5);
 	public Joystick testJoystick = new Joystick(4);
 	
 	public Joystick visionTestStick = new Joystick(3);
@@ -58,8 +56,6 @@ public class OI {
 	private JoystickButton wheelyBarMoveToZero = new JoystickButton(buttonJoystick, 4);
 	
   //Test Joystick Buttons
-	private JoystickButton turn90Degrees 	= new JoystickButton(visionTestStick, 4);
-	
 	private JoystickButton toggleTestMode	= new JoystickButton(testJoystick, 7);
 	private JoystickButton cycleUp			= new JoystickButton(testJoystick, 2);
 	private JoystickButton cycleDown		= new JoystickButton(testJoystick, 1);
@@ -68,6 +64,7 @@ public class OI {
 	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
 	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
 	private JoystickButton testTeleopVisionShooting = new JoystickButton(visionTestStick,2);
+	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
 	
 	public OI(){
 	//Real Buttons
@@ -75,12 +72,12 @@ public class OI {
 		pickUpBall.whileHeld(new CG_DriverPickupBall());
 		pickupRaiseArm.whenPressed(new C_PickupFirePiston(false));
 		pickupLowerArm.whenPressed(new C_PickupFirePiston(true));
-		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafty());
+		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
 	  //Shooter Buttons
 		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
-		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafty());
+		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
 	  //Wheely Bar Buttons
 		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
 		
@@ -90,9 +87,8 @@ public class OI {
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
 		//VisionTestButtons
+		testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
 		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
-		C_VisionCenterGoal centerGoal = new C_VisionCenterGoal();
-		testCenterGoal.whileHeld(centerGoal);
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
 		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());
 	}

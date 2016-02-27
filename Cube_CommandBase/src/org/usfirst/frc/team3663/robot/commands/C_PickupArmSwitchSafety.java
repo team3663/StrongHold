@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_PickupArmSwitchSafty extends Command {
+public class C_PickupArmSwitchSafety extends Command {
 
-    public C_PickupArmSwitchSafty() {
+    public C_PickupArmSwitchSafety() {
     	requires(Robot.ss_PickupArm);
     }
 

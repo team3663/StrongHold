@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 /**
  *
  */
-public class C_VisionFineAdjust extends Command {
+public class C_DriveVisionFineAdjust extends Command {
 
 	NetworkTable table;
 	boolean raiseShooterArm;
 	boolean tryHitEnd;
 	
-    public C_VisionFineAdjust() {
+    public C_DriveVisionFineAdjust() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ss_Dart);
         table = Robot.visionTable;

@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SS_Dart extends Subsystem {
 	
 	//these are maxes based on the shooter of the bot
-	private int maxPotentiometer = 2160;
-	private int minPotentiometer = 600;
+	private int maxPotentiometer = 2200;//2160;
+	private int minPotentiometer = 410;//600
 	//soft is for where the bot fires the arm if in this zone
 	private int soft1 = 660;
 	private int soft2 = 1860;
@@ -25,6 +25,8 @@ public class SS_Dart extends Subsystem {
 	//touch is where the two can connect but the dart needs to go a certain way
 	private int touch1 = 1210;
 	private int touch2 = 1510;
+	//this is what determins what area of acceptance for the dart
+	private int bufferZone = 10;
 	
 	//Motor
 	private CANTalon dartMotor = new CANTalon(Robot.robotMap.dartMotor);
@@ -89,7 +91,7 @@ public class SS_Dart extends Subsystem {
     	return movePickup;
     }
     
-    public double convertSpeed(double pSpeed){
+    public double convertSpeed(double pSpeed){					//makes sure that the joystick is passing it in useful values
     	pSpeed = (int)(pSpeed*10);
     	pSpeed = pSpeed/10;
     	if(pSpeed - .1  == 0 || pSpeed + .1 == 0){
@@ -103,7 +105,7 @@ public class SS_Dart extends Subsystem {
     	pSpeed = convertSpeed(pSpeed);
     	SmartDashboard.putNumber("dart speed ", pSpeed);
     	if((distValue < maxPotentiometer && pSpeed < 0)||(distValue > minPotentiometer && pSpeed > 0)){
-    		if(!pArm){
+    		/*if(!pArm){
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
     					(pSpeed > 0 && distValue < touch1) || (pSpeed > 0 && distValue > soft2)){
     				dartMotor.set(pSpeed);
@@ -131,7 +133,8 @@ public class SS_Dart extends Subsystem {
 				SmartDashboard.putString("ERROR : ", "out");
     			setMovingArm(false);
     			dartMotor.set(pSpeed);
-    		}
+    		}*/
+    		dartMotor.set(pSpeed);
     	}
     	else{
     		dartMotor.set(0);
@@ -144,12 +147,12 @@ public class SS_Dart extends Subsystem {
     	return (currValue < pLocation+4 && currValue > pLocation-4);
     }*///may not need
     
-    public boolean hitLocation(double pSpeed, int pFinalLocation){
+    public boolean hitLocation(double pSpeed, int pFinalLocation){				//checks to see if the bot has hit the target location for the dart
     	int distValue = dartPotentiometer.getAverageValue();
-    	if(pSpeed < 0 && distValue < pFinalLocation+10){
+    	if(pSpeed < 0 && distValue < pFinalLocation+bufferZone){
     		 return true;
     	}
-    	if(pSpeed > 0 && distValue > pFinalLocation-10){
+    	if(pSpeed > 0 && distValue > pFinalLocation-bufferZone){
     		return true;
     	}
     	return false;
@@ -160,7 +163,7 @@ public class SS_Dart extends Subsystem {
     	return !(distValue < maxPotentiometer && distValue > minPotentiometer);
     }
     
-    public void STOP(){
+    public void STOP(){								//stops the dart from moving
     	dartMotor.set(0);
     }
     

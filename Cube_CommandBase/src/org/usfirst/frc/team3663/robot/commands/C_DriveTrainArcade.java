@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_DriveTrain extends Command {
+public class C_DriveTrainArcade extends Command {
 
-    public C_DriveTrain() {
+    public C_DriveTrainArcade() {
         requires(Robot.ss_DriveTrain);
     }
     

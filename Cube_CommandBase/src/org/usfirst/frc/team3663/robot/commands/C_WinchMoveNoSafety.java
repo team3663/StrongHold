@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_WinchMoveNoSafty extends Command {
+public class C_WinchMoveNoSafety extends Command {
 
-    public C_WinchMoveNoSafty() {
+    public C_WinchMoveNoSafety() {
         requires(Robot.ss_Winch);
     }
 
