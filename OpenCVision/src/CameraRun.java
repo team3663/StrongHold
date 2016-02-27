@@ -236,7 +236,7 @@ public class CameraRun {
 			for(int x = 0; x<width; x++)//make it ignore left corner!!!!!!!!!!!
 			{
 				boolean dartBlwThrsh = table.getBoolean("dartBelowThreshold: ",false);
-				if (!(x < 104 && y  < 377) && (!dartBlwThrsh || (dartBlwThrsh && y < 374)))
+				if (!(x < 104/* && y  < 377*/) && (!dartBlwThrsh || (dartBlwThrsh && y < 374)))
 				{
 					c = new Color(img.getRGB(x,y));
 					if (c.getRed()<60 && /*c.getBlue()<210 &&*/ c.getGreen()>=210)
