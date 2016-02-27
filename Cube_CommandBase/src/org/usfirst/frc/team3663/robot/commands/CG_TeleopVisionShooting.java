@@ -14,10 +14,10 @@ public class CG_TeleopVisionShooting extends CommandGroup {
 	
     public  CG_TeleopVisionShooting() {
     	
-    	addSequential(new C_VisionCenterGoal());
+    	addSequential(new C_DriveVisionCenterGoal());
     	if (table.getBoolean("ShooterArm/moveShooterArm: ", false))
     	{
-    		addSequential(new C_VisionFineAdjust());
+    		addSequential(new C_DriveVisionFineAdjust());
     	}
         // Add Commands here:
         // e.g. addSequential(new Command1());

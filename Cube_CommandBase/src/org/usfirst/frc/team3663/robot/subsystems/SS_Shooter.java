@@ -41,8 +41,8 @@ public class SS_Shooter extends Subsystem {
     }
     
     public void setShooterMotorsSpeed(double pSpeed){						//Sets the speed of both motors
-    	shooterTop.set(-pSpeed);
-    	shooterBottom.set(pSpeed);
+    	shooterTop.set(pSpeed);
+    	shooterBottom.set(-pSpeed);
     }
 
     public void toggleShooterSolenoid(){									//Works as a toggle for the shooter piston
@@ -55,7 +55,7 @@ public class SS_Shooter extends Subsystem {
     }
     
     public void fireShooterSolenoid(boolean pFire){							//Manually sets the location of the shooter solenoid
-    	if(pFire){
+    	if(!pFire){
     		shooterSolenoid.set(DoubleSolenoid.Value.kForward);
     	}
     	else{

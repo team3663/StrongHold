@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -25,7 +26,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public int grabEncoder(){										//gets the value of the encoder
-    	return 0;
+    	return wheelyBarMotor.getEncPosition();
     }
     
     public int maxDistance(){										//returns the max value
@@ -83,6 +84,11 @@ public class SS_WheelyBar extends Subsystem {
     
     public void STOP(){												//stops the motor
     	wheelyBarMotor.set(0);
+    }
+    
+    public void updateDashboard(){
+    	SmartDashboard.putNumber("Wheely Bar Motor : ", wheelyBarMotor.getSpeed());
+    	SmartDashboard.putNumber("Wheely Bar Encoder", grabEncoder());
     }
 }
 

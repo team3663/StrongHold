@@ -12,21 +12,24 @@ public class RobotMap {
 	
 /********CANTalons*******/
 	//drive
-		public static int driveLeftMotor1 =  1;
-		public static int driveLeftMotor2 =  2;
-		public static int driveRightMotor1 = 3;
-		public static int driveRightMotor2 = 4;
+		public static int driveLeftMotor1 =  4;
+		public static int driveLeftMotor2 =  9;
+		public static int driveRightMotor1 = 8;
+		public static int driveRightMotor2 = 2;
 	//shooter
-		public static int shooterMotorTop =    5;
-		public static int shooterMotorBottom = 6;
+		public static int shooterMotorTop =    11;
+		public static int shooterMotorBottom = 12;
 	//pickup
-		public static int pickUpMotor = 7;
+		public static int pickUpMotor = 6;
 	//dart
-		public static int dartMotor = 8;
+		public static int dartMotor = 7;
 	//Winch
-		public static int winchMotor = 9;
+		public static int winchMotor1 = 3;
+		public static int winchMotor2 = 5;
 	//wheely bar
 		public static int wheelyBarMotor = 10;
+	//Hook
+		public static int hookMotor = 1;
 		
 	
 /*********Sensors********/
@@ -43,8 +46,8 @@ public class RobotMap {
 	//Camera
 		public static int cameraRelay = 0;
 /*******Solenoids*******/
-	    public static int[] pickUpSolenoid  = new int[]{6,7};    
-	    public static int[] shooterSolenoid = new int[]{5,4};
+	    public static int[] pickUpSolenoid  = new int[]{3,2};    
+	    public static int[] shooterSolenoid = new int[]{1,0};
 	    
 /****DriveControlles*****/
 	//driveTrain
@@ -53,6 +56,8 @@ public class RobotMap {
 	    public static int driveAxisTurn =	 0;
 	//winch
 	    public static int winchAxis = 5;
+	//hook
+	    public static int hookAxis = 1;
 	    
 /******ChangeValues******/
 	//DriveTrain

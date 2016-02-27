@@ -6,7 +6,9 @@ import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
 import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
+import org.usfirst.frc.team3663.robot.subsystems.SS_Hook;
 import org.usfirst.frc.team3663.robot.subsystems.SS_PickupArm;
+import org.usfirst.frc.team3663.robot.subsystems.SS_PowerDistributionBoard;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Shooter;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Test;
 import org.usfirst.frc.team3663.robot.subsystems.SS_WheelyBar;
@@ -38,6 +40,8 @@ public class Robot extends IterativeRobot {
 	public static SS_Winch ss_Winch;
 	public static SS_WheelyBar ss_WheelyBar;
 	public static SS_AutoChooser ss_AutoChooser;
+	public static SS_Hook ss_Hook;
+	public static SS_PowerDistributionBoard ss_PDB;
 	
 	
 	public static SS_Test test;
@@ -63,6 +67,8 @@ public class Robot extends IterativeRobot {
 		ss_WheelyBar = new SS_WheelyBar();
 		ss_Camera = new SS_Camera();
 		ss_AutoChooser = new SS_AutoChooser();
+		ss_Hook = new SS_Hook();
+		ss_PDB = new SS_PowerDistributionBoard();
 		oi = new OI();
 		test = new SS_Test();
     	LiveWindow.setEnabled(false);
@@ -106,7 +112,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	C_DriveControllerDPad DpadControlls = new C_DriveControllerDPad();
-    	DpadControlls.start();
+    	//DpadControlls.start();
     	ss_DriveTrain.resetGyro();
 		ss_Camera.setLight(true);
     }
@@ -139,5 +145,10 @@ public class Robot extends IterativeRobot {
     	ss_DriveTrain.updateDashboard();
     	ss_PickupArm.updateDashboard();
     	ss_Shooter.updateDashboard();
+    	ss_Winch.updateDashboard();
+    	ss_Camera.updateDashboard();
+    	ss_Hook.updateDashboard();
+    	ss_WheelyBar.updateDashboard();
+    	ss_PDB.updateDashboard();
     }
 }

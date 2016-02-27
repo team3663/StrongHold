@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class C_DriveControllerDPad extends Command {
 
-	CG_ConfigGoOverDefences cg_OverD = new CG_ConfigGoOverDefences();
+	CG_ConfigGoOverDefenses cg_OverD = new CG_ConfigGoOverDefenses();
 	CG_ConfigLowBar cg_LowBar = new CG_ConfigLowBar();
 	CG_ConfigNormalShot cg_Normal = new CG_ConfigNormalShot();
 	
@@ -34,7 +34,7 @@ public class C_DriveControllerDPad extends Command {
     		
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == -1){
-    		cg_Normal.cancel();;
+    		cg_Normal.cancel();
     		cg_LowBar.cancel();
     		cg_OverD.cancel();
     		

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
-import org.usfirst.frc.team3663.robot.commands.C_PickupSafteyArm;
+import org.usfirst.frc.team3663.robot.commands.C_PickupSafetyArm;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -27,7 +27,7 @@ public class SS_PickupArm extends Subsystem {
 	private boolean stayInSafeZone = true;
 	
     public void initDefaultCommand() {						//Sets starts safety check
-    	setDefaultCommand(new C_PickupSafteyArm());
+    	setDefaultCommand(new C_PickupSafetyArm());
     }
     
     public void setPickupSpeed(double speed){				//Sets the speed of the motor

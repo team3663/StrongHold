@@ -50,6 +50,40 @@ public class TestC_Test extends Command {
 		    		else if(jsValue < -0.9)	Robot.ss_Shooter.fireShooterSolenoid(false);
 		    		Robot.test.testName = "ShooterSolenoid";
 		    		break;
+		    	case 7:
+		    		Robot.ss_Winch.testSetWinchMotor1(jsValue);
+		    		Robot.test.testName = "WinchMotor1";
+		    		break;
+		    	case 8:
+		    		Robot.ss_Winch.testSetWinchMotor2(jsValue);
+		    		Robot.test.testName = "WinchMotor2";
+		    		break;
+		    	case 9:
+		    		Robot.ss_Dart.moveDart(jsValue, true);
+		    		Robot.test.testName = "DartMotor";
+		    		break;
+		    	case 10:
+		    		Robot.ss_PickupArm.setPickupSpeed(jsValue);
+		    		Robot.test.testName = "PickUpMotor";
+		    		break;
+		    	case 11:
+		    		if(jsValue > 0.9) 		Robot.ss_PickupArm.firePickupSolenoid(true);
+		    		else if(jsValue < -0.9)	Robot.ss_PickupArm.firePickupSolenoid(false);
+		    		Robot.test.testName = "PickUpSolenoid";
+		    		break;
+		    	case 12:
+		    		Robot.ss_WheelyBar.moveWheelyBar(jsValue);
+		    		Robot.test.testName = "WheelyBarMotor";
+		    		break;
+		    	case 13:
+		    		if(jsValue > 0.9) 		Robot.ss_Camera.setLight(true);
+		    		else if(jsValue < -0.9)	Robot.ss_Camera.setLight(false);
+		    		Robot.test.testName = "CameraLightSpike";
+		    		break;
+		    	case 14:
+		    		Robot.ss_Hook.MoveHook(jsValue);
+		    		Robot.test.testName = "HookMotor";
+		    		break;
 	    	}
     	}
     	Robot.test.update();
