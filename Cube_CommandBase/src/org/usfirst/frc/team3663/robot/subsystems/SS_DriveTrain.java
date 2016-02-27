@@ -23,8 +23,7 @@ public class SS_DriveTrain extends Subsystem {
 	private CANTalon driveMotorRight2 = new CANTalon(Robot.robotMap.driveRightMotor2);
 	
 	//DriveTrain
-	private RobotDrive driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
-	
+	private RobotDrive driveTrain = null;
 	//Sensors
 	private AnalogGyro driveGyro = new AnalogGyro(Robot.robotMap.driveGyro);
 
@@ -42,12 +41,22 @@ public class SS_DriveTrain extends Subsystem {
     	driveGyro.reset();
     }
     
-    public void arcadeRobotDrive(double pForwardSpeed, double pTurnSpeed){		//Responsible for driving the robot
-    	driveTrain.arcadeDrive(pForwardSpeed, pTurnSpeed);
+    public void arcadeRobotDrive(double pForwardSpeed, double pTurnSpeed){		//Responsible for driving the robot 
+    	if(driveTrain == null){
+    		
+    		driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
+    	}
+    	SmartDashboard.putNumber("drive asdf", currentRunNumber++);
+    	driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed);
     }
     
     public void resetGyro(){							//Resets the Gyro
     	driveGyro.reset();
+    }
+    
+    public void killDriveTrain(){
+    	driveTrain.setExpiration(10);
+    	driveTrain = null;
     }
     
     public int getLeftEnc(){							//gets the left Encoder

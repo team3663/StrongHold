@@ -69,8 +69,8 @@ public class SS_Shooter extends Subsystem {
     }
     
     public void updateDashboard(){							//sends a update to the dashboard
-    	SmartDashboard.putNumber("Top Shooter Motor Speed : ", shooterTop.getSpeed());
-    	SmartDashboard.putNumber("Bottom Shooter Motor Speed : ", shooterBottom.getSpeed());
+    	SmartDashboard.putNumber("Top Shooter Motor Speed : ", shooterTop.getEncVelocity());
+    	SmartDashboard.putNumber("Bottom Shooter Motor Speed : ", shooterBottom.getEncVelocity());
     	Robot.gui.sendNumber("shooter/Top Shooter Motor", shooterTop.getSpeed());
     	Robot.gui.sendNumber("shooter/Bottom Shooter Motor", shooterBottom.getSpeed());
     }

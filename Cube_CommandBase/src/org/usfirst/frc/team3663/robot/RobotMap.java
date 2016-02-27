@@ -12,10 +12,10 @@ public class RobotMap {
 	
 /********CANTalons*******/
 	//drive
-		public static int driveLeftMotor1 =  4;
-		public static int driveLeftMotor2 =  9;
-		public static int driveRightMotor1 = 8;
-		public static int driveRightMotor2 = 2;
+		public static int driveLeftMotor1 =  8;
+		public static int driveLeftMotor2 =  2;
+		public static int driveRightMotor1 = 4;
+		public static int driveRightMotor2 = 9;
 	//shooter
 		public static int shooterMotorTop =    11;
 		public static int shooterMotorBottom = 12;

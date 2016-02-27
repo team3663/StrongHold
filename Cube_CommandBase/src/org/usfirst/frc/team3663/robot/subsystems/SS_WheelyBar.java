@@ -70,16 +70,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
-    	int distValue = grabEncoder();
-    	if(wheelyBarLimit.get()){
-    		resetEncoder();
-    	}
-    	if(((distValue < maxEncoderTicks && pSpeed > 0) || (distValue > 0 && pSpeed < 0)) && setToZero){
-    		wheelyBarMotor.set(pSpeed);
-    	}
-    	else{
-    		STOP();
-    	}
+    	wheelyBarMotor.set(pSpeed);
     }
     
     public void STOP(){												//stops the motor
@@ -87,7 +78,9 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void updateDashboard(){
+    	SmartDashboard.putNumber("WheelyBar Encoder", wheelyBarMotor.getEncPosition());
     	Robot.gui.sendNumber("wheelyBar/Wheely Motor",wheelyBarMotor.getSpeed());
+    	Robot.gui.sendNumber("wheelyBar/Wheely Encoder",wheelyBarMotor.getEncPosition());
     }
 }
 
