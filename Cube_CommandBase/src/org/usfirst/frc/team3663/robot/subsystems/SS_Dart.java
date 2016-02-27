@@ -14,17 +14,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SS_Dart extends Subsystem {
 	
 	//these are maxes based on the shooter of the bot
-	private int minPotentiometer = 410;//600
-	private int maxPotentiometer = minPotentiometer + 1790;//2160;
+	private int minPotentiometer = Robot.robotMap.minDistanceValue;//600
+	private int maxPotentiometer = Robot.robotMap.maxDistanceValue;//2160;
 	//soft is for where the bot fires the arm if in this zone
-	private int soft1 = 660;
-	private int soft2 = 1860;
+	private int soft1 = Robot.robotMap.soft1;
+	private int soft2 = Robot.robotMap.soft2;
 	//hard is where the dart will stop and wait for the arm
-	private int hard1 = 760;
-	private int hard2 = 1740;
+	private int hard1 = Robot.robotMap.hard1;
+	private int hard2 = Robot.robotMap.hard2;
 	//touch is where the two can connect but the dart needs to go a certain way
-	private int touch1 = 1210;
-	private int touch2 = 1510;
+	private int touch1 = Robot.robotMap.touch1;
+	private int touch2 = Robot.robotMap.touch2;
 	//this is what determins what area of acceptance for the dart
 	private int bufferZone = 10;
 	
