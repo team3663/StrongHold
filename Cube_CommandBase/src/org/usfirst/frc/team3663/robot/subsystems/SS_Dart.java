@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SS_Dart extends Subsystem {
 	
 	//these are maxes based on the shooter of the bot
-	private int maxPotentiometer = 2200;//2160;
-	private int minPotentiometer = 410;//600
+	private int maxPotentiometer = 2200;//Frodo:2160;
+	private int minPotentiometer = 410;//Frodo:600
 	//soft is for where the bot fires the arm if in this zone
 	private int soft1 = 660;
 	private int soft2 = 1860;
@@ -171,10 +171,11 @@ public class SS_Dart extends Subsystem {
     	SmartDashboard.putNumber("Dart Potentiometer : ", dartPotentiometer.getAverageValue());
     	SmartDashboard.putNumber("Dart Motor : ", dartMotor.getSpeed());
     	SmartDashboard.putBoolean("SafeToRaisePickup : ", getMoveArm());
-    	
+
     	Robot.gui.sendNumber("dart/Dart Potentiometer", dartPotentiometer.getAverageValue());
     	Robot.gui.sendNumber("dart/Dart Motor", dartMotor.getSpeed());
     	Robot.gui.sendBoolean("dart/SafeToRaisePickup", getMoveArm());
+
     	Robot.visionTable.putBoolean("dartBelowThreshold: ", (dartPotentiometer.getAverageValue() < 480));
     }
 }

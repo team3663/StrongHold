@@ -46,11 +46,11 @@ public class CameraRun {
 	int goalCenterX = -1,goalCenterY;
 	int fixWidth = 640;
 	int fixHeight = 480;
-	double angle, distance;
+	double angle, distance;//angle called in comment in findCenterGoal()
 	
 //	boolean foundObject = false;
 	
-	boolean inAutonomous,autoFindLeft,alreadyInCommand,centeringGoal/*,movingWithRadius*/,okayToShoot;
+	boolean autoFindLeft,centeringGoal/*,movingWithRadius*/,okayToShoot;
 	
 	public void CameraInit()
 	{
@@ -71,8 +71,8 @@ public class CameraRun {
 		setRedU();
 		
 		table.putBoolean("autoInitFindLeft: ",true);
-		table.putBoolean("Mode/commandRunning: ",false);//may not need
-		table.putBoolean("Mode/inAutonomous: ",false);//may not need
+		//table.putBoolean("Mode/commandRunning: ",false);//may not need
+		//table.putBoolean("Mode/inAutonomous: ",false);//may not need
 		table.putBoolean("C_/centeringGoal: ",true);
 		//table.putBoolean("C_/movingWithRadius: ",false);
 		table.putBoolean("C_/okayToShoot: ",false);
@@ -83,7 +83,7 @@ public class CameraRun {
 	
 	private void checkCameraStillFound()
 	{
-		if (buffingCounter++%100 == 99)
+		//if (buffingCounter++%100 == 99)
 		{
 			if (camera.isOpened())
 			{
@@ -100,6 +100,7 @@ public class CameraRun {
 	{
 	//	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	//	CameraInit();
+
 		if (camera.isOpened())
 		{
 			cameraFound = true;
@@ -112,17 +113,17 @@ public class CameraRun {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			while (true)
 			{
+				checkCameraStillFound();
 				if (cameraFound)
 				{
-					checkCameraStillFound();
 					camera.read(mat);
 					updateJFrame(mat);
 					
 			//		table.putBoolean("foundObject: ",(gPieceKey>-1));//may not need
 					//make a put in Camera Init
 					autoFindLeft = table.getBoolean("autoInitFindLeft: ",true);
-					alreadyInCommand = table.getBoolean("Mode/commandRunning: ",false);//may not need
-					inAutonomous = table.getBoolean("Mode/inAutonomous: ",false);//may not need
+					//alreadyInCommand = table.getBoolean("Mode/commandRunning: ",false);//may not need
+					//inAutonomous = table.getBoolean("Mode/inAutonomous: ",false);//may not need
 					centeringGoal = table.getBoolean("C_/centeringGoal: ",false);
 					//movingWithRadius = table.getBoolean("C_/movingWithRadius: ",false);
 					okayToShoot = table.getBoolean("C_/okayToShoot: ",false);
@@ -145,7 +146,7 @@ public class CameraRun {
 				}
 				else
 				{
-					checkCameraStillFound();
+					System.out.println("cant find it.... 0.0");
 				}
 			}
 		}
@@ -190,8 +191,9 @@ public class CameraRun {
 		//pic = newImgArray(buffImg);
 		//findRectangle(buffImg);//good for if tilted with right side higher, but will need to change findU to get that (overall better)
 		//findU(buffImg);
+		
 		//System.out.println("--------------------printing New Image");
-		resetVariables();
+	/*	resetVariables();
 		separateObjects();
 		removeSmallObjects();//remember later to get rid of extra removeSmallObject() methods
 	//	table.putNumber("gPieceKey: ", gPieceKey);
@@ -200,7 +202,8 @@ public class CameraRun {
 		{
 	//		getMostMassObject();
 			getBestObjectMask();
-		}
+		}*/
+		
 		//*/
 		image = new ImageIcon(buffImg);
 		label.setIcon(image);
@@ -218,28 +221,32 @@ public class CameraRun {
         
 	    return convertToBlackGreenImage(image);
 	}
+	//Constants for image converting
+	Color c;
+	int g = Color.GREEN.getRGB();
+	int cy = Color.CYAN.getRGB();
+	int bl = Color.BLUE.getRGB();
+	int r = Color.RED.getRGB();
+	int gg;
+	
+	//int b = Color.black.getRGB();
 	private BufferedImage convertToBlackGreenImage(BufferedImage img)
 	{
-	/*	rows = new int[img.getHeight()];
-		colmns = new int[img.getWidth()];*/
-		Color c;
 		int width = img.getWidth();
 		int height = img.getHeight();
 		pic = new int[width][height];
-		int g = Color.GREEN.getRGB();
-		int cy = Color.CYAN.getRGB();
-		int bl = Color.BLUE.getRGB();
-		int r = Color.RED.getRGB();
-		int b = Color.black.getRGB();
+		boolean dartBlwThrsh = table.getBoolean("dartBelowThreshold: ",false);;
+	/*	rows = new int[img.getHeight()];
+		colmns = new int[img.getWidth()];*/
 		for(int y = 0; y<height; y++)
 		{
-			for(int x = 0; x<width; x++)//make it ignore left corner!!!!!!!!!!!
+			for(int x = 104/*0*/; x<width; x++)//make it ignore left corner!!!!!!!!!!!
 			{
-				boolean dartBlwThrsh = table.getBoolean("dartBelowThreshold: ",false);
-				if (!(x < 104 && y  < 377) && (!dartBlwThrsh || (dartBlwThrsh && y < 374)))
+				if (/*!(x < 104/* && y  < 377*./) && */(!dartBlwThrsh || (dartBlwThrsh && y < 374)))
 				{
 					c = new Color(img.getRGB(x,y));
-					if (c.getRed()<60 && /*c.getBlue()<210 &&*/ c.getGreen()>=210)
+					gg = c.getGreen();
+					if (c.getRed()<60 && /*c.getBlue()<210 &&*/ (gg>=210 || gg>=c.getBlue()+70))
 					{
 						if (okayToShoot && !centeringGoal)
 						{
@@ -327,10 +334,10 @@ public class CameraRun {
 		
 		if (angle < maxDistortedAngle && angle > -maxDistortedAngle)
 		{
-			table.putBoolean("Moving/MoveSideways: ", false);//may not need
+			//table.putBoolean("Moving/MoveSideways: ", false);//may not need
 			return false;
 		}
-		table.putBoolean("Moving/MoveSideways: ", true);//may not need
+		//table.putBoolean("Moving/MoveSideways: ", true);//may not need
 		return true;
 	}
 	
@@ -518,7 +525,7 @@ public class CameraRun {
 		}
 	}
 	
-	public void checkWithObjectRatio(int keyNum)
+/*	public void checkWithObjectRatio(int keyNum)
 	{
 		getAngleTilt(keyNum);
 		if (massObjectPointer.getGPiece(keyNum).width/massObjectPointer.getGPiece(keyNum).height > 1.67)
@@ -529,7 +536,7 @@ public class CameraRun {
 			table.putNumber("y: ", massObjectPointer.getGPiece(keyNum).yStart+(massObjectPointer.getGPiece(keyNum).height/8));
 		}
 		
-	}
+	}*/
 	private double getAngleTilt(int keyNum)
 	{
 		double angle = 1;
@@ -578,7 +585,7 @@ public class CameraRun {
 		double d = 0;
 		
 		massArr[counter%5] = (double)massObjectPointer.getGPiece(keyNum).mass;
-		table.putNumber("massB: ",massArr[counter%5]);
+		//table.putNumber("massB: ",massArr[counter%5]);
 		if (firstTime)
 		{
 			for (int i = 0; i < 5; i++)
@@ -687,7 +694,7 @@ public class CameraRun {
 				int cX = massObjectPointer.getGPiece(o).xStart,cY = massObjectPointer.getGPiece(o).yStart,
 						cW = massObjectPointer.getGPiece(o).width,cH = massObjectPointer.getGPiece(o).height;
 				
-				if (massObjectPointer.getGPiece(o).mass > 50 || cW > 5 || cH > 5)
+				//if (massObjectPointer.getGPiece(o).mass > 50 || cW > 5 || cH > 5)
 				{
 					double cMaskOverlap = percentMaskOverlap(cX,cY,cW,cH);
 					double maskOverlap = percentMaskOverlap(x,y,w,h);
@@ -728,10 +735,10 @@ public class CameraRun {
 		//	int yCenter = ((massObjectPointer.getGPiece(bestPiece).yStart)+(massObjectPointer.getGPiece(bestPiece).height/2));
 			//use coordinates of best object and get center
 			
-			colorSquare(buffImg,massObjectPointer.getGPiece(bestPiece).xStart,massObjectPointer.getGPiece(bestPiece).yStart, Color.blue);
-			colorSquare(buffImg,massObjectPointer.getGPiece(bestPiece).xStart+massObjectPointer.getGPiece(bestPiece).width,massObjectPointer.getGPiece(bestPiece).yStart+massObjectPointer.getGPiece(bestPiece).height,Color.blue);
+		//	colorSquare(buffImg,massObjectPointer.getGPiece(bestPiece).xStart,massObjectPointer.getGPiece(bestPiece).yStart, bl);
+		//	colorSquare(buffImg,massObjectPointer.getGPiece(bestPiece).xStart+massObjectPointer.getGPiece(bestPiece).width,massObjectPointer.getGPiece(bestPiece).yStart+massObjectPointer.getGPiece(bestPiece).height,bl);
 			
-			colorSquare(buffImg, xCenter, yCenter, Color.RED);
+			colorSquare(buffImg, xCenter, yCenter, r);
 			
 			table.putNumber("bestGoal X: ", xCenter);
 			table.putNumber("bestGoal Y: ", yCenter);
@@ -745,7 +752,7 @@ public class CameraRun {
 		double percentOverlap;
 		double tapeDepth = ((height/6.0)+4*(width/10.0))/5.0;
 		
-		table.putNumber("tapeDepth: ", tapeDepth);
+		//table.putNumber("tapeDepth: ", tapeDepth);
 		
 	//	int[][] mask = createMask(width, height);//index: 0-width; 1-height; 2-tapeDepth
 		double overlapMask = 0, totalGreen = 1;
@@ -796,11 +803,12 @@ public class CameraRun {
 
 	private void findCenterGoal()//range of x: 308/310-361/360 through 30"(2'6")-204"(17')
 	{
-		angle = getAngleTilt(bestPieceKey);
+		//Frodo:
+		//angle = getAngleTilt(bestPieceKey);
 		distance = getDistanceMass(bestPieceKey);
 		table.putNumber("distanceByMass: ", distance);
 		
-		if (distance < 64)
+		/*if (distance < 64)
 		{
 			goalCenterX = 356;
 			//goalCenterY = 
@@ -829,9 +837,9 @@ public class CameraRun {
 		{
 			goalCenterX = 315;
 			//goalCenterY = 
-		}
-		/*//for final bot
-		 * if (distance < 64)
+		}*/
+	//	/*//for final bot
+		if (distance < 64)
 		{
 			goalCenterX = 640-356;
 		}
@@ -855,7 +863,7 @@ public class CameraRun {
 		{
 			goalCenterX = 640-315;
 		}
-		 */
+		 
 	}
 	
 	private boolean centeringGoal()
@@ -870,13 +878,13 @@ public class CameraRun {
 			if (xCenter < goalCenterX-10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
-				table.putBoolean("turnLeft: ", true);
+				//table.putBoolean("turnLeft: ", true);
 				table.putString("needsTurning: ", "TurnLeft");
 			}
 			else if (xCenter > goalCenterX+10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
-				table.putBoolean("turnLeft: ", false);
+				//table.putBoolean("turnLeft: ", false);
 				table.putString("needsTurning: ", "TurnRight");
 				return true;
 			}
@@ -908,7 +916,7 @@ public class CameraRun {
 			table.putBoolean("leftTurn: ", false);
 			return true;
 		}*/
-		return table.getBoolean("turnLeft: ",true);
+		return (table.getNumber("cameraMoveAngle: ",-1) == 0);
 	}
 	
 	private boolean isFineAdjustedGoal()
@@ -940,7 +948,7 @@ public class CameraRun {
 		return (/*(Math.abs(angle) < maxDistortedAngle) && !moveShooterArm &&*/table.getBoolean("finishedMovingPot: ",false) && !centeringGoal && distance < 15*12);
 	}
 	
-	private void colorSquare(BufferedImage img, int x, int y, Color color)
+	private void colorSquare(BufferedImage img, int x, int y, int color)
 	{
 		if (x > 639)
 		{
@@ -958,15 +966,15 @@ public class CameraRun {
 		{
 			y = 0;
 		}
-								    	img.setRGB(x, y, color.getRGB());
-		if (x < 639)			   		img.setRGB(x+1, y, color.getRGB());
-		if (x > 0)			   			img.setRGB(x-1, y, color.getRGB());
-		if (y < 479)			   		img.setRGB(x, y+1, color.getRGB());//out of bounds exception
-		if (x < 639 && y < 479)		img.setRGB(x+1, y+1, color.getRGB());
-		if (x > 0 && y < 479)  		img.setRGB(x-1, y+1, color.getRGB());
-		if (y > 0)			   			img.setRGB(x, y-1, color.getRGB());
-		if (x < 639 && y > 0)  		img.setRGB(x+1, y-1, color.getRGB());
-		if (x > 0 && y > 0)    		img.setRGB(x-1, y-1, color.getRGB());
+								    	img.setRGB(x, y, color);//.getRGB());
+		if (x < 639)			   		img.setRGB(x+1, y, color);//.getRGB());
+		if (x > 0)			   			img.setRGB(x-1, y, color);//.getRGB());
+		if (y < 479)			   		img.setRGB(x, y+1, color);//.getRGB());//out of bounds exception
+		if (x < 639 && y < 479)		img.setRGB(x+1, y+1, color);//.getRGB());
+		if (x > 0 && y < 479)  		img.setRGB(x-1, y+1, color);//.getRGB());
+		if (y > 0)			   			img.setRGB(x, y-1, color);//.getRGB());
+		if (x < 639 && y > 0)  		img.setRGB(x+1, y-1, color);//.getRGB());
+		if (x > 0 && y > 0)    		img.setRGB(x-1, y-1, color);//.getRGB());
 	}
 	//(226,171) (395,171)
 	//x: 196, y: 149, 22
