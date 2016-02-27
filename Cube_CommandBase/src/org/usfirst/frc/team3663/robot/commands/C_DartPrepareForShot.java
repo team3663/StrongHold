@@ -22,7 +22,7 @@ public class C_DartPrepareForShot extends Command {
     }													
     													
     protected void initialize() {
-
+    	//AY- need to test when shooter arm is lowered and sees intake arm
     	table.putBoolean("finishedMovingPot: ", false);
     	 pInches = table.getNumber("distanceByMass: ", 0);
     	 target = Robot.ss_Dart.ConvertInchesToTicks((int)pInches);

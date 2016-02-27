@@ -14,12 +14,11 @@ public class CG_AutoVisionShooting extends CommandGroup {
 	
     public  CG_AutoVisionShooting() {
     	
-    	double angle;// = table.getNumber("Moving/MoveAngle: ",0);
-    	double dist;// = table.getNumber("Moving/MoveDistance: ",0);
     	//fix tomorrow
 		addSequential(new C_VisionCenterGoal());
 		addSequential(new C_VisionFineAdjust());
 	//	addSequential(new C_ShooterShoot());
+		
 		//----------------------------------------------
         // Add Commands here:
         // e.g. addSequential(new Command1());

@@ -85,12 +85,12 @@ public class OI {
 		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
 		
 		//Test Buttons
-		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		toggleTestMode.whenPressed(new TestC_ToggleTestMode());
 		cycleUp.whenPressed(new TestC_Cycle(true));
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
 		//VisionTestButtons
+		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		C_VisionCenterGoal centerGoal = new C_VisionCenterGoal();
 		testCenterGoal.whileHeld(centerGoal);
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());

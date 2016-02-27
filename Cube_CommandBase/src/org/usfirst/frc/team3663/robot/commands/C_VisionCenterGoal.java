@@ -14,6 +14,8 @@ public class C_VisionCenterGoal extends Command {
 	double startTime;
 	boolean wasLastLeft,wasLastLeft2;
 	double moveTime;
+		
+	double degrees;
 	
     public C_VisionCenterGoal() {
         // Use requires() here to declare subsystem dependencies
@@ -22,19 +24,32 @@ public class C_VisionCenterGoal extends Command {
     }
 
     boolean stop;
+    boolean objectFound;
+    
     // Called just before this Command runs the first time
     protected void initialize() {
-    	moveTime = 0.6;
+    /*	moveTime = 0.6;
     	wasLastLeft = table.getBoolean("turnLeft: ",false);
     	wasLastLeft2 = wasLastLeft;
     	stop = !table.getBoolean("C_/centeringGoal: ",false);
     	startTime = Timer.getFPGATimestamp();
+    	*/
+		degrees = table.getNumber("cameraMoveAngle: ",90);
+    	Robot.ss_DriveTrain.resetGyro();
     	table.putBoolean("Mode/commandRunning: ", true);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	boolean turnLeft = table.getBoolean("turnLeft: ",false);
+    	//stop = Robot.ss_DriveTrain.spinByGyro((int)degrees);
+    	
+    	if (!objectFound)
+    	{
+    		Robot.ss_DriveTrain.resetGyro();
+    		degrees = table.getNumber("cameraMoveAngle: ", 360);
+    	}
+    	
+    	/*boolean turnLeft = table.getBoolean("turnLeft: ",false);
     	if (table.getBoolean("C_/centeringGoal: ",false))
     	{
 			if (table.getBoolean("turnLeft: ", false))
@@ -58,12 +73,14 @@ public class C_VisionCenterGoal extends Command {
 			stop = !table.getBoolean("C_/centeringGoal: ",false);
 	        //Robot.ss_DriveTrain.STOP();
 	        Timer.delay(1.0);
-		}
+		}*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
+    	//work on this on Monday!!!
+        return (Robot.ss_DriveTrain.spinByGyro((int)degrees));
+    	//return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
     }
 
     // Called once after isFinished returns true
