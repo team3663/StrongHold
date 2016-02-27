@@ -56,9 +56,9 @@ public class GreenMass {
 	
 
 	//	System.out.println("xStart: " + start + ", xEnd: " + end);
-		int widthDiff = returnNonOverlap();
+	//	int widthDiff = returnNonOverlap();
 //		System.out.println("widthDiff: " + widthDiff);
-		int startMove = 0;
+	/*	int startMove = 0;
 		int newStartMove = 0;
 		if (widthDiff > 0)
 		{
@@ -67,9 +67,9 @@ public class GreenMass {
 		else if (widthDiff < 0)
 		{
 			startMove = Math.abs(widthDiff);
-		}
+		}*/
 		int w = end-start+1;
-		int h = height;
+		//int h = height;
 		
 		//System.out.println("h: " + h);
 		//System.out.println("w: " + w);
@@ -184,10 +184,10 @@ public class GreenMass {
 		//outline = newOutline;
 	}
 	
-	private int returnNonOverlap()
+/*	private int returnNonOverlap()
 	{
 		int widthDiff = 0;
 		widthDiff = newXStart-xStart;
 		return widthDiff;//how much newLine is moving from oldLine
-	}
+	}*/
 }
