@@ -34,13 +34,15 @@ public class DriveTrain extends Subsystem {
     }
 
     public void initDefaultCommand() {
-//        setDefaultCommand(new C_ArcadeDrive());
+        setDefaultCommand(new C_ArcadeDrive());
     }
     public void update(){
     	SmartDashboard.putNumber("DriveLeftMotor:", left.get());
     	SmartDashboard.putNumber("DriveRightMotor:", right.get());
 		Robot.gui.sendNumber("drive/DriveLeftMotor", (Math.round(left.get()*100.0))/100.0);
 		Robot.gui.sendNumber("drive/DriveRightMotor", (Math.round(right.get()*100.0))/100.0);
+		Robot.gui.sendNumber("drive/LeftEncoder", leftEnc.get());
+		Robot.gui.sendNumber("drive/RightEncoder", rightEnc.get());
     }
 }
 
