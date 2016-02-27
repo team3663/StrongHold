@@ -56,7 +56,7 @@ public class CameraRun {
 	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
-		camera = new VideoCapture(0);//videoStreamAddress);
+		camera = new VideoCapture(videoStreamAddress);
 		mat = new Mat();
 		frame = new JFrame("Dog's Eyes <o> . <o>");
 		label = new JLabel();
@@ -675,7 +675,7 @@ public class CameraRun {
 			
 			int x = massObjectPointer.getGPiece(bestPiece).xStart,y = massObjectPointer.getGPiece(bestPiece).yStart,
 				w = massObjectPointer.getGPiece(bestPiece).width,h = massObjectPointer.getGPiece(bestPiece).height;
-			for (int o = 0; o <= gPieceKey; o++)
+			for (int o = 1; o <= gPieceKey; o++)
 			{
 	//			System.out.println("checking mass #: " + o);
 				if (bestPieceChanged)
@@ -685,9 +685,11 @@ public class CameraRun {
 					w = massObjectPointer.getGPiece(bestPiece).width;
 					h = massObjectPointer.getGPiece(bestPiece).height;
 				}
+				
 				int cX = massObjectPointer.getGPiece(o).xStart,cY = massObjectPointer.getGPiece(o).yStart,
 						cW = massObjectPointer.getGPiece(o).width,cH = massObjectPointer.getGPiece(o).height;
-				if (massObjectPointer.getGPiece(o).mass > 75 || cW > 5 || cH > 5)
+				
+				if (massObjectPointer.getGPiece(o).mass > 50 || cW > 5 || cH > 5)
 				{
 					double cMaskOverlap = percentMaskOverlap(cX,cY,cW,cH);
 					double maskOverlap = percentMaskOverlap(x,y,w,h);
@@ -697,16 +699,17 @@ public class CameraRun {
 					//		System.out.println("pO: " + maskOverlap);
 					table.putNumber("cMaskOverlap: ", cMaskOverlap);
 					table.putNumber("MaskOverlap: ", maskOverlap);
+				//	if (Math.abs(a))
 					if (cMaskOverlap > maskOverlap)
 					{
 						bestPiece = o;
 						bestPieceChanged = true;
 					}
-					else if (((cMaskOverlap <= maskOverlap+10)&&(cMaskOverlap >= maskOverlap-10) || (maskOverlap <= cMaskOverlap+10)&&(maskOverlap >= cMaskOverlap-10)) && (massObjectPointer.getGPiece(bestPiece).mass < massObjectPointer.getGPiece(o).mass))
+				/*	else if (((cMaskOverlap <= maskOverlap+10)&&(cMaskOverlap >= maskOverlap-10) || (maskOverlap <= cMaskOverlap+10)&&(maskOverlap >= cMaskOverlap-10)) && (massObjectPointer.getGPiece(bestPiece).mass < massObjectPointer.getGPiece(o).mass))
 					{
 						bestPiece = o;
 						bestPieceChanged = true;
-					}
+					}*/
 					else
 					{
 						bestPieceChanged = false;
@@ -742,7 +745,9 @@ public class CameraRun {
 	private double percentMaskOverlap(int xStart, int yStart, int width, int height)
 	{
 		double percentOverlap;
-		double tapeDepth = (4*(height/6.0)+(width/10.0))/5.0;
+		double tapeDepth = ((height/6.0)+4*(width/10.0))/5.0;
+		
+		table.putNumber("tapeDepth: ", tapeDepth);
 		
 	//	int[][] mask = createMask(width, height);//index: 0-width; 1-height; 2-tapeDepth
 		double overlapMask = 0, totalGreen = 1;
@@ -751,9 +756,9 @@ public class CameraRun {
 		{
 			for (int x = xStart; x < xStart + width; x++)
 			{
-				if ((x < tapeDepth) //left vertical block
-						|| (x > width-tapeDepth)//right vertical block
-						|| (y > height-tapeDepth))
+				if ((x <= xStart+tapeDepth) //left vertical block
+						|| (x >= xStart+width-tapeDepth)//right vertical block
+						|| (y >= yStart+height-tapeDepth))
 				{
 					if (pic[x][y] > 0)
 					{
@@ -762,13 +767,13 @@ public class CameraRun {
 					}
 					else
 					{
-						overlapMask-=0.5;
+						//overlapMask-=2;
 					}
 				}
 				else if (pic[x][y] > 0)
 				{
 					totalGreen++;
-					overlapMask--;
+					overlapMask-=0.05;
 				}
 		/*		if (mask[x-xStart][y-yStart] == pic[x][y])
 				{
@@ -934,11 +939,7 @@ public class CameraRun {
 		*/
 		/*double dist = getDistanceMass(bestPieceKey);
 		double angle = getAngleTilt(bestPieceKey);*/
-		if (/*(Math.abs(angle) < maxDistortedAngle) && !moveShooterArm &&*/table.getBoolean("finishedMovingPot: ",false) && !centeringGoal && distance < 15*12)
-		{
-			return true;
-		}
-		return false;
+		return (/*(Math.abs(angle) < maxDistortedAngle) && !moveShooterArm &&*/table.getBoolean("finishedMovingPot: ",false) && !centeringGoal && distance < 15*12);
 	}
 	
 	private void colorSquare(BufferedImage img, int x, int y, Color color)
