@@ -18,7 +18,7 @@ public class SS_Hook extends Subsystem {
     	setDefaultCommand(new C_HookMove());
     }
     
-    public void MoveHook(double pSpeed){
+    public void moveHook(double pSpeed){
     	hookMotor.set(pSpeed);
     }
     

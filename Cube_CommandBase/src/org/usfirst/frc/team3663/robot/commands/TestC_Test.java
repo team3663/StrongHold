@@ -81,10 +81,11 @@ public class TestC_Test extends Command {
 		    		Robot.test.testName = "CameraLightSpike";
 		    		break;
 		    	case 14:
-		    		Robot.ss_Hook.MoveHook(jsValue);
+		    		Robot.ss_Hook.moveHook(jsValue);
 		    		Robot.test.testName = "HookMotor";
 		    		break;
 	    	}
+	    	zeroMotors(Robot.test.testNumber);
     	}
     	Robot.test.update();
     }
@@ -99,5 +100,53 @@ public class TestC_Test extends Command {
 
     protected void interrupted() {
 	   end();
+    }
+    
+    private void zeroMotors(int pValue){
+    	if(pValue != 0){
+    		Robot.ss_DriveTrain.controlIndMotor(0, 0);
+    	}
+    	if(pValue != 1){
+    		Robot.ss_DriveTrain.controlIndMotor(1, 0);
+    	}
+    	if(pValue != 2){
+    		Robot.ss_DriveTrain.controlIndMotor(2, 0);
+    	}
+    	if(pValue != 3){
+    		Robot.ss_DriveTrain.controlIndMotor(3, 0);
+    	}
+    	if(pValue != 4){
+    		Robot.ss_Shooter.setShooterMotorTop(0);
+    	}
+    	if(pValue != 5){
+    		Robot.ss_Shooter.setShooterMotorBottom(0);
+    	}
+    	if(pValue != 6){
+    		//shooter plunger
+    	}
+    	if(pValue != 7){
+    		Robot.ss_Winch.testSetWinchMotor1(0);
+    	}
+    	if(pValue != 8){
+    		Robot.ss_Winch.testSetWinchMotor2(0);
+    	}
+    	if(pValue != 9){
+    		Robot.ss_Dart.NOTSAFEMoveDart(0);
+    	}
+    	if(pValue != 10){
+    		Robot.ss_PickupArm.setPickupSpeed(0);
+    	}
+    	if(pValue != 11){
+    		//pickup Piston
+    	}
+    	if(pValue != 12){
+    		Robot.ss_WheelyBar.moveWheelyBar(0);
+    	}
+    	if(pValue != 13){
+    		//camera light
+    	}
+    	if(pValue != 14){
+    		Robot.ss_Hook.moveHook(0);
+    	}
     }
 }

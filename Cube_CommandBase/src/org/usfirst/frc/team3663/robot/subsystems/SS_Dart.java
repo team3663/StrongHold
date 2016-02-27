@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SS_Dart extends Subsystem {
 	
 	//these are maxes based on the shooter of the bot
-	private int maxPotentiometer = 2200;//Frodo:2160;
-	private int minPotentiometer = 410;//Frodo:600
+	private int minPotentiometer = 410;//600
+	private int maxPotentiometer = minPotentiometer + 1790;//2160;
 	//soft is for where the bot fires the arm if in this zone
 	private int soft1 = 660;
 	private int soft2 = 1860;
@@ -65,6 +65,10 @@ public class SS_Dart extends Subsystem {
     	else{
     		return -1;
     	}
+    }
+    
+    public void NOTSAFEMoveDart(double pSpeed){
+    	dartMotor.set(pSpeed);
     }
     
     public boolean inSoftZone(){
