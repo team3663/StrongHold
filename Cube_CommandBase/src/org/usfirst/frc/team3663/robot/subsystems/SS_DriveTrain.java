@@ -28,6 +28,8 @@ public class SS_DriveTrain extends Subsystem {
 	private AnalogGyro driveGyro = new AnalogGyro(Robot.robotMap.driveGyro);
 
 	//encoders are now from CANTalons
+	Encoder enc1 = new Encoder(0,1);
+	Encoder enc2 = new Encoder(2,3);
 	
 	//Carry values
 	private int currentRunNumber = 0;
@@ -59,10 +61,12 @@ public class SS_DriveTrain extends Subsystem {
     }
     
     public int getLeftEnc(){							//gets the left Encoder
+    	//return enc1.getRaw();
     	return driveMotorLeft1.getEncPosition();
     }
     
     public int getRightEnc(){							//gets the right encoder
+    	//return enc2.getRaw();
     	return driveMotorRight1.getEncPosition();
     }
     
