@@ -18,7 +18,7 @@ public class SS_Test extends Subsystem {
 		SmartDashboard.putNumber("Testing #:", testNumber);
     	SmartDashboard.putBoolean("Test Mode:", isTesting);
     	SmartDashboard.putString("Testing:", testName);
-    	Robot.gui.sendNumber("operation/Testing", testNumber);
+    	Robot.gui.sendNumber("operation/Test#", testNumber);
     	Robot.gui.sendBoolean("operation/TestMode", isTesting);
     	Robot.gui.sendString("operation/Testing", testName);
 	}
@@ -33,7 +33,7 @@ public class SS_Test extends Subsystem {
     	SmartDashboard.putNumber("Testing #:", testNumber);
     	SmartDashboard.putBoolean("Test Mode:", isTesting);
     	SmartDashboard.putString("Testing:", testName);
-    	Robot.gui.sendNumber("operation/Testing", testNumber);
+    	Robot.gui.sendNumber("operation/Test#", testNumber);
     	Robot.gui.sendBoolean("operation/TestMode", isTesting);
     	Robot.gui.sendString("operation/Testing", testName);
     }

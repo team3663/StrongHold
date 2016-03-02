@@ -1,19 +1,23 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class messageBoard extends JPanel{
-	JLabel txt;
+	JTextArea jta = new JTextArea(7,80);
+	JScrollPane jsp;
 	public messageBoard(){
-		setBackground(Color.DARK_GRAY);
-		setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		txt = new JLabel("hello");
+		jta.setBackground(Color.LIGHT_GRAY);
+		jta.setText("What is love?");
+		jta.setEditable(false);
+		jsp = new JScrollPane(jta,
+			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.add(jsp);
+		
 	}
 	public void say(String msg){
-		txt.setText(msg);
+		jta.append("\n" + msg);
 	}
 }

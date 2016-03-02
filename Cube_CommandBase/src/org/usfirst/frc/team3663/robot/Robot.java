@@ -133,7 +133,6 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	updateDashboard();
         Scheduler.getInstance().run();
     }
     
@@ -153,16 +152,4 @@ public class Robot extends IterativeRobot {
     	//oi.canTest(true);
     }
     
-    private void updateDashboard(){					//responsible for updating the dash board
-    	SmartDashboard.putString("Update Status", "Running");
-    	ss_Dart.updateDashboard();
-    	ss_DriveTrain.updateDashboard();
-    	ss_PickupArm.updateDashboard();
-    	ss_Shooter.updateDashboard();
-    	ss_Winch.updateDashboard();
-    	ss_Camera.updateDashboard();
-    	ss_Hook.updateDashboard();
-    	ss_WheelyBar.updateDashboard();
-    	ss_PDB.updateDashboard();
-    }
 }

@@ -57,11 +57,13 @@ public class Archiver {
 	public void writeFile(String day, String run){
 		alphabetize();
 		PrintWriter writer = null;
+		new File("C:\\logFiles").mkdir();
 		new File("C:\\logFiles\\"+day).mkdir();
 		try {
 			writer = new PrintWriter("C:\\logFiles\\" + day + "\\" + run + ".csv","UTF-8");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
+			System.exit(0);
 		}
 		
 		int maxLength = rows.get(0).size();

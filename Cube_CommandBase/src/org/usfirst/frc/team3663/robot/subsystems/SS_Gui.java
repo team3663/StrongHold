@@ -1,8 +1,11 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
+import org.usfirst.frc.team3663.robot.commands.C_UpdateGui;
+
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-public class SS_Gui {
+public class SS_Gui extends Subsystem{
 	NetworkTable table;
 	public SS_Gui(){
 		table = NetworkTable.getTable("Gui");
@@ -24,5 +27,10 @@ public class SS_Gui {
 	}
 	public boolean getBoolean(String label){
 		return table.getBoolean(label,false);
+	}
+	@Override
+	protected void initDefaultCommand() {
+		setDefaultCommand(new C_UpdateGui());
+		
 	}
 }
