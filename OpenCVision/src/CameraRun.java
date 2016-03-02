@@ -40,7 +40,7 @@ public class CameraRun {
 	int goalCenterX = -1,goalCenterY;
 	int fixWidth = 640;
 	int fixHeight = 480;
-	double resolutionRatio = 320/640;
+	double resolutionRatio = 640/640;//new resolution/640
 	double angle, distance;//angle called in comment in findCenterGoal()
 	
 //	boolean foundObject = false;
