@@ -28,6 +28,8 @@ public class SS_DriveTrain extends Subsystem {
 	private AnalogGyro driveGyro = new AnalogGyro(Robot.robotMap.driveGyro);
 
 	//encoders are now from CANTalons
+	Encoder enc1 = new Encoder(0,1);
+	Encoder enc2 = new Encoder(2,3);
 	
 	//Carry values
 	private int currentRunNumber = 0;
@@ -59,10 +61,12 @@ public class SS_DriveTrain extends Subsystem {
     }
     
     public int getLeftEnc(){							//gets the left Encoder
+    	//return enc1.getRaw();
     	return driveMotorLeft1.getEncPosition();
     }
     
     public int getRightEnc(){							//gets the right encoder
+    	//return enc2.getRaw();
     	return driveMotorRight1.getEncPosition();
     }
     
@@ -137,16 +141,16 @@ public class SS_DriveTrain extends Subsystem {
     
     public void updateDashboard(){						//updates the dash board
     	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
-    	SmartDashboard.putNumber("LeftEncoder : ", driveMotorLeft1.getEncPosition());
-    	SmartDashboard.putNumber("RightEncoder : ", driveMotorRight1.getEncPosition());
+    	SmartDashboard.putNumber("LeftEncoder : ", getRightEnc());
+    	SmartDashboard.putNumber("RightEncoder : ", getLeftEnc());
 
     	Robot.gui.sendNumber("drive/Left Drive Motor 1", driveMotorLeft1.getSpeed());
     	Robot.gui.sendNumber("drive/Left Drive Motor 2", driveMotorLeft2.getSpeed());
     	Robot.gui.sendNumber("drive/Right Drive Motor 1", driveMotorRight1.getSpeed());
     	Robot.gui.sendNumber("drive/Right Drive Motor 2", driveMotorRight2.getSpeed());
     	Robot.gui.sendNumber("drive/Drive Gyro Angle", Math.round(driveGyro.getAngle()*100.0)/100.0);
-    	Robot.gui.sendNumber("drive/Left Encoder", driveMotorLeft1.getEncPosition());
-    	Robot.gui.sendNumber("drive/Right Encoder", driveMotorRight1.getEncPosition());
+    	Robot.gui.sendNumber("drive/Left Encoder", getRightEnc());
+    	Robot.gui.sendNumber("drive/Right Encoder", getLeftEnc());
     }
 }
 

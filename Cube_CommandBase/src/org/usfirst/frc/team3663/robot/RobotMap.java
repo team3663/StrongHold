@@ -40,14 +40,14 @@ public class RobotMap {
 		public int wheelyBarLimitSwitch = 8;
 		public int pickupLowerLimit = 	 9;
 		
-		public int[] autoSwitchs = new int[]{1, 2, 3, 4};
+		public int[] autoSwitchs = new int[]{5, 6, 7, 10};
     
 /*********Relays*********/
 	//Camera
 		public int cameraRelay = 0;
 /*******Solenoids*******/
-	    public int[] pickUpSolenoid  = new int[]{3,2};    
-	    public int[] shooterSolenoid = new int[]{1,0};
+	    public int[] pickUpSolenoid  = new int[]{3,2};//3.2  
+	    public int[] shooterSolenoid = new int[]{1,0};//1.0
 	    
 /****DriveControlles*****/
 	//driveTrain
@@ -63,12 +63,12 @@ public class RobotMap {
 	//DriveTrain
 	    public int encoderTicksPerInch = 20;
 	//Dart
-	    public int minDistanceValue = 410;
-	    public int maxDistanceValue = minDistanceValue + 1790;
-	    public int soft1 = 410;
-	    public int soft2 = 410;
-	    public int hard1 = 410;
-	    public int hard2 = 410;
-	    public int touch1 = 410;
-	    public int touch2 = 410;
+	    public int minDistanceValue = 520;//410;
+	    public int maxDistanceValue = 2200;
+	    public int soft1 = 542;
+	    public int soft2 = 1976;
+	    public int hard1 = 540;
+	    public int hard2 = 1464;//1918
+	    public int touch1 = 542;
+	    public int touch2 = 1464;
 }
