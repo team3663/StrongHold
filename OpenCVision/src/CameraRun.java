@@ -94,8 +94,8 @@ public class CameraRun {
 	
 	public void run()
 	{
-	//	System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-	//	CameraInit();
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		CameraInit();
 
 		if (camera.isOpened())
 		{
@@ -168,7 +168,7 @@ public class CameraRun {
 		//findU(buffImg);
 		
 		//System.out.println("--------------------printing New Image");
-	/*	resetVariables();
+		resetVariables();
 		separateObjects();
 		removeSmallObjects();//remember later to get rid of extra removeSmallObject() methods
 	//	table.putNumber("gPieceKey: ", gPieceKey);
@@ -177,7 +177,7 @@ public class CameraRun {
 		{
 	//		getMostMassObject();
 			getBestObjectMask();
-		}*/
+		}
 		
 		//*/
 		image = new ImageIcon(buffImg);
@@ -215,7 +215,7 @@ public class CameraRun {
 		colmns = new int[img.getWidth()];*/
 		for(int y = 0; y<height; y++)
 		{
-			for(int x = 104/**resolutionRatio*//*0*/; x<width; x++)//make it ignore left corner!!!!!!!!!!!
+			for(int x = (int)(104)/**resolutionRatio)0*/; x<width; x++)//make it ignore left corner!!!!!!!!!!!
 			{
 				if (/*!(x < 104/* && y  < 377*./) && */(!dartBlwThrsh || (dartBlwThrsh && y < 374/**resolutionRatio*/)))
 				{
@@ -430,7 +430,7 @@ public class CameraRun {
 					endX = x;
 					lineLength++;
 				}
-				if(beganLine && (x == 639 || (pic[x][y] == 0)))
+				if(beganLine && (x == fixWidth-1 || (pic[x][y] == 0)))
 				{ 
 					alreadyAdded = false;
 					alreadyAddedKey = -1;
@@ -569,7 +569,7 @@ public class CameraRun {
 			}
 		}counter++;
 		
-		double mass = ((massArr[0]+massArr[1]+massArr[2]+massArr[3]+massArr[4])/5)*27.5/21.0;//if we want to use resolution ratio: ((480*640)/(320*240))
+		double mass = ((massArr[0]+massArr[1]+massArr[2]+massArr[3]+massArr[4])/5)*27.5/21.0;//*((480*640)/(320*240));//if we want to use resolution ratio: ((480*640)/(320*240))
 		//table.putNumber("mass: ",mass);
 		
 		d = (-93.5*Math.log(mass)) + 858.41;
@@ -780,63 +780,65 @@ public class CameraRun {
 	{
 		//Frodo:
 		//angle = getAngleTilt(bestPieceKey);
-		distance = getDistanceMass(bestPieceKey);
+		/*distance = getDistanceMass(bestPieceKey);
 		table.putNumber("distanceByMass: ", distance);
 		
-		/*if (distance < 64)
-		{
-			goalCenterX = 356;
-			//goalCenterY = 
-		}
-		else if (distance < 78)
-		{
-			goalCenterX = 347;
-			//goalCenterY = 
-		}
-		else if (distance < 97)
-		{
-			goalCenterX = 340;
-			//goalCenterY = 
-		}
-		else if (distance < 160)
-		{
-			goalCenterX = 330;
-			//goalCenterY = 
-		}
-		else if (distance < 186)
-		{
-			goalCenterX = 325;
-			//goalCenterY = 
-		}
-		else//321//322
-		{
-			goalCenterX = 315;
-			//goalCenterY = 
-		}*/
-	//	/*//for final bot
+		
 		if (distance < 64)
 		{
-			goalCenterX = 640-356;//*resolutionRatio
+			goalCenterX = (int)(356);//*resolutionRatio);
+			//goalCenterY = 
 		}
 		else if (distance < 78)
 		{
-			goalCenterX = 640-347;//*resolutionRatio
+			goalCenterX = (int)(347);//*resolutionRatio);
+			//goalCenterY = 
 		}
 		else if (distance < 97)
 		{
-			goalCenterX = 640-340;//*resolutionRatio
+			goalCenterX = (int)(340);//*resolutionRatio);
+			//goalCenterY = 
 		}
 		else if (distance < 160)
 		{
-			goalCenterX = 640-330;//*resolutionRatio
+			goalCenterX = (int)(330);//*resolutionRatio);
+			//goalCenterY = 
 		}
 		else if (distance < 186)
 		{
-			goalCenterX = 640-325;//*resolutionRatio
+			goalCenterX = (int)(325);//*resolutionRatio);
+			//goalCenterY = 
 		}
 		else//321//322
 		{
-			goalCenterX = 640-315;//*resolutionRatio
+			goalCenterX = (int)(315);//*resolutionRatio);
+			//goalCenterY = 
+		}*/
+		//for final bot
+		
+		if (distance < 64)
+		{
+			goalCenterX = 640-(int)(356);//*resolutionRatio);
+		}
+		else if (distance < 78)
+		{
+			goalCenterX = 640-(int)(347);//*resolutionRatio);
+		}
+		else if (distance < 97)
+		{
+			goalCenterX = 640-(int)(340);//*resolutionRatio);
+		}
+		else if (distance < 160)
+		{
+			goalCenterX = 640-(int)(330);//*resolutionRatio);
+		}
+		else if (distance < 186)
+		{
+			goalCenterX = 640-(int)(325);//*resolutionRatio);
+		}
+		else//321//322
+		{
+			goalCenterX = 640-(int)(315);//*resolutionRatio);
 		}
 		 
 	}
