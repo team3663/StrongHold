@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -25,7 +26,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public int grabEncoder(){										//gets the value of the encoder
-    	return 0;
+    	return wheelyBarMotor.getEncPosition();
     }
     
     public int maxDistance(){										//returns the max value
@@ -68,24 +69,27 @@ public class SS_WheelyBar extends Subsystem {
     	return false;
     }
     
-    public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
+    public void moveWheelyBarSafe(double pSpeed){
     	int distValue = grabEncoder();
-    	if(wheelyBarLimit.get()){
-    		resetEncoder();
-    	}
-    	if(((distValue < maxEncoderTicks && pSpeed > 0) || (distValue > 0 && pSpeed < 0)) && setToZero){
-    		wheelyBarMotor.set(pSpeed);
+    	if((pSpeed > 0 && distValue < maxEncoderTicks) || (pSpeed < 0 && distValue > 20)){
+    		wheelyBarMotor.set(pSpeed/2);
     	}
     	else{
-    		STOP();
+    		wheelyBarMotor.set(0);
     	}
+    }
+    
+    public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
+    	wheelyBarMotor.set(pSpeed/2);
     }
     
     public void STOP(){												//stops the motor
     	wheelyBarMotor.set(0);
     }
+    
     public void updateDashboard(){
-    	Robot.gui.sendNumber("wheelyBar/Wheely Motor",wheelyBarMotor.getSpeed());
+    	SmartDashboard.putNumber("WheelyBar Encoder", wheelyBarMotor.getEncPosition());
+    	Robot.gui.sendNumber("wheelyBar/Wheely Encoder",wheelyBarMotor.getEncPosition());
     }
 }
 

@@ -7,19 +7,17 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_PickupSafteyArm extends Command {
+public class C_WinchMoveNoSafety extends Command {
 
-    public C_PickupSafteyArm() {
-    	requires(Robot.ss_PickupArm);
+    public C_WinchMoveNoSafety() {
+        requires(Robot.ss_Winch);
     }
 
     protected void initialize() {
     }
     
     protected void execute() {
-    	if(!Robot.ss_PickupArm.isDown() && Robot.ss_Dart.getMoveArm()){
-    		Robot.ss_PickupArm.firePickupSolenoid(true);
-    	}
+    	Robot.ss_Winch.setWinchSpeedNOTSAFE(Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.winchAxis)/2);
     }
 
     protected boolean isFinished() {
@@ -27,9 +25,10 @@ public class C_PickupSafteyArm extends Command {
     }
 
     protected void end() {
+    	Robot.ss_Winch.STOP();
     }
 
-   protected void interrupted() {
-	   end();
+    protected void interrupted() {
+    	end();
     }
 }

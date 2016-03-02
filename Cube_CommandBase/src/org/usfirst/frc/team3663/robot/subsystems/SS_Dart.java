@@ -14,17 +14,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class SS_Dart extends Subsystem {
 	
 	//these are maxes based on the shooter of the bot
-	private int maxPotentiometer = 2160;
-	private int minPotentiometer = 600;
+	private int minPotentiometer = Robot.robotMap.minDistanceValue;//600
+	private int maxPotentiometer = Robot.robotMap.maxDistanceValue;//2160;
 	//soft is for where the bot fires the arm if in this zone
-	private int soft1 = 660;
-	private int soft2 = 1860;
+	private int soft1 = Robot.robotMap.soft1;
+	private int soft2 = Robot.robotMap.soft2;
 	//hard is where the dart will stop and wait for the arm
-	private int hard1 = 760;
-	private int hard2 = 1740;
+	private int hard1 = Robot.robotMap.hard1;
+	private int hard2 = Robot.robotMap.hard2;
 	//touch is where the two can connect but the dart needs to go a certain way
-	private int touch1 = 1210;
-	private int touch2 = 1510;
+	private int touch1 = Robot.robotMap.touch1;
+	private int touch2 = Robot.robotMap.touch2;
+	//this is what determins what area of acceptance for the dart
+	private int bufferZone = 10;
 	
 	//Motor
 	private CANTalon dartMotor = new CANTalon(Robot.robotMap.dartMotor);
@@ -34,10 +36,7 @@ public class SS_Dart extends Subsystem {
 	
 	//Past Values
 	private boolean movePickup = false;
-	
-	private int countDown = 3;
-	private int lastRunPotentiometer = -10000;
-	
+		
     public void initDefaultCommand() {
     	dartMotor.enableBrakeMode(true);
     	setDefaultCommand(new C_DartMove());
@@ -65,6 +64,10 @@ public class SS_Dart extends Subsystem {
     	}
     }
     
+    public void NOTSAFEMoveDart(double pSpeed){
+    	dartMotor.set(pSpeed);
+    }
+    
     public boolean inSoftZone(){
     	int distValue = dartPotentiometer.getAverageValue();
     	return distValue < soft2 && distValue > soft1;
@@ -89,7 +92,7 @@ public class SS_Dart extends Subsystem {
     	return movePickup;
     }
     
-    public double convertSpeed(double pSpeed){
+    public double convertSpeed(double pSpeed){					//makes sure that the joystick is passing it in useful values
     	pSpeed = (int)(pSpeed*10);
     	pSpeed = pSpeed/10;
     	if(pSpeed - .1  == 0 || pSpeed + .1 == 0){
@@ -132,6 +135,7 @@ public class SS_Dart extends Subsystem {
     			setMovingArm(false);
     			dartMotor.set(pSpeed);
     		}
+    		dartMotor.set(pSpeed);
     	}
     	else{
     		dartMotor.set(0);
@@ -144,12 +148,12 @@ public class SS_Dart extends Subsystem {
     	return (currValue < pLocation+4 && currValue > pLocation-4);
     }*///may not need
     
-    public boolean hitLocation(double pSpeed, int pFinalLocation){
+    public boolean hitLocation(double pSpeed, int pFinalLocation){				//checks to see if the bot has hit the target location for the dart
     	int distValue = dartPotentiometer.getAverageValue();
-    	if(pSpeed < 0 && distValue < pFinalLocation+10){
+    	if(pSpeed < 0 && distValue < pFinalLocation+bufferZone){
     		 return true;
     	}
-    	if(pSpeed > 0 && distValue > pFinalLocation-10){
+    	if(pSpeed > 0 && distValue > pFinalLocation-bufferZone){
     		return true;
     	}
     	return false;
@@ -160,18 +164,18 @@ public class SS_Dart extends Subsystem {
     	return !(distValue < maxPotentiometer && distValue > minPotentiometer);
     }
     
-    public void STOP(){
+    public void STOP(){								//stops the dart from moving
     	dartMotor.set(0);
     }
     
     public void updateDashboard(){					//updates to the dash board
     	SmartDashboard.putNumber("Dart Potentiometer : ", dartPotentiometer.getAverageValue());
-    	SmartDashboard.putNumber("Dart Motor : ", dartMotor.getSpeed());
     	SmartDashboard.putBoolean("SafeToRaisePickup : ", getMoveArm());
-    	
-    	Robot.gui.sendNumber("dart/Dart Potentiometer : ", dartPotentiometer.getAverageValue());
-    	Robot.gui.sendNumber("dart/Dart Motor : ", dartMotor.getSpeed());
-    	Robot.gui.sendBoolean("dart/SafeToRaisePickup : ", getMoveArm());
+
+    	Robot.gui.sendNumber("dart/Dart Potentiometer", dartPotentiometer.getAverageValue());
+    	Robot.gui.sendBoolean("dart/SafeToRaisePickup", getMoveArm());
+
+    	Robot.visionTable.putBoolean("dartBelowThreshold: ", (dartPotentiometer.getAverageValue() < 480));
     }
 }
 

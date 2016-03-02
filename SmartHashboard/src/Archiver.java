@@ -57,11 +57,13 @@ public class Archiver {
 	public void writeFile(String day, String run){
 		alphabetize();
 		PrintWriter writer = null;
+		new File("C:\\logFiles").mkdir();
 		new File("C:\\logFiles\\"+day).mkdir();
 		try {
 			writer = new PrintWriter("C:\\logFiles\\" + day + "\\" + run + ".csv","UTF-8");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
+			System.exit(0);
 		}
 		
 		int maxLength = rows.get(0).size();
@@ -73,7 +75,11 @@ public class Archiver {
 		for(int i=0;i<maxLength;i++){
 			for(ArrayList<String> a:rows){
 				if(!a.get(0).equals("aa_time")){ //if the column isn't aa_time
-					currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine
+					try{
+						currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine
+					}catch(IndexOutOfBoundsException e){
+						currentLine = currentLine + ",";
+					}
 				}else{ //if this is aa_time
 					try{
 						tempTime = a.get(i); //temp holds onto aa_time's value

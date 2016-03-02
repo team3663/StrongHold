@@ -1,4 +1,4 @@
-package org.usfirst.frc.team3663.robot.commands;
+ package org.usfirst.frc.team3663.robot.commands;
 
 import org.usfirst.frc.team3663.robot.Robot;
 
@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_WinchJoystickUse extends Command {
+public class C_WinchMove extends Command {
 
-    public C_WinchJoystickUse() {
+    public C_WinchMove() {
         requires(Robot.ss_Winch);
     }
 

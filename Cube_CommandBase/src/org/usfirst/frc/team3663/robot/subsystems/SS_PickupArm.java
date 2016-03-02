@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
-import org.usfirst.frc.team3663.robot.commands.C_PickupSafteyArm;
+import org.usfirst.frc.team3663.robot.commands.C_PickupSafetyArm;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -27,7 +27,7 @@ public class SS_PickupArm extends Subsystem {
 	private boolean stayInSafeZone = true;
 	
     public void initDefaultCommand() {						//Sets starts safety check
-    	setDefaultCommand(new C_PickupSafteyArm());
+    	setDefaultCommand(new C_PickupSafetyArm());
     }
     
     public void setPickupSpeed(double speed){				//Sets the speed of the motor
@@ -36,7 +36,7 @@ public class SS_PickupArm extends Subsystem {
     }
     
     public boolean isDown(){
-    	return pickupSolenoid.get() == DoubleSolenoid.Value.kForward && !lowerLimit.get();
+    	return pickupSolenoid.get() == DoubleSolenoid.Value.kForward && lowerLimit.get();
     }
     
     public boolean isSafe(){
@@ -70,14 +70,12 @@ public class SS_PickupArm extends Subsystem {
     }
     
     public void updateDashboard(){							//Updates the dash board
-    	SmartDashboard.putNumber("Pickup Speed : ", pickupMotor.getSpeed());
     	SmartDashboard.putBoolean("Pickup Lower Limit : ", !lowerLimit.get());
     	SmartDashboard.putBoolean("Pickup Safe Setting : ", stayInSafeZone);
     	SmartDashboard.putBoolean("is down : ", isDown());
-    	Robot.gui.sendNumber("pickUp/Pickup Speed : ", pickupMotor.getSpeed());
-    	Robot.gui.sendBoolean("pickUp/Pickup Lower Limit : ", !lowerLimit.get());
-    	Robot.gui.sendBoolean("pickUp/Pickup Safe Setting : ", stayInSafeZone);
-    	Robot.gui.sendBoolean("pickUp/is down : ", isDown());
+    	Robot.gui.sendBoolean("pickUp/Pickup Lower Limit", !lowerLimit.get());
+    	Robot.gui.sendBoolean("pickUp/Pickup Safe Setting", stayInSafeZone);
+    	Robot.gui.sendBoolean("pickUp/is down", isDown());
     }
 }
 

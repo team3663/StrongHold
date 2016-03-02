@@ -14,9 +14,8 @@ public class CG_AutoVisionShooting extends CommandGroup {
 	
     public  CG_AutoVisionShooting() {
     	
-    	//fix tomorrow
-		addSequential(new C_VisionCenterGoal());
-		addSequential(new C_VisionFineAdjust());
+		addSequential(new C_DriveVisionCenterGoal());
+		addSequential(new C_DriveVisionFineAdjust());
 	//	addSequential(new C_ShooterShoot());
 		
 		//----------------------------------------------

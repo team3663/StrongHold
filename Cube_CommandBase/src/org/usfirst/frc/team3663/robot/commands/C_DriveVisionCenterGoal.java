@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_VisionCenterGoal extends Command {
+public class C_DriveVisionCenterGoal extends Command {
 
 	NetworkTable table;
 	double startTime;
@@ -17,7 +17,7 @@ public class C_VisionCenterGoal extends Command {
 		
 	double degrees;
 	
-    public C_VisionCenterGoal() {
+    public C_DriveVisionCenterGoal() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ss_DriveTrain);
         table = Robot.visionTable;
@@ -25,6 +25,8 @@ public class C_VisionCenterGoal extends Command {
 
     boolean stop;
     boolean objectFound;
+    double speed;
+    boolean firstTime;
     
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -34,19 +36,28 @@ public class C_VisionCenterGoal extends Command {
     	stop = !table.getBoolean("C_/centeringGoal: ",false);
     	startTime = Timer.getFPGATimestamp();
     	*/
-		degrees = table.getNumber("cameraMoveAngle: ",90);
+    	
+		degrees = table.getNumber("cameraMoveAngle: ",360);
     	Robot.ss_DriveTrain.resetGyro();
     	table.putBoolean("Mode/commandRunning: ", true);
+    	speed = 0.6;
+    	firstTime = true;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	//stop = Robot.ss_DriveTrain.spinByGyro((int)degrees);
     	
-    	if (!objectFound)
+    	objectFound = table.getBoolean("foundObject: ",false);
+    	if (objectFound)
     	{
-    		Robot.ss_DriveTrain.resetGyro();
-    		degrees = table.getNumber("cameraMoveAngle: ", 360);
+    		if (firstTime)
+    		{
+    			Robot.ss_DriveTrain.resetGyro();
+        		degrees = table.getNumber("cameraMoveAngle: ", 360);
+        		speed = 0.5;
+    		}
+    		firstTime = false;
     	}
     	
     	/*boolean turnLeft = table.getBoolean("turnLeft: ",false);
@@ -74,12 +85,12 @@ public class C_VisionCenterGoal extends Command {
 	        //Robot.ss_DriveTrain.STOP();
 	        Timer.delay(1.0);
 		}*/
-    }
+ }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//work on this on Monday!!!
-        return (Robot.ss_DriveTrain.spinByGyro((int)degrees));
+        return (Robot.ss_DriveTrain.spinByGyro((int)degrees, speed));
     	//return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
     }
 
@@ -92,6 +103,7 @@ public class C_VisionCenterGoal extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	
         end();
     }
 }

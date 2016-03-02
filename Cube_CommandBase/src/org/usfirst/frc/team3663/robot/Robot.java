@@ -4,10 +4,13 @@ package org.usfirst.frc.team3663.robot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
+import org.usfirst.frc.team3663.robot.subsystems.SS_ConfigReader;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
 import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
+import org.usfirst.frc.team3663.robot.subsystems.SS_Hook;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Gui;
 import org.usfirst.frc.team3663.robot.subsystems.SS_PickupArm;
+import org.usfirst.frc.team3663.robot.subsystems.SS_PowerDistributionBoard;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Shooter;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Test;
 import org.usfirst.frc.team3663.robot.subsystems.SS_WheelyBar;
@@ -39,7 +42,10 @@ public class Robot extends IterativeRobot {
 	public static SS_Winch ss_Winch;
 	public static SS_WheelyBar ss_WheelyBar;
 	public static SS_AutoChooser ss_AutoChooser;
+	public static SS_Hook ss_Hook;
+	public static SS_PowerDistributionBoard ss_PDB;
 	public static SS_Gui gui;
+	public static SS_ConfigReader ss_config;
 	
 	
 	public static SS_Test test;
@@ -53,10 +59,11 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-
+		robotMap = new RobotMap();
+    	ss_config = new SS_ConfigReader();
+    	
 		visionTable = NetworkTable.getTable("Dog-NT");
 		
-		robotMap = new RobotMap();
 		ss_DriveTrain = new SS_DriveTrain();
 		ss_Shooter = new SS_Shooter();
 		ss_PickupArm = new SS_PickupArm();
@@ -65,6 +72,8 @@ public class Robot extends IterativeRobot {
 		ss_WheelyBar = new SS_WheelyBar();
 		ss_Camera = new SS_Camera();
 		ss_AutoChooser = new SS_AutoChooser();
+		ss_Hook = new SS_Hook();
+		ss_PDB = new SS_PowerDistributionBoard();
 		gui = new SS_Gui();
 		oi = new OI();
 		test = new SS_Test();
@@ -113,7 +122,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	C_DriveControllerDPad DpadControlls = new C_DriveControllerDPad();
-    	DpadControlls.start();
+    	//DpadControlls.start();
     	ss_DriveTrain.resetGyro();
 		ss_Camera.setLight(true);
         gui.sendBoolean("operation/Enabled", true);
@@ -124,7 +133,6 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	updateDashboard();
         Scheduler.getInstance().run();
     }
     
@@ -144,11 +152,4 @@ public class Robot extends IterativeRobot {
     	//oi.canTest(true);
     }
     
-    private void updateDashboard(){					//responsible for updating the dash board
-    	SmartDashboard.putString("Update Status", "Running");
-    	ss_Dart.updateDashboard();
-    	ss_DriveTrain.updateDashboard();
-    	ss_PickupArm.updateDashboard();
-    	ss_Shooter.updateDashboard();
-    }
 }
