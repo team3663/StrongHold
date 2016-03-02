@@ -3,6 +3,7 @@ package org.usfirst.frc.team3663.robot;
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
+import org.usfirst.frc.team3663.robot.commands.CG_WinchAndHookCombine;
 import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafety;
@@ -53,6 +54,8 @@ public class OI {
   //Winch Buttons
 	private JoystickButton winchToHoist = 	  new JoystickButton(buttonJoystick, 1);
 	private JoystickButton winchNotSafeMove = new JoystickButton(buttonJoystick, 7);
+  //Winch And Hook Enable
+	private JoystickButton winchAndHookEnable = new JoystickButton(buttonJoystick, 8); 
   //Wheely Bar Buttons
 	private JoystickButton wheelyBarMoveToZero = new JoystickButton(buttonJoystick, 4);
 	
@@ -79,6 +82,8 @@ public class OI {
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
+	  //WinchAndHookEnable
+		//winchAndHookEnable.whenPressed(new CG_WinchAndHookCombine());
 	  //Wheely Bar Buttons
 		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
 		
