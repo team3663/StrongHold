@@ -24,7 +24,7 @@ public class C_ShooterShoot extends Command {
     protected void execute() {
     	Robot.ss_Shooter.setShooterMotorsSpeed(1);
     	if(Robot.oi.driveJoystick.getRawButton(Robot.oi.shooterFirerPistonWait)){
-    		Robot.ss_Shooter.aboveWantedSpeed(123);
+    		Robot.ss_Shooter.aboveWantedSpeed(20000);
     		end = true;
     	}
     	else if(Robot.oi.driveJoystick.getRawButton(Robot.oi.shooterFirePistonNoWait)){

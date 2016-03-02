@@ -69,6 +69,16 @@ public class SS_WheelyBar extends Subsystem {
     	return false;
     }
     
+    public void moveWheelyBarSafe(double pSpeed){
+    	int distValue = grabEncoder();
+    	if((pSpeed > 0 && distValue < maxEncoderTicks) || (pSpeed < 0 && distValue > 20)){
+    		wheelyBarMotor.set(pSpeed/2);
+    	}
+    	else{
+    		wheelyBarMotor.set(0);
+    	}
+    }
+    
     public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
     	wheelyBarMotor.set(pSpeed/2);
     }

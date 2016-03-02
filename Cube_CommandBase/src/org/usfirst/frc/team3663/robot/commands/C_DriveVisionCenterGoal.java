@@ -54,9 +54,9 @@ public class C_DriveVisionCenterGoal extends Command {
     		if (firstTime)
     		{
     			Robot.ss_DriveTrain.resetGyro();
+        		degrees = table.getNumber("cameraMoveAngle: ", 360);
+        		speed = 0.5;
     		}
-    		degrees = table.getNumber("cameraMoveAngle: ", 360);
-    		speed = 0.5;
     		firstTime = false;
     	}
     	

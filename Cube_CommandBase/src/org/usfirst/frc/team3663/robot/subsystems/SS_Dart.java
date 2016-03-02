@@ -105,8 +105,8 @@ public class SS_Dart extends Subsystem {
     	int distValue = dartPotentiometer.getAverageValue();
     	pSpeed = convertSpeed(pSpeed);
     	SmartDashboard.putNumber("dart speed ", pSpeed);
-    	//if((distValue < maxPotentiometer && pSpeed < 0)||(distValue > minPotentiometer && pSpeed > 0)){
-    		/*if(!pArm){
+    	if((distValue < maxPotentiometer && pSpeed < 0)||(distValue > minPotentiometer && pSpeed > 0)){
+    		if(!pArm){
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
     					(pSpeed > 0 && distValue < touch1) || (pSpeed > 0 && distValue > soft2)){
     				dartMotor.set(pSpeed);
@@ -139,8 +139,7 @@ public class SS_Dart extends Subsystem {
     	}
     	else{
     		dartMotor.set(0);
-    	}*/
-		dartMotor.set(pSpeed);
+    	}
     }
     
 /*    public boolean atLocation(int pLocation)
