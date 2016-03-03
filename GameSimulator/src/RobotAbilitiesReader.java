@@ -28,7 +28,6 @@ public class RobotAbilitiesReader {
 		    abilitiesNames = reader.readLine();
 		
 		    String line;
-		    int counter = 0;
 		    while ((line = reader.readLine()) != null){// && counter++<6) {
 		    	robots.add(new Robot(abilitiesNames, line));
 		    	//System.out.println(line);

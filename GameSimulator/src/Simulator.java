@@ -1,15 +1,11 @@
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Simulator {
 
@@ -91,14 +87,14 @@ public class Simulator {
 			// initialize each red robot in match
 			int index = 0;
 			for(Robot r: robotsRed){
-				r.startMatch(i,defensesBlue,true);
+				r.startMatch(index,defensesBlue,true);
 				index++;
 			}
 			
 			// initialize each blue robot in match
 			index = 0;
 			for(Robot r: robotsBlue){
-				r.startMatch(i,defensesRed,false);
+				r.startMatch(index,defensesRed,false);
 				index++;
 			}
 			for (Robot r:robotsRed){
