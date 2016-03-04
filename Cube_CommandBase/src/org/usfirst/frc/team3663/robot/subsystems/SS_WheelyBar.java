@@ -80,7 +80,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
-    	wheelyBarMotor.set(pSpeed/2);
+    	wheelyBarMotor.set(pSpeed/2.0);
     }
     
     public void STOP(){												//stops the motor
