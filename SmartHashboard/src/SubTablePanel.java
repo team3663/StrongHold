@@ -20,12 +20,14 @@ public class SubTablePanel extends JPanel implements Runnable{
 	String subTable;
 	Color bckg;
 	Archiver archy;
+	messageBoard msgb;
 	
-	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy){
+	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, messageBoard msgb){
 		this.table = table;
 		this.subTable = subTable;
 		this.bckg = bckg;
 		this.archy = archy;
+		this.msgb = msgb;
 		setBackground(bckg);
 	}
 	public void init(){
@@ -52,6 +54,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 		for(int i=0;i<sList.length;i++){
 			jList[i] = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
 			System.out.println(sList[i]);
+			msgb.say(sList[i]);
 		}
 	}
 	public void fillJFrame(){
@@ -64,6 +67,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 		//guiElements = table.getKeys();
 		guiElements = table.getSubTable(subTable).getKeys();
 		System.out.println("There are " + guiElements.size() + " elements in the Set");
+		msgb.say("There are " + guiElements.size() + " elements in the Set");
 		sList = new String[guiElements.size()+1];
 		jList = new JLabel[guiElements.size()+1];
 		//populate String Array
@@ -84,53 +88,28 @@ public class SubTablePanel extends JPanel implements Runnable{
 	public void run(){
 		int count = 0;
 		long startTime = System.currentTimeMillis();
-		double r = 0;
-		double g = 0;
-		double b = 0;
-		int changing = 0;
 		while(true){
 			sleep(2); //necessary to not blow up your CPU
-			//rainbow code//
-//			b=255;
-//			if(count%1000 == 0){
-//				if(b>=255){
-//					changing = 1;
-//				}else if(g>=255){
-//					changing = 2;
-//				}else if(r>=255){
-//					changing = 3;
-//				}
-//				switch(changing){
-//					case 1:
-//						b--;
-//						g++;
-//						break;
-//					case 2:
-//						g--;
-//						r++;
-//						break;
-//					case 3:
-//						r--;
-//						b++;
-//						break;
+			if(count%1000 == 0){
+//				update(hue,)
+			}
+//			if(subTable.equals("drive")){
+//				double speedLeft = table.getSubTable(subTable).getNumber(sList[2],3663);
+//				double speedRight = table.getSubTable(subTable).getNumber(sList[5],3663);
+//				g = (((speedLeft + speedRight)/2)+1)*127.5;
+//				r = 255 - g;
+//				if(g<r)b=g;
+//				else b=r;
+//				try{
+//					update(new Color((int)r,(int)g,(int)b));
+//				}catch(Exception e){
+//					System.err.println("Color error in " + subTable);
 //				}
 //			}
-			if(subTable.equals("drive")){
-				double speedLeft = table.getSubTable(subTable).getNumber(sList[2],3663);
-				double speedRight = table.getSubTable(subTable).getNumber(sList[5],3663);
-				g = (((speedLeft + speedRight)/2)+1)*127.5;
-				r = 255 - g;
-				if(g<r)b=g;
-				else b=r;
-				try{
-					update(new Color((int)r,(int)g,(int)b));
-				}catch(Exception e){
-					System.err.println("Color error in " + subTable);
-				}
-			}
-			else{
-				update(bckg);
-			}
+//			else{
+//				update(bckg);
+//			}
+			update(bckg);
 			count++;
 			//Auto CHECK FOR REMOVED ELEMENTS//
 //			if(System.currentTimeMillis() > startTime + 10000){

@@ -3,8 +3,8 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 public class Start implements Runnable{
 
 	public static void main(String[] args) {
-		//LogReader lr = new LogReader();
-		//lr.readWordFile();
+		LogReader lr = new LogReader();
+		lr.readWordFile();
 		
 		//new Start().run();
 		Video v = new Video();

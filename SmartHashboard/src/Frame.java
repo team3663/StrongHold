@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -23,17 +24,18 @@ public class Frame implements Runnable{
 	JFrame frame;
 	OperationWatchAndTimer owat;
 	Set<String> tableList;
+	messageBoard msgBoard;
 	
-	public Frame(){
-		initNetworkTable();
+	public Frame(String ipAdr){
+		initNetworkTable(ipAdr);
 		setWindowsLookAndFeel();
 		initJFrame();
 		
 		JButton refresh = new JButton("Refresh");
 		initRefreshButton(refresh);
-		refresh.setPreferredSize(new Dimension(10,75));
+		refresh.setPreferredSize(new Dimension(10,30));
 		
-		messageBoard msgBoard = new messageBoard();
+		msgBoard = new messageBoard();
 		Archiver archie = new Archiver();
 
 		do{
@@ -47,11 +49,21 @@ public class Frame implements Runnable{
 		for(String k:tableList){
 			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
 					(float)Math.random(), 
-					(float)(Math.random()/1.5), 
-					(float)(0.6f + (Math.random()/2.5))),archie);
+					(float)(Math.random()/3.6), 
+					(float)(0.7f + (Math.random()/3.33))),archie,msgBoard);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
+//		float h = (float)Math.random();
+//		float s = 0.2f;
+//		float b = 1.0f;
+//		for(String k:tableList){
+//			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(h,s,b),archie);
+//			s += 0.1f;
+//			b -= 0.02f;
+//			count++;
+//			System.out.println("SubTable: " + k);
+//		}
 		JPanel systems = new JPanel();
 		for(int i=0;i<subs.length;i++){
 			systems.add(subs[i]);
@@ -63,10 +75,10 @@ public class Frame implements Runnable{
 			}
 		}
 		systems.setLayout(new GridLayout(0,subs.length));
-		systems.setPreferredSize(new Dimension(0,200));
+		systems.setPreferredSize(new Dimension(0,260));
 		///////////////////////////////////////////////////////
 		frame.getContentPane().add(systems, BorderLayout.NORTH);
-		frame.getContentPane().add(msgBoard, BorderLayout.CENTER);
+		frame.getContentPane().add(msgBoard, BorderLayout.WEST);
 		frame.getContentPane().add(refresh, BorderLayout.SOUTH);
 		///////////////////////////////////////////////////////
 	}
@@ -92,16 +104,10 @@ public class Frame implements Runnable{
 			sleep(3000);
 		}
 	}
-	public void initNetworkTable(){
+	public void initNetworkTable(String ip){
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.20");
+		NetworkTable.setIPAddress(ip);
 		table = NetworkTable.getTable("Gui");
-		sleep(300);
-		if(!table.isConnected()){
-			NetworkTable.shutdown();
-			NetworkTable.setIPAddress("10.36.63.78");
-			table = NetworkTable.getTable("Gui");
-		}
 		sleep(2000);
 	}
 	public void setWindowsLookAndFeel(){
@@ -124,7 +130,7 @@ public class Frame implements Runnable{
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
 		frame.setVisible(true);
-		frame.setBounds(-7,0,1619,480); //my computer screen puts it at +2, so...
+		frame.setBounds(-7,0,1200,480); //my computer screen puts it at +2, so...
 //		frame.setBounds(0,0,640,480);
 		frame.setBackground(Color.white);
 		frame.getContentPane().setBackground(Color.white);
