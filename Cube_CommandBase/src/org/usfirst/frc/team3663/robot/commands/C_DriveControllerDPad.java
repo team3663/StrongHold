@@ -28,15 +28,15 @@ public class C_DriveControllerDPad extends Command {
     		cg_OverD.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == 180 && !cg_LowBar.isRunning()){
-    		cg_LowBar.start();
+    		//cg_LowBar.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == 270){
     		
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == -1){
-    		cg_Normal.cancel();
-    		cg_LowBar.cancel();
-    		cg_OverD.cancel();
+    		//cg_Normal.cancel();
+    		//cg_LowBar.cancel();
+    		//cg_OverD.cancel();
     		
     	}
     }

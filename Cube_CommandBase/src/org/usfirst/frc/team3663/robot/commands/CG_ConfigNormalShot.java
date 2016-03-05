@@ -9,7 +9,7 @@ public class CG_ConfigNormalShot extends CommandGroup {
     
     public  CG_ConfigNormalShot() {
     	addSequential(new C_PickupFirePiston(true));
-    	addParallel(new C_WheelyBarAutoMove(0, 1));
-    	addSequential(new C_DartAutoMove(2000));
+    	addSequential(new C_DartAutoMove(2100));
+    	addSequential(new C_PickupFirePiston(false));
     }
 }

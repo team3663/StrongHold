@@ -19,6 +19,8 @@ public class SS_Winch extends Subsystem {
 	private int maxEncoderTicks = 2000;
 	
     public void initDefaultCommand() {
+    	winchMotor1.enableBrakeMode(true);
+    	winchMotor2.enableBrakeMode(true);
     	setDefaultCommand(new C_WinchMove());
     }
     
@@ -37,14 +39,8 @@ public class SS_Winch extends Subsystem {
     }
     
     public void runMotorTeleop(double pSpeed){							//for human use with built in safty
-    	int distValue = 0;
-    	if((distValue > maxEncoderTicks && pSpeed < 0) || (distValue < 0 && pSpeed > 0)){
-    		winchMotor1.set(pSpeed);
-    		winchMotor2.set(pSpeed);
-    	}
-    	else{
-    		STOP();
-    	}
+    	winchMotor1.set(pSpeed);
+    	winchMotor2.set(pSpeed);
     }
     
     public void testSetWinchMotor1(double pSpeed){

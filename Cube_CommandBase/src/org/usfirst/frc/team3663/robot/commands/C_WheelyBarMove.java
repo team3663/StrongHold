@@ -17,11 +17,23 @@ public class C_WheelyBarMove extends Command {
     }
 
     protected void execute() {
-    	if(Robot.oi.buttonJoystick.getPOV() == 0){
-        	Robot.ss_WheelyBar.moveWheelyBar(-1);
+
+    	if(Robot.oi.buttonJoystick.getRawButton(3)){
+        	if(Robot.oi.buttonJoystick.getPOV() == 0){
+            	Robot.ss_WheelyBar.moveWheelyBar(-1);
+        	}
+        	else if(Robot.oi.buttonJoystick.getPOV() == 180){
+        		Robot.ss_WheelyBar.moveWheelyBar(1);
+        	}
+        	else{
+        		Robot.ss_WheelyBar.STOP();
+        	}
+    	}
+    	else if(Robot.oi.buttonJoystick.getPOV() == 0){
+        	Robot.ss_WheelyBar.moveWheelyBarSafe(-1);
     	}
     	else if(Robot.oi.buttonJoystick.getPOV() == 180){
-    		Robot.ss_WheelyBar.moveWheelyBar(1);
+    		Robot.ss_WheelyBar.moveWheelyBarSafe(1);
     	}
     	else{
     		Robot.ss_WheelyBar.STOP();

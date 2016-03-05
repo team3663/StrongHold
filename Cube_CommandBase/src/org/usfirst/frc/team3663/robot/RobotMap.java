@@ -63,12 +63,12 @@ public class RobotMap {
 	//DriveTrain
 	    public int encoderTicksPerInch = 20;
 	//Dart
-	    public int minDistanceValue = 530;//410;
+	    public int minDistanceValue = 550;//410;
 	    public int maxDistanceValue = 2200;
-	    public int soft1 = 542;
+	    public int soft1 = 552;
 	    public int soft2 = 1976;
-	    public int hard1 = 540;
+	    public int hard1 = 552;
 	    public int hard2 = 1464;//1918
-	    public int touch1 = 542;
+	    public int touch1 = 552;
 	    public int touch2 = 1464;
 }

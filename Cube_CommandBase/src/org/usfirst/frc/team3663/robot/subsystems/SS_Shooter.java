@@ -48,9 +48,11 @@ public class SS_Shooter extends Subsystem {
     public void toggleShooterSolenoid(){									//Works as a toggle for the shooter piston
     	if(shooterSolenoid.get() == DoubleSolenoid.Value.kForward){
     		shooterSolenoid.set(DoubleSolenoid.Value.kReverse);
+    		Robot.visionTable.putBoolean("ShooterShot: ", false);
     	}
     	else{
-    		shooterSolenoid.set(DoubleSolenoid.Value.kForward);    		
+    		shooterSolenoid.set(DoubleSolenoid.Value.kForward);   
+    		Robot.visionTable.putBoolean("ShooterShot: ", true);
     	}
     }
     

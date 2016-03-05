@@ -135,7 +135,6 @@ public class SS_Dart extends Subsystem {
     			setMovingArm(false);
     			dartMotor.set(pSpeed);
     		}
-    		dartMotor.set(pSpeed);
     	}
     	else{
     		dartMotor.set(0);
