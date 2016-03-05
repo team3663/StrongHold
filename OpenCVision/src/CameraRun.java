@@ -51,7 +51,7 @@ public class CameraRun {
 	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
-		camera = new VideoCapture(videoStreamAddress);
+		camera = new VideoCapture(0);//videoStreamAddress);
 		mat = new Mat();
 		frame = new JFrame("Dog's Eyes <o> . <o>");
 		label = new JLabel();

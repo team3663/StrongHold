@@ -69,12 +69,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
-    	if(pSpeed > .2 || pSpeed < -.2){
-    		wheelyBarMotor.set(pSpeed/3.5);
-    	}
-    	else{
-    		wheelyBarMotor.set(0);
-    	}
+    	wheelyBarMotor.set(pSpeed/2.0);
     }
     
     public void STOP(){												//stops the motor
