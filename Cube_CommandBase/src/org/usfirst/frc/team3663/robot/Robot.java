@@ -108,6 +108,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
+    	
     	CG_Auto auto = new CG_Auto();
     	auto.start();
         gui.sendBoolean("operation/Enabled", true);

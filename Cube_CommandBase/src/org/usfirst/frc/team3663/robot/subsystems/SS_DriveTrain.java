@@ -75,10 +75,10 @@ public class SS_DriveTrain extends Subsystem {
     
     public boolean spinByGyro(int pDegrees, double posSpeed){			//Spins the robot the passed in value returning if the action was complete
     	if(pDegrees - bufferZoneGyro > driveGyro.getAngle() && pDegrees > 0){
-    		driveTrain.arcadeDrive(-posSpeed, 0);
+    		driveTrain.arcadeDrive(0, -posSpeed);
     	}
     	else if(pDegrees + bufferZoneGyro < driveGyro.getAngle() && pDegrees < 0){
-    		driveTrain.arcadeDrive(posSpeed, 0);    		
+    		driveTrain.arcadeDrive(0, posSpeed);    		
     	}
     	else{
     		return true;

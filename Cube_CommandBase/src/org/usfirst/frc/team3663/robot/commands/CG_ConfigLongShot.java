@@ -1,21 +1,16 @@
 package org.usfirst.frc.team3663.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class CG_Auto extends CommandGroup {
+public class CG_ConfigLongShot extends CommandGroup {
     
-    public  CG_Auto() {
+    public  CG_ConfigLongShot() {
         // Add Commands here:
-    	addSequential(new C_CameraLightSet(true));
-    	addSequential(new C_WheelyBarAutoMove(2946, .5));
         addSequential(new C_PickupFirePiston(true));
-        addSequential(new C_DartAutoMove(1410));
-        addSequential(new C_PickupFirePiston(false));
-        addSequential(new C_DriveBasedTime());
+        addSequential(new C_DartAutoMove(1750));
         //      addSequential(new Command2());
         // these will run in order.
 

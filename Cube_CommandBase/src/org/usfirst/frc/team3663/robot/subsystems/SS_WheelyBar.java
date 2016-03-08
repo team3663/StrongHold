@@ -54,13 +54,13 @@ public class SS_WheelyBar extends Subsystem {
     		STOP();
     		resetEncoder();
     		return true;
-    	}
+    	}//1750
     	return false;
     }
     
     public void moveWheelyBarSafe(double pSpeed){
     	int distValue = -grabEncoder();
-    	if((pSpeed > 0 && distValue < 2946) || (pSpeed < 0 && distValue > 1211)){
+    	if((pSpeed > 0 && distValue < 2946) || (pSpeed < 0 && distValue > 1211)&&(pSpeed>.4||pSpeed<-.4)){
     		wheelyBarMotor.set(pSpeed/2);
     	}
     	else{

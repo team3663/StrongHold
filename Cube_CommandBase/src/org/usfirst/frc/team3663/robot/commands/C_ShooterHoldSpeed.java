@@ -7,45 +7,42 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_ShooterShoot extends Command {
+public class C_ShooterHoldSpeed extends Command {
 
-	private int count = 20;
-	private boolean end = false;
-    public C_ShooterShoot() {
+	public int speed;
+	private boolean done = false;
+	private int timeOut = 10;
+    public C_ShooterHoldSpeed(int pSpeed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ss_Shooter);
     }
 
+    // Called just before this Command runs the first time
     protected void initialize() {
-    	count = 20;
-    	end = false;
     }
 
+    // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ss_Shooter.setShooterMotorTop(1);
-    	if(Robot.oi.driveJoystick.getRawButton(Robot.oi.shooterFirerPistonWait)){
-    		Robot.ss_Shooter.aboveWantedSpeed(20000);
-    		end = true;
-    	}
-    	else if(Robot.oi.driveJoystick.getRawButton(Robot.oi.shooterFirePistonNoWait)){
+    	Robot.ss_Shooter.HoldSpeed(speed);
+    	if(Robot.oi.driveJoystick.getRawButton(3)){
     		Robot.ss_Shooter.fireShooterSolenoid(true);
-    		end = true;
+    		done = true;
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(end){
-    		count --;
-    		return count < 0;
+    	if(done){
+    		timeOut--;
+            return timeOut < 0;
     	}
     	return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.ss_Shooter.fireShooterSolenoid(false); 
     	Robot.ss_Shooter.STOP();
-    	Robot.ss_Shooter.fireShooterSolenoid(false);
     }
 
     // Called when another command which requires one or more of the same
