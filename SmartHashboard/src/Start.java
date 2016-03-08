@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
@@ -15,11 +14,11 @@ public class Start {
 				InputStream in = Files.newInputStream(file);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 				ip = reader.readLine();
-				System.out.println("Connected at " + ip);
+				System.out.println("Connecting to " + ip + "...");
 			}catch(Exception e){
 				System.out.println("No IP txt file found. Defaulting to 10.36.63.20");
 			}
 		Frame hi = new Frame(ip);
-//		new Thread(hi).start(); completely untested and potentially dangerous
+		new Thread(hi).start();
 	}
 }

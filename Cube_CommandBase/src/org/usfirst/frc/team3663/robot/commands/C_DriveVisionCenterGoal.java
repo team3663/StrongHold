@@ -93,7 +93,7 @@ public class C_DriveVisionCenterGoal extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//work on this on Monday!!!
-        return (Robot.ss_DriveTrain.spinByGyro((int)degrees, speed));
+        return (Robot.ss_DriveTrain.spinByGyro(degrees, speed));
     	//return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
     }
 

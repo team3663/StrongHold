@@ -20,22 +20,41 @@ public class OperationWatchAndTimer implements Runnable{
 		boolean exportFlag = false;
 		while(true){
 			sleep(2);
-			archiver.addValue(name, Double.toString((((double)System.currentTimeMillis() - (double)startTime))/1000.0));
-			if(operation.get(1).equals("true")){//On startup (enable)
+			//the time in seconds, truncated to two decimal places
+			archiver.addValue(name, Double.toString((Math.round(((double)System.currentTimeMillis() - (double)startTime)/1000.0)*100.0)/100.0));
+			//On startup (enable)
+			if(operation.get(1).equals("true")){
+				exportFlag = true;
 				if(setNewTimeFlag){
 					setNewTimeFlag = false;
 					timeStamp = new Date();
 				}
-				exportFlag = true;
-				//Continuously add new time values
-			}else{ //On disable
+			//On disable
+			}else if(!keepGoing(1500)){
+				setNewTimeFlag = true;
 				if(exportFlag){
 					export();
 					exportFlag = false;
 				}
-				setNewTimeFlag = true;
 			}
 		}
+	}
+	//this will continue adding time values to the archiver while it waits to see if the robot is re-enabled
+	//after less than 1.5 seconds. This will prevent a break in csv logging between Autonomous and Teleop
+	public boolean keepGoing(long wait){
+		long startTime = System.currentTimeMillis();
+		while(startTime + wait >= System.currentTimeMillis()){
+			sleep(2);
+			archiver.addValue(name, Double.toString((double)System.currentTimeMillis() - (double)startTime));
+			if(operation.get(1).equals("true")) return true;
+		}
+		return false;
+	}
+	public long getTime(){
+		return System.currentTimeMillis() - startTime;
+	}
+	public boolean isEnabled(){
+		return operation.get(1).equals("true");
 	}
 	public void export(){
 		SimpleDateFormat mdy = new SimpleDateFormat("MM-dd-yyyy");

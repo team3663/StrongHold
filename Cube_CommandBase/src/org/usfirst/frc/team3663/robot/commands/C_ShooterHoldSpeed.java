@@ -15,6 +15,7 @@ public class C_ShooterHoldSpeed extends Command {
     public C_ShooterHoldSpeed(int pSpeed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ss_Shooter);
+        speed = pSpeed;
     }
 
     // Called just before this Command runs the first time
