@@ -158,10 +158,10 @@ public class SS_DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("LeftEncoder : ", getRightEnc());
     	SmartDashboard.putNumber("RightEncoder : ", getLeftEnc());
 
-    	Robot.gui.sendNumber("drive/Left Drive Motor 1", driveMotorLeft1.get());
-    	Robot.gui.sendNumber("drive/Left Drive Motor 2", driveMotorLeft2.get());
-    	Robot.gui.sendNumber("drive/Right Drive Motor 1", driveMotorRight1.get());
-    	Robot.gui.sendNumber("drive/Right Drive Motor 2", driveMotorRight2.get());
+    	Robot.gui.sendNumber("drive/Left Drive Motor 1", Math.round(driveMotorLeft1.get()*100.0)/100.0);
+    	Robot.gui.sendNumber("drive/Left Drive Motor 2", Math.round(driveMotorLeft2.get()*100.0)/100.0);
+    	Robot.gui.sendNumber("drive/Right Drive Motor 1", Math.round(driveMotorRight1.get()*100.0)/100.0);
+    	Robot.gui.sendNumber("drive/Right Drive Motor 2", Math.round(driveMotorRight2.get()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Drive Gyro Angle", Math.round(driveGyro.getAngle()*100.0)/100.0);
 //    	Robot.gui.sendNumber("drive/Left Encoder", getRightEnc());
 //    	Robot.gui.sendNumber("drive/Right Encoder", getLeftEnc());

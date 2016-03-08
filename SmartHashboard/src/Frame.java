@@ -1,30 +1,29 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Set;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-//import com.sun.java.swing.plaf.motif.*;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Frame implements Runnable{
 	SubTablePanel[] subs;
 	NetworkTable table;
+	JPanel systems;
 	JFrame frame;
 	OperationWatchAndTimer owat;
 	Set<String> tableList;
 	messageBoard msgBoard;
+	Archiver archiver;
+	int tableSize = 0;
 	
 	public Frame(String ipAdr){
 		initNetworkTable(ipAdr);
@@ -36,12 +35,13 @@ public class Frame implements Runnable{
 		refresh.setPreferredSize(new Dimension(10,30));
 		
 		msgBoard = new messageBoard();
-		Archiver archie = new Archiver();
+		archiver = new Archiver();
 
 		do{
 			tableList = table.getSubTables();
 			subs = new SubTablePanel[tableList.size()];
 			System.out.println("Table size: " + tableList.size());
+			tableSize = tableList.size();
 			sleep(1300);
 		}while(subs.length == 0);
 
@@ -50,7 +50,7 @@ public class Frame implements Runnable{
 			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
 					(float)Math.random(), 
 					(float)(Math.random()/3.6), 
-					(float)(0.7f + (Math.random()/3.33))),archie,msgBoard);
+					(float)(0.7f + (Math.random()/3.33))),archiver,msgBoard);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
@@ -64,23 +64,12 @@ public class Frame implements Runnable{
 //			count++;
 //			System.out.println("SubTable: " + k);
 //		}
-		JPanel systems = new JPanel();
-		for(int i=0;i<subs.length;i++){
-			systems.add(subs[i]);
-			subs[i].init();
-			new Thread(subs[i]).start();
-			if(tableList.toArray()[i].equals("operation")){
-				owat = new OperationWatchAndTimer(subs[i],archie);
-				new Thread(owat).start();
-			}
-		}
-		systems.setLayout(new GridLayout(0,subs.length));
-		systems.setPreferredSize(new Dimension(0,260));
-		///////////////////////////////////////////////////////
-		frame.getContentPane().add(systems, BorderLayout.NORTH);
-		frame.getContentPane().add(msgBoard, BorderLayout.WEST);
-		frame.getContentPane().add(refresh, BorderLayout.SOUTH);
-		///////////////////////////////////////////////////////
+		initSystems();
+		/////////////////////////////
+		addToFrame(systems, "North");
+		addToFrame(msgBoard, "South");
+//		addToFrame(refresh, "South");
+		/////////////////////////////
 	}
 	@Override
 	public void run(){
@@ -88,21 +77,39 @@ public class Frame implements Runnable{
 		//if new system is found, update subs, add it to the frame, refresh the frame
 		//figure out a way to tell the Archiver to offset the log by a certain amount
 		//(b/c it started later than the systems at init)
+		boolean updateFlag = true;
 		sleep(1500);
-		while(true){
+		if(owat.isEnabled() && updateFlag){
+			updateFlag = false;
 			//if the tableList has changed
-			if(!tableList.equals(table.getSubTables())){
-				System.out.println("~~~~~New SubTable found~~~~~~");
-				do{
-					tableList = table.getSubTables();
-					subs = new SubTablePanel[tableList.size()];
-					System.out.println("Table size: " + tableList.size());
-					sleep(1300);
-				}while(subs.length == 0);
-				
+			tableList = table.getSubTables();
+			if(tableSize != tableList.size()){
+				System.out.println("~~~~~" + "table has changed" + "~~~~~~");
+				subs = new SubTablePanel[tableList.size()];
+				System.out.println("Table size: " + tableList.size());
+				frame.remove(systems);
+				initSystems();
+				addToFrame(systems, "North");
+				sleep(1300);
 			}
 			sleep(3000);
+		}else if(!owat.isEnabled()){
+			updateFlag = true;
 		}
+	}
+	public void initSystems(){
+		systems = new JPanel();
+		for(int i=0;i<subs.length;i++){
+			systems.add(subs[i]);
+			subs[i].init();
+			new Thread(subs[i]).start();
+			if(tableList.toArray()[i].equals("operation")){
+				owat = new OperationWatchAndTimer(subs[i],archiver);
+				new Thread(owat).start();
+			}
+		}
+		systems.setLayout(new GridLayout(0,subs.length));
+		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
 		NetworkTable.setClientMode();
@@ -154,6 +161,9 @@ public class Frame implements Runnable{
 				}
 			}
 		});
+	}
+	public void addToFrame(Component c, String position){
+		frame.getContentPane().add(c, position);
 	}
 	public void sleep(int milliseconds){
 		try{
