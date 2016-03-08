@@ -5,7 +5,10 @@ import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,8 +27,11 @@ public class CameraRun {
 	Mat mat;
 	JFrame frame;
 	Component com;
-	String videoStreamAddress = "http://root:password@10.36.63.100/mjpg/video.mjpg";
-	String videoStreamAddress2 = "http://root:password@10.36.63.101/mjpg/video.mjpg";
+	String videoStreamAddress = "http://root:team3663@10.36.63.15/mjpg/video.mjpg";//"http://root:password@10.36.63.100/mjpg/video.mjpg";
+	String videoStreamAddress2 = "http://root:password@10.36.63.100/mjpg/video.mjpg";
+	String videoStreamAddress3 = "http://root:password@169.254.199.100/mjpg/video.mjpg";
+	String streamAddress = videoStreamAddress;
+	
 	ImageIcon image;//, imageTest;
 	BufferedImage buffImg;
 	JLabel label;
@@ -51,7 +57,9 @@ public class CameraRun {
 	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
-		camera = new VideoCapture(videoStreamAddress);
+		System.out.println(streamAddress);
+		
+		camera = new VideoCapture(streamAddress);
 		mat = new Mat();
 		frame = new JFrame("Dog's Eyes <o> . <o>");
 		label = new JLabel();
@@ -60,9 +68,9 @@ public class CameraRun {
 		massObjectPointer = new MassObjectHolder();
 		
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.20");//78");
+		NetworkTable.setIPAddress("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
 		table = NetworkTable.getTable("Dog-NT");
-
+		
 		//setRedU();
 		
 		table.putBoolean("autoInitFindLeft: ",true);
@@ -94,62 +102,128 @@ public class CameraRun {
 	
 	public void run()
 	{
-		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		CameraInit();
+		//System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+		
+		//CameraInit();
 
-		if (camera.isOpened())
+		/*while (!camera.isOpened())
 		{
-			cameraFound = true;
-			System.out.println("Yay! I see something  ");
-			camera.read(mat);
-			updateJFrame(mat);
-
-			frame.setSize(mat.width()+20,mat.height()+45);
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			while (true)
+			System.out.println("camera not on yet");
+		}*/
+	//	do
+		{
+			if (camera.isOpened())
 			{
-				cameraFound = checkCameraStillFound();
-				if (cameraFound)
+				cameraFound = true;
+				System.out.println("Yay! I see something  ");
+				camera.read(mat);
+				updateJFrame(mat);
+	
+				try
 				{
-					camera.read(mat);
-					updateJFrame(mat);
-					
-			//		table.putBoolean("foundObject: ",(gPieceKey>-1));//may not need
-					//make a put in Camera Init
-					autoFindLeft = table.getBoolean("autoInitFindLeft: ",true);
-					//alreadyInCommand = table.getBoolean("Mode/commandRunning: ",false);//may not need
-					//inAutonomous = table.getBoolean("Mode/inAutonomous: ",false);//may not need
-					centeringGoal = table.getBoolean("C_/centeringGoal: ",false);
-					//movingWithRadius = table.getBoolean("C_/movingWithRadius: ",false);
-					okayToShoot = table.getBoolean("C_/okayToShoot: ",false);
-					
-					if (gPieceKey>-1)
+					new File("C:\\2016CameraImages").mkdir();
+					File outputfile = new File("C:\\2016CameraImages\\cameraImg" + System.currentTimeMillis() + ".jpg");
+					ImageIO.write(buffImg, "jpg", outputfile);
+				} catch (IOException e)
+				{
+				}
+				
+				frame.setSize(mat.width()+20,mat.height()+45);
+				frame.setVisible(true);
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
+				boolean badMat = false;
+				while (true)
+				{
+					cameraFound = checkCameraStillFound();
+					if (cameraFound)
 					{
-						findCenterGoal();
-						//if (!movingWithRadius)
+						do 
 						{
-							centeringGoal = centeringGoal();
-						}
-						//if (!centeringGoal)
+							badMat = false;
+							try
+							{
+								camera.read(mat);
+							}
+							catch (Exception e)
+							{
+								badMat = true;
+								System.out.println(e.getMessage());
+							}
+							if (!badMat)
+							{
+								if (mat.width() == 0)
+								{
+									System.out.println("can't see mat!" + mat.width());
+									badMat = true;
+								}
+							}
+							if (badMat)
+							{
+								try {
+									Thread.sleep(500);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}while (badMat);
+						updateJFrame(mat);
+						
+				//		table.putBoolean("foundObject: ",(gPieceKey>-1));//may not need
+						//make a put in Camera Init
+						autoFindLeft = table.getBoolean("autoInitFindLeft: ",true);
+						//alreadyInCommand = table.getBoolean("Mode/commandRunning: ",false);//may not need
+						//inAutonomous = table.getBoolean("Mode/inAutonomous: ",false);//may not need
+						centeringGoal = table.getBoolean("C_/centeringGoal: ",false);
+						//movingWithRadius = table.getBoolean("C_/movingWithRadius: ",false);
+						okayToShoot = table.getBoolean("C_/okayToShoot: ",false);
+						
+						if (gPieceKey>-1)
 						{
-							okayToShoot = isFineAdjustedGoal();
+							findCenterGoal();
+							//if (!movingWithRadius)
+							{
+								centeringGoal = centeringGoal();
+							}
+							//if (!centeringGoal)
+							{
+								okayToShoot = isFineAdjustedGoal();
+							}
+							table.putBoolean("C_/centeringGoal: ", centeringGoal);
+							//table.putBoolean("C_/movingWithRadius: ", movingWithRadius);
+							table.putBoolean("C_/okayToShoot: ", okayToShoot);
 						}
-						table.putBoolean("C_/centeringGoal: ", centeringGoal);
-						//table.putBoolean("C_/movingWithRadius: ", movingWithRadius);
-						table.putBoolean("C_/okayToShoot: ", okayToShoot);
+						
+						if (table.getBoolean("ShooterShot: ",false))
+						{
+							try
+							{
+								File outputfile = new File("C:\\2016CameraImages\\cameraImg" + System.currentTimeMillis() + ".jpg");
+								ImageIO.write(buffImg, "jpg", outputfile);
+							} catch (IOException e)
+							{
+							}
+						}
+					}
+					else
+					{
+						System.out.println("cant find it.... 0.0");
+						break;
 					}
 				}
-				else
-				{
-					System.out.println("cant find it.... 0.0");
+			}
+			else
+			{
+				System.out.println("camera not found!");
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
-		}
-		else
-		{
-			System.out.println("camera not found!");
-		}
+		}// while (true);
 	}
 	public void resetVariables()
 	{
