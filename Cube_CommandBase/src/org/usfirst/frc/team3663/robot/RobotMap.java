@@ -40,7 +40,7 @@ public class RobotMap {
 		public int wheelyBarLimitSwitch = 8;
 		public int pickupLowerLimit = 	 9;
 		
-		public int[] autoSwitchs = new int[]{5, 6, 7, 10};
+		public int[] autoSwitchs = new int[]{0,1,2,3};
     
 /*********Relays*********/
 	//Camera
@@ -71,4 +71,7 @@ public class RobotMap {
 	    public int hard2 = 1464;//1918
 	    public int touch1 = 552;
 	    public int touch2 = 1464;
+	//drive
+	    public boolean isDriveFlipped = false;
+	
 }

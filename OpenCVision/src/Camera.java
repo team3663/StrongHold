@@ -8,9 +8,10 @@ public class Camera {
 	public static void main(String[] args)
 	{
 		camRun = new CameraRun();
-		camRun.CameraInit();
-//		while (true)
+		//camRun.CameraInit();
+		while (true)
 		{
+			camRun.CameraInit();
 			camRun.run();
 		}
 	}

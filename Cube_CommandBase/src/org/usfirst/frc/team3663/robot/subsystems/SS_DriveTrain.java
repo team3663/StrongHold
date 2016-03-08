@@ -51,7 +51,12 @@ public class SS_DriveTrain extends Subsystem {
     		
     		driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
     	}
-    	driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed);
+    	if(!Robot.robotMap.isDriveFlipped){
+    		driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed);
+    	}
+    	else{
+    		driveTrain.arcadeDrive(pForwardSpeed, pTurnSpeed);    		
+    	}
     }
     
     public void resetGyro(){							//Resets the Gyro
@@ -72,6 +77,7 @@ public class SS_DriveTrain extends Subsystem {
     	//return enc2.getRaw();
     	return driveMotorRight1.getEncPosition();
     }
+
     //Spins the robot to within a tolerated amount of the target degrees. Returns true if within the tolerance
     public boolean spinByGyro(double pDegrees, double pSpeed){
     	double gyroAngle = driveGyro.getAngle();
