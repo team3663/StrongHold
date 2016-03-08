@@ -77,13 +77,13 @@ public class SS_DriveTrain extends Subsystem {
     	//return enc2.getRaw();
     	return driveMotorRight1.getEncPosition();
     }
-    
-    public boolean spinByGyro(int pDegrees, double posSpeed){			//Spins the robot the passed in value returning if the action was complete
-    	if(pDegrees - bufferZoneGyro > driveGyro.getAngle() && pDegrees > 0){
-    		driveTrain.arcadeDrive(0, -posSpeed);
-    	}
-    	else if(pDegrees + bufferZoneGyro < driveGyro.getAngle() && pDegrees < 0){
-    		driveTrain.arcadeDrive(0, posSpeed);    		
+    //Spins the robot to within a tolerated amount of the target degrees. Returns true if within the tolerance
+    public boolean spinByGyro(double pDegrees, double pSpeed){
+    	double gyroAngle = driveGyro.getAngle();
+    	//if the target degree lies outside of the current value +/- tolerance/2
+    	if(pDegrees > gyroAngle+bufferZoneGyro/2 || pDegrees < gyroAngle-bufferZoneGyro/2){
+    		if(pDegrees > gyroAngle) driveTrain.arcadeDrive(0,-pSpeed);
+    		if(pDegrees < gyroAngle) driveTrain.arcadeDrive(0,pSpeed);
     	}
     	else{
     		return true;
@@ -163,10 +163,10 @@ public class SS_DriveTrain extends Subsystem {
     	SmartDashboard.putNumber("LeftEncoder : ", getRightEnc());
     	SmartDashboard.putNumber("RightEncoder : ", getLeftEnc());
 
-    	Robot.gui.sendNumber("drive/Left Drive Motor 1", driveMotorLeft1.get());
-    	Robot.gui.sendNumber("drive/Left Drive Motor 2", driveMotorLeft2.get());
-    	Robot.gui.sendNumber("drive/Right Drive Motor 1", driveMotorRight1.get());
-    	Robot.gui.sendNumber("drive/Right Drive Motor 2", driveMotorRight2.get());
+    	Robot.gui.sendNumber("drive/Left Drive Motor 1", Math.round(driveMotorLeft1.get()*100.0)/100.0);
+    	Robot.gui.sendNumber("drive/Left Drive Motor 2", Math.round(driveMotorLeft2.get()*100.0)/100.0);
+    	Robot.gui.sendNumber("drive/Right Drive Motor 1", Math.round(driveMotorRight1.get()*100.0)/100.0);
+    	Robot.gui.sendNumber("drive/Right Drive Motor 2", Math.round(driveMotorRight2.get()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Drive Gyro Angle", Math.round(driveGyro.getAngle()*100.0)/100.0);
 //    	Robot.gui.sendNumber("drive/Left Encoder", getRightEnc());
 //    	Robot.gui.sendNumber("drive/Right Encoder", getLeftEnc());

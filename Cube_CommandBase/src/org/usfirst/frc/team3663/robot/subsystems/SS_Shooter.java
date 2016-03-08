@@ -48,7 +48,6 @@ public class SS_Shooter extends Subsystem {
     public void toggleShooterSolenoid(){									//Works as a toggle for the shooter piston
     	if(shooterSolenoid.get() == DoubleSolenoid.Value.kForward){
     		shooterSolenoid.set(DoubleSolenoid.Value.kReverse);
-    		Robot.visionTable.putBoolean("ShooterShot: ", false);
     	}
     	else{
     		shooterSolenoid.set(DoubleSolenoid.Value.kForward);   
@@ -71,19 +70,13 @@ public class SS_Shooter extends Subsystem {
     	int vTopSpeed = shooterTop.getEncVelocity();
     	int vBottomSpeed = shooterBottom.getEncVelocity();
     	double diffBottom = (double)(pSpeed - vBottomSpeed)/200000;
-    	/*if(vTopSpeed < pSpeed){
-    		topSpeed+=.005;    		
-    	}
-    	else if (vTopSpeed > pSpeed){
-    		topSpeed-=.005;        		
-    	}*/
+    	bottomSpeed-=diffBottom;
     	/*if(topSpeed > 1){
     		topSpeed = 1;
     	}
     	else if(topSpeed < -1){
     		topSpeed = -1;
     	}*/
-    	bottomSpeed = bottomSpeed - diffBottom;
     	if(bottomSpeed > 1){
     		bottomSpeed = 1;
     	}
@@ -109,4 +102,3 @@ public class SS_Shooter extends Subsystem {
     	Robot.gui.sendNumber("shooter/Bottom Shooter Motor", shooterBottom.getEncVelocity());
     }
 }
-

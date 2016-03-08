@@ -38,15 +38,15 @@ public class CameraRun {
 	NetworkTable table;
 	
 	//int[] rows, colmns;
-	int[][] pic;
-	int gPieceKey = -1;
-	int bestPieceKey;
-	int[][] U = new int[640][480];//size[196][149];
-	double maxDistortedAngle = 20;
-	int goalCenterX = -1,goalCenterY;
 	int fixWidth = 640;
 	int fixHeight = 480;
 	double resolutionRatio = 640/640;//new resolution/640
+	int[][] pic;
+	int gPieceKey = -1;
+	int bestPieceKey;
+	int[][] U = new int[fixWidth][fixHeight];//size[196][149];
+	double maxDistortedAngle = 20;
+	int goalCenterX = 325/*-1*/,goalCenterY;
 	double angle, distance;//angle called in comment in findCenterGoal()
 	
 //	boolean foundObject = false;
@@ -119,14 +119,14 @@ public class CameraRun {
 				camera.read(mat);
 				updateJFrame(mat);
 	
-				try
+			/*	try
 				{
 					new File("C:\\2016CameraImages").mkdir();
 					File outputfile = new File("C:\\2016CameraImages\\cameraImg" + System.currentTimeMillis() + ".jpg");
 					ImageIO.write(buffImg, "jpg", outputfile);
 				} catch (IOException e)
 				{
-				}
+				}*/
 				
 				frame.setSize(mat.width()+20,mat.height()+45);
 				frame.setVisible(true);
@@ -204,6 +204,7 @@ public class CameraRun {
 							} catch (IOException e)
 							{
 							}
+							table.putBoolean("ShooterShot: ",false);
 						}
 					}
 					else
@@ -889,7 +890,7 @@ public class CameraRun {
 			//goalCenterY = 
 		}*/
 		//for final bot
-		
+		/*
 		if (distance < 64)
 		{
 			goalCenterX = 640-(int)(356);//*resolutionRatio);
@@ -913,8 +914,8 @@ public class CameraRun {
 		else//321//322
 		{
 			goalCenterX = 640-(int)(315);//*resolutionRatio);
-		}
-		 
+		}*/
+		goalCenterX = (int)(325);//*resolutionRatio);
 	}
 	
 	private boolean centeringGoal()
@@ -926,13 +927,13 @@ public class CameraRun {
 		
 		if (gPieceKey > -1)
 		{
-			if (xCenter < goalCenterX-10)
+			if (xCenter < goalCenterX-6)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", true);
 				table.putString("needsTurning: ", "TurnLeft");
 			}
-			else if (xCenter > goalCenterX+10)
+			else if (xCenter > goalCenterX+6)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", false);

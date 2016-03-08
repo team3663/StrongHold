@@ -54,13 +54,13 @@ public class Archiver {
 		}
 		acceptingValues = true;
 	}
-	public void writeFile(String day, String run){
+	public void writeFile(String day, String name){
 		alphabetize();
 		PrintWriter writer = null;
 		new File("C:\\logFiles").mkdir();
 		new File("C:\\logFiles\\"+day).mkdir();
 		try {
-			writer = new PrintWriter("C:\\logFiles\\" + day + "\\" + run + ".csv","UTF-8");
+			writer = new PrintWriter("C:\\logFiles\\" + day + "\\" + name + ".csv","UTF-8");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 			System.exit(0);
@@ -94,7 +94,7 @@ public class Archiver {
 			lastLine = currentLine;
 			currentLine = "";
 		}
-		System.out.println("Exported log file to C:\\logFiles\\" + day + "\\" + run + ".csv");
+		System.out.println("Exported log file to C:\\logFiles\\" + day + "\\" + name + ".csv");
 		reset();
 		writer.close();
 	}
