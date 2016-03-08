@@ -9,6 +9,7 @@ import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafety;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_PickupRunMotor;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
+import org.usfirst.frc.team3663.robot.commands.C_ShooterHoldSpeed;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
@@ -48,7 +49,7 @@ public class OI {
 	private JoystickButton pickupRaiseArm 	= new JoystickButton(driveJoystick, 6);
 	private JoystickButton pickupLowerArm 	= new JoystickButton(driveJoystick, 5);
 	private JoystickButton pickupCycleSafty = new JoystickButton(driveJoystick, 8);
-	private JoystickButton pickupRunOut 	= new JoystickButton(driveJoystick, 2);
+	private JoystickButton pickupRunOut 	= new JoystickButton(buttonJoystick, 2);
   //Shooter Buttons
 	private JoystickButton shooterMotorsFullPower 	= new JoystickButton(driveJoystick, 1);
 	public int shooterFirePistonNoWait 	= 7;

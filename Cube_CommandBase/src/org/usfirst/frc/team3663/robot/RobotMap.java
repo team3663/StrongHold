@@ -64,7 +64,7 @@ public class RobotMap {
 	    public int encoderTicksPerInch = 20;
 	//Dart
 	    public int minDistanceValue = 550;//410;
-	    public int maxDistanceValue = 2200;
+	    public int maxDistanceValue = 2310;
 	    public int soft1 = 552;
 	    public int soft2 = 1976;
 	    public int hard1 = 552;

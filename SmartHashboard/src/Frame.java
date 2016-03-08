@@ -67,7 +67,7 @@ public class Frame implements Runnable{
 		initSystems();
 		/////////////////////////////
 		addToFrame(systems, "North");
-		addToFrame(msgBoard, "South");
+		addToFrame(msgBoard, "West");
 //		addToFrame(refresh, "South");
 		/////////////////////////////
 	}

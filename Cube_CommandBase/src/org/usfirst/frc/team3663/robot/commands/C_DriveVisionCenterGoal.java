@@ -40,7 +40,7 @@ public class C_DriveVisionCenterGoal extends Command {
 		degrees = table.getNumber("cameraMoveAngle: ",360);
     	Robot.ss_DriveTrain.resetGyro();
     	table.putBoolean("Mode/commandRunning: ", true);
-    	speed = 0.6;
+    	speed = 1;
     	firstTime = true;
     }
 
@@ -55,7 +55,7 @@ public class C_DriveVisionCenterGoal extends Command {
     		{
     			Robot.ss_DriveTrain.resetGyro();
         		degrees = table.getNumber("cameraMoveAngle: ", 360);
-        		speed = 0.5;
+        		speed = 0.7;
     		}
     		firstTime = false;
     	}
@@ -90,7 +90,7 @@ public class C_DriveVisionCenterGoal extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//work on this on Monday!!!
-        return (Robot.ss_DriveTrain.spinByGyro((int)degrees, speed));
+        return (Robot.ss_DriveTrain.spinByGyro(degrees, speed));
     	//return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
     }
 

@@ -13,6 +13,7 @@ public class C_DriveControllerDPad extends Command {
 	CG_ConfigGoOverDefenses cg_OverD = new CG_ConfigGoOverDefenses();
 	CG_ConfigLowBar cg_LowBar = new CG_ConfigLowBar();
 	CG_ConfigNormalShot cg_Normal = new CG_ConfigNormalShot();
+	CG_ConfigLongShot cg_Long = new CG_ConfigLongShot();
 	
     public C_DriveControllerDPad() {
     }
@@ -31,7 +32,7 @@ public class C_DriveControllerDPad extends Command {
     		//cg_LowBar.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == 270){
-    		
+    		cg_Long.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == -1){
     		//cg_Normal.cancel();

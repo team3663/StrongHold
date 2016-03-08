@@ -45,7 +45,7 @@ public class OperationWatchAndTimer implements Runnable{
 		long startTime = System.currentTimeMillis();
 		while(startTime + wait >= System.currentTimeMillis()){
 			sleep(2);
-			archiver.addValue(name, Double.toString((Math.round(((double)System.currentTimeMillis() - (double)startTime)/1000.0)*100.0)/100.0));
+			archiver.addValue(name, Double.toString((double)System.currentTimeMillis() - (double)startTime));
 			if(operation.get(1).equals("true")) return true;
 		}
 		return false;
