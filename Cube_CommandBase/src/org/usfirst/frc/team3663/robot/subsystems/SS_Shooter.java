@@ -70,26 +70,20 @@ public class SS_Shooter extends Subsystem {
     public void HoldSpeed(int pSpeed){
     	int vTopSpeed = shooterTop.getEncVelocity();
     	int vBottomSpeed = shooterBottom.getEncVelocity();
-    	double diffBottom = (pSpeed - vBottomSpeed);
-    	
+    	double diffBottom = (double)(pSpeed - vBottomSpeed)/20000;
+    	/*if(vTopSpeed < pSpeed){
+    		topSpeed+=.005;    		
+    	}
+    	else if (vTopSpeed > pSpeed){
+    		topSpeed-=.005;        		
+    	}*/
     	/*if(topSpeed > 1){
     		topSpeed = 1;
     	}
     	else if(topSpeed < -1){
     		topSpeed = -1;
-    	}
-    	/*if(bottomSpeed > 1){
-    		bottomSpeed = 1;
-    	}
-    	else if(bottomSpeed < -1){
-    		bottomSpeed = -1;
     	}*/
-    	SmartDashboard.putNumber("tops speed", topSpeed);
-    	SmartDashboard.putNumber("bottoms speed", bottomSpeed);
-    	shooterTop.set(topSpeed);
-    	//shooterBottom.set(bottomSpeed);
-
-    	bottomSpeed = diffBottom + bottomSpeed;
+    	bottomSpeed = diffBottom - bottomSpeed;
     	if(bottomSpeed > .5){
     		bottomSpeed = .5;
     	}
@@ -101,8 +95,7 @@ public class SS_Shooter extends Subsystem {
     	SmartDashboard.putNumber("bottoms speed", bottomSpeed);
     	//shooterTop.set(topSpeed);
     	shooterBottom.set(bottomSpeed);
-	}
-
+    }
     
     public void STOP(){
     	shooterBottom.set(0);
@@ -116,4 +109,3 @@ public class SS_Shooter extends Subsystem {
     	Robot.gui.sendNumber("shooter/Bottom Shooter Motor", shooterBottom.getEncVelocity());
     }
 }
-
