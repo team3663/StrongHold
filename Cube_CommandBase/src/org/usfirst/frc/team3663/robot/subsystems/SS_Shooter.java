@@ -70,7 +70,7 @@ public class SS_Shooter extends Subsystem {
     public void HoldSpeed(int pSpeed){
     	int vTopSpeed = shooterTop.getEncVelocity();
     	int vBottomSpeed = shooterBottom.getEncVelocity();
-    	double diffBottom = (pSpeed - vBottomSpeed);
+    	double diffBottom = (double)(pSpeed - vBottomSpeed)/200000;
     	/*if(vTopSpeed < pSpeed){
     		topSpeed+=.005;    		
     	}
@@ -83,12 +83,12 @@ public class SS_Shooter extends Subsystem {
     	else if(topSpeed < -1){
     		topSpeed = -1;
     	}*/
-    	bottomSpeed = diffBottom + bottomSpeed;
-    	if(bottomSpeed > .5){
-    		bottomSpeed = .5;
+    	bottomSpeed = bottomSpeed - diffBottom;
+    	if(bottomSpeed > 1){
+    		bottomSpeed = 1;
     	}
-    	else if(bottomSpeed < -.5){
-    		bottomSpeed = -.5;
+    	else if(bottomSpeed < -1){
+    		bottomSpeed = -1;
     	}
     	SmartDashboard.putNumber("Numbers ", diffBottom);
     	SmartDashboard.putNumber("tops speed", topSpeed++);
