@@ -84,7 +84,6 @@ public class SS_DriveTrain extends Subsystem {
     	if(pDegrees > gyroAngle+bufferZoneGyro/2 || pDegrees < gyroAngle-bufferZoneGyro/2){
     		if(pDegrees > gyroAngle) driveTrain.arcadeDrive(0,-pSpeed);
     		if(pDegrees < gyroAngle) driveTrain.arcadeDrive(0,pSpeed);
-
     	}
     	else{
     		return true;
