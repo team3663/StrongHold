@@ -43,7 +43,7 @@ public class C_DriveVisionCenterGoal extends Command {
 		degrees = table.getNumber("cameraMoveAngle: ",360);
     	Robot.ss_DriveTrain.resetGyro();
     	table.putBoolean("Mode/commandRunning: ", true);
-    	speed = 1;
+    	speed = 0.75;//until we know we can go faster
     	firstTime = true;
     }
 
