@@ -18,7 +18,7 @@ public class TestC_Test extends Command {
     }
 
     protected void execute() {
-    	if(Robot.test.isTesting){
+    	if(Robot.test.currentTestMode()){
     		double jsValue = Robot.oi.testJoystick.getRawAxis(1);
 	    	switch(Robot.test.testNumber){
 		    	case 0:
