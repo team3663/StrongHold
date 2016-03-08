@@ -51,7 +51,12 @@ public class SS_DriveTrain extends Subsystem {
     		
     		driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
     	}
-    	driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed);
+    	if(!Robot.robotMap.isDriveFlipped){
+    		driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed);
+    	}
+    	else{
+    		driveTrain.arcadeDrive(pForwardSpeed, pTurnSpeed);    		
+    	}
     }
     
     public void resetGyro(){							//Resets the Gyro
