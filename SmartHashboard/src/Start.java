@@ -7,11 +7,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Start {
-	public static void main(String[] args) {
-		Path file = Paths.get("IpAddress.txt"); // current dir with application
+	public static void main(String[] args){
 		String ip = "10.36.63.20";
 		try
 			{
+				Path file = Paths.get("IpAddress.txt"); // current dir with application
 				InputStream in = Files.newInputStream(file);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 				ip = reader.readLine();

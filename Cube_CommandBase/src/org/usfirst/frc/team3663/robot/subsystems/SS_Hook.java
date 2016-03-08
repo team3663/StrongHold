@@ -19,7 +19,12 @@ public class SS_Hook extends Subsystem {
     }
     
     public void moveHook(double pSpeed){
-    	hookMotor.set(pSpeed);
+    	if(pSpeed > .2 || pSpeed < -.2){
+        	hookMotor.set(pSpeed);    		
+    	}
+    	else{
+    		hookMotor.set(0);
+    	}
     }
     
     public void updateDashboard(){

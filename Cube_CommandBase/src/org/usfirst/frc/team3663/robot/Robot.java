@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team3663.robot;
 
+import org.usfirst.frc.team3663.robot.commands.CG_Auto;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
@@ -107,9 +108,9 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-    	if(ss_AutoChooser.autoType() == 0){
-    		//this uses the switches on board to find which one to run
-    	}
+    	
+    	CG_Auto auto = new CG_Auto();
+    	auto.start();
         gui.sendBoolean("operation/Enabled", true);
         gui.sendString("operation/Mode", "Autonomous");
     }
@@ -122,7 +123,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	C_DriveControllerDPad DpadControlls = new C_DriveControllerDPad();
-    	//DpadControlls.start();
+    	DpadControlls.start();
     	ss_DriveTrain.resetGyro();
 		ss_Camera.setLight(true);
         gui.sendBoolean("operation/Enabled", true);

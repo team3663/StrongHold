@@ -7,35 +7,36 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_WinchMove2 extends Command {
+public class C_DriveBasedTime extends Command {
 
-	
-	double speed;
-    public C_WinchMove2(double pSpeed) {
-        requires(Robot.ss_Winch);
-        speed = pSpeed;
+    public C_DriveBasedTime() {
+        requires(Robot.ss_DriveTrain);
     }
 
     // Called just before this Command runs the first time
+    public int delay = 175;
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ss_Winch.runMotorTeleop(speed);
+    	delay--;
+    	Robot.ss_DriveTrain.arcadeRobotDrive(0, -.7);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return delay < 0;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.ss_DriveTrain.STOP();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	end();
     }
 }

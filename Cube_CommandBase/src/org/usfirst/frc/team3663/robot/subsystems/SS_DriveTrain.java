@@ -4,11 +4,13 @@ import org.usfirst.frc.team3663.robot.Robot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveTrainArcade;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -26,6 +28,7 @@ public class SS_DriveTrain extends Subsystem {
 	private RobotDrive driveTrain = null;
 	//Sensors
 	private AnalogGyro driveGyro = new AnalogGyro(Robot.robotMap.driveGyro);
+	private Accelerometer accel = new BuiltInAccelerometer();
 
 	//encoders are now from CANTalons
 	Encoder enc1 = new Encoder(0,1);
@@ -72,10 +75,10 @@ public class SS_DriveTrain extends Subsystem {
     
     public boolean spinByGyro(int pDegrees, double posSpeed){			//Spins the robot the passed in value returning if the action was complete
     	if(pDegrees - bufferZoneGyro > driveGyro.getAngle() && pDegrees > 0){
-    		driveTrain.arcadeDrive(-posSpeed, 0);
+    		driveTrain.arcadeDrive(0, -posSpeed);
     	}
     	else if(pDegrees + bufferZoneGyro < driveGyro.getAngle() && pDegrees < 0){
-    		driveTrain.arcadeDrive(posSpeed, 0);    		
+    		driveTrain.arcadeDrive(0, posSpeed);    		
     	}
     	else{
     		return true;
@@ -139,18 +142,29 @@ public class SS_DriveTrain extends Subsystem {
     	}
     }
     
+    public double getAccel(int axis){
+    	if(axis == 0){
+    		return accel.getX(); //On Glass, this is the z axis
+    	}else if(axis == 1){
+    		return accel.getY(); //On Glass, still the y
+    	}else if(axis == 2){
+    		return accel.getZ(); //On Glass, this is the x axis
+    	}
+    	return 0.0;
+    }
+    
     public void updateDashboard(){						//updates the dash board
     	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
     	SmartDashboard.putNumber("LeftEncoder : ", getRightEnc());
     	SmartDashboard.putNumber("RightEncoder : ", getLeftEnc());
 
-    	Robot.gui.sendNumber("drive/Left Drive Motor 1", driveMotorLeft1.getSpeed());
-    	Robot.gui.sendNumber("drive/Left Drive Motor 2", driveMotorLeft2.getSpeed());
-    	Robot.gui.sendNumber("drive/Right Drive Motor 1", driveMotorRight1.getSpeed());
-    	Robot.gui.sendNumber("drive/Right Drive Motor 2", driveMotorRight2.getSpeed());
+    	Robot.gui.sendNumber("drive/Left Drive Motor 1", driveMotorLeft1.get());
+    	Robot.gui.sendNumber("drive/Left Drive Motor 2", driveMotorLeft2.get());
+    	Robot.gui.sendNumber("drive/Right Drive Motor 1", driveMotorRight1.get());
+    	Robot.gui.sendNumber("drive/Right Drive Motor 2", driveMotorRight2.get());
     	Robot.gui.sendNumber("drive/Drive Gyro Angle", Math.round(driveGyro.getAngle()*100.0)/100.0);
-    	Robot.gui.sendNumber("drive/Left Encoder", getRightEnc());
-    	Robot.gui.sendNumber("drive/Right Encoder", getLeftEnc());
+//    	Robot.gui.sendNumber("drive/Left Encoder", getRightEnc());
+//    	Robot.gui.sendNumber("drive/Right Encoder", getLeftEnc());
     }
 }
 

@@ -17,12 +17,13 @@ public class SS_WheelyBar extends Subsystem {
 	private CANTalon wheelyBarMotor = new CANTalon(Robot.robotMap.wheelyBarMotor);
 	private DigitalInput wheelyBarLimit = new DigitalInput(Robot.robotMap.wheelyBarLimitSwitch);
 	
-	private int maxEncoderTicks = 1000;
+	private int maxEncoderTicks = -1211;
 	private int accptance = 10;
 	private boolean setToZero = false;
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new C_WheelyBarMove());
+    	wheelyBarMotor.enableBrakeMode(true);
     }
     
     public int grabEncoder(){										//gets the value of the encoder
@@ -34,29 +35,17 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void resetEncoder(){										//resets the encoder
-		setToZero = true;
+		wheelyBarMotor.reset();
     }
     
     public boolean moveWheelyBarAuto(int pTarget, double pSpeed){	//moves to a set distance on the encoder
-    	int distValue = grabEncoder();
-    	int direction = 0;
-    	if((distValue > pTarget - accptance && distValue < pTarget + accptance) || 
-    			!(distValue < maxEncoderTicks && pSpeed > 0) || 
-    			!(distValue > 0 && pSpeed < 0) ||
-    			pSpeed < 0 || setToZero){
-    		return true;
+    	int distValue = -grabEncoder();
+    	if(distValue < pTarget){
+        	wheelyBarMotor.set(pSpeed);
+    		return false;
     	}
-    	if(pTarget > distValue){
-    		direction = 1;
-    	}
-    	else if(pTarget < distValue){
-    		direction = -1;
-    	}
-    	else{
-    		direction = 0;
-    	}
-    	wheelyBarMotor.set(pSpeed * direction);
-    	return false;
+    	wheelyBarMotor.set(0);
+    	return true;
     }
     
     public boolean moveToReset(){									//moves the bar down until the limit switch is hit
@@ -65,13 +54,13 @@ public class SS_WheelyBar extends Subsystem {
     		STOP();
     		resetEncoder();
     		return true;
-    	}
+    	}//1750
     	return false;
     }
     
     public void moveWheelyBarSafe(double pSpeed){
-    	int distValue = grabEncoder();
-    	if((pSpeed > 0 && distValue < maxEncoderTicks) || (pSpeed < 0 && distValue > 20)){
+    	int distValue = -grabEncoder();
+    	if((pSpeed > 0 && distValue < 2946) || (pSpeed < 0 && distValue > 1211)&&(pSpeed>.4||pSpeed<-.4)){
     		wheelyBarMotor.set(pSpeed/2);
     	}
     	else{
@@ -80,7 +69,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
-    	wheelyBarMotor.set(pSpeed/2);
+    	wheelyBarMotor.set(pSpeed/2.0);
     }
     
     public void STOP(){												//stops the motor

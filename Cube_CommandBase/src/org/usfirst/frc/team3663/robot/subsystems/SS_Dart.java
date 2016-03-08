@@ -113,16 +113,19 @@ public class SS_Dart extends Subsystem {
     			}
     			else if(distValue < hard2 && distValue > hard1){
     				SmartDashboard.putString("ERROR : ", "number 2");
+    				Robot.gui.sendString("dart/Error","hard stop");
     				setMovingArm(true);
     				dartMotor.set(0);
     			}
     			else if(distValue > soft1 && distValue < soft2){
     				SmartDashboard.putString("ERROR : ", "number 1");
+    				Robot.gui.sendString("dart/Error","soft stop");
     				dartMotor.set(pSpeed/4);
     				setMovingArm(true);
     			}
     			else if(distValue < touch2 && distValue > touch1){
     				SmartDashboard.putString("ERROR : ", "number 3");
+    				Robot.gui.sendString("dart/Error","touch stop");
     				setMovingArm(true);
     				dartMotor.set(0);
     			}
@@ -135,7 +138,6 @@ public class SS_Dart extends Subsystem {
     			setMovingArm(false);
     			dartMotor.set(pSpeed);
     		}
-    		dartMotor.set(pSpeed);
     	}
     	else{
     		dartMotor.set(0);

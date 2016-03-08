@@ -3,16 +3,18 @@ package org.usfirst.frc.team3663.robot;
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
-import org.usfirst.frc.team3663.robot.commands.CG_WinchAndHookCombine;
 import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafety;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
+import org.usfirst.frc.team3663.robot.commands.C_PickupRunMotor;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
+import org.usfirst.frc.team3663.robot.commands.C_ShooterHoldSpeed;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
+import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEnc;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafety;
 import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
@@ -47,6 +49,7 @@ public class OI {
 	private JoystickButton pickupRaiseArm 	= new JoystickButton(driveJoystick, 6);
 	private JoystickButton pickupLowerArm 	= new JoystickButton(driveJoystick, 5);
 	private JoystickButton pickupCycleSafty = new JoystickButton(driveJoystick, 8);
+	private JoystickButton pickupRunOut 	= new JoystickButton(buttonJoystick, 2);
   //Shooter Buttons
 	private JoystickButton shooterMotorsFullPower 	= new JoystickButton(driveJoystick, 1);
 	public int shooterFirePistonNoWait 	= 7;
@@ -54,10 +57,10 @@ public class OI {
   //Winch Buttons
 	private JoystickButton winchToHoist = 	  new JoystickButton(buttonJoystick, 1);
 	private JoystickButton winchNotSafeMove = new JoystickButton(buttonJoystick, 7);
-  //Winch And Hook Enable
-	private JoystickButton winchAndHookEnable = new JoystickButton(buttonJoystick, 8); 
   //Wheely Bar Buttons
 	private JoystickButton wheelyBarMoveToZero = new JoystickButton(buttonJoystick, 4);
+	private JoystickButton wheelyBarEncZero = new JoystickButton(buttonJoystick, 8);
+	
 	
   //Test Joystick Buttons
 	private JoystickButton toggleTestMode	= new JoystickButton(testJoystick, 7);
@@ -77,6 +80,7 @@ public class OI {
 		pickupRaiseArm.whenPressed(new C_PickupFirePiston(false));
 		pickupLowerArm.whenPressed(new C_PickupFirePiston(true));
 		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
+		pickupRunOut.whenPressed(new C_PickupRunMotor(1));
 	  //Shooter Buttons
 		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
@@ -86,6 +90,7 @@ public class OI {
 		//winchAndHookEnable.whenPressed(new CG_WinchAndHookCombine());
 	  //Wheely Bar Buttons
 		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
+		wheelyBarEncZero.whenPressed(new C_WheelyBarZeroEnc());
 		
 		//Test Buttons
 		toggleTestMode.whenPressed(new TestC_ToggleTestMode());
