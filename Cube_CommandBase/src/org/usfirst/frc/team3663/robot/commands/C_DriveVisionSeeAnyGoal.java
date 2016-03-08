@@ -3,47 +3,53 @@ package org.usfirst.frc.team3663.robot.commands;
 import org.usfirst.frc.team3663.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  */
-public class C_ShooterHoldSpeed extends Command {
+public class C_DriveVisionSeeAnyGoal extends Command {
 
-	public int speed;
-	private boolean done = false;
-	private int timeOut = 10;
-    public C_ShooterHoldSpeed(int pSpeed) {
+	NetworkTable table = Robot.visionTable;
+	int degrees;
+	boolean foundObject,leftDone;
+	
+    public C_DriveVisionSeeAnyGoal() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.ss_Shooter);
-        speed = pSpeed;
+        requires(Robot.ss_DriveTrain);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.ss_DriveTrain.resetGyro();
+		leftDone = false;
+		degrees = -45;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ss_Shooter.HoldSpeed(speed);
-    	if(Robot.oi.driveJoystick.getRawButton(3)){
-    		Robot.ss_Shooter.fireShooterSolenoid(true);
-    		done = true;
+    	foundObject = table.getBoolean("foundObject: ",false);
+    	if (!foundObject)
+    	{
+    		leftDone = Robot.ss_DriveTrain.spinByGyro(degrees, 0.75);
+    		if (leftDone)
+    		{
+    			degrees = 90;
+    		}
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(done){
-    		timeOut--;
-            return timeOut < 0;
-    	}
-    	return false;
+        return foundObject;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.ss_Shooter.fireShooterSolenoid(false); 
-    	Robot.ss_Shooter.STOP();
+        Robot.ss_DriveTrain.STOP();
+       // for (int i = 0; i < 10; i+=0.1)delay?
+        {
+        }
     }
 
     // Called when another command which requires one or more of the same

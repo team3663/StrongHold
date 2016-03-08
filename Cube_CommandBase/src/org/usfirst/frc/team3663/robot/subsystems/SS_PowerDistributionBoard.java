@@ -52,7 +52,7 @@ public class SS_PowerDistributionBoard extends Subsystem {
     	Robot.gui.sendNumber("voltage/Wheely Bar Voltage",				pdp.getCurrent(11));
     	Robot.gui.sendNumber("voltage/Total Voltage", 					pdp.getVoltage());
     	Robot.gui.sendNumber("voltage/Total draw",						pdp.getTotalCurrent());
-    	Robot.gui.sendNumber("voltage/PDP Tempature",					pdp.getTemperature());
+    	Robot.gui.sendString("voltage/PDP Tempature",					Double.toString(Math.round((pdp.getTemperature()*1.8+32)*100.0)/100.0) + "F");
     }
 }
 
