@@ -36,7 +36,10 @@ public class C_DriveVisionCenterGoal extends Command {
     	stop = !table.getBoolean("C_/centeringGoal: ",false);
     	startTime = Timer.getFPGATimestamp();
     	*/
-    	
+    	if (!table.getBoolean("foundObject: ",false))
+    	{
+    		System.out.println("didn't find Object! DriveVisionSeeAnyGoal didn't work!");
+    	}
 		degrees = table.getNumber("cameraMoveAngle: ",360);
     	Robot.ss_DriveTrain.resetGyro();
     	table.putBoolean("Mode/commandRunning: ", true);
@@ -56,8 +59,8 @@ public class C_DriveVisionCenterGoal extends Command {
     			Robot.ss_DriveTrain.resetGyro();
         		degrees = table.getNumber("cameraMoveAngle: ", 360);
         		speed = 0.7;
+        		firstTime = false;
     		}
-    		firstTime = false;
     	}
     	
     	/*boolean turnLeft = table.getBoolean("turnLeft: ",false);
