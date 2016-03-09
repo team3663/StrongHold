@@ -721,15 +721,18 @@ public class CameraRun {
 	public void getBestObjectMask()//actual ratio 1.42 (20x14) and general average ratio 1.63 (w x h)
 	{
 		int bestPiece = 0;
+		double bestMaskOverlap;
 
 	//	removeSmallObjects();
 
+		int x = massObjectPointer.getGPiece(bestPiece).xStart,y = massObjectPointer.getGPiece(bestPiece).yStart,
+			w = massObjectPointer.getGPiece(bestPiece).width,h = massObjectPointer.getGPiece(bestPiece).height;
+		bestMaskOverlap = percentMaskOverlap(x,y,w,h);
+		
 		if (gPieceKey > 0)
 		{
 			boolean bestPieceChanged = false;
 			
-			int x = massObjectPointer.getGPiece(bestPiece).xStart,y = massObjectPointer.getGPiece(bestPiece).yStart,
-				w = massObjectPointer.getGPiece(bestPiece).width,h = massObjectPointer.getGPiece(bestPiece).height;
 			for (int o = 1; o <= gPieceKey; o++)
 			{
 	//			System.out.println("checking mass #: " + o);
@@ -748,6 +751,7 @@ public class CameraRun {
 				{
 					double cMaskOverlap = percentMaskOverlap(cX,cY,cW,cH);
 					double maskOverlap = percentMaskOverlap(x,y,w,h);
+					bestMaskOverlap = maskOverlap;
 //					System.out.println("cPercentOverlap: " + cMaskOverlap);
 	//				System.out.println("percentOverlap: " + maskOverlap);
 		//			System.out.println("x: " + cX + ", y: " + cY + ", w: " + cW + ", h: " + cH);
@@ -755,29 +759,42 @@ public class CameraRun {
 					table.putNumber("cMaskOverlap: ", cMaskOverlap);
 					table.putNumber("MaskOverlap: ", maskOverlap);
 				//	if (Math.abs(a))
-					if (cMaskOverlap > maskOverlap)
+					if (cMaskOverlap < 70)
 					{
-						bestPiece = o;
-						bestPieceChanged = true;
+						massObjectPointer.removeMass(o);
+						gPieceKey--;
 					}
-				/*	else if (((cMaskOverlap <= maskOverlap+10)&&(cMaskOverlap >= maskOverlap-10) || (maskOverlap <= cMaskOverlap+10)&&(maskOverlap >= cMaskOverlap-10)) && (massObjectPointer.getGPiece(bestPiece).mass < massObjectPointer.getGPiece(o).mass))
+					else if (maskOverlap < 70)
 					{
-						bestPiece = o;
-						bestPieceChanged = true;
-					}*/
+						massObjectPointer.removeMass(bestPiece);
+						gPieceKey--;
+					}
 					else
 					{
-						bestPieceChanged = false;
+						if (cMaskOverlap > maskOverlap)
+						{
+							bestPiece = o;
+							bestPieceChanged = true;
+							bestMaskOverlap = cMaskOverlap;
+						}
+					/*	else if (((cMaskOverlap <= maskOverlap+10)&&(cMaskOverlap >= maskOverlap-10) || (maskOverlap <= cMaskOverlap+10)&&(maskOverlap >= cMaskOverlap-10)) && (massObjectPointer.getGPiece(bestPiece).mass < massObjectPointer.getGPiece(o).mass))
+						{
+							bestPiece = o;
+							bestPieceChanged = true;
+						}*/
+						else
+						{
+							bestPieceChanged = false;
+						}
 					}
 				}
 			}
 
 		}
-
-		if (gPieceKey > -1)
+		if (gPieceKey > -1 && bestMaskOverlap > 69)
 		{
-	//		checkWithObjectRatio(bestPiece);
 			bestPieceKey = bestPiece;
+	//		checkWithObjectRatio(bestPiece);
 			
 			int xCenter = (massObjectPointer.getGPiece(bestPiece).xEnd+massObjectPointer.getGPiece(bestPiece).xStart)/2;
 	//		int ycenter = ((massObjectPointer.getGPiece(bestPiece).yStart)+(massObjectPointer.getGPiece(bestPiece).height/2));

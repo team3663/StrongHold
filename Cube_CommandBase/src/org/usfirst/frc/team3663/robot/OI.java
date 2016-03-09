@@ -2,6 +2,7 @@ package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
+import org.usfirst.frc.team3663.robot.commands.CG_VisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
 import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
@@ -98,7 +99,8 @@ public class OI {
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
 		//VisionTestButtons
-		testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
+		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
+		testCenterGoal.whileHeld(new CG_VisionCenterGoal());
 		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
 		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());
