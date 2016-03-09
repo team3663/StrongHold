@@ -128,6 +128,7 @@ public class Robot extends IterativeRobot {
 		ss_Camera.setLight(true);
         gui.sendBoolean("operation/Enabled", true);
         gui.sendString("operation/Mode", "Teleop");
+        gui.sendNumber("operation/Time", Timer.getMatchTime());
     }
 
     /**

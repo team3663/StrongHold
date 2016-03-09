@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Set;
 
 import javax.swing.Box;
@@ -18,7 +16,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-public class Frame implements Runnable{
+public class DriveFrame implements Runnable{
 	SubTablePanel[] subs;
 	NetworkTable table;
 	JPanel systems;
@@ -29,20 +27,18 @@ public class Frame implements Runnable{
 	Archiver archiver;
 	int tableSize = 0;
 	
-	public Frame(String ipAdr){
-		initJFrame();
-		System.out.println("Initialized JFrame");
+	public DriveFrame(String ipAdr){
 		initNetworkTable(ipAdr);
-		System.out.println("Initialized Network Table");
 		setWindowsLookAndFeel();
+		initJFrame();
 		
-//		JButton refresh = new JButton("Refresh");
-//		initRefreshButton(refresh);
-//		refresh.setPreferredSize(new Dimension(10,30));
+		JButton refresh = new JButton("Refresh");
+		initRefreshButton(refresh);
+		refresh.setPreferredSize(new Dimension(10,30));
 		
 		msgBoard = new MessageBoard();
 		archiver = new Archiver();
-		
+
 		do{
 			tableList = table.getSubTables();
 			subs = new SubTablePanel[tableList.size()];
@@ -50,9 +46,7 @@ public class Frame implements Runnable{
 			tableSize = tableList.size();
 			sleep(1300);
 		}while(subs.length == 0);
-		
-		System.out.println("Connected");
-		
+
 		int count = 0;
 		for(String k:tableList){
 			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
@@ -65,6 +59,16 @@ public class Frame implements Runnable{
 		Box box = Box.createHorizontalBox();
 		box.add(msgBoard);
 		box.add(Box.createHorizontalGlue());
+//		float h = (float)Math.random();
+//		float s = 0.2f;
+//		float b = 1.0f;
+//		for(String k:tableList){
+//			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(h,s,b),archie);
+//			s += 0.1f;
+//			b -= 0.02f;
+//			count++;
+//			System.out.println("SubTable: " + k);
+//		}
 		initSystems();
 		/////////////////////////////
 		addToFrame(systems, "North");
@@ -142,19 +146,16 @@ public class Frame implements Runnable{
 //		frame.setBounds(0,0,640,480);
 		frame.setBackground(Color.white);
 		frame.getContentPane().setBackground(Color.white);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-//		frame.addWindowListener(new WindowAdapter() {
-//		    @Override
-//		    public void windowClosing(WindowEvent windowEvent) {
-//		    	System.out.println("Hey");
-//		    	if(owat != null){
-//		    		owat.export();
-//		    	}
-//		        System.exit(0);
-//		    }
-//		});
-		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	if(owat != null){
+		    		owat.export();
+		    	}
+		        System.exit(0);
+		    }
+		});
 	}
 	public void initRefreshButton(JButton b){
 		b.addActionListener(new ActionListener() {

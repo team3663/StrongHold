@@ -20,9 +20,9 @@ public class SubTablePanel extends JPanel implements Runnable{
 	String subTable;
 	Color bckg;
 	Archiver archy;
-	messageBoard msgb;
+	MessageBoard msgb;
 	
-	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, messageBoard msgb){
+	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, MessageBoard msgb){
 		this.table = table;
 		this.subTable = subTable;
 		this.bckg = bckg;
@@ -34,7 +34,7 @@ public class SubTablePanel extends JPanel implements Runnable{
         getNames();
         fillJLabels();
         fillJFrame();
-        setLayout(new GridLayout(10,1,0,0));
+        setLayout(new GridLayout(18,0,0,0));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
 	}
@@ -90,34 +90,9 @@ public class SubTablePanel extends JPanel implements Runnable{
 		long startTime = System.currentTimeMillis();
 		while(true){
 			sleep(2); //necessary to not blow up your CPU
-			if(count%1000 == 0){
-//				update(hue,)
-			}
-//			if(subTable.equals("drive")){
-//				double speedLeft = table.getSubTable(subTable).getNumber(sList[2],3663);
-//				double speedRight = table.getSubTable(subTable).getNumber(sList[5],3663);
-//				g = (((speedLeft + speedRight)/2)+1)*127.5;
-//				r = 255 - g;
-//				if(g<r)b=g;
-//				else b=r;
-//				try{
-//					update(new Color((int)r,(int)g,(int)b));
-//				}catch(Exception e){
-//					System.err.println("Color error in " + subTable);
-//				}
-//			}
-//			else{
-//				update(bckg);
-//			}
 			update(bckg);
 			count++;
-			//Auto CHECK FOR REMOVED ELEMENTS//
-//			if(System.currentTimeMillis() > startTime + 10000){
-//				startTime = System.currentTimeMillis();
-//				emptyTable();
-//				System.out.println("Emptied NetworkTables");
-//			}
-			//CHECK IF NEW ELEMENTS//
+
 			if(count%100 == 0){
 				do{
 					int oldSize = guiElements.size();
