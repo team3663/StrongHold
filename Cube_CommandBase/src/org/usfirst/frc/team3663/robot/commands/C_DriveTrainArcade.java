@@ -2,6 +2,7 @@ package org.usfirst.frc.team3663.robot.commands;
 
 import org.usfirst.frc.team3663.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -16,8 +17,9 @@ public class C_DriveTrainArcade extends Command {
     protected void initialize() {
     	
     }
-    
+    int ctr=0;
     protected void execute() {
+    	Robot.gui.sendNumber("general/drivearcade",ctr++);
 
 			Robot.ss_DriveTrain.arcadeRobotDrive(-Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisTurn),
 					(Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisForward) - Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisReverse)));
