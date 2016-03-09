@@ -51,7 +51,7 @@ public class SS_DriveTrain extends Subsystem {
     		
     		driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
     	}
-    	if(!Robot.robotMap.isDriveFlipped){
+    	if(Robot.robotMap.isDriveFlipped){
     		driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed);
     	}
     	else{
@@ -82,8 +82,8 @@ public class SS_DriveTrain extends Subsystem {
     	double gyroAngle = driveGyro.getAngle();
     	//if the target degree lies outside of the current value +/- tolerance/2
     	if(pDegrees > gyroAngle+bufferZoneGyro/2 || pDegrees < gyroAngle-bufferZoneGyro/2){
-    		if(pDegrees > gyroAngle) driveTrain.arcadeDrive(0,-pSpeed);
-    		if(pDegrees < gyroAngle) driveTrain.arcadeDrive(0,pSpeed);
+    		if(pDegrees > gyroAngle) arcadeRobotDrive(0,-pSpeed);
+    		if(pDegrees < gyroAngle) arcadeRobotDrive(0,pSpeed);
     	}
     	else{
     		return true;

@@ -60,6 +60,7 @@ public class CameraRun {
 		System.out.println(streamAddress);
 		
 		camera = new VideoCapture(streamAddress);
+		System.out.println("found camera");
 		mat = new Mat();
 		frame = new JFrame("Dog's Eyes <o> . <o>");
 		label = new JLabel();
@@ -68,9 +69,9 @@ public class CameraRun {
 		massObjectPointer = new MassObjectHolder();
 		
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
+		NetworkTable.setIPAddress("10.36.63.20");//("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
 		table = NetworkTable.getTable("Dog-NT");
-		
+		System.out.println("found NT");
 		//setRedU();
 		
 		table.putBoolean("autoInitFindLeft: ",true);
@@ -138,6 +139,7 @@ public class CameraRun {
 					cameraFound = checkCameraStillFound();
 					if (cameraFound)
 					{
+						int badMatCounter = 0;
 						do 
 						{
 							badMat = false;
@@ -167,7 +169,16 @@ public class CameraRun {
 									e.printStackTrace();
 								}
 							}
+							badMatCounter++;
+							if (badMatCounter > 50)
+							{
+								break;
+							}
 						}while (badMat);
+						if (badMatCounter > 50)
+						{
+							break;
+						}
 						updateJFrame(mat);
 						
 				//		table.putBoolean("foundObject: ",(gPieceKey>-1));//may not need
@@ -759,12 +770,12 @@ public class CameraRun {
 					table.putNumber("cMaskOverlap: ", cMaskOverlap);
 					table.putNumber("MaskOverlap: ", maskOverlap);
 				//	if (Math.abs(a))
-					if (cMaskOverlap < 70)
+					if (cMaskOverlap < 67)
 					{
 						massObjectPointer.removeMass(o);
 						gPieceKey--;
 					}
-					else if (maskOverlap < 70)
+					else if (maskOverlap < 67)
 					{
 						massObjectPointer.removeMass(bestPiece);
 						gPieceKey--;
@@ -937,18 +948,19 @@ public class CameraRun {
 	
 	private boolean centeringGoal()
 	{//can compress alot more later
-		int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
-		//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
-		
-		double moveAngle = 45.0*((double)xCenter-320.0)/320.0;//-160)/160;
-		
 		if (gPieceKey > -1)
 		{
+			int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
+			//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
+			
+			double moveAngle = 45.0*((double)xCenter-goalCenterX/*320.0*/)/320.0;//-160)/160;
+		
 			if (xCenter < goalCenterX-6)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", true);
 				table.putString("needsTurning: ", "TurnLeft");
+				return true;
 			}
 			else if (xCenter > goalCenterX+6)//10)
 			{
@@ -974,6 +986,7 @@ public class CameraRun {
 			{
 				table.putNumber("cameraMoveAngle: ", 360);
 			}
+			return true;
 		}/*
 		else if (autoFindLeft)//maybe put something that saved if seen object and which way it disappeared
 		{
@@ -985,7 +998,6 @@ public class CameraRun {
 			table.putBoolean("leftTurn: ", false);
 			return true;
 		}*/
-		return (table.getNumber("cameraMoveAngle: ",-1) == 0);
 	}
 	
 	private boolean isFineAdjustedGoal()
