@@ -8,9 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CG_AutoShoot extends CommandGroup {
     
     public  CG_AutoShoot(int pSpeed) {
-    	addParallel(new C_ShooterRunMotors(1));
-    	addSequential(new C_ShooterWaitForSpeed(pSpeed));
-    	addParallel(new C_ShooterFirePiston());
+    	addSequential(new C_ShooterAutoStart(pSpeed));
+    	addSequential(new C_ShooterAutoEnd());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
