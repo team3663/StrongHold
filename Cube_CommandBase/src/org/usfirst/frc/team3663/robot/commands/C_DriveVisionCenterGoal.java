@@ -30,11 +30,12 @@ public class C_DriveVisionCenterGoal extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    	moveTime = 0.6;
+    	moveTime = Math.abs(table.getNumber("cameraMoveAngle: ",45)/45);
     	wasLastLeft = table.getBoolean("turnLeft: ",false);
     	wasLastLeft2 = wasLastLeft;
     	stop = !table.getBoolean("C_/centeringGoal: ",false);
     	startTime = Timer.getFPGATimestamp();
+    	//====
     	
     	if (!table.getBoolean("foundObject: ",false))
     	{
@@ -66,28 +67,34 @@ public class C_DriveVisionCenterGoal extends Command {
     	boolean turnLeft = table.getBoolean("turnLeft: ",false);
     	if (table.getBoolean("C_/centeringGoal: ",false))
     	{
-			if (table.getBoolean("turnLeft: ", false))
+			/*if (!table.getBoolean("foundObject: ",false))
 			{
-				Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.67);
+				turnLeft = !turnLeft;
+			}*/
+			if (turnLeft)
+			{
+				Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.62);
 			}
 			else
 			{
-				Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.68);
+				Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.65);
+			}
+	    	if (turnLeft != wasLastLeft && wasLastLeft != wasLastLeft2 && moveTime > 0.05)
+	    	{
+	    		moveTime = Math.abs(table.getNumber("cameraMoveAngle: ", 45)/45);
+	    		//moveTime-=0.1;
+	    	}
+	    	wasLastLeft2 = wasLastLeft;
+			wasLastLeft = turnLeft;
+			if (Timer.getFPGATimestamp()-startTime > moveTime)
+			{
+				Robot.ss_DriveTrain.arcadeRobotDrive(0,0);
+				stop = !table.getBoolean("C_/centeringGoal: ",false);
+		        //Robot.ss_DriveTrain.STOP();
+		        Timer.delay(1.0);
+				startTime = Timer.getFPGATimestamp();
 			}
     	}
-    	if (turnLeft != wasLastLeft && wasLastLeft != wasLastLeft2)
-    	{
-    		moveTime-=0.12;
-    	}
-    	wasLastLeft2 = wasLastLeft;
-		wasLastLeft = turnLeft;
-		if (Timer.getFPGATimestamp()-startTime > moveTime)
-		{
-			startTime = Timer.getFPGATimestamp();
-			stop = !table.getBoolean("C_/centeringGoal: ",false);
-	        //Robot.ss_DriveTrain.STOP();
-	        Timer.delay(1.0);
-		}
  }
 
     // Make this return true when this Command no longer needs to run execute()
