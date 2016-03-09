@@ -36,14 +36,16 @@ public class SS_Test extends Subsystem {
 		if(isTesting == false){
 			isTesting = true;
 			takeAll.start();
+
+	    	Robot.gui.sendString("general/takeall","taken");
 		}
 	}
 	
 	public void exitTestMode(){
 		if (takeAll != null){
 			takeAll.cancel();
+	    	Robot.gui.sendString("general/takeall","free");
 		}
-		isTesting = false;
 		isTesting = false;
 	}
 	public void incrementBy(int value){
