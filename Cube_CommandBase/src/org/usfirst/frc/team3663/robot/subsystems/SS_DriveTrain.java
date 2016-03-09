@@ -64,8 +64,8 @@ public class SS_DriveTrain extends Subsystem {
     }
     
     public void killDriveTrain(){
-    	driveTrain.setExpiration(10);
-    	driveTrain = null;
+    	//driveTrain.setExpiration(10);
+    	//driveTrain = null;
     }
     
     public int getLeftEnc(){							//gets the left Encoder
