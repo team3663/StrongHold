@@ -7,16 +7,13 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_ShooterHoldSpeed extends Command {
+public class C_HookSetPiston extends Command {
 
-	private int speed;
-	private boolean done = false;
-	private boolean buttonPress = false;
-	private int timeOut = 10;
-    public C_ShooterHoldSpeed(int pSpeed) {
+	private boolean fire;
+    public C_HookSetPiston(boolean pValue) {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.ss_Shooter);
-        speed = pSpeed;
+		fire = pValue;
+    	requires(Robot.ss_Hook);
     }
 
     // Called just before this Command runs the first time
@@ -25,34 +22,20 @@ public class C_ShooterHoldSpeed extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ss_Shooter.holdSpeed(speed);
-    	if(Robot.oi.driveJoystick.getRawButton(3)){
-    		buttonPress = true;
-    	}
-    	if(Robot.oi.driveJoystick.getRawButton(7)||(buttonPress&&Robot.ss_Shooter.topInSpeed(speed))){
-    		done = true;
-    		Robot.ss_Shooter.fireShooterSolenoid(true);
-    	}
+    	Robot.ss_Hook.fireHookPiston(fire);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	if(done){
-    		timeOut--;
-            return timeOut < 0;
-    	}
-    	return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.ss_Shooter.fireShooterSolenoid(false); 
-    	Robot.ss_Shooter.STOP();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
