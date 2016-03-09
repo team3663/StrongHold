@@ -1,22 +1,16 @@
 package org.usfirst.frc.team3663.robot.commands;
 
-import org.usfirst.frc.team3663.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  */
-public class CG_TeleopVisionShooting extends CommandGroup {
+public class TestCG_FullTest extends CommandGroup {
     
-	NetworkTable table = Robot.visionTable;
-	
-    public  CG_TeleopVisionShooting() {
-		//addSequential(new C_DriveVisionCenterGoal());
-    	addSequential(new CG_VisionCenterGoal());
-		addSequential(new C_DartPrepareForShot());
-    	addSequential(new C_ShooterShoot());
+    public  TestCG_FullTest() {
+    	addSequential(new TestC_EnableTestMode());
+    	addSequential(new C_WaitSecs(20));
+    	addSequential(new TestC_DisableTestMode());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -1,7 +1,9 @@
 package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
+import org.usfirst.frc.team3663.robot.commands.TestCG_FullTest;
 import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
+import org.usfirst.frc.team3663.robot.commands.CG_VisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
 import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
@@ -14,6 +16,7 @@ import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
+import org.usfirst.frc.team3663.robot.commands.C_WaitSecs;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEnc;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafety;
@@ -21,6 +24,7 @@ import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
 import org.usfirst.frc.team3663.robot.commands.TC_TurnByGyro;
 import org.usfirst.frc.team3663.robot.commands.TestCG_TestRequiresAll;
 import org.usfirst.frc.team3663.robot.commands.TestC_Cycle;
+import org.usfirst.frc.team3663.robot.commands.TestC_DisableTestMode;
 import org.usfirst.frc.team3663.robot.commands.TestC_ToggleTestMode;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -38,7 +42,7 @@ public class OI {
 	//Joysticks	
 	public Joystick driveJoystick = new Joystick(0);
 	public Joystick buttonJoystick = new Joystick(1);
-	public Joystick testJoystick1= new Joystick(5);
+	//public Joystick testJoystick1= new Joystick(5);
 	public Joystick testJoystick = new Joystick(4);
 	
 	public Joystick visionTestStick = new Joystick(3);
@@ -64,6 +68,8 @@ public class OI {
 	
   //Test Joystick Buttons
 	private JoystickButton toggleTestMode	= new JoystickButton(testJoystick, 7);
+	private JoystickButton runFullTest  	= new JoystickButton(testJoystick, 8);//start button on xbox ctrl
+	private JoystickButton disableFullTest 	= new JoystickButton(testJoystick, 8);//start button on xbox ctrl
 	private JoystickButton cycleUp			= new JoystickButton(testJoystick, 2);
 	private JoystickButton cycleDown		= new JoystickButton(testJoystick, 1);
 	
@@ -82,7 +88,7 @@ public class OI {
 		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
 		pickupRunOut.whenPressed(new C_PickupRunMotor(1));
 	  //Shooter Buttons
-		shooterMotorsFullPower.whileHeld(new C_ShooterHoldSpeed(1000));
+		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
@@ -94,11 +100,15 @@ public class OI {
 		
 		//Test Buttons
 		toggleTestMode.whenPressed(new TestC_ToggleTestMode());
+		runFullTest.whileHeld(new TestCG_FullTest());
+		//runFullTest.whileHeld(new C_WaitSecs(15));
+		disableFullTest.whenReleased(new TestC_DisableTestMode());
 		cycleUp.whenPressed(new TestC_Cycle(true));
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
 		//VisionTestButtons
-		testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
+		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
+		testCenterGoal.whileHeld(new CG_VisionCenterGoal());
 		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
 		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());

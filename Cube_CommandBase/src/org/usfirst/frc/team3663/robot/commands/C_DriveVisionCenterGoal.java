@@ -36,11 +36,14 @@ public class C_DriveVisionCenterGoal extends Command {
     	stop = !table.getBoolean("C_/centeringGoal: ",false);
     	startTime = Timer.getFPGATimestamp();
     	*/
-    	
+    	if (!table.getBoolean("foundObject: ",false))
+    	{
+    		System.out.println("didn't find Object! DriveVisionSeeAnyGoal didn't work!");
+    	}
 		degrees = table.getNumber("cameraMoveAngle: ",360);
     	Robot.ss_DriveTrain.resetGyro();
     	table.putBoolean("Mode/commandRunning: ", true);
-    	speed = 1;
+    	speed = 0.75;//until we know we can go faster
     	firstTime = true;
     }
 
@@ -48,7 +51,7 @@ public class C_DriveVisionCenterGoal extends Command {
     protected void execute() {
     	//stop = Robot.ss_DriveTrain.spinByGyro((int)degrees);
     	
-    	objectFound = table.getBoolean("foundObject: ",false);
+    	/*objectFound = table.getBoolean("foundObject: ",false);
     	if (objectFound)
     	{
     		if (firstTime)
@@ -56,10 +59,10 @@ public class C_DriveVisionCenterGoal extends Command {
     			Robot.ss_DriveTrain.resetGyro();
         		degrees = table.getNumber("cameraMoveAngle: ", 360);
         		speed = 0.7;
+        		firstTime = false;
     		}
-    		firstTime = false;
-    	}
-    	
+    	}*/
+    	//-----------------------------------------------------------------
     	/*boolean turnLeft = table.getBoolean("turnLeft: ",false);
     	if (table.getBoolean("C_/centeringGoal: ",false))
     	{
@@ -89,8 +92,7 @@ public class C_DriveVisionCenterGoal extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	//work on this on Monday!!!
-        return (Robot.ss_DriveTrain.spinByGyro(degrees, speed));
+        return (Robot.ss_DriveTrain.spinByGyro((int)degrees, speed));
     	//return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
     }
 
