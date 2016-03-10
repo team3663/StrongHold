@@ -1,23 +1,21 @@
 package org.usfirst.frc.team3663.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team3663.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class CG_Auto extends CommandGroup {
+public class CG_AutoUnderLowBar extends CommandGroup {
     
-    public  CG_Auto() {
-        // Add Commands here:
+    public  CG_AutoUnderLowBar() {
     	addSequential(new C_CameraLightSet(true));
-    	addSequential(new C_WheelyBarAutoMove(2946, .5));
         addSequential(new C_PickupFirePiston(true));
-        addSequential(new C_DartAutoMove(1410));
-        addSequential(new C_PickupFirePiston(false));
-        addSequential(new C_DriveBasedTime());
+    	addSequential(new C_WheelyBarAutoMove(2946, .5));
+    	addSequential(new C_DartAutoMove(Robot.ss_Dart.minDistance()));
+    	addSequential(new C_DriveBasedTime());
         //      addSequential(new Command2());
-        // these will run in order.
 
         // To run multiple commands at the same time,
         // use addParallel()
