@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team3663.robot;
 
-import org.usfirst.frc.team3663.robot.commands.CG_Auto;
+import org.usfirst.frc.team3663.robot.commands.CG_AutoOverBasicDefence;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
@@ -109,7 +109,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	
-    	CG_Auto auto = new CG_Auto();
+    	CG_AutoOverBasicDefence auto = new CG_AutoOverBasicDefence();
     	auto.start();
         gui.sendBoolean("operation/Enabled", true);
         gui.sendString("operation/Mode", "Autonomous");
@@ -125,6 +125,7 @@ public class Robot extends IterativeRobot {
     	C_DriveControllerDPad DpadControlls = new C_DriveControllerDPad();
     	DpadControlls.start();
     	ss_DriveTrain.resetGyro();
+    	ss_Hook.resetEnc();
 		ss_Camera.setLight(true);
         gui.sendBoolean("operation/Enabled", true);
         gui.sendString("operation/Mode", "Teleop");

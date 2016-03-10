@@ -39,8 +39,14 @@ public class SS_Winch extends Subsystem {
     }
     
     public void runMotorTeleop(double pSpeed){							//for human use with built in safty
-    	winchMotor1.set(pSpeed);
-    	winchMotor2.set(pSpeed);
+    	if(pSpeed > .2 || pSpeed < -.2){
+	    	winchMotor1.set(pSpeed);
+	    	winchMotor2.set(pSpeed);
+    	}
+    	else{
+	    	winchMotor1.set(0);
+	    	winchMotor2.set(0);
+    	}
     }
     
     public void testSetWinchMotor1(double pSpeed){
