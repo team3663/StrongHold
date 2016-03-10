@@ -76,8 +76,8 @@ public class Robot extends IterativeRobot {
 		ss_Hook = new SS_Hook();
 		ss_PDB = new SS_PowerDistributionBoard();
 		gui = new SS_Gui();
-		oi = new OI();
 		ss_Test = new SS_Test();
+		oi = new OI();
     	LiveWindow.setEnabled(false);
         gui.sendNumber("operation/Time", Timer.getMatchTime());
 

@@ -66,6 +66,7 @@ public class SS_Test extends Subsystem {
 	    	Robot.gui.sendString("Test/takeall","free");
 		}
 		isTesting = false;
+		update();
 	}
 	
 	public void incrementBy(int value){

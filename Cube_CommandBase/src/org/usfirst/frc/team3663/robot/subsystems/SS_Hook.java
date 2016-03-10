@@ -47,15 +47,21 @@ public class SS_Hook extends Subsystem {
     	}
     }
     
+    // todo make speed and encoder positive when extending hook
+    // todo make sure hook can always be moved in a safe direction
     public void moveHook(double pSpeed){//-200000
-    	int distValue = hookMotor.getEncPosition();
-    	if(distValue > -200000 && distValue < 0 && (pSpeed > .2 || pSpeed < -.2)){
-        	hookMotor.set(pSpeed/2);    		
-    	}
-    	else{
+    	
+    	if (pSpeed < .2 && pSpeed > -.2){
     		hookMotor.set(0);
     	}
-    	SmartDashboard.putNumber("Hook Value", hookMotor.getEncPosition());
+    	else
+    	{
+    		int distValue = hookMotor.getEncPosition();
+    		if (distValue > -200000 && distValue < 0) {
+    			hookMotor.set(pSpeed/2);    		
+    		}
+    		SmartDashboard.putNumber("Hook Encoder", distValue);
+    	}
     }
     
     public boolean pastLocUp(int pValue){

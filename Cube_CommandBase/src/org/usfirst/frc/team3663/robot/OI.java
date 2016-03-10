@@ -47,7 +47,7 @@ public class OI {
 	//public Joystick testJoystick1= new Joystick(5);
 	public Joystick testJoystick = new Joystick(4);
 	
-	public Joystick visionTestStick = new Joystick(3);
+	//public Joystick visionTestStick = new Joystick(3);
 
 //Buttons
   //Pickup Buttons
@@ -78,10 +78,15 @@ public class OI {
 	private JoystickButton cycleDown		= new JoystickButton(testJoystick, 1);
 	
   //visionTestStick Buttons
-	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
-	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
-	private JoystickButton testTeleopVisionShooting = new JoystickButton(visionTestStick,2);
-	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
+//	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
+//	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
+//	private JoystickButton testTeleopVisionShooting = new JoystickButton(visionTestStick,2);
+//	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
+//	
+	private JoystickButton testCenterGoal = new JoystickButton(testJoystick,3);
+	private JoystickButton testFineAdjust = new JoystickButton(testJoystick,4);
+	private JoystickButton testTeleopVisionShooting = new JoystickButton(testJoystick,5);
+	private JoystickButton turn90Degrees = new JoystickButton(testJoystick,6);
 	
 	public OI(){
 	//Real Buttons

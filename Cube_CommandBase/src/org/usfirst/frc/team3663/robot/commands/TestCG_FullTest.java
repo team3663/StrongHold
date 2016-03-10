@@ -11,6 +11,7 @@ public class TestCG_FullTest extends CommandGroup {
     	addSequential(new TestC_EnableTestMode());
     	//addSequential(new C_WaitSecs(20));
     	addSequential(new TestC_TestShooter());
+    	addSequential(new C_WaitSecs(5));
     	addSequential(new TestC_DisableTestMode());
         // Add Commands here:
         // e.g. addSequential(new Command1());
