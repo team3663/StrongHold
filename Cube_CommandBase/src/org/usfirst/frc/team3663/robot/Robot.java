@@ -79,6 +79,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		test = new SS_Test();
     	LiveWindow.setEnabled(false);
+        gui.sendNumber("operation/Time", Timer.getMatchTime());
 
     }
 	

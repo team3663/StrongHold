@@ -58,11 +58,10 @@ public class DriveFrame implements Runnable{
 		System.out.println("Connected");
 		
 		//CREATING EACH COLUMN//
-		Font myFont = new Font("Serif", Font.PLAIN, 189);
+		Font myFont = new Font("SanSerif", Font.PLAIN, 12);
 		int count = 0;
-		Color offWhite = new Color(250,250,250);
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,offWhite,archiver,msgBoard,myFont);
+			subs[count] = new SubTablePanel(k,table,Color.BLACK,archiver,msgBoard,myFont);
 			count++;
 			System.out.println("SubTable: " + k);
 		}

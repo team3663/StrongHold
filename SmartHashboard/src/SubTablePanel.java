@@ -39,14 +39,14 @@ public class SubTablePanel extends JPanel implements Runnable{
 		this.archy = archy;
 		this.msgb = msgb;
 		this.f = f;
-		setForeground(Color.WHITE);
 		setBackground(Color.BLACK);
 	}
 	public void init(){
         getNames();
         fillJLabels();
         fillPanel();
-        setLayout(new GridLayout(18,0,0,0));
+        if(f == null) setLayout(new GridLayout(18,0,0,0));
+//        else setLayout(new GridLayout(1,0,0,0));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
 	}
@@ -67,8 +67,9 @@ public class SubTablePanel extends JPanel implements Runnable{
 			if(f == null){
 				jList[i] = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
 			}else{
-				JLabel jl = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
+				JLabel jl = new JLabel(""+table.getValue(sList[i],3663));
 				jl.setFont(f);
+				jl.setForeground(Color.WHITE);
 				jList[i] = jl;
 			}
 			System.out.println(sList[i]);
@@ -81,9 +82,10 @@ public class SubTablePanel extends JPanel implements Runnable{
 				add(jList[i]);
 			}
 		}else{
+			//this is drive mode
 			for(int i=0;i<sList.length;i++){
 				if(sList[i].equals("Time")){
-					add(jList[i]);
+					add(jList[i],"Center");
 				}
 			}
 		}
@@ -147,7 +149,11 @@ public class SubTablePanel extends JPanel implements Runnable{
 		for(int i=0;i<sList.length;i++){
 			if(i != 0){
 				Object o = table.getSubTable(subTable).getValue(sList[i],3663);
-				jList[i].setText(sList[i] + ": " + o);
+				if(f == null)jList[i].setText(sList[i] + ": " + o);
+				else{
+					jList[i].setFont(updateFont(jList[i]));
+					jList[i].setText("" + o);
+				}
 				archy.addValue(sList[i], o.toString());
 			}else{
 				//titles
@@ -157,5 +163,24 @@ public class SubTablePanel extends JPanel implements Runnable{
 	}
 	public String get(int index){
 		return (table.getSubTable(subTable).getValue(sList[index],3663).toString());
+	}
+	public Font updateFont(JLabel label){
+		Font labelFont = label.getFont();
+		String labelText = label.getText();
+
+		int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
+		int componentWidth = this.getWidth();
+
+		// Find out how much the font can grow in width.
+		double widthRatio = (double)componentWidth / (double)stringWidth;
+
+		int newFontSize = (int)(labelFont.getSize() * widthRatio);
+		int componentHeight = this.getHeight() - (int)((double)this.getHeight()/3.0);
+
+		// Pick a new font size so it will not be larger than the height of label.
+		int fontSizeToUse = Math.min(newFontSize, componentHeight);
+
+		// Set the label's font size to the newly determined size.
+		return new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse);
 	}
 }
