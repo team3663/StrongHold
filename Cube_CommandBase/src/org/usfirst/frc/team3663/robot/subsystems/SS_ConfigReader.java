@@ -74,6 +74,11 @@ public class SS_ConfigReader extends Subsystem{
 			    		Robot.robotMap.shooterSolenoid = new int[]{
 			    				Integer.parseInt(temp[0]),
 			    				Integer.parseInt(temp[1])};
+			    	}else if(keyValue[0].equals("hookSolenoid")){
+			    		String[] temp = keyValue[1].split(",");
+			    		Robot.robotMap.hookSolenoid = new int[]{
+			    				Integer.parseInt(temp[0]),
+			    				Integer.parseInt(temp[1])};
 			    	}else if(keyValue[0].equals("driveAxisForward")){
 			    		Robot.robotMap.driveAxisForward = Integer.parseInt(keyValue[1]);
 			    	}else if(keyValue[0].equals("driveAxisReverse")){

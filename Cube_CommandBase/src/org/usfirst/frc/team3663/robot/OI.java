@@ -1,10 +1,10 @@
 package org.usfirst.frc.team3663.robot;
 
+import org.usfirst.frc.team3663.robot.commands.CG_AutoShoot;
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.TestCG_FullTest;
 import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.CG_VisionCenterGoal;
-import org.usfirst.frc.team3663.robot.commands.CG_WaitForShooterThenShoot;
 import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafety;
@@ -88,7 +88,7 @@ public class OI {
 		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
 		pickupRunOut.whenPressed(new C_PickupRunMotor(1));
 	  //Shooter Buttons
-		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
+		shooterMotorsFullPower.whenPressed(new CG_AutoShoot(-10000));
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
@@ -108,7 +108,7 @@ public class OI {
 		
 		//VisionTestButtons
 		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
-		testCenterGoal.whileHeld(new CG_VisionCenterGoal());
+		testCenterGoal.whenPressed(new CG_VisionCenterGoal());
 		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
 		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());

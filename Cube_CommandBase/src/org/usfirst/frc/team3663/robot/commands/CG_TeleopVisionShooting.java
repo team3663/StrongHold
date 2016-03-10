@@ -15,7 +15,7 @@ public class CG_TeleopVisionShooting extends CommandGroup {
     public  CG_TeleopVisionShooting() {
 		//addSequential(new C_DriveVisionCenterGoal());
     	addSequential(new CG_VisionCenterGoal());
-		addSequential(new C_DartPrepareForShot());
+	//	addSequential(new C_DartPrepareForShot());
     	addSequential(new C_ShooterShoot());
         // Add Commands here:
         // e.g. addSequential(new Command1());

@@ -60,6 +60,7 @@ public class CameraRun {
 		System.out.println(streamAddress);
 		
 		camera = new VideoCapture(streamAddress);
+		System.out.println("found camera");
 		mat = new Mat();
 		frame = new JFrame("Dog's Eyes <o> . <o>");
 		label = new JLabel();
@@ -68,17 +69,31 @@ public class CameraRun {
 		massObjectPointer = new MassObjectHolder();
 		
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
+		NetworkTable.setIPAddress("10.36.63.20");//("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
 		table = NetworkTable.getTable("Dog-NT");
-		
+		System.out.println("found NT");
 		//setRedU();
 		
-		table.putBoolean("autoInitFindLeft: ",true);
+		table.putBoolean("autoInitFindLeft: ",true);//remove when auto switches are made
+		
 		//table.putBoolean("Mode/commandRunning: ",false);//may not need
 		//table.putBoolean("Mode/inAutonomous: ",false);//may not need
 		table.putBoolean("C_/centeringGoal: ",true);
 		//table.putBoolean("C_/movingWithRadius: ",false);
 		table.putBoolean("C_/okayToShoot: ",false);
+		
+		//-------------------------------------------//may need to be placed in a place where camera can be disconnected?
+		if (table.getBoolean("autoInitFindLeft: ",true))//found from gettingBoolean
+		{
+			table.putNumber("cameraMoveAngle: ", -360);//may not need
+			table.putBoolean("turnLeft: ",true);
+		}
+		else
+		{
+			table.putNumber("cameraMoveAngle: ", 360);//may not need
+			table.putBoolean("turnLeft: ", false);
+		}
+		//--------------------------------------------
 	}
 
 	int buffingCounter = 0;
@@ -138,6 +153,7 @@ public class CameraRun {
 					cameraFound = checkCameraStillFound();
 					if (cameraFound)
 					{
+						int badMatCounter = 0;
 						do 
 						{
 							badMat = false;
@@ -167,7 +183,16 @@ public class CameraRun {
 									e.printStackTrace();
 								}
 							}
+							badMatCounter++;
+							if (badMatCounter > 50)
+							{
+								break;
+							}
 						}while (badMat);
+						if (badMatCounter > 50)
+						{
+							break;
+						}
 						updateJFrame(mat);
 						
 				//		table.putBoolean("foundObject: ",(gPieceKey>-1));//may not need
@@ -759,12 +784,12 @@ public class CameraRun {
 					table.putNumber("cMaskOverlap: ", cMaskOverlap);
 					table.putNumber("MaskOverlap: ", maskOverlap);
 				//	if (Math.abs(a))
-					if (cMaskOverlap < 70)
+					if (cMaskOverlap < 66)
 					{
 						massObjectPointer.removeMass(o);
 						gPieceKey--;
 					}
-					else if (maskOverlap < 70)
+					else if (maskOverlap < 66)
 					{
 						massObjectPointer.removeMass(bestPiece);
 						gPieceKey--;
@@ -937,24 +962,27 @@ public class CameraRun {
 	
 	private boolean centeringGoal()
 	{//can compress alot more later
-		int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
-		//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
-		
-		double moveAngle = 45.0*((double)xCenter-320.0)/320.0;//-160)/160;
-		
 		if (gPieceKey > -1)
 		{
-			if (xCenter < goalCenterX-6)//10)
+			int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
+			//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
+			
+			double moveAngle = 45.0*((double)xCenter-goalCenterX/*320.0*/)/320.0;//-160)/160;
+		
+			if (xCenter < goalCenterX-7)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", true);
 				table.putString("needsTurning: ", "TurnLeft");
+				table.putBoolean("turnLeft: ",true);
+				return true;
 			}
-			else if (xCenter > goalCenterX+6)//10)
+			else if (xCenter > goalCenterX+7)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", false);
 				table.putString("needsTurning: ", "TurnRight");
+				table.putBoolean("turnLeft: ", false);
 				return true;
 			}
 			else
@@ -964,17 +992,20 @@ public class CameraRun {
 				return false;
 			}
 		}
-		else
+	/*	else
 		{
 			if (autoFindLeft)
 			{
 				table.putNumber("cameraMoveAngle: ", -360);
+				table.putBoolean("turnLeft: ",true);
 			}
 			else
 			{
 				table.putNumber("cameraMoveAngle: ", 360);
+				table.putBoolean("turnLeft: ", false);
 			}
-		}/*
+			return true;
+		}*/return true;/*
 		else if (autoFindLeft)//maybe put something that saved if seen object and which way it disappeared
 		{
 			table.putBoolean("leftTurn: ", true);
@@ -985,7 +1016,6 @@ public class CameraRun {
 			table.putBoolean("leftTurn: ", false);
 			return true;
 		}*/
-		return (table.getNumber("cameraMoveAngle: ",-1) == 0);
 	}
 	
 	private boolean isFineAdjustedGoal()

@@ -30,12 +30,13 @@ public class C_DriveVisionCenterGoal extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    /*	moveTime = 0.6;
+    	moveTime = Math.abs(table.getNumber("cameraMoveAngle: ",45)/45);
     	wasLastLeft = table.getBoolean("turnLeft: ",false);
     	wasLastLeft2 = wasLastLeft;
     	stop = !table.getBoolean("C_/centeringGoal: ",false);
     	startTime = Timer.getFPGATimestamp();
-    	*/
+    	//====
+    	
     	if (!table.getBoolean("foundObject: ",false))
     	{
     		System.out.println("didn't find Object! DriveVisionSeeAnyGoal didn't work!");
@@ -63,37 +64,43 @@ public class C_DriveVisionCenterGoal extends Command {
     		}
     	}*/
     	//-----------------------------------------------------------------
-    	/*boolean turnLeft = table.getBoolean("turnLeft: ",false);
+    	boolean turnLeft = table.getBoolean("turnLeft: ",false);
     	if (table.getBoolean("C_/centeringGoal: ",false))
     	{
-			if (table.getBoolean("turnLeft: ", false))
+			/*if (!table.getBoolean("foundObject: ",false))
 			{
-				Robot.ss_DriveTrain.autoArcadeDrive(0.675, 0);
+				turnLeft = !turnLeft;
+			}*/
+			if (turnLeft)
+			{
+				Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.62);
 			}
 			else
 			{
-				Robot.ss_DriveTrain.autoArcadeDrive(-0.68, 0);
+				Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.65);
+			}
+	    	if (turnLeft != wasLastLeft && wasLastLeft != wasLastLeft2 && moveTime > 0.05)
+	    	{
+	    		moveTime = Math.abs(table.getNumber("cameraMoveAngle: ", 45)/45);
+	    		//moveTime-=0.1;
+	    	}
+	    	wasLastLeft2 = wasLastLeft;
+			wasLastLeft = turnLeft;
+			if (Timer.getFPGATimestamp()-startTime > moveTime)
+			{
+				Robot.ss_DriveTrain.arcadeRobotDrive(0,0);
+				stop = !table.getBoolean("C_/centeringGoal: ",false);
+		        //Robot.ss_DriveTrain.STOP();
+		        Timer.delay(1.0);
+				startTime = Timer.getFPGATimestamp();
 			}
     	}
-    	if (turnLeft != wasLastLeft && wasLastLeft != wasLastLeft2)
-    	{
-    		moveTime-=0.1;
-    	}
-    	wasLastLeft2 = wasLastLeft;
-		wasLastLeft = turnLeft;
-		if (Timer.getFPGATimestamp()-startTime > moveTime)
-		{
-			startTime = Timer.getFPGATimestamp();
-			stop = !table.getBoolean("C_/centeringGoal: ",false);
-	        //Robot.ss_DriveTrain.STOP();
-	        Timer.delay(1.0);
-		}*/
  }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (Robot.ss_DriveTrain.spinByGyro((int)degrees, speed));
-    	//return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
+        //return (Robot.ss_DriveTrain.spinByGyro((int)degrees, speed));
+    	return (stop);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
     }
 
     // Called once after isFinished returns true

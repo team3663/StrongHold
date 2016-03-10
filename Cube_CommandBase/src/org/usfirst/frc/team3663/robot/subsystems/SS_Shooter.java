@@ -18,7 +18,6 @@ public class SS_Shooter extends Subsystem {
 	private DoubleSolenoid shooterSolenoid = new DoubleSolenoid(Robot.robotMap.shooterSolenoid[0], Robot.robotMap.shooterSolenoid[1]);
 	//Sensors
 	
-	
     public void initDefaultCommand() {
     	
     }
@@ -63,31 +62,66 @@ public class SS_Shooter extends Subsystem {
     		shooterSolenoid.set(DoubleSolenoid.Value.kReverse);
     	}
     }
-    
+        
     private double topSpeed = 0;
-    private double bottomSpeed = 0;   
-    public void HoldSpeed(int pSpeed){
+    public void holdTopSpeed(int pSpeed){
     	int vTopSpeed = shooterTop.getEncVelocity();
-    	int vBottomSpeed = shooterBottom.getEncVelocity();
-    	double diffBottom = (double)(pSpeed - vBottomSpeed)/200000;
-    	bottomSpeed-=diffBottom;
-    	/*if(topSpeed > 1){
+    	double diffTop = (double)(pSpeed - vTopSpeed)/300000;
+    	topSpeed-=diffTop;
+    	if(topSpeed > 1){
     		topSpeed = 1;
     	}
     	else if(topSpeed < -1){
     		topSpeed = -1;
-    	}*/
+    	}
+    	shooterTop.set(topSpeed);
+    }
+    
+    private double bottomSpeed = 0;    
+    public void holdBottomSpeed(int pSpeed){
+    	int vBottomSpeed = shooterBottom.getEncVelocity();
+    	double diffBottom = (double)(pSpeed - vBottomSpeed)/300000;
+    	bottomSpeed-=diffBottom;
     	if(bottomSpeed > 1){
     		bottomSpeed = 1;
     	}
     	else if(bottomSpeed < -1){
     		bottomSpeed = -1;
-    	}
-    	SmartDashboard.putNumber("Numbers ", diffBottom);
-    	SmartDashboard.putNumber("tops speed", topSpeed++);
-    	SmartDashboard.putNumber("bottoms speed", bottomSpeed);
-    	//shooterTop.set(topSpeed);
+    	}    
     	shooterBottom.set(bottomSpeed);
+    }
+    
+    public void holdSpeed(int pSpeed){
+    	holdBottomSpeed(pSpeed);
+    	holdTopSpeed(pSpeed);
+    }
+    
+    private int topSafeTimes = 5;
+    public boolean topInSpeed(int pSpeed){
+    	int currentSpeed = shooterTop.getEncVelocity();
+    	if(pSpeed+300>currentSpeed&&pSpeed-300<currentSpeed){
+    		topSafeTimes--;
+    	}
+    	else{
+    		topSafeTimes = 5;
+    	}
+    	return topSafeTimes<0;
+    }
+    
+    private int bottomSafeTimes = 5;
+    public boolean bottomInSpeed(int pSpeed){
+    	int currentSpeed = shooterBottom.getEncVelocity();
+    	if(pSpeed+300>currentSpeed&&pSpeed-300<currentSpeed){
+    		bottomSafeTimes--;
+    	}
+    	else{
+    		bottomSafeTimes = 5;
+    	}
+    	return bottomSafeTimes<0;
+    }
+    
+    public boolean atSpeed(int pSpeed){
+    	return /*topInSpeed(pSpeed) &&*/ bottomInSpeed(pSpeed);
     }
     
     public void STOP(){

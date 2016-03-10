@@ -48,6 +48,7 @@ public class RobotMap {
 /*******Solenoids*******/
 	    public int[] pickUpSolenoid  = new int[]{3,2};//3.2  
 	    public int[] shooterSolenoid = new int[]{1,0};//1.0
+	    public int[] hookSolenoid 	 = new int[]{4,5};
 	    
 /****DriveControlles*****/
 	//driveTrain

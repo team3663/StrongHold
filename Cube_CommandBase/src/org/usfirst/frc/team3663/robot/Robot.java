@@ -136,6 +136,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        updateDONTREMOVE();
     }
     
     /**
@@ -152,6 +153,10 @@ public class Robot extends IterativeRobot {
 //    	SmartDashboard.putBoolean("TestModeEnabled", true);
 //    	LiveWindow.setEnabled(false);
     	//oi.canTest(true);
+    }
+    
+    public void updateDONTREMOVE(){
+    	ss_Shooter.updateDashboard();
     }
     
 }
