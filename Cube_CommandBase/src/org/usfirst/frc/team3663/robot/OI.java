@@ -16,6 +16,7 @@ import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
+import org.usfirst.frc.team3663.robot.commands.C_TrentsVision;
 import org.usfirst.frc.team3663.robot.commands.C_WaitSecs;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEnc;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
@@ -75,6 +76,7 @@ public class OI {
 	
   //visionTestStick Buttons
 	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
+	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
 	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
 	private JoystickButton testTeleopVisionShooting = new JoystickButton(visionTestStick,2);
 	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
@@ -109,6 +111,7 @@ public class OI {
 		//VisionTestButtons
 		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
 		testCenterGoal.whenPressed(new CG_VisionCenterGoal());
+		trentsBadCode.whenPressed(new C_TrentsVision());
 		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
 		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());

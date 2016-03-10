@@ -66,7 +66,9 @@ public class SubTablePanel extends JPanel implements Runnable{
 		for(int i=0;i<sList.length;i++){
 			if(f == null){
 				jList[i] = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
-			}else{
+			}
+			//DRIVER MODE CODE//
+			else{
 				JLabel jl = new JLabel(""+table.getValue(sList[i],3663));
 				jl.setFont(f);
 				jl.setForeground(Color.WHITE);
@@ -81,8 +83,9 @@ public class SubTablePanel extends JPanel implements Runnable{
 			for(int i=0;i<sList.length;i++){
 				add(jList[i]);
 			}
-		}else{
-			//this is drive mode
+		}
+		//DRIVER MODE CODE//
+		else{
 			for(int i=0;i<sList.length;i++){
 				if(sList[i].equals("Time")){
 					add(jList[i],"Center");
@@ -149,10 +152,30 @@ public class SubTablePanel extends JPanel implements Runnable{
 		for(int i=0;i<sList.length;i++){
 			if(i != 0){
 				Object o = table.getSubTable(subTable).getValue(sList[i],3663);
-				if(f == null)jList[i].setText(sList[i] + ": " + o);
+				if(f == null){
+					jList[i].setText(sList[i] + ": " + o);
+				}
+				//DRIVER MODE CODE//
 				else{
-					jList[i].setFont(updateFont(jList[i]));
-					jList[i].setText("" + o);
+					if(sList[i].equals("Time")){
+						if((double)o < 15.0 && (double)o > 0){
+							jList[i].setForeground(Color.getHSBColor((float)Math.random(),1.0f,1.0f));
+							jList[i].setFont(updateFont(jList[i],true));
+						}else{
+							jList[i].setForeground(Color.WHITE);
+							jList[i].setFont(updateFont(jList[i],false));
+						}
+					}else{
+						jList[i].setForeground(Color.WHITE);
+						jList[i].setFont(updateFont(jList[i],false));
+					}
+					String text = o.toString();
+					int decimalPlaces = text.length() - text.indexOf('.') - 1;
+					if(decimalPlaces < 2){
+						jList[i].setText("" + text.concat("0"));
+					}else{
+						jList[i].setText("" + o);
+					}
 				}
 				archy.addValue(sList[i], o.toString());
 			}else{
@@ -164,23 +187,24 @@ public class SubTablePanel extends JPanel implements Runnable{
 	public String get(int index){
 		return (table.getSubTable(subTable).getValue(sList[index],3663).toString());
 	}
-	public Font updateFont(JLabel label){
+	public Font updateFont(JLabel label,boolean crazy){
 		Font labelFont = label.getFont();
 		String labelText = label.getText();
 
 		int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
-		int componentWidth = this.getWidth();
+		int componentWidth = (int)((double)this.getWidth()/1.2)+1;
 
 		// Find out how much the font can grow in width.
 		double widthRatio = (double)componentWidth / (double)stringWidth;
 
 		int newFontSize = (int)(labelFont.getSize() * widthRatio);
-		int componentHeight = this.getHeight() - (int)((double)this.getHeight()/3.0);
+		int componentHeight = this.getHeight() - (int)((double)this.getHeight()/3.4);
 
 		// Pick a new font size so it will not be larger than the height of label.
 		int fontSizeToUse = Math.min(newFontSize, componentHeight);
 
 		// Set the label's font size to the newly determined size.
-		return new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse);
+		if(!crazy) return new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse);
+		return new Font(labelFont.getName(),Font.PLAIN,fontSizeToUse - (int)((fontSizeToUse/10) * Math.random()));
 	}
 }
