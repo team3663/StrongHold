@@ -79,6 +79,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		test = new SS_Test();
     	LiveWindow.setEnabled(false);
+        gui.sendNumber("operation/Time", Timer.getMatchTime());
 
     }
 	
@@ -119,11 +120,12 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        gui.sendNumber("operation/Time",Math.round(100.0*Timer.getMatchTime())/100.0);
     }
 
     public void teleopInit() {
-    	C_DriveControllerDPad DpadControlls = new C_DriveControllerDPad();
-    	DpadControlls.start();
+    	C_DriveControllerDPad dPadControls = new C_DriveControllerDPad();
+    	dPadControls.start();
     	ss_DriveTrain.resetGyro();
     	ss_Hook.resetEnc();
 		ss_Camera.setLight(true);
@@ -136,6 +138,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        gui.sendNumber("operation/Time",Math.round(100.0*Timer.getMatchTime())/100.0);
         updateDONTREMOVE();
     }
     

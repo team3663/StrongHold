@@ -108,7 +108,7 @@ public class OI {
 		
 		//VisionTestButtons
 		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
-		testCenterGoal.whileHeld(new CG_VisionCenterGoal());
+		testCenterGoal.whenPressed(new CG_VisionCenterGoal());
 		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
 		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());

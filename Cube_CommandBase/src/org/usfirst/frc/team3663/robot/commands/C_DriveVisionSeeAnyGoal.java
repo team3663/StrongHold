@@ -2,6 +2,7 @@ package org.usfirst.frc.team3663.robot.commands;
 
 import org.usfirst.frc.team3663.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
@@ -13,6 +14,9 @@ public class C_DriveVisionSeeAnyGoal extends Command {
 	NetworkTable table = Robot.visionTable;
 	int degrees;
 	boolean foundObject,leftDone;
+	//====
+	double startTime, endTime;
+	double turnTime = 1.0;
 	
     public C_DriveVisionSeeAnyGoal() {
         // Use requires() here to declare subsystem dependencies
@@ -24,6 +28,8 @@ public class C_DriveVisionSeeAnyGoal extends Command {
     	Robot.ss_DriveTrain.resetGyro();
 		leftDone = false;
 		degrees = -45;
+		//====
+		startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -31,11 +37,21 @@ public class C_DriveVisionSeeAnyGoal extends Command {
     	foundObject = table.getBoolean("foundObject: ",false);
     	if (!foundObject)
     	{
-    		leftDone = Robot.ss_DriveTrain.spinByGyro(degrees, 0.75);
+    		/*leftDone = Robot.ss_DriveTrain.spinByGyro(degrees, 0.75);
     		if (leftDone)
     		{
     			degrees = 90;
+    		}*/
+    		//====
+    		if ((Timer.getFPGATimestamp()-startTime) < (turnTime))
+    		{
+    			Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.63);
     		}
+    		else
+    		{
+    			Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.63);
+    		}
+    		
     	}
     }
 

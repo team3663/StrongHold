@@ -7,6 +7,7 @@ public class GreenMass {
 	int xStart, yStart, width, height;
 	int newXStart, xEnd, newXEnd;
 	int newLineLength;
+	double maskOverlap;
 	
 	public GreenMass(int x, int y, int lineLength, int xend)
 	{
@@ -182,6 +183,15 @@ public class GreenMass {
 		width = w;
 		height = h;
 		//outline = newOutline;
+	}
+	
+	public double getMaskOverlap()
+	{
+		return maskOverlap;
+	}
+	public void putMaskOverlap(double percent)
+	{
+		maskOverlap = percent;
 	}
 	
 /*	private int returnNonOverlap()
