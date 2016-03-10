@@ -55,13 +55,13 @@ public class SS_ConfigReader extends Subsystem{
 			    		Robot.robotMap.wheelyBarLimitSwitch = Integer.parseInt(keyValue[1]);
 			    	}else if(keyValue[0].equals("pickupLowerLimit")){
 			    		Robot.robotMap.pickupLowerLimit = Integer.parseInt(keyValue[1]);
-			    	}else if(keyValue[0].equals("autoSwitchs")){
+			    	/*}else if(keyValue[0].equals("autoSwitchs")){
 			    		String[] temp = keyValue[1].split(",");
 			    		Robot.robotMap.autoSwitchs = new int[]{
 			    				Integer.parseInt(temp[0]),
-			    				Integer.parseInt(temp[1]),
+//Trent These no longerExist	Integer.parseInt(temp[1]),
 			    				Integer.parseInt(temp[2]),
-			    				Integer.parseInt(temp[3])};
+			    				Integer.parseInt(temp[3])};*/
 			    	}else if(keyValue[0].equals("cameraRelay")){
 			    		Robot.robotMap.cameraRelay = Integer.parseInt(keyValue[1]);
 			    	}else if(keyValue[0].equals("pickUpSolenoid")){

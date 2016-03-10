@@ -21,8 +21,9 @@ public class C_DriveTrainArcade extends Command {
     protected void execute() {
     	Robot.gui.sendNumber("general/drivearcade",ctr++);
 
-			Robot.ss_DriveTrain.arcadeRobotDrive(-Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisTurn),
-					(Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisForward) - Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisReverse)));
+    		//this section is Angelique's change. this is correct! Check with Trent
+			Robot.ss_DriveTrain.arcadeRobotDrive((Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisForward) - Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisReverse)),
+					-Robot.oi.driveJoystick.getRawAxis(Robot.robotMap.driveAxisTurn));
 
     }
     

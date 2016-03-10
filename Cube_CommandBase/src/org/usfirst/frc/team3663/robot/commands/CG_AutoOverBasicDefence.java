@@ -1,26 +1,21 @@
 package org.usfirst.frc.team3663.robot.commands;
 
-import org.usfirst.frc.team3663.robot.Robot;
-
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  */
-public class CG_AutoVisionShooting extends CommandGroup {
+public class CG_AutoOverBasicDefence extends CommandGroup {
     
-	NetworkTable table = Robot.visionTable;
-	
-    public  CG_AutoVisionShooting() {
-    	
-		addSequential(new CG_VisionCenterGoal());
-		addSequential(new C_DartPrepareForShot());
-		addSequential(new CG_AutoShoot(-26500));
-		
-		//----------------------------------------------
+    public  CG_AutoOverBasicDefence() {
         // Add Commands here:
-        // e.g. addSequential(new Command1());
+    	addSequential(new C_CameraLightSet(true));
+    	addSequential(new C_WheelyBarAutoMove(2946, .5));
+        addSequential(new C_PickupFirePiston(true));
+        addSequential(new C_DartAutoMove(1410));
+        addSequential(new C_PickupFirePiston(false));
+        addSequential(new C_DriveBasedTime());
         //      addSequential(new Command2());
         // these will run in order.
 

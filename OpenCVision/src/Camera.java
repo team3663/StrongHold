@@ -8,7 +8,7 @@ public class Camera {
 	public static void main(String[] args)
 	{
 		camRun = new CameraRun();
-		//camRun.CameraInit();
+		camRun.CameraFirstInit();
 		while (true)
 		{
 			camRun.CameraInit();

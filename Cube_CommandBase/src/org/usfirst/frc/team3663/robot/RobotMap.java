@@ -17,8 +17,8 @@ public class RobotMap {
 		public int driveRightMotor1 = 8;
 		public int driveRightMotor2 = 2;
 	//shooter
-		public int shooterMotorTop =    11;
-		public int shooterMotorBottom = 12;
+		public int shooterMotorTop =    12;
+		public int shooterMotorBottom = 11;
 	//pickup
 		public int pickUpMotor = 6;
 	//dart
@@ -35,12 +35,12 @@ public class RobotMap {
 /*********Sensors********/
 	//Analog
 		public int dartPotentiometer = 0;
-		public int driveGyro = 		  1;
+		public int driveGyro = 		   1;
+		public int autoAnalogDial =    2;
 	//Digital IO
 		public int wheelyBarLimitSwitch = 8;
 		public int pickupLowerLimit = 	 9;
 		
-		public int[] autoSwitchs = new int[]{0,1,2,3};
     
 /*********Relays*********/
 	//Camera
