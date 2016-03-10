@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Arrays;
 import java.util.Set;
@@ -20,9 +21,10 @@ public class SubTablePanel extends JPanel implements Runnable{
 	String subTable;
 	Color bckg;
 	Archiver archy;
-	messageBoard msgb;
-	
-	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, messageBoard msgb){
+	MessageBoard msgb;
+	Font f;
+
+	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, MessageBoard msgb){
 		this.table = table;
 		this.subTable = subTable;
 		this.bckg = bckg;
@@ -30,11 +32,21 @@ public class SubTablePanel extends JPanel implements Runnable{
 		this.msgb = msgb;
 		setBackground(bckg);
 	}
+	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, MessageBoard msgb, Font f){
+		this.table = table;
+		this.subTable = subTable;
+		this.bckg = bckg;
+		this.archy = archy;
+		this.msgb = msgb;
+		this.f = f;
+		setBackground(Color.BLACK);
+	}
 	public void init(){
         getNames();
         fillJLabels();
-        fillJFrame();
-        setLayout(new GridLayout(10,1,0,0));
+        fillPanel();
+        if(f == null) setLayout(new GridLayout(18,0,0,0));
+//        else setLayout(new GridLayout(1,0,0,0));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
 	}
@@ -48,18 +60,34 @@ public class SubTablePanel extends JPanel implements Runnable{
 //		remove(grid);
         getNames();
         fillJLabels();
-        fillJFrame();
+        fillPanel();
 	}
 	public void fillJLabels(){
 		for(int i=0;i<sList.length;i++){
-			jList[i] = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
+			if(f == null){
+				jList[i] = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
+			}else{
+				JLabel jl = new JLabel(""+table.getValue(sList[i],3663));
+				jl.setFont(f);
+				jl.setForeground(Color.WHITE);
+				jList[i] = jl;
+			}
 			System.out.println(sList[i]);
 			msgb.say(sList[i]);
 		}
 	}
-	public void fillJFrame(){
-		for(int i=0;i<sList.length;i++){
-			add(jList[i]);
+	public void fillPanel(){
+		if(f == null){
+			for(int i=0;i<sList.length;i++){
+				add(jList[i]);
+			}
+		}else{
+			//this is drive mode
+			for(int i=0;i<sList.length;i++){
+				if(sList[i].equals("Time")){
+					add(jList[i],"Center");
+				}
+			}
 		}
 	}
 	public int getNames(){
@@ -90,34 +118,9 @@ public class SubTablePanel extends JPanel implements Runnable{
 		long startTime = System.currentTimeMillis();
 		while(true){
 			sleep(2); //necessary to not blow up your CPU
-			if(count%1000 == 0){
-//				update(hue,)
-			}
-//			if(subTable.equals("drive")){
-//				double speedLeft = table.getSubTable(subTable).getNumber(sList[2],3663);
-//				double speedRight = table.getSubTable(subTable).getNumber(sList[5],3663);
-//				g = (((speedLeft + speedRight)/2)+1)*127.5;
-//				r = 255 - g;
-//				if(g<r)b=g;
-//				else b=r;
-//				try{
-//					update(new Color((int)r,(int)g,(int)b));
-//				}catch(Exception e){
-//					System.err.println("Color error in " + subTable);
-//				}
-//			}
-//			else{
-//				update(bckg);
-//			}
 			update(bckg);
 			count++;
-			//Auto CHECK FOR REMOVED ELEMENTS//
-//			if(System.currentTimeMillis() > startTime + 10000){
-//				startTime = System.currentTimeMillis();
-//				emptyTable();
-//				System.out.println("Emptied NetworkTables");
-//			}
-			//CHECK IF NEW ELEMENTS//
+
 			if(count%100 == 0){
 				do{
 					int oldSize = guiElements.size();
@@ -146,7 +149,11 @@ public class SubTablePanel extends JPanel implements Runnable{
 		for(int i=0;i<sList.length;i++){
 			if(i != 0){
 				Object o = table.getSubTable(subTable).getValue(sList[i],3663);
-				jList[i].setText(sList[i] + ": " + o);
+				if(f == null)jList[i].setText(sList[i] + ": " + o);
+				else{
+					jList[i].setFont(updateFont(jList[i]));
+					jList[i].setText("" + o);
+				}
 				archy.addValue(sList[i], o.toString());
 			}else{
 				//titles
@@ -156,5 +163,24 @@ public class SubTablePanel extends JPanel implements Runnable{
 	}
 	public String get(int index){
 		return (table.getSubTable(subTable).getValue(sList[index],3663).toString());
+	}
+	public Font updateFont(JLabel label){
+		Font labelFont = label.getFont();
+		String labelText = label.getText();
+
+		int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
+		int componentWidth = this.getWidth();
+
+		// Find out how much the font can grow in width.
+		double widthRatio = (double)componentWidth / (double)stringWidth;
+
+		int newFontSize = (int)(labelFont.getSize() * widthRatio);
+		int componentHeight = this.getHeight() - (int)((double)this.getHeight()/3.0);
+
+		// Pick a new font size so it will not be larger than the height of label.
+		int fontSizeToUse = Math.min(newFontSize, componentHeight);
+
+		// Set the label's font size to the newly determined size.
+		return new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse);
 	}
 }

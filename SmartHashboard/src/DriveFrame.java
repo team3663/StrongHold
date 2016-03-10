@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -18,7 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-public class Frame implements Runnable{
+public class DriveFrame implements Runnable{
 	SubTablePanel[] subs;
 	NetworkTable table;
 	JPanel systems;
@@ -30,7 +29,9 @@ public class Frame implements Runnable{
 	String ip;
 	int tableSize = 0;
 	
-	public Frame(String ipAdr){
+	SubTablePanel asdf;
+	
+	public DriveFrame(String ipAdr){
 		ip = ipAdr;
 	}
 	public void init(){
@@ -57,12 +58,10 @@ public class Frame implements Runnable{
 		System.out.println("Connected");
 		
 		//CREATING EACH COLUMN//
+		Font myFont = new Font("SanSerif", Font.PLAIN, 12);
 		int count = 0;
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
-					(float)Math.random(), 
-					(float)(Math.random()/3.6), 
-					(float)(0.7f + (Math.random()/3.33))),archiver,msgBoard);
+			subs[count] = new SubTablePanel(k,table,Color.BLACK,archiver,msgBoard,myFont);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
@@ -70,10 +69,10 @@ public class Frame implements Runnable{
 		box.add(msgBoard);
 		box.add(Box.createHorizontalGlue());
 		initSystems();
+		frame.getContentPane().revalidate();
+		systems.revalidate();
 		/////////////////////////////
-		addToFrame(systems, "North");
-		addToFrame(box, "South");
-//		addToFrame(refresh, "South");
+		addToFrame(systems, "Center");
 		/////////////////////////////
 	}
 	@Override
@@ -106,15 +105,17 @@ public class Frame implements Runnable{
 	public void initSystems(){
 		systems = new JPanel();
 		for(int i=0;i<subs.length;i++){
-			systems.add(subs[i]);
+//			systems.add(subs[i]);
 			subs[i].init();
 			new Thread(subs[i]).start();
 			if(tableList.toArray()[i].equals("operation")){
 				owat = new OperationWatchAndTimer(subs[i],archiver);
+				asdf = subs[i];
 				new Thread(owat).start();
+				systems.add(asdf);
 			}
 		}
-		systems.setLayout(new GridLayout(0,subs.length));
+		systems.setLayout(new GridLayout(0,1));
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
