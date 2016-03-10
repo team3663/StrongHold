@@ -590,7 +590,8 @@ public class CameraRun {
 	{
 		for (int o = 0; o <= gPieceKey; o++)
 		{
-			if (massObjectPointer.getGPiece(o).mass < 1000)//500)
+			massObjectPointer.putMaskOverlap(o, percentMaskOverlap(o));
+			if (massObjectPointer.getGPiece(o).mass < 1000 || massObjectPointer.getMaskOverlap(o) < 69)//500)
 			{
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
@@ -746,13 +747,13 @@ public class CameraRun {
 	public void getBestObjectMask()//actual ratio 1.42 (20x14) and general average ratio 1.63 (w x h)
 	{
 		int bestPiece = 0;
-		double bestMaskOverlap;
+		double bestMaskOverlap = massObjectPointer.getMaskOverlap(bestPiece);
 
 	//	removeSmallObjects();
-
+/*
 		int x = massObjectPointer.getGPiece(bestPiece).xStart,y = massObjectPointer.getGPiece(bestPiece).yStart,
 			w = massObjectPointer.getGPiece(bestPiece).width,h = massObjectPointer.getGPiece(bestPiece).height;
-		bestMaskOverlap = percentMaskOverlap(x,y,w,h);
+		bestMaskOverlap = percentMaskOverlap(x,y,w,h);*/
 		
 		if (gPieceKey > 0)
 		{
@@ -761,7 +762,7 @@ public class CameraRun {
 			for (int o = 1; o <= gPieceKey; o++)
 			{
 	//			System.out.println("checking mass #: " + o);
-				if (bestPieceChanged)
+/*				if (bestPieceChanged)
 				{
 					x = massObjectPointer.getGPiece(bestPiece).xStart;
 					y = massObjectPointer.getGPiece(bestPiece).yStart;
@@ -771,11 +772,11 @@ public class CameraRun {
 				
 				int cX = massObjectPointer.getGPiece(o).xStart,cY = massObjectPointer.getGPiece(o).yStart,
 						cW = massObjectPointer.getGPiece(o).width,cH = massObjectPointer.getGPiece(o).height;
-				
+*/				
 				//if (massObjectPointer.getGPiece(o).mass > 50 || cW > 5 || cH > 5)
 				{
-					double cMaskOverlap = percentMaskOverlap(cX,cY,cW,cH);
-					double maskOverlap = percentMaskOverlap(x,y,w,h);
+					double cMaskOverlap = massObjectPointer.getMaskOverlap(o);//percentMaskOverlap(o);
+					double maskOverlap = massObjectPointer.getMaskOverlap(bestPiece);//percentMaskOverlap(bestPiece);
 					bestMaskOverlap = maskOverlap;
 //					System.out.println("cPercentOverlap: " + cMaskOverlap);
 	//				System.out.println("percentOverlap: " + maskOverlap);
@@ -788,6 +789,10 @@ public class CameraRun {
 					{
 						massObjectPointer.removeMass(o);
 						gPieceKey--;
+						if (o < bestPieceKey)
+						{
+							bestPieceKey--;
+						}
 					}
 					else if (maskOverlap < 66)
 					{
@@ -816,7 +821,7 @@ public class CameraRun {
 			}
 
 		}
-		if (gPieceKey > -1 && bestMaskOverlap > 69)
+		if (gPieceKey > -1 && bestMaskOverlap > 69)//may not need bestMaskOverlap comparison
 		{
 			bestPieceKey = bestPiece;
 	//		checkWithObjectRatio(bestPiece);
@@ -839,8 +844,13 @@ public class CameraRun {
 		}
 	}
 
-	private double percentMaskOverlap(int xStart, int yStart, int width, int height)
+	private double percentMaskOverlap(int key)//int xStart, int yStart, int width, int height)
 	{
+		int xStart = massObjectPointer.getGPiece(key).xStart;
+		int yStart = massObjectPointer.getGPiece(key).yStart;
+		int width = massObjectPointer.getGPiece(key).width;
+		int height = massObjectPointer.getGPiece(key).height;
+		
 		double percentOverlap;
 		double tapeDepth = ((height/6.0)+4*(width/10.0))/5.0;
 		
@@ -895,11 +905,11 @@ public class CameraRun {
 
 	private void findCenterGoal()//range of x: 308/310-361/360 through 30"(2'6")-204"(17')
 	{
+		distance = getDistanceMass(bestPieceKey);
+		table.putNumber("distanceByMass: ", distance);
 		//Frodo:
 		//angle = getAngleTilt(bestPieceKey);
-		/*distance = getDistanceMass(bestPieceKey);
-		table.putNumber("distanceByMass: ", distance);
-		
+		/*
 		
 		if (distance < 64)
 		{
@@ -931,7 +941,9 @@ public class CameraRun {
 			goalCenterX = (int)(315);//*resolutionRatio);
 			//goalCenterY = 
 		}*/
-		//for final bot
+		///===============================================
+		//for final bot===================================
+		goalCenterX = (int)(325);//*resolutionRatio);
 		/*
 		if (distance < 64)
 		{
@@ -957,7 +969,6 @@ public class CameraRun {
 		{
 			goalCenterX = 640-(int)(315);//*resolutionRatio);
 		}*/
-		goalCenterX = (int)(325);//*resolutionRatio);
 	}
 	
 	private boolean centeringGoal()

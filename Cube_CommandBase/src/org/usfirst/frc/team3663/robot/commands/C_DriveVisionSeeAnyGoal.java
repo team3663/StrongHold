@@ -16,7 +16,7 @@ public class C_DriveVisionSeeAnyGoal extends Command {
 	boolean foundObject,leftDone;
 	//====
 	double startTime, endTime;
-	double turnTime;
+	double turnTime = 1.0;
 	
     public C_DriveVisionSeeAnyGoal() {
         // Use requires() here to declare subsystem dependencies
@@ -43,13 +43,13 @@ public class C_DriveVisionSeeAnyGoal extends Command {
     			degrees = 90;
     		}*/
     		//====
-    		if ((Timer.getFPGATimestamp()-startTime) < (startTime+turnTime))
+    		if ((Timer.getFPGATimestamp()-startTime) < (turnTime))
     		{
-    			Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.6);
+    			Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.655);
     		}
     		else
     		{
-    			Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.6);
+    			Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.655);
     		}
     		
     	}
