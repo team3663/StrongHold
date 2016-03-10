@@ -22,9 +22,11 @@ import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafety;
 import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
 import org.usfirst.frc.team3663.robot.commands.TC_TurnByGyro;
+import org.usfirst.frc.team3663.robot.commands.TestCG_CycleTest;
 import org.usfirst.frc.team3663.robot.commands.TestCG_TestRequiresAll;
 import org.usfirst.frc.team3663.robot.commands.TestC_Cycle;
 import org.usfirst.frc.team3663.robot.commands.TestC_DisableTestMode;
+import org.usfirst.frc.team3663.robot.commands.TestC_StopCycleTest;
 import org.usfirst.frc.team3663.robot.commands.TestC_ToggleTestMode;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -67,9 +69,10 @@ public class OI {
 	
 	
   //Test Joystick Buttons
-	private JoystickButton toggleTestMode	= new JoystickButton(testJoystick, 7);
 	private JoystickButton runFullTest  	= new JoystickButton(testJoystick, 8);//start button on xbox ctrl
 	private JoystickButton disableFullTest 	= new JoystickButton(testJoystick, 8);//start button on xbox ctrl
+	private JoystickButton cycleTest    	= new JoystickButton(testJoystick, 7);
+	private JoystickButton stopCycleTest   	= new JoystickButton(testJoystick, 9);
 	private JoystickButton cycleUp			= new JoystickButton(testJoystick, 2);
 	private JoystickButton cycleDown		= new JoystickButton(testJoystick, 1);
 	
@@ -99,10 +102,11 @@ public class OI {
 		wheelyBarEncZero.whenPressed(new C_WheelyBarZeroEnc());
 		
 		//Test Buttons
-		toggleTestMode.whenPressed(new TestC_ToggleTestMode());
 		runFullTest.whileHeld(new TestCG_FullTest());
-		//runFullTest.whileHeld(new C_WaitSecs(15));
 		disableFullTest.whenReleased(new TestC_DisableTestMode());
+		
+		cycleTest.whenPressed(new TestCG_CycleTest());
+		stopCycleTest.whenPressed(new TestC_StopCycleTest());
 		cycleUp.whenPressed(new TestC_Cycle(true));
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		

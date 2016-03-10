@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 	public static SS_ConfigReader ss_config;
 	
 	
-	public static SS_Test test;
+	public static SS_Test ss_Test;
 	public static SS_Camera ss_Camera;
 
 
@@ -77,7 +77,7 @@ public class Robot extends IterativeRobot {
 		ss_PDB = new SS_PowerDistributionBoard();
 		gui = new SS_Gui();
 		oi = new OI();
-		test = new SS_Test();
+		ss_Test = new SS_Test();
     	LiveWindow.setEnabled(false);
 
     }

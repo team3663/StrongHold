@@ -31,6 +31,14 @@ public class SS_Shooter extends Subsystem {
     	return value == 0;
     }
     
+    public int getShooterMotorBottomEncVelocity(){						//gets the speed of the bottom
+    	return shooterBottom.getEncVelocity();
+    }
+    
+    public int getShooterMotorTopEncVelocity(){						//gets the speed of the bottom
+    	return shooterTop.getEncVelocity();
+    }
+    
     public void setShooterMotorBottom(double pSpeed){						//sets the speed of the bottom
     	shooterBottom.set(pSpeed);
     }

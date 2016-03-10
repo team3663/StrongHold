@@ -14,12 +14,12 @@ public class TestC_ToggleTestMode extends Command {
     	takeAll = new TestCG_TestRequiresAll();
     }
     protected void initialize() {
-    	if(Robot.test.currentTestMode()){
-    		Robot.test.enterTestMode();
+    	if(Robot.ss_Test.currentlyTesting()){
+    		Robot.ss_Test.enterTestMode();
     	}else{
-    		Robot.test.exitTestMode();
+    		Robot.ss_Test.exitTestMode();
     	}
-    	Robot.test.update();
+    	Robot.ss_Test.update();
     	
     }
 
