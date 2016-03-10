@@ -32,6 +32,15 @@ public class MassObjectHolder {
 	    pointer.remove(keyB);
 	}
 	
+	public void putMaskOverlap(int key, double input)
+	{
+		pointer.get(key).putMaskOverlap(input);
+	}
+	public double getMaskOverlap(int key)
+	{
+		return pointer.get(key).getMaskOverlap();
+	}
+	
 	public void removeMass(int key)
 	{
 		pointer.remove(key);
