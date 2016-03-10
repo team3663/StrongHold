@@ -1,7 +1,7 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,15 +27,18 @@ public class Frame implements Runnable{
 	Set<String> tableList;
 	MessageBoard msgBoard;
 	Archiver archiver;
+	String ip;
 	int tableSize = 0;
 	
 	public Frame(String ipAdr){
+		ip = ipAdr;
+	}
+	public void init(){
 		initJFrame();
 		System.out.println("Initialized JFrame");
-		initNetworkTable(ipAdr);
+		initNetworkTable(ip);
 		System.out.println("Initialized Network Table");
 		setWindowsLookAndFeel();
-		
 //		JButton refresh = new JButton("Refresh");
 //		initRefreshButton(refresh);
 //		refresh.setPreferredSize(new Dimension(10,30));
@@ -53,6 +56,7 @@ public class Frame implements Runnable{
 		
 		System.out.println("Connected");
 		
+		//CREATING EACH COLUMN//
 		int count = 0;
 		for(String k:tableList){
 			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
@@ -74,6 +78,7 @@ public class Frame implements Runnable{
 	}
 	@Override
 	public void run(){
+		init();
 		//periodically scan the table for new systems
 		//if new system is found, update subs, add it to the frame, refresh the frame
 		//figure out a way to tell the Archiver to offset the log by a certain amount
@@ -137,23 +142,21 @@ public class Frame implements Runnable{
 	}
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
-		frame.setVisible(true);
 		frame.setBounds(-7,0,1200,480); //my computer screen puts it at +2, so...
-//		frame.setBounds(0,0,640,480);
 		frame.setBackground(Color.white);
 		frame.getContentPane().setBackground(Color.white);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-//		frame.addWindowListener(new WindowAdapter() {
-//		    @Override
-//		    public void windowClosing(WindowEvent windowEvent) {
-//		    	System.out.println("Hey");
-//		    	if(owat != null){
-//		    		owat.export();
-//		    	}
-//		        System.exit(0);
-//		    }
-//		});
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(new WindowAdapter() {
+		    @Override
+		    public void windowClosing(WindowEvent windowEvent) {
+		    	System.out.println("Hey");
+		    	if(owat != null){
+		    		owat.export();
+		    	}
+		        System.exit(0);
+		    }
+		});
 		frame.setVisible(true);
 	}
 	public void initRefreshButton(JButton b){

@@ -1,10 +1,11 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Set;
 
 import javax.swing.Box;
@@ -25,20 +26,27 @@ public class DriveFrame implements Runnable{
 	Set<String> tableList;
 	MessageBoard msgBoard;
 	Archiver archiver;
+	String ip;
 	int tableSize = 0;
 	
+	SubTablePanel asdf;
+	
 	public DriveFrame(String ipAdr){
-		initNetworkTable(ipAdr);
-		setWindowsLookAndFeel();
+		ip = ipAdr;
+	}
+	public void init(){
 		initJFrame();
-		
-		JButton refresh = new JButton("Refresh");
-		initRefreshButton(refresh);
-		refresh.setPreferredSize(new Dimension(10,30));
+		System.out.println("Initialized JFrame");
+		initNetworkTable(ip);
+		System.out.println("Initialized Network Table");
+		setWindowsLookAndFeel();
+//		JButton refresh = new JButton("Refresh");
+//		initRefreshButton(refresh);
+//		refresh.setPreferredSize(new Dimension(10,30));
 		
 		msgBoard = new MessageBoard();
 		archiver = new Archiver();
-
+		
 		do{
 			tableList = table.getSubTables();
 			subs = new SubTablePanel[tableList.size()];
@@ -46,38 +54,31 @@ public class DriveFrame implements Runnable{
 			tableSize = tableList.size();
 			sleep(1300);
 		}while(subs.length == 0);
-
+		
+		System.out.println("Connected");
+		
+		//CREATING EACH COLUMN//
+		Font myFont = new Font("Serif", Font.PLAIN, 189);
 		int count = 0;
+		Color offWhite = new Color(250,250,250);
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
-					(float)Math.random(), 
-					(float)(Math.random()/3.6), 
-					(float)(0.7f + (Math.random()/3.33))),archiver,msgBoard);
+			subs[count] = new SubTablePanel(k,table,offWhite,archiver,msgBoard,myFont);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
 		Box box = Box.createHorizontalBox();
 		box.add(msgBoard);
 		box.add(Box.createHorizontalGlue());
-//		float h = (float)Math.random();
-//		float s = 0.2f;
-//		float b = 1.0f;
-//		for(String k:tableList){
-//			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(h,s,b),archie);
-//			s += 0.1f;
-//			b -= 0.02f;
-//			count++;
-//			System.out.println("SubTable: " + k);
-//		}
 		initSystems();
+		frame.getContentPane().revalidate();
+		systems.revalidate();
 		/////////////////////////////
-		addToFrame(systems, "North");
-		addToFrame(box, "South");
-//		addToFrame(refresh, "South");
+		addToFrame(systems, "Center");
 		/////////////////////////////
 	}
 	@Override
 	public void run(){
+		init();
 		//periodically scan the table for new systems
 		//if new system is found, update subs, add it to the frame, refresh the frame
 		//figure out a way to tell the Archiver to offset the log by a certain amount
@@ -105,15 +106,17 @@ public class DriveFrame implements Runnable{
 	public void initSystems(){
 		systems = new JPanel();
 		for(int i=0;i<subs.length;i++){
-			systems.add(subs[i]);
+//			systems.add(subs[i]);
 			subs[i].init();
 			new Thread(subs[i]).start();
 			if(tableList.toArray()[i].equals("operation")){
 				owat = new OperationWatchAndTimer(subs[i],archiver);
+				asdf = subs[i];
 				new Thread(owat).start();
+				systems.add(asdf);
 			}
 		}
-		systems.setLayout(new GridLayout(0,subs.length));
+		systems.setLayout(new GridLayout(0,1));
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
@@ -141,21 +144,22 @@ public class DriveFrame implements Runnable{
 	}
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
-		frame.setVisible(true);
 		frame.setBounds(-7,0,1200,480); //my computer screen puts it at +2, so...
-//		frame.setBounds(0,0,640,480);
 		frame.setBackground(Color.white);
 		frame.getContentPane().setBackground(Color.white);
+//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		frame.addWindowListener(new WindowAdapter() {
 		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    public void windowClosing(WindowEvent windowEvent) {
+		    	System.out.println("Hey");
 		    	if(owat != null){
 		    		owat.export();
 		    	}
 		        System.exit(0);
 		    }
 		});
+		frame.setVisible(true);
 	}
 	public void initRefreshButton(JButton b){
 		b.addActionListener(new ActionListener() {

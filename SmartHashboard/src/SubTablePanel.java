@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Arrays;
 import java.util.Set;
@@ -21,7 +22,8 @@ public class SubTablePanel extends JPanel implements Runnable{
 	Color bckg;
 	Archiver archy;
 	MessageBoard msgb;
-	
+	Font f;
+
 	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, MessageBoard msgb){
 		this.table = table;
 		this.subTable = subTable;
@@ -30,10 +32,20 @@ public class SubTablePanel extends JPanel implements Runnable{
 		this.msgb = msgb;
 		setBackground(bckg);
 	}
+	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, MessageBoard msgb, Font f){
+		this.table = table;
+		this.subTable = subTable;
+		this.bckg = bckg;
+		this.archy = archy;
+		this.msgb = msgb;
+		this.f = f;
+		setForeground(Color.WHITE);
+		setBackground(Color.BLACK);
+	}
 	public void init(){
         getNames();
         fillJLabels();
-        fillJFrame();
+        fillPanel();
         setLayout(new GridLayout(18,0,0,0));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
@@ -48,18 +60,32 @@ public class SubTablePanel extends JPanel implements Runnable{
 //		remove(grid);
         getNames();
         fillJLabels();
-        fillJFrame();
+        fillPanel();
 	}
 	public void fillJLabels(){
 		for(int i=0;i<sList.length;i++){
-			jList[i] = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
+			if(f == null){
+				jList[i] = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
+			}else{
+				JLabel jl = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
+				jl.setFont(f);
+				jList[i] = jl;
+			}
 			System.out.println(sList[i]);
 			msgb.say(sList[i]);
 		}
 	}
-	public void fillJFrame(){
-		for(int i=0;i<sList.length;i++){
-			add(jList[i]);
+	public void fillPanel(){
+		if(f == null){
+			for(int i=0;i<sList.length;i++){
+				add(jList[i]);
+			}
+		}else{
+			for(int i=0;i<sList.length;i++){
+				if(sList[i].equals("Time")){
+					add(jList[i]);
+				}
+			}
 		}
 	}
 	public int getNames(){
