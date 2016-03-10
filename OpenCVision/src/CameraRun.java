@@ -53,6 +53,12 @@ public class CameraRun {
 	
 	boolean autoFindLeft,centeringGoal/*,movingWithRadius*/,okayToShoot;
 	
+	public void CameraFirstInit()
+	{
+		frame = new JFrame("Dog's Eyes <o> . <o>");
+		label = new JLabel();
+		buffImg = null;
+	}
 	public void CameraInit()
 	{
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -62,9 +68,6 @@ public class CameraRun {
 		camera = new VideoCapture(streamAddress);
 		System.out.println("found camera");
 		mat = new Mat();
-		frame = new JFrame("Dog's Eyes <o> . <o>");
-		label = new JLabel();
-		buffImg = null;
 		
 		massObjectPointer = new MassObjectHolder();
 		
@@ -204,7 +207,7 @@ public class CameraRun {
 						//movingWithRadius = table.getBoolean("C_/movingWithRadius: ",false);
 						okayToShoot = table.getBoolean("C_/okayToShoot: ",false);
 						
-						if (gPieceKey>-1)
+						//if (gPieceKey>-1)//moved if statement within methods
 						{
 							findCenterGoal();
 							//if (!movingWithRadius)
@@ -591,7 +594,7 @@ public class CameraRun {
 		for (int o = 0; o <= gPieceKey; o++)
 		{
 			massObjectPointer.putMaskOverlap(o, percentMaskOverlap(o));
-			if (massObjectPointer.getGPiece(o).mass < 1000 || massObjectPointer.getMaskOverlap(o) < 69)//500)
+			if (massObjectPointer.getGPiece(o).mass < 950 || massObjectPointer.getMaskOverlap(o) < 69)//500)
 			{
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
@@ -905,8 +908,11 @@ public class CameraRun {
 
 	private void findCenterGoal()//range of x: 308/310-361/360 through 30"(2'6")-204"(17')
 	{
-		distance = getDistanceMass(bestPieceKey);
-		table.putNumber("distanceByMass: ", distance);
+		if (gPieceKey > -1)
+		{
+			distance = getDistanceMass(bestPieceKey);
+			table.putNumber("distanceByMass: ", distance);
+		}
 		//Frodo:
 		//angle = getAngleTilt(bestPieceKey);
 		/*
@@ -976,11 +982,12 @@ public class CameraRun {
 		if (gPieceKey > -1)
 		{
 			int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
+			double buffer = (double)(massObjectPointer.getGPiece(bestPieceKey).width*2.0/20.0);
 			//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
 			
 			double moveAngle = 45.0*((double)xCenter-goalCenterX/*320.0*/)/320.0;//-160)/160;
 		
-			if (xCenter < goalCenterX-7)//10)
+			if (xCenter < goalCenterX-buffer)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", true);
@@ -988,7 +995,7 @@ public class CameraRun {
 				table.putBoolean("turnLeft: ",true);
 				return true;
 			}
-			else if (xCenter > goalCenterX+7)//10)
+			else if (xCenter > goalCenterX+buffer)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", false);
@@ -996,11 +1003,23 @@ public class CameraRun {
 				table.putBoolean("turnLeft: ", false);
 				return true;
 			}
-			else
+			else if (xCenter > goalCenterX-buffer && xCenter < goalCenterX+buffer)
 			{
 				table.putNumber("cameraMoveAngle: ", 0);
 				table.putString("needsTurning: ", "StopTurning");
 				return false;
+			}
+		}
+		else
+		{
+			double angle = table.getNumber("cameraMoveAngle: ", -45);
+			if (angle < 0)
+			{
+				table.putNumber("cameraMoveAngle: ", -45);
+			}
+			else if (angle > 0)
+			{
+				table.putNumber("cameraMoveAngle: ", 45);
 			}
 		}
 	/*	else

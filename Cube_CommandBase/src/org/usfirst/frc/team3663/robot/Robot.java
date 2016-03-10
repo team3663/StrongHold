@@ -120,6 +120,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        gui.sendNumber("operation/Time",Math.round(100.0*Timer.getMatchTime())/100.0);
     }
 
     public void teleopInit() {
@@ -129,7 +130,6 @@ public class Robot extends IterativeRobot {
 		ss_Camera.setLight(true);
         gui.sendBoolean("operation/Enabled", true);
         gui.sendString("operation/Mode", "Teleop");
-        gui.sendNumber("operation/Time", Timer.getMatchTime());
     }
 
     /**
@@ -137,6 +137,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        gui.sendNumber("operation/Time",Math.round(100.0*Timer.getMatchTime())/100.0);
         updateDONTREMOVE();
     }
     
