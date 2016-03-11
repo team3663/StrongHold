@@ -155,7 +155,7 @@ public class TestC_TestShooter extends Command {
     protected void end() {
     	Robot.ss_Shooter.setShooterTopMotorSpeed(0);
     	Robot.ss_Shooter.setShooterBottomMotorSpeed(0);
-    	Robot.ss_Shooter.fireShooterSolenoid(false);
+    	//Robot.ss_Shooter.fireShooterSolenoid(false);
 
     	Robot.gui.sendString("Test/testState","shooter done");
     }

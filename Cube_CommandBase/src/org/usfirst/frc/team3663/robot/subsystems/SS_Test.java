@@ -22,6 +22,8 @@ public class SS_Test extends Subsystem {
 	public String shooterTopStatus = untested; 
 	public String shooterBottomStatus = untested; 
 	public String shooterPlungerStatus = untested; 
+	public String pickupIntakeStatus = untested;
+	public String pickupArmStatus = untested;
 	
     public void initDefaultCommand() {
     	//setDefaultCommand(new TestC_Test());
@@ -58,6 +60,8 @@ public class SS_Test extends Subsystem {
 		shooterTopStatus = untested;
 		shooterBottomStatus = untested;
 		shooterPlungerStatus = untested;
+		pickupIntakeStatus = untested;
+		pickupArmStatus = untested;
 	}
 	
 	public void exitTestMode(){
@@ -84,5 +88,7 @@ public class SS_Test extends Subsystem {
     	Robot.gui.sendString("Test/Shooter top motor+enc", shooterTopStatus);
     	Robot.gui.sendString("Test/Shooter bottom motor+enc", shooterBottomStatus);
     	Robot.gui.sendString("Test/Shooter plunger", shooterPlungerStatus);
+    	Robot.gui.sendString("Test/Pickup intake", pickupIntakeStatus);
+    	Robot.gui.sendString("Test/Pickup arm", pickupArmStatus);
     }
 }

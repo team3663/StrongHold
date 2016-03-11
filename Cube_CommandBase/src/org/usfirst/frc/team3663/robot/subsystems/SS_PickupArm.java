@@ -31,7 +31,6 @@ public class SS_PickupArm extends Subsystem {
     }
     
     public void setPickupSpeed(double speed){				//Sets the speed of the motor
-    	Robot.ss_Dart.getMoveArm();
     	pickupMotor.set(speed);
     }
     
