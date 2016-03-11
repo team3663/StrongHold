@@ -38,11 +38,11 @@ public class TestC_CycleTest extends Command {
 	    		Robot.ss_Test.testName = "DriveMotorRight2";
 	    		break;
 	    	case 4:
-	    		Robot.ss_Shooter.setShooterMotorTop(jsValue);
+	    		Robot.ss_Shooter.setShooterTopMotorSpeed(jsValue);
 	    		Robot.ss_Test.testName = "ShooterMotorTop";
 	    		break;
 	    	case 5:
-	    		Robot.ss_Shooter.setShooterMotorBottom(jsValue);
+	    		Robot.ss_Shooter.setShooterBottomMotorSpeed(jsValue);
 	    		Robot.ss_Test.testName = "ShooterMotorBottom";
 	    		break;
 	    	case 6:
@@ -115,10 +115,10 @@ public class TestC_CycleTest extends Command {
     		Robot.ss_DriveTrain.controlIndMotor(3, 0);
     	}
     	if(pValue != 4){
-    		Robot.ss_Shooter.setShooterMotorTop(0);
+    		Robot.ss_Shooter.setShooterTopMotorSpeed(0);
     	}
     	if(pValue != 5){
-    		Robot.ss_Shooter.setShooterMotorBottom(0);
+    		Robot.ss_Shooter.setShooterBottomMotorSpeed(0);
     	}
     	if(pValue != 6){
     		//shooter plunger

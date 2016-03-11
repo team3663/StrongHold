@@ -39,40 +39,40 @@ public class TestC_TestShooter extends Command {
     	
     	switch (state){
     	case 0:
-    		Robot.ss_Shooter.setShooterMotorTop(speed);
+    		Robot.ss_Shooter.setShooterTopMotorSpeed(speed);
     		speed += delta;
     		if (speed > topSpeed)
     		{
     			speed = topSpeed;
     			state++;
-    			if (Robot.ss_Shooter.getShooterMotorTopEncVelocity() < 1000){
-    				Robot.ss_Test.shooterTopStatus = "Failed - expected encoder velocity > 1000, read "+Robot.ss_Shooter.getShooterMotorTopEncVelocity();
+    			if (Robot.ss_Shooter.getShooterTopEncoderVelocity() < 1000){
+    				Robot.ss_Test.shooterTopStatus = "Failed - expected encoder velocity > 1000, read "+Robot.ss_Shooter.getShooterTopEncoderVelocity();
     				Robot.ss_Test.update();
     			}
     		}
     		break;
     	case 1:
-    		Robot.ss_Shooter.setShooterMotorTop(speed);
+    		Robot.ss_Shooter.setShooterTopMotorSpeed(speed);
     		speed -= delta;
     		if (speed < -topSpeed)
     		{
     			speed = -topSpeed;
     			state++;
-    			if (Robot.ss_Shooter.getShooterMotorTopEncVelocity() > -1000){
-    				Robot.ss_Test.shooterTopStatus = "Failed - expected encoder velocity < -1000, read "+Robot.ss_Shooter.getShooterMotorTopEncVelocity();
+    			if (Robot.ss_Shooter.getShooterTopEncoderVelocity() > -1000){
+    				Robot.ss_Test.shooterTopStatus = "Failed - expected encoder velocity < -1000, read "+Robot.ss_Shooter.getShooterTopEncoderVelocity();
     				Robot.ss_Test.update();
     			}
     			
     		}
     		break;
     	case 2:
-    		Robot.ss_Shooter.setShooterMotorTop(speed);
+    		Robot.ss_Shooter.setShooterTopMotorSpeed(speed);
     		speed += delta;
     		if (speed > 0)
     		{
     			speed = 0;
     			state++;
-    			Robot.ss_Shooter.setShooterMotorTop(speed);
+    			Robot.ss_Shooter.setShooterTopMotorSpeed(speed);
     			if (Robot.ss_Test.shooterTopStatus.equals(Robot.ss_Test.untested)){
     				Robot.ss_Test.shooterTopStatus = Robot.ss_Test.passed;
     				Robot.ss_Test.update();
@@ -80,39 +80,39 @@ public class TestC_TestShooter extends Command {
     		}
     		break;
     	case 3:
-    		Robot.ss_Shooter.setShooterMotorBottom(speed);
+    		Robot.ss_Shooter.setShooterBottomMotorSpeed(speed);
     		speed += delta;
     		if (speed > topSpeed)
     		{
     			speed = topSpeed;
     			state++;
-    			if (Robot.ss_Shooter.getShooterMotorBottomEncVelocity() > -1000){
-    				Robot.ss_Test.shooterBottomStatus = "Failed - expected encoder velocity < -1000, read "+Robot.ss_Shooter.getShooterMotorBottomEncVelocity();
+    			if (Robot.ss_Shooter.getShooterBottomEncoderVelocity() > -1000){
+    				Robot.ss_Test.shooterBottomStatus = "Failed - expected encoder velocity < -1000, read "+Robot.ss_Shooter.getShooterBottomEncoderVelocity();
     				Robot.ss_Test.update();
     			}
     		}
     		break;
     	case 4:
-    		Robot.ss_Shooter.setShooterMotorBottom(speed);
+    		Robot.ss_Shooter.setShooterBottomMotorSpeed(speed);
     		speed -= delta;
     		if (speed < -topSpeed)
     		{
     			speed = -topSpeed;
     			state++;
-    			if (Robot.ss_Shooter.getShooterMotorBottomEncVelocity() < 1000){
-    				Robot.ss_Test.shooterBottomStatus = "Failed - expected encoder velocity > 1000, read "+Robot.ss_Shooter.getShooterMotorBottomEncVelocity();
+    			if (Robot.ss_Shooter.getShooterBottomEncoderVelocity() < 1000){
+    				Robot.ss_Test.shooterBottomStatus = "Failed - expected encoder velocity > 1000, read "+Robot.ss_Shooter.getShooterBottomEncoderVelocity();
     				Robot.ss_Test.update();
     			}
     		}
     		break;
     	case 5:
-    		Robot.ss_Shooter.setShooterMotorBottom(speed);
+    		Robot.ss_Shooter.setShooterBottomMotorSpeed(speed);
     		speed += delta;
     		if (speed > 0)
     		{
     			speed = 0;
     			state++;
-    			Robot.ss_Shooter.setShooterMotorBottom(speed);
+    			Robot.ss_Shooter.setShooterBottomMotorSpeed(speed);
     			if (Robot.ss_Test.shooterBottomStatus.equals(Robot.ss_Test.untested)){
     				Robot.ss_Test.shooterBottomStatus = Robot.ss_Test.passed;
     				Robot.ss_Test.update();
@@ -153,8 +153,8 @@ public class TestC_TestShooter extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.ss_Shooter.setShooterMotorTop(0);
-    	Robot.ss_Shooter.setShooterMotorBottom(0);
+    	Robot.ss_Shooter.setShooterTopMotorSpeed(0);
+    	Robot.ss_Shooter.setShooterBottomMotorSpeed(0);
     	Robot.ss_Shooter.fireShooterSolenoid(false);
 
     	Robot.gui.sendString("Test/testState","shooter done");

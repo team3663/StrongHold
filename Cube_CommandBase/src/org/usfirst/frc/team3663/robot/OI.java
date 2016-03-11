@@ -15,7 +15,6 @@ import org.usfirst.frc.team3663.robot.commands.C_ShooterHoldSpeed;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
-import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
 import org.usfirst.frc.team3663.robot.commands.C_WaitSecs;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEnc;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
