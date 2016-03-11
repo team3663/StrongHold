@@ -31,10 +31,11 @@ public class SS_PickupArm extends Subsystem {
     }
     
     public void setPickupSpeed(double speed){				//Sets the speed of the motor
-    	pickupMotor.set(speed);
+    	pickupMotor.set(speed*Robot.robotMap.pickupMotorDir);
     }
     
     public boolean isDown(){
+    	// todo also use pickupDownSetting from RobotMap
     	return pickupSolenoid.get() == DoubleSolenoid.Value.kForward && lowerLimit.get();
     }
     
@@ -65,7 +66,7 @@ public class SS_PickupArm extends Subsystem {
     }
     
     public void STOP(){										//Stops the speed of the motor
-    	pickupMotor.set(0);
+    	setPickupSpeed(0);
     }
     
     public void updateDashboard(){							//Updates the dash board

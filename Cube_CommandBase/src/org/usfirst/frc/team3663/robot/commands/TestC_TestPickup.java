@@ -31,6 +31,13 @@ public class TestC_TestPickup extends Command {
     	Robot.ss_Test.pickupIntakeStatus = Robot.ss_Test.untested;
     	Robot.ss_Test.pickupArmStatus = Robot.ss_Test.untested;
     	Robot.ss_Test.update();
+    	
+//    	if (!Robot.ss_PickupArm.isDown()){
+//    		Robot.ss_Test.pickupIntakeStatus = Robot.ss_Test.untested+" pickup must be down to start test";
+//        	Robot.ss_Test.pickupArmStatus = Robot.ss_Test.untested+" check limit switch if pickup is down";
+//        	Robot.ss_Test.update();
+//        	state = -1; // this will stall the test until the pickup arm is down and the sensor works
+//    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -38,6 +45,7 @@ public class TestC_TestPickup extends Command {
     	
     	switch (state){
     	case 0:
+			Robot.ss_Test.pickupIntakeStatus = Robot.ss_Test.testing;
     		Robot.ss_PickupArm.setPickupSpeed(speed);
     		speed += delta;
     		if (speed > topSpeed)
@@ -63,20 +71,28 @@ public class TestC_TestPickup extends Command {
     			speed = 0;
     			state++;
     			Robot.ss_PickupArm.setPickupSpeed(speed);
-				Robot.ss_Test.pickupIntakeStatus = Robot.ss_Test.selfVerify;
+				Robot.ss_Test.pickupIntakeStatus = "verify intake motor spun in both directions";
 				Robot.ss_Test.update();
     		}
     		break;
     	case 3:
-    		Robot.ss_PickupArm.firePickupSolenoid(false);
-    		state++;
-    		endTime = Timer.getFPGATimestamp()+delay;
+			Robot.ss_Test.pickupArmStatus = Robot.ss_Test.testing;
+    		if (!Robot.ss_PickupArm.isDown()){
+    			Robot.ss_Test.pickupArmStatus = "Failed - limit switch is not working";
+    		}
+			Robot.ss_PickupArm.firePickupSolenoid(false);
+			state++;
+			endTime = Timer.getFPGATimestamp()+delay;
     		break;
     	case 4:
     		if (Timer.getFPGATimestamp() > endTime)
     			state++;
     		break;
     	case 5:
+    		if (Robot.ss_PickupArm.isDown()){
+    			Robot.ss_Test.pickupArmStatus = "Failed - limit switch is not working";
+				Robot.ss_Test.update();
+    		}
     		Robot.ss_PickupArm.firePickupSolenoid(true);
     		state++;
     		endTime = Timer.getFPGATimestamp()+delay;
@@ -85,14 +101,16 @@ public class TestC_TestPickup extends Command {
     	case 6:
     		if (Timer.getFPGATimestamp() > endTime){
     			state++;
-    			Robot.ss_Test.pickupArmStatus = Robot.ss_Test.selfVerify;
-				Robot.ss_Test.update();
+        		if (Robot.ss_Test.pickupArmStatus.equals(Robot.ss_Test.testing)){
+        			Robot.ss_Test.pickupArmStatus = "verify pickup arm went up and down";
+        		}
     		}
     		break;
     	}
 
     	Robot.gui.sendString("Test/testState","pickup "+state);
-    }
+		Robot.ss_Test.update();
+	}
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

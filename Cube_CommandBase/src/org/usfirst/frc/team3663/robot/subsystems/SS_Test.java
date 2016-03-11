@@ -17,6 +17,7 @@ public class SS_Test extends Subsystem {
 	
 	public String untested = "untested";
 	public String passed = "passed";
+	public String testing = "testing";
 	public String selfVerify = "you verify";
 	
 	public String shooterTopStatus = untested; 
