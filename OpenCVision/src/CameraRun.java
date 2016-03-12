@@ -72,7 +72,7 @@ public class CameraRun {
 		massObjectPointer = new MassObjectHolder();
 		
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.20");//("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
+		NetworkTable.setIPAddress("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
 		table = NetworkTable.getTable("Dog-NT");
 		System.out.println("found NT");
 		//setRedU();
