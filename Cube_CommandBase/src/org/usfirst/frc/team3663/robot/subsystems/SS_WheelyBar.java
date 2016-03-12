@@ -10,12 +10,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * Setting the speed in a positive direction (+) moves the
+ * wheely bar upwards, towards the wheels and center of the robot
  */
 public class SS_WheelyBar extends Subsystem {
     
 	private CANTalon wheelyBarMotor = new CANTalon(Robot.robotMap.wheelyBarMotor);
-	private DigitalInput wheelyBarLimit = new DigitalInput(Robot.robotMap.wheelyBarLimitSwitch);
 	
 	private int maxEncoderTicks = -1211;
 	private int accptance = 10;
@@ -41,30 +41,20 @@ public class SS_WheelyBar extends Subsystem {
     public boolean moveWheelyBarAuto(int pTarget, double pSpeed){	//moves to a set distance on the encoder
     	int distValue = -grabEncoder();
     	if(distValue < pTarget){
-        	wheelyBarMotor.set(pSpeed);
+        	moveWheelyBar(pSpeed);
     		return false;
     	}
-    	wheelyBarMotor.set(0);
+    	STOP();
     	return true;
-    }
-    
-    public boolean moveToReset(){									//moves the bar down until the limit switch is hit
-    	wheelyBarMotor.set(-.2);
-    	if(wheelyBarLimit.get()){
-    		STOP();
-    		resetEncoder();
-    		return true;
-    	}//1750
-    	return false;
     }
     
     public void moveWheelyBarSafe(double pSpeed){
     	int distValue = -grabEncoder();
     	if((pSpeed > 0 && distValue < 2946) || (pSpeed < 0 && distValue > 1211)&&(pSpeed>.4||pSpeed<-.4)){
-    		wheelyBarMotor.set(pSpeed/2);
+    		moveWheelyBar(pSpeed/2);
     	}
     	else{
-    		wheelyBarMotor.set(0);
+    		STOP();
     	}
     }
     

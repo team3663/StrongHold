@@ -19,8 +19,14 @@ public class RobotMap {
 	//shooter
 		public int shooterMotorTop =    12;
 		public int shooterMotorBottom = 11;
+		public int shooterMotorTopDir = 1;
+		public int shooterMotorBottomDir = 1;
+		public int shooterEncoderTopDir = 1;
+		public int shooterEncoderBottomDir = 1;
 	//pickup
 		public int pickUpMotor = 6;
+		public int pickupMotorDir = 1;
+		public boolean pickupDownSetting = true;
 	//dart
 		public int dartMotor = 7;
 	//Winch

@@ -88,7 +88,7 @@ public class SS_Dart extends Subsystem {
     
     public void setMovingArm(boolean pValue){
     	movePickup = pValue;
-    	SmartDashboard.putBoolean("asd jfkla", pValue);
+//    	SmartDashboard.putBoolean("asd jfkla", pValue); Curtis.... please no
     }
     
     public boolean getMoveArm(){

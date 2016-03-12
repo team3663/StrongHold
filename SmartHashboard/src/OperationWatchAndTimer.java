@@ -21,7 +21,7 @@ public class OperationWatchAndTimer implements Runnable{
 		while(true){
 			sleep(2);
 			//the time in seconds, truncated to two decimal places
-			archiver.addValue(name, Double.toString((Math.round(((double)System.currentTimeMillis() - (double)startTime)/1000.0)*100.0)/100.0));
+			archiver.addValue(name, Double.toString(((double)System.currentTimeMillis() - (double)startTime)/1000.0));
 			//On startup (enable)
 			if(operation.get(1).equals("true")){
 				exportFlag = true;
@@ -30,7 +30,7 @@ public class OperationWatchAndTimer implements Runnable{
 					timeStamp = new Date();
 				}
 			//On disable
-			}else if(!keepGoing(1500)){
+			}else if(!keepGoing(2000)){
 				setNewTimeFlag = true;
 				if(exportFlag){
 					export();
@@ -42,11 +42,13 @@ public class OperationWatchAndTimer implements Runnable{
 	//this will continue adding time values to the archiver while it waits to see if the robot is re-enabled
 	//after less than 1.5 seconds. This will prevent a break in csv logging between Autonomous and Teleop
 	public boolean keepGoing(long wait){
-		long startTime = System.currentTimeMillis();
-		while(startTime + wait >= System.currentTimeMillis()){
+		long stTime = System.currentTimeMillis();
+		while(stTime + wait >= System.currentTimeMillis()){
 			sleep(2);
-			archiver.addValue(name, Double.toString((double)System.currentTimeMillis() - (double)startTime));
-			if(operation.get(1).equals("true")) return true;
+			archiver.addValue(name, Double.toString(((double)System.currentTimeMillis() - (double)startTime)/1000.0));
+			if(operation.get(1).equals("true")){
+				return true;
+			}
 		}
 		return false;
 	}

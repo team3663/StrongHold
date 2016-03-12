@@ -119,11 +119,11 @@ public class C_DriveVisionCenterGoal extends Command {
     		}
 			switchForward*=-1;
 			stop = !table.getBoolean("C_/centeringGoal: ",false);
-			
-		//	CHANGE CODE AND PLAY WITH VARIABLES
 		}
-    }
+		//	CHANGE CODE AND PLAY WITH VARIABLES
+	}
 
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         //return (Robot.ss_DriveTrain.spinByGyro((int)degrees, speed));
