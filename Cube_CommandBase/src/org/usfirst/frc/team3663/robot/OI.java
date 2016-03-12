@@ -88,6 +88,7 @@ public class OI {
 	private JoystickButton testFineAdjust = new JoystickButton(testJoystick,4);
 	private JoystickButton testTeleopVisionShooting = new JoystickButton(testJoystick,5);
 	private JoystickButton turn90Degrees = new JoystickButton(testJoystick,6);
+
 //	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
 	
 	public OI(){

@@ -110,7 +110,6 @@ public class C_DriveVisionCenterGoal extends Command {
 	    		moveTime = Math.abs(cameraMoveAngle/angleToTime);//*1.35;
 	    		//moveTime-=0.1;
 	    	}
-
 	    	else*/if (Math.abs(cameraMoveAngle) < 10)
     		{
     			moveTime = Math.pow(Math.abs(cameraMoveAngle/angleToTime)*1.2, 1.2);
