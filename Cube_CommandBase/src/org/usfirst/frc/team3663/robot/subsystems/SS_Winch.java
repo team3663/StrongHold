@@ -25,35 +25,34 @@ public class SS_Winch extends Subsystem {
     }
     
     public void setWinchSpeedNOTSAFE(double pSpeed){
-    	winchMotor1.set(pSpeed);
-		winchMotor2.set(pSpeed);
+    	setWinchMotor1(pSpeed);
+    	setWinchMotor2(pSpeed);
     }
     
     public boolean runMotorAutoToTarget(int pTarget, double pSpeed){	//code written to run the winch in auto	
     	if(0< pTarget){
-    		winchMotor1.set(pSpeed);
-    		winchMotor2.set(pSpeed);
+    		setWinchMotor1(pSpeed);
+    		setWinchMotor2(pSpeed);
     		return false;
     	}
     	return true;
     }
     
-    public void runMotorTeleop(double pSpeed){							//for human use with built in safty
+    public void runMotorTeleop(double pSpeed){							//for human use with built in safety
     	if(pSpeed > .2 || pSpeed < -.2){
-	    	winchMotor1.set(pSpeed);
-	    	winchMotor2.set(pSpeed);
+    		setWinchMotor1(pSpeed);
+    		setWinchMotor2(pSpeed);
     	}
     	else{
-	    	winchMotor1.set(0);
-	    	winchMotor2.set(0);
+	    	STOP();
     	}
     }
     
-    public void testSetWinchMotor1(double pSpeed){
+    public void setWinchMotor1(double pSpeed){
 		winchMotor1.set(pSpeed);
     }
     
-    public void testSetWinchMotor2(double pSpeed){
+    public void setWinchMotor2(double pSpeed){
 		winchMotor2.set(pSpeed);
     }
     

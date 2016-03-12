@@ -49,7 +49,7 @@ public class Robot extends IterativeRobot {
 	public static SS_ConfigReader ss_config;
 	
 	
-	public static SS_Test test;
+	public static SS_Test ss_Test;
 	public static SS_Camera ss_Camera;
 
 
@@ -76,8 +76,8 @@ public class Robot extends IterativeRobot {
 		ss_Hook = new SS_Hook();
 		ss_PDB = new SS_PowerDistributionBoard();
 		gui = new SS_Gui();
+		ss_Test = new SS_Test();
 		oi = new OI();
-		test = new SS_Test();
     	LiveWindow.setEnabled(false);
         gui.sendNumber("operation/Time", Timer.getMatchTime());
 
@@ -120,7 +120,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        gui.sendNumber("operation/Time", Math.round(100.0*Timer.getMatchTime())/100.0);
+        gui.sendNumber("operation/Time",Math.round(100.0*Timer.getMatchTime())/100.0);
     }
 
     public void teleopInit() {

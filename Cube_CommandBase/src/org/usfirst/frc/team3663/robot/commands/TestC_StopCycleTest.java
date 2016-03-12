@@ -7,16 +7,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TestC_EnableTestMode extends Command {
+public class TestC_StopCycleTest extends Command {
 
-    public TestC_EnableTestMode() {
+    public TestC_StopCycleTest() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.ss_Test.enterTestMode();
+    	Robot.ss_Test.stopCycleTest = true;
     }
 
     // Called repeatedly when this Command is scheduled to run

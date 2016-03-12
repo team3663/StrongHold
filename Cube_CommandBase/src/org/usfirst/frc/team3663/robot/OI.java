@@ -19,13 +19,14 @@ import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
 import org.usfirst.frc.team3663.robot.commands.C_TrentsVision;
 import org.usfirst.frc.team3663.robot.commands.C_WaitSecs;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEnc;
-import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafety;
 import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
 import org.usfirst.frc.team3663.robot.commands.TC_TurnByGyro;
+import org.usfirst.frc.team3663.robot.commands.TestCG_CycleTest;
 import org.usfirst.frc.team3663.robot.commands.TestCG_TestRequiresAll;
 import org.usfirst.frc.team3663.robot.commands.TestC_Cycle;
 import org.usfirst.frc.team3663.robot.commands.TestC_DisableTestMode;
+import org.usfirst.frc.team3663.robot.commands.TestC_StopCycleTest;
 import org.usfirst.frc.team3663.robot.commands.TestC_ToggleTestMode;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -46,7 +47,7 @@ public class OI {
 	//public Joystick testJoystick1= new Joystick(5);
 	public Joystick testJoystick = new Joystick(4);
 	
-	public Joystick visionTestStick = new Joystick(3);
+	//public Joystick visionTestStick = new Joystick(3);
 
 //Buttons
   //Pickup Buttons
@@ -69,18 +70,25 @@ public class OI {
 	
 	
   //Test Joystick Buttons
-	private JoystickButton toggleTestMode	= new JoystickButton(testJoystick, 7);
 	private JoystickButton runFullTest  	= new JoystickButton(testJoystick, 8);//start button on xbox ctrl
 	private JoystickButton disableFullTest 	= new JoystickButton(testJoystick, 8);//start button on xbox ctrl
+	private JoystickButton cycleTest    	= new JoystickButton(testJoystick, 7);
+	private JoystickButton stopCycleTest   	= new JoystickButton(testJoystick, 9);
 	private JoystickButton cycleUp			= new JoystickButton(testJoystick, 2);
 	private JoystickButton cycleDown		= new JoystickButton(testJoystick, 1);
 	
   //visionTestStick Buttons
-	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
-	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
-	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
-	private JoystickButton testTeleopVisionShooting = new JoystickButton(visionTestStick,2);
-	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
+//	private JoystickButton testCenterGoal = new JoystickButton(visionTestStick,1);
+//	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
+//	private JoystickButton testTeleopVisionShooting = new JoystickButton(visionTestStick,2);
+//	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
+//	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
+
+	private JoystickButton testCenterGoal = new JoystickButton(testJoystick,3);
+	private JoystickButton testFineAdjust = new JoystickButton(testJoystick,4);
+	private JoystickButton testTeleopVisionShooting = new JoystickButton(testJoystick,5);
+	private JoystickButton turn90Degrees = new JoystickButton(testJoystick,6);
+//	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
 	
 	public OI(){
 	//Real Buttons
@@ -98,20 +106,20 @@ public class OI {
 	  //WinchAndHookEnable
 		//winchAndHookEnable.whenPressed(new CG_WinchAndHookCombine());
 	  //Wheely Bar Buttons
-		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
-		
+		//...there are none
 		//Test Buttons
-		toggleTestMode.whenPressed(new TestC_ToggleTestMode());
 		runFullTest.whileHeld(new TestCG_FullTest());
-		//runFullTest.whileHeld(new C_WaitSecs(15));
 		disableFullTest.whenReleased(new TestC_DisableTestMode());
+		
+		cycleTest.whenPressed(new TestCG_CycleTest());
+		stopCycleTest.whenPressed(new TestC_StopCycleTest());
 		cycleUp.whenPressed(new TestC_Cycle(true));
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
 		//VisionTestButtons
 		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
+//		trentsBadCode.whenPressed(new C_TrentsVision());
 		testCenterGoal.whenPressed(new CG_VisionCenterGoal());
-		trentsBadCode.whenPressed(new C_TrentsVision());
 		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
 		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());

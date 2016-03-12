@@ -22,7 +22,8 @@ public class C_ShooterShoot extends Command {
     }
 
     protected void execute() {
-    	Robot.ss_Shooter.setShooterMotorTop(1);
+    	// todo this only drives the top motor
+    	Robot.ss_Shooter.setShooterTopMotorSpeed(1);
     	if(Robot.oi.driveJoystick.getRawButton(Robot.oi.shooterFirerPistonWait)){
     		Robot.ss_Shooter.aboveWantedSpeed(20000);
     		end = true;
