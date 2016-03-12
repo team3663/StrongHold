@@ -20,11 +20,11 @@ public class TestC_Cycle extends Command {
 
     protected void execute() {
     	if(up){
-    		Robot.test.incrementBy(1);
+    		Robot.ss_Test.incrementBy(1);
     	}else{
-    		Robot.test.incrementBy(-1);
+    		Robot.ss_Test.incrementBy(-1);
     	}
-    	Robot.test.update();
+    	Robot.ss_Test.update();
     }
 
     protected boolean isFinished() {

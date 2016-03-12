@@ -84,7 +84,7 @@ public class C_DriveVisionCenterGoal extends Command {
 			{
 				Robot.ss_DriveTrain.arcadeRobotDrive(forwardVariable*switchForward, -turnSpeed);
 			}
-	    	if (Math.abs(cameraMoveAngle) >= 8)//(turnLeft != wasLastLeft && wasLastLeft != wasLastLeft2 && moveTime > 0.05)
+	    	if (Math.abs(cameraMoveAngle) >= 10)//(turnLeft != wasLastLeft && wasLastLeft != wasLastLeft2 && moveTime > 0.05)
 	    	{
 	    		moveTime = Math.abs(cameraMoveAngle/angleToTime);//*1.35;
 	    		//moveTime-=0.1;
@@ -110,18 +110,18 @@ public class C_DriveVisionCenterGoal extends Command {
 	    		moveTime = Math.abs(cameraMoveAngle/angleToTime);//*1.35;
 	    		//moveTime-=0.1;
 	    	}
-	    	else*/if (Math.abs(cameraMoveAngle) < 8)
+	    	else*/if (Math.abs(cameraMoveAngle) < 10)
     		{
-    			moveTime = Math.pow(Math.abs(cameraMoveAngle/angleToTime)*4.0, .2);
-    			forwardVariable = 0.4;
-    			turnSpeed = 0.65;
+    			moveTime = Math.pow(Math.abs(cameraMoveAngle/angleToTime)*1.2, 1.2);
+    			forwardVariable = 0.7;
+    			turnSpeed = 0.67;
     		}
 			switchForward*=-1;
 			stop = !table.getBoolean("C_/centeringGoal: ",false);
 			
 		//	CHANGE CODE AND PLAY WITH VARIABLES
 		}
- }
+    }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {

@@ -5,14 +5,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class TestCG_FullTest extends CommandGroup {
+public class TestCG_CycleTest extends CommandGroup {
     
-    public  TestCG_FullTest() {
+    public  TestCG_CycleTest() {
     	addSequential(new TestC_EnableTestMode());
     	//addSequential(new C_WaitSecs(20));
-    	addSequential(new TestC_TestShooter());
-    	addSequential(new TestC_TestPickup());
-    	addSequential(new C_WaitSecs(5));
+    	addSequential(new TestC_CycleTest());
     	addSequential(new TestC_DisableTestMode());
         // Add Commands here:
         // e.g. addSequential(new Command1());
