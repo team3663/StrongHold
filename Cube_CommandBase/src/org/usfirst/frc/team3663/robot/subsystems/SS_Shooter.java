@@ -90,7 +90,7 @@ public class SS_Shooter extends Subsystem {
     	else if(topSpeed < -1){
     		topSpeed = -1;
     	}
-    	shooterTop.set(topSpeed);
+    	setShooterTopMotorSpeed(topSpeed);
     	SmartDashboard.putNumber("tops speed", topSpeed);
     }
     
@@ -104,8 +104,8 @@ public class SS_Shooter extends Subsystem {
     	}
     	else if(bottomSpeed < -1){
     		bottomSpeed = -1;
-    	}    
-    	shooterBottom.set(bottomSpeed);
+    	}
+    	setShooterBottomMotorSpeed(bottomSpeed);
     	SmartDashboard.putNumber("bottoms speed", bottomSpeed);
     }
     

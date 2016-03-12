@@ -25,6 +25,7 @@ public class SS_Test extends Subsystem {
 	public String shooterPlungerStatus = untested; 
 	public String pickupIntakeStatus = untested;
 	public String pickupArmStatus = untested;
+	public String wheelyBarMotorStatus = untested;
 	
     public void initDefaultCommand() {
     	//setDefaultCommand(new TestC_Test());

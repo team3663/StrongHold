@@ -61,7 +61,7 @@ public class DriveFrame implements Runnable{
 		Font myFont = new Font("SanSerif", Font.PLAIN, 12);
 		int count = 0;
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.BLACK,archiver,msgBoard,myFont);
+			subs[count] = new SubTablePanel(k,table,Color.DARK_GRAY,archiver,msgBoard,myFont);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
@@ -151,7 +151,6 @@ public class DriveFrame implements Runnable{
 		frame.addWindowListener(new WindowAdapter() {
 		    @Override
 		    public void windowClosing(WindowEvent windowEvent) {
-		    	System.out.println("Hey");
 		    	if(owat != null){
 		    		owat.export();
 		    	}

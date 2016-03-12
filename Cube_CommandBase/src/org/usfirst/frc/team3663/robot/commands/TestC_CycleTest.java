@@ -51,11 +51,11 @@ public class TestC_CycleTest extends Command {
 	    		Robot.ss_Test.testName = "ShooterSolenoid";
 	    		break;
 	    	case 7:
-	    		Robot.ss_Winch.testSetWinchMotor1(jsValue);
+	    		Robot.ss_Winch.setWinchMotor1(jsValue);
 	    		Robot.ss_Test.testName = "WinchMotor1";
 	    		break;
 	    	case 8:
-	    		Robot.ss_Winch.testSetWinchMotor2(jsValue);
+	    		Robot.ss_Winch.setWinchMotor2(jsValue);
 	    		Robot.ss_Test.testName = "WinchMotor2";
 	    		break;
 	    	case 9:
@@ -124,10 +124,10 @@ public class TestC_CycleTest extends Command {
     		//shooter plunger
     	}
     	if(pValue != 7){
-    		Robot.ss_Winch.testSetWinchMotor1(0);
+    		Robot.ss_Winch.setWinchMotor1(0);
     	}
     	if(pValue != 8){
-    		Robot.ss_Winch.testSetWinchMotor2(0);
+    		Robot.ss_Winch.setWinchMotor2(0);
     	}
     	if(pValue != 9){
     		Robot.ss_Dart.NOTSAFEMoveDart(0);

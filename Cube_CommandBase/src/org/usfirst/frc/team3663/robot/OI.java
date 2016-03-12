@@ -15,9 +15,10 @@ import org.usfirst.frc.team3663.robot.commands.C_ShooterHoldSpeed;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
+import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
+import org.usfirst.frc.team3663.robot.commands.C_TrentsVision;
 import org.usfirst.frc.team3663.robot.commands.C_WaitSecs;
 import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEnc;
-import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEncoder;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafety;
 import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
 import org.usfirst.frc.team3663.robot.commands.TC_TurnByGyro;
@@ -81,11 +82,14 @@ public class OI {
 //	private JoystickButton testFineAdjust = new JoystickButton(visionTestStick,3);
 //	private JoystickButton testTeleopVisionShooting = new JoystickButton(visionTestStick,2);
 //	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
-//	
+//	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
+
 	private JoystickButton testCenterGoal = new JoystickButton(testJoystick,3);
 	private JoystickButton testFineAdjust = new JoystickButton(testJoystick,4);
 	private JoystickButton testTeleopVisionShooting = new JoystickButton(testJoystick,5);
 	private JoystickButton turn90Degrees = new JoystickButton(testJoystick,6);
+
+//	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
 	
 	public OI(){
 	//Real Buttons
@@ -103,8 +107,7 @@ public class OI {
 	  //WinchAndHookEnable
 		//winchAndHookEnable.whenPressed(new CG_WinchAndHookCombine());
 	  //Wheely Bar Buttons
-		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
-		
+		//...there are none
 		//Test Buttons
 		runFullTest.whileHeld(new TestCG_FullTest());
 		disableFullTest.whenReleased(new TestC_DisableTestMode());
@@ -116,6 +119,7 @@ public class OI {
 		
 		//VisionTestButtons
 		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
+//		trentsBadCode.whenPressed(new C_TrentsVision());
 		testCenterGoal.whenPressed(new CG_VisionCenterGoal());
 		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
