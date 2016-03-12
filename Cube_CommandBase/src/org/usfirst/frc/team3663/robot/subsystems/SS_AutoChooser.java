@@ -27,29 +27,29 @@ public class SS_AutoChooser extends Subsystem {
     	if(value > 4 && value < 400){
     		auto = null;
     	}
-    	if(value > 400 && value < 800){
+    	else if(value > 400 && value < 800){
     		auto = new CG_AutoOverBasicDefence();
     		autoShoot = false;    		
     	}
-    	if(value > 800 && value < 1200){
+    	else if(value > 800 && value < 1200){
     		auto = new CG_AutoUnderLowBar();
     		autoShoot = false;
     	}
-    	if(value > 1200 && value < 1600){
+    	else if(value > 1200 && value < 1600){
     	}
-    	if(value > 1600 && value < 2000){
+    	else if(value > 1600 && value < 2000){
     	}
-    	if(value > 2000 && value < 2400){
+    	else if(value > 2000 && value < 2400){
     	}
-    	if(value > 2400 && value < 2800){
+    	else if(value > 2400 && value < 2800){
     	}
-    	if(value > 2800 && value < 3200){
+    	else if(value > 2800 && value < 3200){
     	}
-    	if(value > 3200 && value < 3600){
+    	else if(value > 3200 && value < 3600){
     		auto = new CG_AutoUnderLowBar();
     		autoShoot = true;
     	}
-    	if(value > 3600 && value < 4000){
+    	else if(value > 3600 && value < 4000){
     		auto = new CG_AutoOverBasicDefence();
     		autoShoot = true;
     	}

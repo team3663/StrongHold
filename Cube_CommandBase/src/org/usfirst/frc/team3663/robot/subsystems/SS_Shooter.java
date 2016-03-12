@@ -29,8 +29,8 @@ public class SS_Shooter extends Subsystem {
     public boolean isMotorRunning(){
     	double value = shooterTop.getSpeed() + shooterBottom.getSpeed();
     	return value == 0;
-    }
-    
+    }																							//IMPORTANT : the numbers for saber should be negative = out for both 
+    																							//		speed and encoders and positive = in
     public int getShooterTopEncoderPosition(){						//gets the pos of the top
     	return shooterTop.getEncPosition()*Robot.robotMap.shooterEncoderTopDir;
     }
@@ -57,7 +57,7 @@ public class SS_Shooter extends Subsystem {
     
     public void setShooterMotorsSpeed(double pSpeed){						//Sets the speed of both motors
     	setShooterTopMotorSpeed(pSpeed);
-    	setShooterBottomMotorSpeed(-pSpeed);
+    	setShooterBottomMotorSpeed(pSpeed);
     }
 
     public void toggleShooterSolenoid(){									//Works as a toggle for the shooter piston
