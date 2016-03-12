@@ -104,7 +104,7 @@ public class SS_Shooter extends Subsystem {
     	}
     	else if(bottomSpeed < -1){
     		bottomSpeed = -1;
-    	}    
+    	}
     	setShooterBottomMotorSpeed(bottomSpeed);
     	SmartDashboard.putNumber("bottoms speed", bottomSpeed);
     }

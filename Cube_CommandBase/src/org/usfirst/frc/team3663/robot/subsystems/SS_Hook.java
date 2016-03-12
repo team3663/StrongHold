@@ -44,7 +44,6 @@ public class SS_Hook extends Subsystem {
     	else{
     		hookMotor.set(0);
     		return true;
-
     	}
     }
     
@@ -61,15 +60,6 @@ public class SS_Hook extends Subsystem {
     		if (distValue > -200000 && distValue < 0) {
     			hookMotor.set(pSpeed/2);    		
     		}
-    		/*
-    		if (distValue > -200000 && pSpeed > 0) {
-    			hookMotor.set(pSpeed/2);    		
-    		}else if(distValue < 0 && pSpeed < 0){
-    			hookMotor.set(pSpeed/2);
-    		}else{
-    			hookMotor.set(0.0);
-    		}*/
-    		
     		SmartDashboard.putNumber("Hook Encoder", distValue);
     	}
     }
