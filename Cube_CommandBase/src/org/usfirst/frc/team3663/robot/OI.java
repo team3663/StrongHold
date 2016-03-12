@@ -64,7 +64,8 @@ public class OI {
 	private JoystickButton winchNotSafeMove = new JoystickButton(buttonJoystick, 7);
   //Wheely Bar Buttons
 	private JoystickButton wheelyBarMoveToZero = new JoystickButton(buttonJoystick, 4);
-	private JoystickButton wheelyBarEncZero = new JoystickButton(buttonJoystick, 8);
+  //Hook Buttons
+	private JoystickButton fireHookPiston = new JoystickButton(buttonJoystick, 3);
 	
 	
   //Test Joystick Buttons
@@ -90,7 +91,7 @@ public class OI {
 		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
 		pickupRunOut.whenPressed(new C_PickupRunMotor(1));
 	  //Shooter Buttons
-		shooterMotorsFullPower.whenPressed(new CG_AutoShoot(-10000));
+		shooterMotorsFullPower.whileHeld(new C_ShooterHoldSpeed(-10000));
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
@@ -98,7 +99,6 @@ public class OI {
 		//winchAndHookEnable.whenPressed(new CG_WinchAndHookCombine());
 	  //Wheely Bar Buttons
 		wheelyBarMoveToZero.whileHeld(new C_WheelyBarZeroEncoder());
-		wheelyBarEncZero.whenPressed(new C_WheelyBarZeroEnc());
 		
 		//Test Buttons
 		toggleTestMode.whenPressed(new TestC_ToggleTestMode());

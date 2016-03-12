@@ -66,9 +66,9 @@ public class C_TrentsVision extends Command {
     private void calculateDriveTime(){
     	
     }
-    private void drive(double power, double turn, double duration){
+    private void drive(double power, double turn/*, double duration*/){
     	double startTime = Timer.getFPGATimestamp();
-    	while(startTime + duration > Timer.getFPGATimestamp()){
+    	while(startTime /*+ duration */> Timer.getFPGATimestamp()){
     		Robot.ss_DriveTrain.arcadeRobotDrive(power,turn);
     	}
     	Robot.ss_DriveTrain.STOP();

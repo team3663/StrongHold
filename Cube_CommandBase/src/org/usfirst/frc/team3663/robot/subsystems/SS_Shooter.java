@@ -66,7 +66,7 @@ public class SS_Shooter extends Subsystem {
     private double topSpeed = 0;
     public void holdTopSpeed(int pSpeed){
     	int vTopSpeed = shooterTop.getEncVelocity();
-    	double diffTop = (double)(pSpeed - vTopSpeed)/300000;
+    	double diffTop = (double)(pSpeed - vTopSpeed)/300000.0;
     	topSpeed-=diffTop;
     	if(topSpeed > 1){
     		topSpeed = 1;
@@ -75,12 +75,13 @@ public class SS_Shooter extends Subsystem {
     		topSpeed = -1;
     	}
     	shooterTop.set(topSpeed);
+    	SmartDashboard.putNumber("tops speed", topSpeed);
     }
     
     private double bottomSpeed = 0;    
     public void holdBottomSpeed(int pSpeed){
-    	int vBottomSpeed = shooterBottom.getEncVelocity();
-    	double diffBottom = (double)(pSpeed - vBottomSpeed)/300000;
+    	int vBottomSpeed = -shooterBottom.getEncVelocity();
+    	double diffBottom = (double)(pSpeed - vBottomSpeed)/300000.0;
     	bottomSpeed-=diffBottom;
     	if(bottomSpeed > 1){
     		bottomSpeed = 1;
@@ -89,6 +90,7 @@ public class SS_Shooter extends Subsystem {
     		bottomSpeed = -1;
     	}    
     	shooterBottom.set(bottomSpeed);
+    	SmartDashboard.putNumber("bottoms speed", bottomSpeed);
     }
     
     public void holdSpeed(int pSpeed){
@@ -96,32 +98,32 @@ public class SS_Shooter extends Subsystem {
     	holdTopSpeed(pSpeed);
     }
     
-    private int topSafeTimes = 5;
+    private int topSafeTimes = 3;
     public boolean topInSpeed(int pSpeed){
     	int currentSpeed = shooterTop.getEncVelocity();
     	if(pSpeed+300>currentSpeed&&pSpeed-300<currentSpeed){
     		topSafeTimes--;
     	}
     	else{
-    		topSafeTimes = 5;
+    		topSafeTimes = 3;
     	}
     	return topSafeTimes<0;
     }
     
-    private int bottomSafeTimes = 5;
+    private int bottomSafeTimes = 3;
     public boolean bottomInSpeed(int pSpeed){
     	int currentSpeed = shooterBottom.getEncVelocity();
     	if(pSpeed+300>currentSpeed&&pSpeed-300<currentSpeed){
     		bottomSafeTimes--;
     	}
     	else{
-    		bottomSafeTimes = 5;
+    		bottomSafeTimes = 3;
     	}
     	return bottomSafeTimes<0;
     }
     
     public boolean atSpeed(int pSpeed){
-    	return /*topInSpeed(pSpeed) &&*/ bottomInSpeed(pSpeed);
+    	return topInSpeed(pSpeed) && bottomInSpeed(pSpeed);
     }
     
     public void STOP(){
