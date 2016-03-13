@@ -86,6 +86,7 @@ public class C_DriveVisionCenterGoal extends Command {
 			}
 	    	if (Math.abs(cameraMoveAngle) >= 10)//(turnLeft != wasLastLeft && wasLastLeft != wasLastLeft2 && moveTime > 0.05)
 	    	{
+	    		//forwardSpeed = 0.2;
 	    		moveTime = Math.abs(cameraMoveAngle/angleToTime);//*1.35;
 	    		//moveTime-=0.1;
 	    	}
