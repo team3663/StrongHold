@@ -11,7 +11,6 @@ public class C_ShooterHoldSpeed extends Command {
 
 	private int speed;
 	private boolean done = false;
-	private boolean buttonPress = false;
 	private int timeOut = 10;
     public C_ShooterHoldSpeed(int pSpeed) {
         // Use requires() here to declare subsystem dependencies
@@ -21,17 +20,15 @@ public class C_ShooterHoldSpeed extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	timeOut = 10;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	Robot.ss_Shooter.holdSpeed(speed);
-    	if(Robot.oi.driveJoystick.getRawButton(3)){
-    		buttonPress = true;
-    	}
-    	if(Robot.oi.driveJoystick.getRawButton(7)||(buttonPress&&Robot.ss_Shooter.atSpeed(speed))){
-    		done = true;
+    	if(Robot.oi.driveJoystick.getRawButton(7)){
     		Robot.ss_Shooter.fireShooterSolenoid(true);
+    		done = true;
     	}
     }
 

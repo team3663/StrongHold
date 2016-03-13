@@ -10,7 +10,7 @@ public class CG_ConfigLongShot extends CommandGroup {
     public  CG_ConfigLongShot() {
         // Add Commands here:
         addSequential(new C_PickupFirePiston(true));
-        addSequential(new C_DartAutoMove(1750));
+        addSequential(new C_DartAutoMove(1730));
         //      addSequential(new Command2());
         // these will run in order.
 

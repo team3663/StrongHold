@@ -96,7 +96,7 @@ public class SS_Shooter extends Subsystem {
     
     private double bottomSpeed = 0;    
     public void holdBottomSpeed(int pSpeed){
-    	int vBottomSpeed = -getShooterBottomEncoderVelocity();
+    	int vBottomSpeed = getShooterBottomEncoderVelocity();
     	double diffBottom = (double)(pSpeed - vBottomSpeed)/300000.0;
     	bottomSpeed-=diffBottom;
     	if(bottomSpeed > 1){
@@ -146,9 +146,9 @@ public class SS_Shooter extends Subsystem {
     	setShooterMotorsSpeed(0);
     }
     
-    public void updateDashboard(){							//sends a update to the dashboard
-    	//SmartDashboard.putNumber("Top Shooter Motor Speed : ", shooterTop.getEncVelocity());
-    	//SmartDashboard.putNumber("Bottom Shooter Motor Speed : ", shooterBottom.getEncVelocity());
+    public void updateDashboard(){							//sends a update to the dashboard			LEAVE THE SMARTDASHBOARD
+    	SmartDashboard.putNumber("Top Shooter Motor Speed : ", shooterTop.getEncVelocity());
+    	SmartDashboard.putNumber("Bottom Shooter Motor Speed : ", shooterBottom.getEncVelocity());
     	Robot.gui.sendNumber("shooter/Top Shooter Motor", getShooterTopEncoderVelocity());
     	Robot.gui.sendNumber("shooter/Bottom Shooter Motor", getShooterBottomEncoderVelocity());
     }

@@ -15,13 +15,14 @@ public class C_DriveBasedTime extends Command {
 
     // Called just before this Command runs the first time
     public int delay = 175;
+    //Curtis
     protected void initialize() {
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	delay--;
-    	Robot.ss_DriveTrain.arcadeRobotDrive(0, -.7);
+    	Robot.ss_DriveTrain.arcadeRobotDrive(-.7, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

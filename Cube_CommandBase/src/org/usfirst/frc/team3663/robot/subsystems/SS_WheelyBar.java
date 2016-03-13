@@ -51,7 +51,7 @@ public class SS_WheelyBar extends Subsystem {
     public void moveWheelyBarSafe(double pSpeed){
     	int distValue = -grabEncoder();
     	if((pSpeed > 0 && distValue < 2946) || (pSpeed < 0 && distValue > 1211)&&(pSpeed>.4||pSpeed<-.4)){
-    		moveWheelyBar(pSpeed/2);
+    		moveWheelyBar(pSpeed/1.5);
     	}
     	else{
     		STOP();
@@ -59,7 +59,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
-    	wheelyBarMotor.set(pSpeed/2.0);
+    	wheelyBarMotor.set(pSpeed/1.5);
     }
     
     public void STOP(){												//stops the motor

@@ -20,6 +20,7 @@ public class C_DartMove extends Command {
 
     protected void execute() {
     	Robot.ss_Dart.moveDart(Robot.oi.driveJoystick.getRawAxis(5), Robot.ss_PickupArm.isDown());
+    	//Robot.ss_Dart.NOTSAFEMoveDart(Robot.oi.driveJoystick.getRawAxis(5));
     }
 
     protected boolean isFinished() {
