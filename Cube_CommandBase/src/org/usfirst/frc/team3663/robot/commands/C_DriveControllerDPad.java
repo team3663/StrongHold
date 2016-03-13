@@ -3,7 +3,6 @@ package org.usfirst.frc.team3663.robot.commands;
 import org.usfirst.frc.team3663.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -29,7 +28,7 @@ public class C_DriveControllerDPad extends Command {
     		cg_OverD.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == 180 && !cg_LowBar.isRunning()){
-    		//cg_LowBar.start();
+    		cg_LowBar.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == 270){
     		cg_Long.start();

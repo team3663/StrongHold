@@ -72,7 +72,7 @@ public class Robot extends IterativeRobot {
 		ss_Winch = new SS_Winch();
 		ss_WheelyBar = new SS_WheelyBar();
 		ss_Camera = new SS_Camera();
-		//ss_AutoChooser = new SS_AutoChooser();
+		ss_AutoChooser = new SS_AutoChooser();
 		ss_Hook = new SS_Hook();
 		ss_PDB = new SS_PowerDistributionBoard();
 		gui = new SS_Gui();
@@ -160,6 +160,7 @@ public class Robot extends IterativeRobot {
     
     public void updateDONTREMOVE(){
     	ss_Shooter.updateDashboard();
+    	ss_AutoChooser.updateDashboard();
     }
     
 }

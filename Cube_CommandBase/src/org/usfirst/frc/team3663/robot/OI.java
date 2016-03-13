@@ -15,6 +15,7 @@ import org.usfirst.frc.team3663.robot.commands.C_ShooterHoldSpeed;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
+import org.usfirst.frc.team3663.robot.commands.C_HookSetPiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
 import org.usfirst.frc.team3663.robot.commands.C_TrentsVision;
 import org.usfirst.frc.team3663.robot.commands.C_WaitSecs;
@@ -55,7 +56,7 @@ public class OI {
 	private JoystickButton pickupRaiseArm 	= new JoystickButton(driveJoystick, 6);
 	private JoystickButton pickupLowerArm 	= new JoystickButton(driveJoystick, 5);
 	private JoystickButton pickupCycleSafty = new JoystickButton(driveJoystick, 8);
-	private JoystickButton pickupRunOut 	= new JoystickButton(buttonJoystick, 2);
+	private JoystickButton pickupRunOut 	= new JoystickButton(driveJoystick, 2);
   //Shooter Buttons
 	private JoystickButton shooterMotorsFullPower 	= new JoystickButton(driveJoystick, 1);
 	public int shooterFirePistonNoWait 	= 7;
@@ -67,6 +68,7 @@ public class OI {
 	private JoystickButton wheelyBarMoveToZero = new JoystickButton(buttonJoystick, 4);
   //Hook Buttons
 	private JoystickButton fireHookPiston = new JoystickButton(buttonJoystick, 3);
+	private JoystickButton retractHookPiston = new JoystickButton(buttonJoystick,2);
 	
 	
   //Test Joystick Buttons
@@ -98,12 +100,15 @@ public class OI {
 		pickupRaiseArm.whenPressed(new C_PickupFirePiston(false));
 		pickupLowerArm.whenPressed(new C_PickupFirePiston(true));
 		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
-		pickupRunOut.whenPressed(new C_PickupRunMotor(1));
+		pickupRunOut.whileHeld(new C_PickupRunMotor(1));
 	  //Shooter Buttons
-		shooterMotorsFullPower.whileHeld(new C_ShooterHoldSpeed(-10000));
+		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
+	  //Hook
+		fireHookPiston.whenPressed(new C_HookSetPiston(true));
+		retractHookPiston.whenPressed(new C_HookSetPiston(false));
 	  //WinchAndHookEnable
 		//winchAndHookEnable.whenPressed(new CG_WinchAndHookCombine());
 	  //Wheely Bar Buttons

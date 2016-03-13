@@ -58,7 +58,7 @@ public class SS_Winch extends Subsystem {
     
     public void STOP(){													//stops running the motor
     	winchMotor1.set(0);
-		winchMotor1.set(0);
+		winchMotor2.set(0);
     }
     
     public void updateDashboard(){								

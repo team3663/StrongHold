@@ -20,7 +20,7 @@ public class RobotMap {
 		public int shooterMotorTop =    12;
 		public int shooterMotorBottom = 11;
 		public int shooterMotorTopDir = 1;
-		public int shooterMotorBottomDir = 1;
+		public int shooterMotorBottomDir = -1;
 		public int shooterEncoderTopDir = 1;
 		public int shooterEncoderBottomDir = 1;
 	//pickup
@@ -71,13 +71,13 @@ public class RobotMap {
 	    public int encoderTicksPerInch = 20;
 	//Dart
 	    public int minDistanceValue = 550;//410;
-	    public int maxDistanceValue = 2310;
-	    public int soft1 = 552;
-	    public int soft2 = 1976;
-	    public int hard1 = 552;
-	    public int hard2 = 1464;//1918
-	    public int touch1 = 552;
-	    public int touch2 = 1464;
+	    public int maxDistanceValue = 2260;
+	    public int soft1 = 544;
+	    public int soft2 = 1934;
+	    public int hard1 = 546;
+	    public int hard2 = 1751;//1918
+	    public int touch1 = 546;
+	    public int touch2 = 1437;
 	//drive
 	    public boolean isDriveFlipped = false;
 	
