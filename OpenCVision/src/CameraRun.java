@@ -72,7 +72,7 @@ public class CameraRun {
 		massObjectPointer = new MassObjectHolder();
 		
 		NetworkTable.setClientMode();
-		NetworkTable.setIPAddress("10.36.63.20");//("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
+		NetworkTable.setIPAddress("10.36.63.2");//"169.254.199.6");//"10.36.63.20");//78");
 		table = NetworkTable.getTable("Dog-NT");
 		System.out.println("found NT");
 		//setRedU();
@@ -231,6 +231,7 @@ public class CameraRun {
 								ImageIO.write(buffImg, "jpg", outputfile);
 							} catch (IOException e)
 							{
+								System.out.println("ERROR: " + e.getMessage());
 							}
 							table.putBoolean("ShooterShot: ",false);
 						}
@@ -982,7 +983,7 @@ public class CameraRun {
 		if (gPieceKey > -1)
 		{
 			int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
-			double buffer = (double)(massObjectPointer.getGPiece(bestPieceKey).width*2.0/20.0);
+			double buffer = (double)(massObjectPointer.getGPiece(bestPieceKey).width*4.0/20.0);
 			//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
 			
 			double moveAngle = 45.0*((double)xCenter-goalCenterX/*320.0*/)/320.0;//-160)/160;
@@ -1096,14 +1097,35 @@ public class CameraRun {
 			y = 0;
 		}
 								    	img.setRGB(x, y, color);//.getRGB());
-		if (x < fixWidth-1)			   		img.setRGB(x+1, y, color);//.getRGB());
-		if (x > 0)			   			img.setRGB(x-1, y, color);//.getRGB());
-		if (y < fixHeight-1)			   		img.setRGB(x, y+1, color);//.getRGB());//out of bounds exception
-		if (x < fixWidth-1 && y < fixHeight-1)		img.setRGB(x+1, y+1, color);//.getRGB());
-		if (x > 0 && y < fixHeight-1)  		img.setRGB(x-1, y+1, color);//.getRGB());
-		if (y > 0)			   			img.setRGB(x, y-1, color);//.getRGB());
-		if (x < fixWidth-1 && y > 0)  		img.setRGB(x+1, y-1, color);//.getRGB());
-		if (x > 0 && y > 0)    		img.setRGB(x-1, y-1, color);//.getRGB());
+		for (int rad = 1; rad <= 3; rad++)
+		{
+		if (x < fixWidth-rad)			   		img.setRGB(x+rad, y, color);//.getRGB());
+		if (x > rad-1)			   			img.setRGB(x-rad, y, color);//.getRGB());
+		if (y < fixHeight-rad)			   		img.setRGB(x, y+rad, color);//.getRGB());//out of bounds exception
+		if (x < fixWidth-1 && y < fixHeight-1)		img.setRGB(x+rad, y+rad, color);//.getRGB());
+		if (x > rad-1 && y < fixHeight-rad)  		img.setRGB(x-rad, y+rad, color);//.getRGB());
+		if (y > rad-1)			   			img.setRGB(x, y-rad, color);//.getRGB());
+		if (x < fixWidth-rad && y > rad-1)  		img.setRGB(x+rad, y-rad, color);//.getRGB());
+		if (x > rad-1 && y > rad-1)    		img.setRGB(x-rad, y-rad, color);//.getRGB());
+		}
+		
+		/*
+		int width = 5, height = 5;
+		int x = x-2, y = y-2;
+		if (
+		//img.getGraphics().drawRect(x, y, width, height);
+		*/
+		
+		/*if (x < fixWidth-2)			   		img.setRGB(x+2, y, color);
+		if (x > 1)			   			img.setRGB(x-2, y, color);
+		if (y < fixHeight-2)			   		img.setRGB(x, y+2, color);
+		if (x < fixWidth-2 && y < fixHeight-2)		img.setRGB(x+2, y+2, color);
+		if (x > 1 && y < fixHeight-2)  		img.setRGB(x-2, y+2, color);
+		if (y > 1)			   			img.setRGB(x, y-2, color);
+		if (x < fixWidth-2 && y > 1)  		img.setRGB(x+2, y-2, color);
+		if (x > 1 && y > 1)    		img.setRGB(x-2, y-2, color);
+		*/
+		
 	}
 	//(226,171) (395,171)
 	//x: 196, y: 149, 22

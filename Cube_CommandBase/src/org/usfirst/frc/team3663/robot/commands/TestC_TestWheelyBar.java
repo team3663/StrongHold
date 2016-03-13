@@ -15,8 +15,10 @@ public class TestC_TestWheelyBar extends Command {
 	double speed = 0;
 	double delta = .01;
 	double delay = .5;
-	int encoder = 0;
+	int encoderStart = 0;
+	int encoderTolerance = 4;
 	double topSpeed = .4;
+	long startTime = System.currentTimeMillis();
 	
     public TestC_TestWheelyBar() {
         // Use requires() here to declare subsystem dependencies
@@ -27,6 +29,7 @@ public class TestC_TestWheelyBar extends Command {
     protected void initialize() {
     	state = 0;
     	speed = 0;
+    	encoderStart = Robot.ss_WheelyBar.grabEncoder();
     	Robot.gui.sendString("Test/testState","wheelyBar starting");
     	Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.untested;
     	Robot.ss_Test.update();
@@ -35,41 +38,59 @@ public class TestC_TestWheelyBar extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	switch (state){
-    	case 0:
+    	case 0://Drive up
+    		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
+    		Robot.ss_WheelyBar.moveWheelyBar(speed);
+    		speed += delta*10.0;
+    		if (speed > topSpeed)
+    		{
+    			speed = topSpeed;
+    			if(System.currentTimeMillis() > (1000 + startTime)){
+	    			state++;
+	    		}
+    		}
+    		Robot.ss_WheelyBar.resetEncoder();
+    		break;
+    	case 1://Drive down
+    		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
+    		speed -= delta;
+    		if (speed < -topSpeed)
+    		{
+    			speed = -topSpeed;
+    			if(Robot.ss_WheelyBar.grabEncoder() >= 2500){
+        			state++;
+    			}
+    		}
+    		break;
+    	case 2://Drive up again
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
     		Robot.ss_WheelyBar.moveWheelyBar(speed);
     		speed += delta;
     		if (speed > topSpeed)
     		{
     			speed = topSpeed;
-    			state++;
+    			if(Robot.ss_WheelyBar.grabEncoder() <= 20){
+        			state++;
+        		}
     		}
+    		encoderStart = Robot.ss_WheelyBar.grabEncoder();
     		break;
-    	case 1:
-    		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
-    		speed -= delta;
-    		if (speed < -topSpeed)
-    		{
-    			speed = -topSpeed;
-    			state++;
-    		}
-    		break;
-    	case 2:
+    	case 3://Stop
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
     		speed += delta;
     		if (speed > 0)
     		{
     			speed = 0;
     			state++;
-    			Robot.ss_Shooter.setShooterTopMotorSpeed(speed);
-    			if (Robot.ss_Test.shooterTopStatus.equals(Robot.ss_Test.testing)){
-    				Robot.ss_Test.shooterTopStatus = Robot.ss_Test.passed;
+    			Robot.ss_WheelyBar.moveWheelyBar(speed);
+    			if (Robot.ss_Test.wheelyBarMotorStatus.equals(Robot.ss_Test.testing)){
+    				Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.passed;
     			}
     		}
     		break;
     	}
 
-    	Robot.gui.sendString("Test/testState","shooter "+state);
+    	Robot.gui.sendString("Test/testState","wheelyBar "+state);
 		Robot.ss_Test.update();    	
     }
 
@@ -81,7 +102,6 @@ public class TestC_TestWheelyBar extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.ss_WheelyBar.moveWheelyBar(0);
-    	//Robot.ss_Shooter.fireShooterSolenoid(false);
 
     	Robot.gui.sendString("Test/testState","wheelyBar done");
     }

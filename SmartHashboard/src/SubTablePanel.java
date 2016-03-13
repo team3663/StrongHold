@@ -1,18 +1,16 @@
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.util.Arrays;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+@SuppressWarnings("serial")
 public class SubTablePanel extends JPanel implements Runnable{
 	NetworkTable table;
 	Set<String> guiElements;
@@ -118,7 +116,6 @@ public class SubTablePanel extends JPanel implements Runnable{
 	@Override
 	public void run(){
 		int count = 0;
-		long startTime = System.currentTimeMillis();
 		while(true){
 			sleep(2); //necessary to not blow up your CPU
 			update(bckg);
