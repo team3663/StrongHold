@@ -36,8 +36,8 @@ public class SS_Test extends Subsystem {
 //    	SmartDashboard.putBoolean("Test Mode:", isTesting);
 //    	SmartDashboard.putString("Testing:", testName);
     	Robot.gui.sendNumber("Test/Test#", testNumber);
-    	Robot.gui.sendBoolean("Test/TestMode", isTesting);
-    	Robot.gui.sendString("Test/Testing", testName);
+    	Robot.gui.sendBoolean("Test/IsTesting", isTesting);
+    	Robot.gui.sendString("Test/TestMode", testName);
     	resetTestStatus();
 	}
 	
@@ -84,8 +84,8 @@ public class SS_Test extends Subsystem {
 //    	SmartDashboard.putBoolean("Test Mode:", isTesting);
 //    	SmartDashboard.putString("Testing:", testName);
     	Robot.gui.sendNumber("Test/Test#", testNumber);
-    	Robot.gui.sendBoolean("Test/TestMode", isTesting);
-    	Robot.gui.sendString("Test/Testing", testName);
+    	Robot.gui.sendBoolean("Test/IsTesting", isTesting);
+    	Robot.gui.sendString("Test/TestMode", testName);
     	
     	Robot.gui.sendString("Test/Shooter top motor+enc", shooterTopStatus);
     	Robot.gui.sendString("Test/Shooter bottom motor+enc", shooterBottomStatus);

@@ -38,6 +38,10 @@ public class SS_WheelyBar extends Subsystem {
 		wheelyBarMotor.reset();
     }
     
+    public int getVelocity(){
+    	return wheelyBarMotor.getEncVelocity();
+    }
+    
     public boolean moveWheelyBarAuto(int pTarget, double pSpeed){	//moves to a set distance on the encoder
     	int distValue = -grabEncoder();
     	if(distValue < pTarget){

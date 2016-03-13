@@ -50,8 +50,10 @@ public class Archiver {
 		for(ArrayList<String> a:rows){
 			String title = a.get(0);
 			a.clear();
+			System.out.println("Erasing " + title + " : size is " + a.size());
 			a.add(title);
 		}
+		System.gc();
 		acceptingValues = true;
 	}
 	public void writeFile(String day, String name){
