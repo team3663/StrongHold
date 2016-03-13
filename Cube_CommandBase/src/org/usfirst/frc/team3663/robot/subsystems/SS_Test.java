@@ -28,6 +28,7 @@ public class SS_Test extends Subsystem {
 	public String wheelyBarMotorStatus = untested;
 	public String driveTrainStatus = untested;
 	public String dartStatus = untested;
+	public String winchStatus = untested;
 	
     public void initDefaultCommand() {
     	//setDefaultCommand(new TestC_Test());

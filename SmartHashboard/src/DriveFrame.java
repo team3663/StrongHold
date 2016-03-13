@@ -24,7 +24,6 @@ public class DriveFrame implements Runnable{
 	JFrame frame;
 	OperationWatchAndTimer owat;
 	Set<String> tableList;
-	MessageBoard msgBoard;
 	Archiver archiver;
 	String ip;
 	int tableSize = 0;
@@ -39,12 +38,7 @@ public class DriveFrame implements Runnable{
 		System.out.println("Initialized JFrame");
 		initNetworkTable(ip);
 		System.out.println("Initialized Network Table");
-		setWindowsLookAndFeel();
-//		JButton refresh = new JButton("Refresh");
-//		initRefreshButton(refresh);
-//		refresh.setPreferredSize(new Dimension(10,30));
 		
-		msgBoard = new MessageBoard();
 		archiver = new Archiver();
 		
 		do{
@@ -61,13 +55,10 @@ public class DriveFrame implements Runnable{
 		Font myFont = new Font("SanSerif", Font.PLAIN, 12);
 		int count = 0;
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.DARK_GRAY,archiver,msgBoard,myFont);
+			subs[count] = new SubTablePanel(k,table,Color.DARK_GRAY,archiver,myFont);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
-		Box box = Box.createHorizontalBox();
-		box.add(msgBoard);
-		box.add(Box.createHorizontalGlue());
 		initSystems();
 		frame.getContentPane().revalidate();
 		systems.revalidate();

@@ -42,8 +42,13 @@ public class Archiver {
 		}
 		return false;
 	}
-	public void alphabetize(){
-		
+	public void alphabetizeRows(){
+		boolean sorted = false;
+		while(!sorted){
+			for(int i=0;i<rows.size()-1;i++){
+				rows.get(i).get(0).compareTo(rows.get(i).get(0));
+			}
+		}
 	}
 	public void reset(){
 		acceptingValues = false;
@@ -53,11 +58,11 @@ public class Archiver {
 			System.out.println("Erasing " + title + " : size is " + a.size());
 			a.add(title);
 		}
-		System.gc();
+		System.gc(); //Garbage collector please run?
 		acceptingValues = true;
 	}
 	public void writeFile(String day, String name){
-		alphabetize();
+//		alphabetizeRows(); //doesn't work yet
 		PrintWriter writer = null;
 		new File("C:\\logFiles").mkdir();
 		new File("C:\\logFiles\\"+day).mkdir();

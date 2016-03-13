@@ -55,6 +55,9 @@ public class SS_Winch extends Subsystem {
     public void setWinchMotor2(double pSpeed){
 		winchMotor2.set(pSpeed);
     }
+    public int grabEncoder(){
+    	return winchMotor1.getEncPosition();
+    }
     
     public void STOP(){													//stops running the motor
     	winchMotor1.set(0);
