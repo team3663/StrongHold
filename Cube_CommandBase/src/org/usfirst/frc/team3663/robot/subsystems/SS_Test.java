@@ -28,6 +28,7 @@ public class SS_Test extends Subsystem {
 	public String wheelyBarMotorStatus = untested;
 	public String driveTrainStatus = untested;
 	public String dartStatus = untested;
+	public String hookStatus = untested;
 	
     public void initDefaultCommand() {
     	//setDefaultCommand(new TestC_Test());
@@ -68,6 +69,7 @@ public class SS_Test extends Subsystem {
 		pickupArmStatus = untested;
 		driveTrainStatus = untested;
 		dartStatus = untested;
+		hookStatus = untested;
 	}
 	
 	public void exitTestMode(){
@@ -98,5 +100,6 @@ public class SS_Test extends Subsystem {
     	Robot.gui.sendString("Test/Pickup arm", pickupArmStatus);
     	Robot.gui.sendString("Test/DriveTrain left", driveTrainStatus);
     	Robot.gui.sendString("Test/Dart",dartStatus);
+    	Robot.gui.sendString("Test/Hook", hookStatus);
     }
 }

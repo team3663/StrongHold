@@ -137,14 +137,14 @@ public class CameraRun {
 				camera.read(mat);
 				updateJFrame(mat);
 	
-			/*	try
+				try
 				{
 					new File("C:\\2016CameraImages").mkdir();
 					File outputfile = new File("C:\\2016CameraImages\\cameraImg" + System.currentTimeMillis() + ".jpg");
 					ImageIO.write(buffImg, "jpg", outputfile);
 				} catch (IOException e)
 				{
-				}*/
+				}
 				
 				frame.setSize(mat.width()+20,mat.height()+45);
 				frame.setVisible(true);
