@@ -65,7 +65,7 @@ public class CameraRun {
 		
 		System.out.println(streamAddress);
 		
-		camera = new VideoCapture(streamAddress);
+		camera = new VideoCapture(streamAddress);//0 - USB Cam....?
 		System.out.println("found camera");
 		mat = new Mat();
 		
