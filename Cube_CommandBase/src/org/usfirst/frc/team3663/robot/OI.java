@@ -5,6 +5,7 @@ import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.TestCG_FullTest;
 import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.CG_VisionCenterGoal;
+import org.usfirst.frc.team3663.robot.commands.C_DartMoveNOTSAFE;
 import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafety;
@@ -53,8 +54,11 @@ public class OI {
 //Buttons
   //Pickup Buttons
 	private JoystickButton pickUpBall 		= new JoystickButton(driveJoystick, 4);
-	private JoystickButton pickupRaiseArm 	= new JoystickButton(driveJoystick, 6);
-	private JoystickButton pickupLowerArm 	= new JoystickButton(driveJoystick, 5);
+	private JoystickButton pickupRaiseArmD 	= new JoystickButton(driveJoystick, 6);
+	private JoystickButton pickupLowerArmD 	= new JoystickButton(driveJoystick, 5);
+	private JoystickButton pickupRaiseArmB 	= new JoystickButton(buttonJoystick, 6);
+	private JoystickButton pickupLowerArmB 	= new JoystickButton(buttonJoystick, 5);
+	
 	private JoystickButton pickupCycleSafty = new JoystickButton(driveJoystick, 8);
 	private JoystickButton pickupRunOut 	= new JoystickButton(driveJoystick, 2);
   //Shooter Buttons
@@ -64,11 +68,11 @@ public class OI {
   //Winch Buttons
 	private JoystickButton winchToHoist = 	  new JoystickButton(buttonJoystick, 1);
 	private JoystickButton winchNotSafeMove = new JoystickButton(buttonJoystick, 7);
-  //Wheely Bar Buttons
-	private JoystickButton wheelyBarMoveToZero = new JoystickButton(buttonJoystick, 4);
   //Hook Buttons
 	private JoystickButton fireHookPiston = new JoystickButton(buttonJoystick, 3);
 	private JoystickButton retractHookPiston = new JoystickButton(buttonJoystick,2);
+  //NOTSAFE
+	private JoystickButton moveDartNotSafe = new JoystickButton(buttonJoystick, 4); 
 	
 	
   //Test Joystick Buttons
@@ -97,12 +101,14 @@ public class OI {
 	//Real Buttons
 	  //Pickup Buttons
 		pickUpBall.whileHeld(new CG_DriverPickupBall());
-		pickupRaiseArm.whenPressed(new C_PickupFirePiston(false));
-		pickupLowerArm.whenPressed(new C_PickupFirePiston(true));
+		pickupRaiseArmD.whenPressed(new C_PickupFirePiston(false));
+		pickupLowerArmD.whenPressed(new C_PickupFirePiston(true));
+		pickupRaiseArmB.whenPressed(new C_PickupFirePiston(false));
+		pickupLowerArmB.whenPressed(new C_PickupFirePiston(true));
 		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
 		pickupRunOut.whileHeld(new C_PickupRunMotor(1));
 	  //Shooter Buttons
-		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
+		shooterMotorsFullPower.whileHeld(new C_ShooterHoldSpeed(-28000));
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
@@ -116,6 +122,8 @@ public class OI {
 		//Test Buttons
 		runFullTest.whileHeld(new TestCG_FullTest());
 		disableFullTest.whenReleased(new TestC_DisableTestMode());
+	  //Not Safe Buttons
+		moveDartNotSafe.whenPressed(new C_DartMoveNOTSAFE());
 		
 		cycleTest.whenPressed(new TestCG_CycleTest());
 		stopCycleTest.whenPressed(new TestC_StopCycleTest());
