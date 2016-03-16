@@ -112,7 +112,7 @@ public class Frame implements Runnable{
 				new Thread(owat).start();
 			}
 		}
-		systems.setLayout(new GridLayout(0,subs.length));
+		systems.setLayout(new GridLayout(2,subs.length));
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
@@ -122,21 +122,11 @@ public class Frame implements Runnable{
 		sleep(2000);
 	}
 	public void setWindowsLookAndFeel(){
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+				e.printStackTrace();
+			}
 	}
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");

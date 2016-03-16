@@ -24,7 +24,6 @@ public class DriveFrame implements Runnable{
 	JFrame frame;
 	OperationWatchAndTimer owat;
 	Set<String> tableList;
-	MessageBoard msgBoard;
 	Archiver archiver;
 	String ip;
 	int tableSize = 0;
@@ -39,19 +38,14 @@ public class DriveFrame implements Runnable{
 		System.out.println("Initialized JFrame");
 		initNetworkTable(ip);
 		System.out.println("Initialized Network Table");
-		setWindowsLookAndFeel();
-//		JButton refresh = new JButton("Refresh");
-//		initRefreshButton(refresh);
-//		refresh.setPreferredSize(new Dimension(10,30));
 		
-		msgBoard = new MessageBoard();
 		archiver = new Archiver();
 		
 		do{
 			tableList = table.getSubTables();
 			subs = new SubTablePanel[tableList.size()];
-			System.out.println("Table size: " + tableList.size());
 			tableSize = tableList.size();
+			System.out.println("Table size: " + tableSize);
 			sleep(1300);
 		}while(subs.length == 0);
 		
@@ -61,13 +55,10 @@ public class DriveFrame implements Runnable{
 		Font myFont = new Font("SanSerif", Font.PLAIN, 12);
 		int count = 0;
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.DARK_GRAY,archiver,msgBoard,myFont);
+			subs[count] = new SubTablePanel(k,table,Color.DARK_GRAY,archiver,myFont);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
-		Box box = Box.createHorizontalBox();
-		box.add(msgBoard);
-		box.add(Box.createHorizontalGlue());
 		initSystems();
 		frame.getContentPane().revalidate();
 		systems.revalidate();
@@ -85,7 +76,6 @@ public class DriveFrame implements Runnable{
 		boolean updateFlag = true;
 		sleep(1500);
 		if(owat.isEnabled() && updateFlag){
-			updateFlag = false;
 			//if the tableList has changed
 			tableList = table.getSubTables();
 			if(tableSize != tableList.size()){
@@ -115,7 +105,7 @@ public class DriveFrame implements Runnable{
 				systems.add(asdf);
 			}
 		}
-		systems.setLayout(new GridLayout(0,1));
+		systems.setLayout(new GridLayout(2,1)); //columns, rows
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){

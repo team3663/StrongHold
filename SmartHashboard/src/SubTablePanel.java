@@ -30,12 +30,11 @@ public class SubTablePanel extends JPanel implements Runnable{
 		this.msgb = msgb;
 		setBackground(bckg);
 	}
-	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, MessageBoard msgb, Font f){
+	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, Font f){
 		this.table = table;
 		this.subTable = subTable;
 		this.bckg = bckg;
 		this.archy = archy;
-		this.msgb = msgb;
 		this.f = f;
 		setBackground(Color.BLACK);
 	}
@@ -43,7 +42,9 @@ public class SubTablePanel extends JPanel implements Runnable{
         getNames();
         fillJLabels();
         fillPanel();
-        if(f == null) setLayout(new GridLayout(18,0,0,0));
+        if(f == null){
+        	setLayout(new GridLayout(18,0,0,0));
+        }
 //        else setLayout(new GridLayout(1,0,0,0));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
@@ -67,7 +68,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 			}
 			//DRIVER MODE CODE//
 			else{
-				JLabel jl = new JLabel(""+table.getValue(sList[i],3663));
+				JLabel jl = new JLabel(""+table.getValue(sList[i],3663)); //don't add name (e.g. "Time:"
 				jl.setFont(f);
 				jl.setForeground(Color.WHITE);
 				jList[i] = jl;
@@ -154,16 +155,18 @@ public class SubTablePanel extends JPanel implements Runnable{
 				}
 				//DRIVER MODE CODE//
 				else{
+					jList[i].setForeground(Color.WHITE);
 					if(sList[i].equals("Time")){
 						if((double)o < 15.0 && (double)o > 0){
-							jList[i].setForeground(Color.getHSBColor((float)Math.random(),1.0f,1.0f));
-							jList[i].setFont(updateFont(jList[i],true));
+							for(int j=0;j<sList.length;j++){
+								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[i],3663).equals("Teleop")){
+									jList[i].setFont(updateFont(jList[i],true));
+								}
+							}
 						}else{
-							jList[i].setForeground(Color.WHITE);
 							jList[i].setFont(updateFont(jList[i],false));
 						}
 					}else{
-						jList[i].setForeground(Color.WHITE);
 						jList[i].setFont(updateFont(jList[i],false));
 					}
 					String text = o.toString();
@@ -202,6 +205,6 @@ public class SubTablePanel extends JPanel implements Runnable{
 
 		// Set the label's font size to the newly determined size.
 		if(!crazy) return new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse);
-		return new Font(labelFont.getName(),Font.PLAIN,fontSizeToUse - (int)((fontSizeToUse/10) * Math.random()));
+		return new Font(labelFont.getName(),Font.PLAIN,fontSizeToUse - (int)((fontSizeToUse/30) * Math.random()));
 	}
 }

@@ -108,7 +108,7 @@ public class OI {
 		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
 		pickupRunOut.whileHeld(new C_PickupRunMotor(1));
 	  //Shooter Buttons
-		shooterMotorsFullPower.whileHeld(new C_ShooterHoldSpeed(-28000));
+		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
 		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());

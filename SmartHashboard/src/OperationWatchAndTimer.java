@@ -33,7 +33,7 @@ public class OperationWatchAndTimer implements Runnable{
 			}else if(!keepGoing(2000)){
 				setNewTimeFlag = true;
 				if(exportFlag){
-					export();
+					export(); //Timed out, write file
 					exportFlag = false;
 				}
 			}
