@@ -18,7 +18,7 @@ public class C_HookMove extends Command {
     }
 
     protected void execute() {
-    	Robot.ss_Hook.moveHook(Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.hookAxis));
+    	Robot.ss_Hook.moveHook(Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.hookAxis), true);
     }
 
     protected boolean isFinished() {

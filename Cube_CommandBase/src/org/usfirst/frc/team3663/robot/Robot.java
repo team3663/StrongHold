@@ -111,7 +111,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
     	
     	CG_AutoOverBasicDefence auto = new CG_AutoOverBasicDefence();
-    	auto.start();
+    	//auto.start();
+    	ss_AutoChooser.autoStart();
         gui.sendBoolean("operation/Enabled", true);
         gui.sendString("operation/Mode", "Autonomous");
     }
@@ -125,7 +126,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	C_DriveControllerDPad dPadControls = new C_DriveControllerDPad();
-    	dPadControls.start();
+    	//dPadControls.start();
     	ss_DriveTrain.resetGyro();
     	ss_Hook.resetEnc();
 		ss_Camera.setLight(true);

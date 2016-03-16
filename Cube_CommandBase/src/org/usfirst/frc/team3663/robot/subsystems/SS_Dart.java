@@ -36,9 +36,11 @@ public class SS_Dart extends Subsystem {
 	
 	//Past Values
 	private boolean movePickup = false;
+	private boolean useSafety = true;
 		
     public void initDefaultCommand() {
     	dartMotor.enableBrakeMode(true);
+    	useSafety = true;
     	setDefaultCommand(new C_DartMove());
     }
     
@@ -53,6 +55,10 @@ public class SS_Dart extends Subsystem {
     public int getPotentiometerValue()
     {
     	return dartPotentiometer.getAverageValue();
+    }
+    
+    public void setUseSafty(boolean value){
+    	useSafety = value;
     }
     
     public int ConvertInchesToTicks(int pInches){
@@ -114,7 +120,7 @@ public class SS_Dart extends Subsystem {
     	pSpeed = convertSpeed(pSpeed);
     	SmartDashboard.putNumber("dart speed ", pSpeed);
     	if((distValue < maxPotentiometer && pSpeed < 0)||(distValue > minPotentiometer && pSpeed > 0)){
-    		if(!pArm){
+    		if(!pArm && useSafety){
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
     					(pSpeed > 0 && distValue < touch1) || (pSpeed > 0 && distValue > soft2)){
     				dartMotor.set(pSpeed);
