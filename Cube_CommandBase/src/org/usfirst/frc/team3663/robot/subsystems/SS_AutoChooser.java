@@ -55,7 +55,10 @@ public class SS_AutoChooser extends Subsystem {
     		auto = new CG_AutoOverBasicDefence();
     		autoShoot = true;
     	}
-    	auto.start();
+    	
+    	if(auto != null){
+        	auto.start();    		
+    	}
     }   
     
     public void updateDashboard(){

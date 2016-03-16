@@ -53,7 +53,7 @@ public class TestC_TestHook extends Command {
     		}
     		break;
     	case 2:
-    		Robot.ss_Hook.moveHook(speed);
+    		Robot.ss_Hook.moveHook(speed,true);
     		Robot.ss_Test.hookStatus = "verify extending";
     		if (Timer.getFPGATimestamp() > endTime)
     		{
@@ -62,7 +62,7 @@ public class TestC_TestHook extends Command {
     		}
     		break;
     	case 3:
-    		Robot.ss_Hook.moveHook(-speed);
+    		Robot.ss_Hook.moveHook(-speed,true);
     		Robot.ss_Test.hookStatus = "verify contracting";
     		if (Timer.getFPGATimestamp() > endTime)
     		{
@@ -81,7 +81,7 @@ public class TestC_TestHook extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.ss_Hook.moveHook(0);
+    	Robot.ss_Hook.moveHook(0,true);
     	Robot.gui.sendString("Test/testState", "hook done");
     }
 

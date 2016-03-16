@@ -21,7 +21,7 @@ public class C_HookMove2 extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ss_Hook.moveHook(speed);
+    	Robot.ss_Hook.moveHook(speed, false);
     }
 
     // Make this return true when this Command no longer needs to run execute()

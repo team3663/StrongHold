@@ -80,7 +80,7 @@ public class TestC_CycleTest extends Command {
 	    		Robot.ss_Test.testName = "CameraLightSpike";
 	    		break;
 	    	case 14:
-	    		Robot.ss_Hook.moveHook(jsValue);
+	    		//Robot.ss_Hook.moveHook(jsValue);
 	    		Robot.ss_Test.testName = "HookMotor";
 	    		break;
     	}
@@ -144,7 +144,7 @@ public class TestC_CycleTest extends Command {
     		//camera light
     	}
     	if(pValue != 14){
-    		Robot.ss_Hook.moveHook(0);
+    		//Robot.ss_Hook.moveHook(0);
     	}
     }
 }

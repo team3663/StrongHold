@@ -27,8 +27,8 @@ public class C_WaitSecs extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.gui.sendNumber("general/wait",endTime-Timer.getFPGATimestamp());
-    	Robot.gui.sendNumber("general/ctr",ctr++);
+    	//Robot.gui.sendNumber("general/wait",endTime-Timer.getFPGATimestamp());
+    	//Robot.gui.sendNumber("general/ctr",ctr++);
 
     }
 
