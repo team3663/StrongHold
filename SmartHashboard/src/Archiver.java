@@ -8,13 +8,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Archiver {
 	CopyOnWriteArrayList<ArrayList<String>> rows;
 	boolean acceptingValues = true;
+	String[] columnHeadings;
 	public Archiver(){
 		rows = new CopyOnWriteArrayList<ArrayList<String>>();
 	}
 	public void addNewColumn(String key){
 		if(acceptingValues){
 			if(!alreadyContains(key)){
-				ArrayList<String> temp = new ArrayList<String>();
+				ArrayList<String> temp = new ArrayList<String>(); //new ArrayList<String>.add(key);
 				temp.add(key);
 				rows.add(temp);
 			}
@@ -52,13 +53,18 @@ public class Archiver {
 	}
 	public void reset(){
 		acceptingValues = false;
+		int count = 0;
+		columnHeadings = new String[rows.size()];
 		for(ArrayList<String> a:rows){
-			String title = a.get(0);
-			a.clear();
-			System.out.println("Erasing " + title + " : size is " + a.size());
-			a.add(title);
+			columnHeadings[count] = a.get(0);
+			count++;
 		}
+		rows = null;
 		System.gc(); //Garbage collector please run?
+		rows = new CopyOnWriteArrayList<ArrayList<String>>();
+		for(int i=0;i<columnHeadings.length;i++){
+			addNewColumn(columnHeadings[i]);
+		}
 		acceptingValues = true;
 	}
 	public void writeFile(String day, String name){
