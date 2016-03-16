@@ -23,7 +23,7 @@ public class OperationWatchAndTimer implements Runnable{
 			//the time in seconds, truncated to two decimal places
 			archiver.addValue(name, Double.toString(((double)System.currentTimeMillis() - (double)startTime)/1000.0));
 			//On startup (enable)
-			if(operation.get(1).equals("true")){
+			if(operation.get(1).equals("true")){ //Change to iteration to find Enabled
 				exportFlag = true;
 				if(setNewTimeFlag){
 					setNewTimeFlag = false;

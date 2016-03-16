@@ -17,7 +17,7 @@ public class ModeChooser {
 	Frame f;
 	DriveFrame df;
 	public ModeChooser(){
-		String ip = "10.36.63.20";
+		String ip = "10.36.63.2";
 		try
 			{
 				Path file = Paths.get("IpAddress.txt"); // current dir with application
@@ -26,7 +26,7 @@ public class ModeChooser {
 				ip = reader.readLine();
 				System.out.println("Connecting to " + ip + "...");
 			}catch(Exception e){
-				System.out.println("No IP txt file found. Defaulting to 10.36.63.20");
+				System.out.println("No IP txt file found. Defaulting to 10.36.63.2");
 			}
 		initChoiceDialog(ip);
 	}
