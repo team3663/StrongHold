@@ -44,8 +44,8 @@ public class DriveFrame implements Runnable{
 		do{
 			tableList = table.getSubTables();
 			subs = new SubTablePanel[tableList.size()];
-			System.out.println("Table size: " + tableList.size());
 			tableSize = tableList.size();
+			System.out.println("Table size: " + tableSize);
 			sleep(1300);
 		}while(subs.length == 0);
 		
@@ -76,7 +76,6 @@ public class DriveFrame implements Runnable{
 		boolean updateFlag = true;
 		sleep(1500);
 		if(owat.isEnabled() && updateFlag){
-			updateFlag = false;
 			//if the tableList has changed
 			tableList = table.getSubTables();
 			if(tableSize != tableList.size()){
@@ -106,7 +105,7 @@ public class DriveFrame implements Runnable{
 				systems.add(asdf);
 			}
 		}
-		systems.setLayout(new GridLayout(0,1));
+		systems.setLayout(new GridLayout(2,1)); //columns, rows
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){

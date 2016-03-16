@@ -34,30 +34,37 @@ public class TestC_TestWinch extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     	switch (state){
     	case 0:
 			Robot.ss_Test.winchStatus = Robot.ss_Test.testing;
-    		Robot.ss_Winch.setWinchMotor1(speed);
-    		speed += delta;
-    		if (speed > topSpeed)
-    		{
-    			speed = topSpeed;
-    			state++;
-    		}
-    		break;
-    	case 1:
     		Robot.ss_Winch.setWinchMotor1(speed);
     		speed -= delta;
     		if (speed < -topSpeed)
     		{
     			speed = -topSpeed;
+    			state--;
+    		}
+    		break;
+    	case 1:
+    		Robot.ss_Winch.setWinchMotor1(speed);
+    		speed += delta;
+    		if (speed > topSpeed)
+    		{
+    			speed = topSpeed;
     			state++;
     		}
     		break;
     	case 2:
     		Robot.ss_Winch.setWinchMotor2(speed);
-    		speed += delta;
+    		speed -= delta;
+    		if (speed < -topSpeed)
+    		{
+    			speed = -topSpeed;
+    			state--;
+    		}
+    		break;
+    	case 3:
+    		Robot.ss_Winch.setWinchMotor2(speed);
     		speed += delta;
     		if (speed > topSpeed)
     		{
@@ -65,54 +72,23 @@ public class TestC_TestWinch extends Command {
     			state++;
     		}
     		break;
-    	case 3:
-    		Robot.ss_Winch.setWinchMotor2(speed);
-    		speed -= delta;
-    		if (speed < -topSpeed)
-    		{
-    			speed = -topSpeed;
-    			state++;
-    		}
-    		break;
-    	case 4:
-    		if (Timer.getFPGATimestamp() > endTime)
-    			state++;
-    		break;
-    	case 5:
-    		if (Robot.ss_PickupArm.isDown()){
-    			Robot.ss_Test.pickupArmStatus = "Failed - limit switch is not working";
-				Robot.ss_Test.update();
-    		}
-    		Robot.ss_PickupArm.firePickupSolenoid(true);
-    		state++;
-    		endTime = Timer.getFPGATimestamp()+delay;
-    		break;
-
-    	case 6:
-    		if (Timer.getFPGATimestamp() > endTime){
-    			state++;
-        		if (Robot.ss_Test.pickupArmStatus.equals(Robot.ss_Test.testing)){
-        			Robot.ss_Test.pickupArmStatus = "verify pickup arm went up and down";
-        		}
-    		}
-    		break;
     	}
 
-    	Robot.gui.sendString("Test/testState","pickup "+state);
+    	Robot.gui.sendString("Test/testState","winch "+state);
 		Robot.ss_Test.update();
 	}
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return state >= 7;
+        return state >= 4;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.ss_PickupArm.setPickupSpeed(0);
-    	//Robot.ss_PickupArm.firePickupSolenoid(true);
+    	Robot.ss_Winch.setWinchMotor1(0);
+    	Robot.ss_Winch.setWinchMotor2(0);
 
-    	Robot.gui.sendString("Test/testState","pickup done");
+    	Robot.gui.sendString("Test/testState","winch done");
     }
 
     // Called when another command which requires one or more of the same

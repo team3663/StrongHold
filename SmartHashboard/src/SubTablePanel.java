@@ -68,7 +68,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 			}
 			//DRIVER MODE CODE//
 			else{
-				JLabel jl = new JLabel(""+table.getValue(sList[i],3663));
+				JLabel jl = new JLabel(""+table.getValue(sList[i],3663)); //don't add name (e.g. "Time:"
 				jl.setFont(f);
 				jl.setForeground(Color.WHITE);
 				jList[i] = jl;

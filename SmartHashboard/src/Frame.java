@@ -112,7 +112,7 @@ public class Frame implements Runnable{
 				new Thread(owat).start();
 			}
 		}
-		systems.setLayout(new GridLayout(0,subs.length));
+		systems.setLayout(new GridLayout(2,subs.length));
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
