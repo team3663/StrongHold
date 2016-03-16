@@ -65,7 +65,7 @@ public class CameraRun {
 		
 		System.out.println(streamAddress);
 		
-		camera = new VideoCapture(streamAddress);
+		camera = new VideoCapture(streamAddress);//0 - USB Cam....?
 		System.out.println("found camera");
 		mat = new Mat();
 		
@@ -137,14 +137,14 @@ public class CameraRun {
 				camera.read(mat);
 				updateJFrame(mat);
 	
-			/*	try
+				try
 				{
 					new File("C:\\2016CameraImages").mkdir();
 					File outputfile = new File("C:\\2016CameraImages\\cameraImg" + System.currentTimeMillis() + ".jpg");
 					ImageIO.write(buffImg, "jpg", outputfile);
 				} catch (IOException e)
 				{
-				}*/
+				}
 				
 				frame.setSize(mat.width()+20,mat.height()+45);
 				frame.setVisible(true);
@@ -1080,6 +1080,9 @@ public class CameraRun {
 	
 	private void colorSquare(BufferedImage img, int x, int y, int color)
 	{
+		int width = 7, height = 7;
+		int x2 = x-3,y2 = y-3;
+
 		if (x > fixWidth-1)
 		{
 			x = fixWidth-1;
@@ -1096,8 +1099,34 @@ public class CameraRun {
 		{
 			y = 0;
 		}
-								    	img.setRGB(x, y, color);//.getRGB());
-		for (int rad = 1; rad <= 3; rad++)
+		//-------------
+		if (x2+((width/2)+1) > fixWidth-1)
+		{
+			width-=(x-x2);
+			//x2 = fixWidth-1;
+		}
+		else if (x2 < 0)
+		{
+			width-=(x-x2);
+			x2 = 0;
+		}
+		if (y2+((height/2)+1) > fixHeight-1)
+		{
+			height-=(y-y2);
+			//y2 = fixHeight-1;
+		}
+		else if (y2 < 0)
+		{
+			height-=(y-y2);
+			y2 = 0;
+		}
+		
+		img.getGraphics().setColor(Color.RED);
+		img.getGraphics().fillRect(x2, y2, width, height);
+		//------
+		color = Color.HSBtoRGB((float)Math.random(), (float)1.0, (float)1.0);
+												img.setRGB(x, y, color);//.getRGB());
+		for (int rad = 1; rad <= 4; rad++)
 		{
 		if (x < fixWidth-rad)			   		img.setRGB(x+rad, y, color);//.getRGB());
 		if (x > rad-1)			   			img.setRGB(x-rad, y, color);//.getRGB());
@@ -1109,12 +1138,7 @@ public class CameraRun {
 		if (x > rad-1 && y > rad-1)    		img.setRGB(x-rad, y-rad, color);//.getRGB());
 		}
 		
-		/*
-		int width = 5, height = 5;
-		int x = x-2, y = y-2;
-		if (
-		//img.getGraphics().drawRect(x, y, width, height);
-		*/
+		
 		
 		/*if (x < fixWidth-2)			   		img.setRGB(x+2, y, color);
 		if (x > 1)			   			img.setRGB(x-2, y, color);
