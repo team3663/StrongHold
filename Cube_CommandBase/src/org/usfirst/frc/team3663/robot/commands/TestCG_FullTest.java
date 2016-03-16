@@ -16,7 +16,7 @@ public class TestCG_FullTest extends CommandGroup {
     	addSequential(new TestC_TestDriveTrain());
     	addSequential(new TestC_TestDart());
     	addSequential(new TestC_TestHook());
-    	//addSequential(new TestC_TestWinch());
+    	addSequential(new TestC_TestWinch());
     	addSequential(new C_WaitSecs(5));
     	addSequential(new TestC_DisableTestMode());
         // Add Commands here:

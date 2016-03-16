@@ -90,11 +90,15 @@ public class C_DriveVisionCenterGoal extends Command {
 	    		moveTime = Math.abs(cameraMoveAngle/angleToTime);//*1.35;
 	    		//moveTime-=0.1;
 	    	}
-			/*else//if (Math.abs(cameraMoveAngle) < 8)
+			/*else if (Math.abs(cameraMoveAngle) < 10)
     		{
-    			moveTime = Math.pow(Math.abs(cameraMoveAngle/angleToTime)*6.0, .25);
-    			forwardVariable = 0.4;
-    			turnSpeed = 0.65;
+    			moveTime = Math.pow(Math.abs(cameraMoveAngle/angleToTime)*1.2,1.2);//6.0, .25);
+    			forwardVariable = 0.6;
+    			turnSpeed = 0.78;
+    			if (moveTime < 0.1)
+    			{
+    				moveTime = 0.1;
+    			}
     		}*/
 	    	wasLastLeft2 = wasLastLeft;
 			wasLastLeft = turnLeft;
@@ -111,11 +115,15 @@ public class C_DriveVisionCenterGoal extends Command {
 	    		moveTime = Math.abs(cameraMoveAngle/angleToTime);//*1.35;
 	    		//moveTime-=0.1;
 	    	}
-	    	else*/if (Math.abs(cameraMoveAngle) < 10)
+			else*/ if (Math.abs(cameraMoveAngle) < 10)
     		{
-    			moveTime = Math.pow(Math.abs(cameraMoveAngle/angleToTime)*1.2, 1.2);
-    			forwardVariable = 0.7;
-    			turnSpeed = 0.67;
+    			moveTime = Math.pow(Math.abs(cameraMoveAngle/angleToTime)*1.2,1.2);//6.0, .25);
+    			forwardVariable = 0.6;
+    			turnSpeed = 0.78;
+    			if (moveTime < 0.15)
+    			{
+    				moveTime = 0.15;
+    			}
     		}
 			switchForward*=-1;
 			stop = !table.getBoolean("C_/centeringGoal: ",false);

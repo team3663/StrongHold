@@ -15,6 +15,7 @@ import org.usfirst.frc.team3663.robot.commands.C_ShooterHoldSpeed;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
+import org.usfirst.frc.team3663.robot.commands.C_EndCommand;
 import org.usfirst.frc.team3663.robot.commands.C_HookSetPiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
 import org.usfirst.frc.team3663.robot.commands.C_TrentsVision;
@@ -125,10 +126,16 @@ public class OI {
 		//VisionTestButtons
 		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
 //		trentsBadCode.whenPressed(new C_TrentsVision());
-		testCenterGoal.whenPressed(new CG_VisionCenterGoal());
-		turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
-		testFineAdjust.whileHeld(new C_DartPrepareForShot());//C_VisionFineAdjust());
-		testTeleopVisionShooting.whileHeld(new CG_TeleopVisionShooting());
+		CG_VisionCenterGoal cCenterGoal = new CG_VisionCenterGoal();
+		testCenterGoal.whenPressed(cCenterGoal);
+		testCenterGoal.whenReleased(new C_EndCommand(cCenterGoal));
+		//NOT USE!!! //turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
+		C_DartPrepareForShot cPrepareDartShot = new C_DartPrepareForShot();
+		testFineAdjust.whenPressed(cPrepareDartShot);//C_VisionFineAdjust());
+		testFineAdjust.whenReleased(new C_EndCommand(cPrepareDartShot));
+		CG_TeleopVisionShooting cgTeleopVision = new CG_TeleopVisionShooting();
+		testTeleopVisionShooting.whenPressed(cgTeleopVision);
+		testTeleopVisionShooting.whenReleased(new C_EndCommand(cgTeleopVision));
 	}
 //	public void canTest(boolean inTestMode){
 //		if(inTestMode) testJoystick = new Joystick(1);

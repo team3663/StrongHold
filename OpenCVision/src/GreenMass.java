@@ -150,14 +150,15 @@ public class GreenMass {
 //		System.out.println("xStart: " + xStart + ", xEnd: " + xEnd + ", x1StartDiff " + x1StartDiff);
 		//...
 		w = xEnd-xStart+1;
+		yEnd = yEndA;
 		if (yEndB > yEndA)
 		{
 			yEnd = yEndB;
-		}
+		}/*
 		else
 		{
 			yEnd = yEndA;
-		}
+		}*/
 		h = yEnd-yStart+1;
 //		newOutline = new int[w][h];
 //		System.out.println("w: " + w + ", h: " + h);
