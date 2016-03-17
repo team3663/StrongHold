@@ -8,13 +8,16 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class C_DriveBasedTime extends Command {
+    public int delay = 0;
+    public double speed = 0;
 
-    public C_DriveBasedTime() {
+    public C_DriveBasedTime(int pDelay, double pSpeed) {
         requires(Robot.ss_DriveTrain);
+        delay = pDelay;
+        
     }
 
     // Called just before this Command runs the first time
-    public int delay = 175;
     //Curtis
     protected void initialize() {
     }
