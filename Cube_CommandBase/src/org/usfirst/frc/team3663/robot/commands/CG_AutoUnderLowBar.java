@@ -15,6 +15,9 @@ public class CG_AutoUnderLowBar extends CommandGroup {
     	addSequential(new C_WheelyBarAutoMove(2946, .5));
     	//addSequential(new C_DartAutoMove(Robot.ss_Dart.minDistance()));
     	addSequential(new C_DriveBasedTime());
+    	
+    	addSequential(new C_WaitSecs(0.25));
+    	addSequential(new CG_AutoVisionShooting());
         //      addSequential(new Command2());
 
         // To run multiple commands at the same time,

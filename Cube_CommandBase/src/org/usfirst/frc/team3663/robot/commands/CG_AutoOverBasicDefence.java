@@ -20,7 +20,11 @@ public class CG_AutoOverBasicDefence extends CommandGroup {
         addSequential(new C_DriveBasedTime());
 												    		addSequential(new C_CameraLightSet(false));
 												        	addSequential(new C_CameraLightSet(true));
-        //      addSequential(new Command2());
+        
+    	addSequential(new C_WaitSecs(0.25));
+		addSequential(new CG_AutoVisionShooting());										        	
+												        	
+    	//      addSequential(new Command2());
         // these will run in order.
 
         // To run multiple commands at the same time,
