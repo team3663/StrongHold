@@ -17,7 +17,8 @@ public class SS_WheelyBar extends Subsystem {
     
 	private CANTalon wheelyBarMotor = new CANTalon(Robot.robotMap.wheelyBarMotor);
 	
-	private int maxEncoderTicks = -1211;
+	private int maxEncTicks = 2964;
+	private int minEncTicks = 1211;
 	private int accptance = 10;
 	private boolean setToZero = false;
 	
@@ -31,7 +32,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public int maxDistance(){										//returns the max value
-    	return maxEncoderTicks;
+    	return maxEncTicks;
     }
     
     public void resetEncoder(){										//resets the encoder
@@ -54,7 +55,7 @@ public class SS_WheelyBar extends Subsystem {
     
     public void moveWheelyBarSafe(double pSpeed){
     	int distValue = -grabEncoder();
-    	if((pSpeed > 0 && distValue < 2946) || (pSpeed < 0 && distValue > 1211)&&(pSpeed>.4||pSpeed<-.4)){
+    	if((pSpeed > 0 && distValue < maxEncTicks) || (pSpeed < 0 && distValue > minEncTicks)&&(pSpeed>.4||pSpeed<-.4)){
     		moveWheelyBar(pSpeed/1.5);
     	}
     	else{

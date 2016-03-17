@@ -115,6 +115,30 @@ public class SS_Dart extends Subsystem {
     	return pSpeed;
     }
     
+    public double incrementSpeed(double pSpeed, int pTarget, boolean pArm){
+    	int distValue = dartPotentiometer.getAverageValue();
+    	if(distValue + 50 > pTarget && pSpeed < 0){
+    		pSpeed = -.5;
+    	}
+    	else if(distValue - 50 < pTarget && pSpeed > 0){
+    		pSpeed = .5;
+    	}
+    	else if(pSpeed > 1){
+    		pSpeed = 1;
+    	}
+    	else if(pSpeed < -1){
+    		pSpeed = -1;
+    	}
+    	else if(pSpeed < 0){
+    		pSpeed -= .05;
+    	}
+    	else if(pSpeed > 0){
+    		pSpeed += .05;
+    	}
+    	moveDart(pSpeed, pArm);
+    	return pSpeed;
+    }
+    
     public void moveDart(double pSpeed, boolean pArm){			//set the speed of the dart motor 
     	int distValue = dartPotentiometer.getAverageValue();
     	pSpeed = convertSpeed(pSpeed);
