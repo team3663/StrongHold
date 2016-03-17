@@ -75,6 +75,7 @@ public class ModeChooser {
 		firstFrame.pack();
 		firstFrame.setVisible(true);
 		firstFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		firstFrame.setResizable(false);
 
 	}
 	

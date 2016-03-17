@@ -209,9 +209,6 @@ public class SS_Dart extends Subsystem {
     }
     
     public void updateDashboard(){					//updates to the dash board
-    	SmartDashboard.putNumber("Dart Potentiometer : ", dartPotentiometer.getAverageValue());
-    	SmartDashboard.putBoolean("SafeToRaisePickup : ", getMoveArm());
-
     	Robot.gui.sendNumber("dart/Dart Potentiometer", dartPotentiometer.getAverageValue());
     	Robot.gui.sendBoolean("dart/SafeToRaisePickup", getMoveArm());
 

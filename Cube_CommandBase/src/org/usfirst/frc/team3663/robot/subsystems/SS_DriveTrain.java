@@ -158,11 +158,7 @@ public class SS_DriveTrain extends Subsystem {
     	return 0.0;
     }
     
-    public void updateDashboard(){						//updates the dash board
-    	SmartDashboard.putNumber("Drive Gyro Angle : ", driveGyro.getAngle());
-    	SmartDashboard.putNumber("LeftEncoder : ", getRightEnc());
-    	SmartDashboard.putNumber("RightEncoder : ", getLeftEnc());
-
+    public void updateDashboard(){
     	Robot.gui.sendNumber("drive/Left Drive Motor 1", Math.round(driveMotorLeft1.get()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Left Drive Motor 2", Math.round(driveMotorLeft2.get()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Right Drive Motor 1", Math.round(driveMotorRight1.get()*100.0)/100.0);

@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,31 +57,28 @@ public class Frame implements Runnable{
 		
 		//CREATING EACH COLUMN//
 		int count = 0;
+		float offset = (float)Math.random();
 		for(String k:tableList){
 			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
-					(float)Math.random(), 
-					(float)(Math.random()/3.6), 
-					(float)(0.7f + (Math.random()/3.33))),archiver,msgBoard);
+					(float)(offset + Math.random()/5), 
+					(float)(0.3 + Math.random()/4.6), 
+					(float)(0.6f + (Math.random()/3))),archiver,msgBoard);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
-		Box box = Box.createHorizontalBox();
-		box.add(msgBoard);
-		box.add(Box.createHorizontalGlue());
+//		Box box = Box.createHorizontalBox();
+//		box.add(msgBoard);
+//		box.add(Box.createHorizontalGlue());
 		initSystems();
 		/////////////////////////////
-		addToFrame(systems, "North");
-		addToFrame(box, "South");
+		addToFrame(systems, "Center");
+//		addToFrame(box, "South");
 //		addToFrame(refresh, "South");
 		/////////////////////////////
 	}
 	@Override
 	public void run(){
 		init();
-		//periodically scan the table for new systems
-		//if new system is found, update subs, add it to the frame, refresh the frame
-		//figure out a way to tell the Archiver to offset the log by a certain amount
-		//(b/c it started later than the systems at init)
 		boolean updateFlag = true;
 		sleep(1500);
 		if(owat.isEnabled() && updateFlag){
@@ -93,7 +91,7 @@ public class Frame implements Runnable{
 				System.out.println("Table size: " + tableList.size());
 				frame.remove(systems);
 				initSystems();
-				addToFrame(systems, "North");
+				addToFrame(systems, "Center");
 				sleep(1300);
 			}
 			sleep(3000);
@@ -112,7 +110,7 @@ public class Frame implements Runnable{
 				new Thread(owat).start();
 			}
 		}
-		systems.setLayout(new GridLayout(2,subs.length));
+		systems.setLayout(new GridLayout(2,subs.length,4,4));
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
@@ -130,9 +128,9 @@ public class Frame implements Runnable{
 	}
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
-		frame.setBounds(-7,0,1200,480); //my computer screen puts it at +2, so...
-		frame.setBackground(Color.white);
-		frame.getContentPane().setBackground(Color.white);
+		frame.setBounds(0,0,1200,520);
+		frame.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
