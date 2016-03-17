@@ -62,7 +62,6 @@ public class SS_AutoChooser extends Subsystem {
     }   
     
     public void updateDashboard(){
-    	SmartDashboard.putNumber("dial calue", dial.getAverageValue());
     	Robot.gui.sendNumber("Auto/Dial", dial.getAverageValue());
     }
 }

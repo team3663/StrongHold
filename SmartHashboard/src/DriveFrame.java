@@ -117,23 +117,14 @@ public class DriveFrame implements Runnable{
 	public void setWindowsLookAndFeel(){
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
 	}
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
-		frame.setBounds(-7,0,1200,480); //my computer screen puts it at +2, so...
+		frame.setBounds(0,0,1200,520);
 		frame.setBackground(Color.white);
 		frame.getContentPane().setBackground(Color.white);
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

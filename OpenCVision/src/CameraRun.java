@@ -308,7 +308,7 @@ public class CameraRun {
 	int r = Color.RED.getRGB();
 	int gg;
 	
-	//int b = Color.black.getRGB();
+	int b = Color.black.getRGB();
 	private BufferedImage convertToBlackGreenImage(BufferedImage img)
 	{
 		int width = img.getWidth();
@@ -325,7 +325,7 @@ public class CameraRun {
 				{
 					c = new Color(img.getRGB(x,y));
 					gg = c.getGreen();
-					if (c.getRed()<60 && /*c.getBlue()<210 &&*/ (gg>=210 || gg>=c.getBlue()+70))
+					if (c.getRed()<60 && /*c.getBlue()<210 &&*/ (gg>=210 || gg>=c.getBlue()+40))//c.HSBtoRGB(hue, saturation, 100) greater than 100 luminosity
 					{
 						if (okayToShoot && !centeringGoal)
 						{
@@ -333,7 +333,7 @@ public class CameraRun {
 						}
 						else if (centeringGoal)
 						{
-							img.setRGB(x, y, cy);
+							img.setRGB(x, y, b);//cy);
 						}
 						else
 						{
@@ -594,9 +594,14 @@ public class CameraRun {
 	{
 		for (int o = 0; o <= gPieceKey; o++)
 		{
-			massObjectPointer.putMaskOverlap(o, percentMaskOverlap(o));
-			if (massObjectPointer.getGPiece(o).mass < 950 || massObjectPointer.getMaskOverlap(o) < 69)//500)
+			if (massObjectPointer.getGPiece(o).mass > 600)
 			{
+				massObjectPointer.putMaskOverlap(o, percentMaskOverlap(o));
+				table.putNumber("mask overlap not removing yet", massObjectPointer.getMaskOverlap(o));
+			}
+			if (massObjectPointer.getGPiece(o).mass < 600)// || massObjectPointer.getMaskOverlap(o) < 62)
+			{
+				System.out.println("mass: " + massObjectPointer.getGPiece(o).mass);
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
 				gPieceKey--;
@@ -855,10 +860,13 @@ public class CameraRun {
 		int width = massObjectPointer.getGPiece(key).width;
 		int height = massObjectPointer.getGPiece(key).height;
 		
-		double percentOverlap;
-		double tapeDepth = ((height/6.0)+4*(width/10.0))/5.0;
+		table.putNumber("height: ", height);
+		table.putNumber("width: ", width);
 		
-		//table.putNumber("tapeDepth: ", tapeDepth);
+		double percentOverlap;
+		double tapeDepth = ((((double)height/6.0)+((4.0*(double)width)/10.0))/5.0);
+		
+		table.putNumber("tapeDepth: ", tapeDepth);
 		
 	//	int[][] mask = createMask(width, height);//index: 0-width; 1-height; 2-tapeDepth
 		double overlapMask = 0, totalGreen = 1;
@@ -873,8 +881,8 @@ public class CameraRun {
 				{
 					if (pic[x][y] > 0)
 					{
-						overlapMask++;
-						totalGreen++;
+						overlapMask+=2;
+						totalGreen+=2;
 					}
 					else
 					{

@@ -157,18 +157,22 @@ public class SubTablePanel extends JPanel implements Runnable{
 				else{
 					jList[i].setForeground(Color.WHITE);
 					if(sList[i].equals("Time")){
-						if((double)o < 15.0 && (double)o > 0){
-							for(int j=0;j<sList.length;j++){
-								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[i],3663).equals("Teleop")){
-									jList[i].setFont(updateFont(jList[i],true));
-								}
-							}
-						}else{
-							jList[i].setFont(updateFont(jList[i],false));
-						}
+						o = (double)o -1;
+//						if((double)o < 15.0 && (double)o > 0){
+//							for(int j=0;j<sList.length;j++){
+//								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[i],3663).equals("Autonomous")){
+//									jList[i].setForeground(Color.getHSBColor((float)Math.random(), 1.0f, 1.0f));
+//									jList[i].setFont(updateFont(jList[i],true));
+//								}
+//							}
+//						}else{
+//							jList[i].setFont(updateFont(jList[i],false));
+//						}
+						//^^^^ the Drive team wasn't fond of this ^^^^
 					}else{
 						jList[i].setFont(updateFont(jList[i],false));
 					}
+					//these lines here modify the time to have a consistent number of decimal places
 					String text = o.toString();
 					int decimalPlaces = text.length() - text.indexOf('.') - 1;
 					if(decimalPlaces < 2){
