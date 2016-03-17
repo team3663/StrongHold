@@ -1,6 +1,7 @@
+package notDefault;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,20 +18,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
-public class DriveFrame implements Runnable{
+public class Frame implements Runnable{
 	SubTablePanel[] subs;
 	NetworkTable table;
 	JPanel systems;
 	JFrame frame;
 	OperationWatchAndTimer owat;
 	Set<String> tableList;
+	MessageBoard msgBoard;
 	Archiver archiver;
 	String ip;
 	int tableSize = 0;
 	
-	SubTablePanel asdf;
-	
-	public DriveFrame(String ipAdr){
+	public Frame(String ipAdr){
 		ip = ipAdr;
 	}
 	public void init(){
@@ -38,44 +38,52 @@ public class DriveFrame implements Runnable{
 		System.out.println("Initialized JFrame");
 		initNetworkTable(ip);
 		System.out.println("Initialized Network Table");
+		setWindowsLookAndFeel();
+//		JButton refresh = new JButton("Refresh");
+//		initRefreshButton(refresh);
+//		refresh.setPreferredSize(new Dimension(10,30));
 		
+		msgBoard = new MessageBoard();
 		archiver = new Archiver();
 		
 		do{
 			tableList = table.getSubTables();
 			subs = new SubTablePanel[tableList.size()];
+			System.out.println("Table size: " + tableList.size());
 			tableSize = tableList.size();
-			System.out.println("Table size: " + tableSize);
 			sleep(1300);
 		}while(subs.length == 0);
 		
 		System.out.println("Connected");
 		
 		//CREATING EACH COLUMN//
-		Font myFont = new Font("SanSerif", Font.PLAIN, 12);
 		int count = 0;
+		float offset = (float)Math.random();
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.DARK_GRAY,archiver,myFont);
+			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
+					(float)(offset + Math.random()/5), 
+					(float)(0.3 + Math.random()/4.6), 
+					(float)(0.6f + (Math.random()/3))),archiver,msgBoard);
 			count++;
 			System.out.println("SubTable: " + k);
 		}
+//		Box box = Box.createHorizontalBox();
+//		box.add(msgBoard);
+//		box.add(Box.createHorizontalGlue());
 		initSystems();
-		frame.getContentPane().revalidate();
-		systems.revalidate();
 		/////////////////////////////
 		addToFrame(systems, "Center");
+//		addToFrame(box, "South");
+//		addToFrame(refresh, "South");
 		/////////////////////////////
 	}
 	@Override
 	public void run(){
 		init();
-		//periodically scan the table for new systems
-		//if new system is found, update subs, add it to the frame, refresh the frame
-		//figure out a way to tell the Archiver to offset the log by a certain amount
-		//(b/c it started later than the systems at init)
 		boolean updateFlag = true;
 		sleep(1500);
 		if(owat.isEnabled() && updateFlag){
+			updateFlag = false;
 			//if the tableList has changed
 			tableList = table.getSubTables();
 			if(tableSize != tableList.size()){
@@ -84,7 +92,7 @@ public class DriveFrame implements Runnable{
 				System.out.println("Table size: " + tableList.size());
 				frame.remove(systems);
 				initSystems();
-				addToFrame(systems, "North");
+				addToFrame(systems, "Center");
 				sleep(1300);
 			}
 			sleep(3000);
@@ -95,17 +103,15 @@ public class DriveFrame implements Runnable{
 	public void initSystems(){
 		systems = new JPanel();
 		for(int i=0;i<subs.length;i++){
-//			systems.add(subs[i]);
+			systems.add(subs[i]);
 			subs[i].init();
 			new Thread(subs[i]).start();
 			if(tableList.toArray()[i].equals("operation")){
 				owat = new OperationWatchAndTimer(subs[i],archiver);
-				asdf = subs[i];
 				new Thread(owat).start();
-				systems.add(asdf);
 			}
 		}
-		systems.setLayout(new GridLayout(2,1)); //columns, rows
+		systems.setLayout(new GridLayout(2,subs.length,4,4));
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
@@ -115,23 +121,23 @@ public class DriveFrame implements Runnable{
 		sleep(2000);
 	}
 	public void setWindowsLookAndFeel(){
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+				e.printStackTrace();
+			}
 	}
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
 		frame.setBounds(0,0,1200,520);
-		frame.setBackground(Color.white);
-		frame.getContentPane().setBackground(Color.white);
+		frame.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 		    @Override
 		    public void windowClosing(WindowEvent windowEvent) {
+		    	System.out.println("Hey");
 		    	if(owat != null){
 		    		owat.export();
 		    	}

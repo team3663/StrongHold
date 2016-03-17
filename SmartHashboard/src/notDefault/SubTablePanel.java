@@ -1,3 +1,4 @@
+package notDefault;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -157,7 +158,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 				else{
 					jList[i].setForeground(Color.WHITE);
 					if(sList[i].equals("Time")){
-						o = (double)o -1;
+						o = (double)o - 100;
 //						if((double)o < 15.0 && (double)o > 0){
 //							for(int j=0;j<sList.length;j++){
 //								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[i],3663).equals("Autonomous")){
