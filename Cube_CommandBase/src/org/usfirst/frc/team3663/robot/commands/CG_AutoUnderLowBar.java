@@ -8,13 +8,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class CG_AutoUnderLowBar extends CommandGroup {
-    
     public  CG_AutoUnderLowBar() {
     	addSequential(new C_CameraLightSet(true));
         addSequential(new C_PickupFirePiston(true));
-    	addSequential(new C_WheelyBarAutoMove(2946, .5));
+    	addSequential(new C_WheelyBarAutoMove(Robot.ss_WheelyBar.maxDistance(), .5));
     	//addSequential(new C_DartAutoMove(Robot.ss_Dart.minDistance()));
-    	addSequential(new C_DriveBasedTime());
+    	addSequential(new C_DriveBasedTime(175, -.7));
         //      addSequential(new Command2());
 
         // To run multiple commands at the same time,

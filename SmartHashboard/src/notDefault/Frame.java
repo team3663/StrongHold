@@ -1,4 +1,8 @@
+<<<<<<< HEAD:SmartHashboard/src/Frame.java
+package src;
+=======
 package notDefault;
+>>>>>>> 3abd6380c8069f36fa4dbb17788080778d1e786c:SmartHashboard/src/notDefault/Frame.java
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;

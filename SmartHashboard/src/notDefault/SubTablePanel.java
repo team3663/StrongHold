@@ -1,4 +1,8 @@
+<<<<<<< HEAD:SmartHashboard/src/SubTablePanel.java
+package src;
+=======
 package notDefault;
+>>>>>>> 3abd6380c8069f36fa4dbb17788080778d1e786c:SmartHashboard/src/notDefault/SubTablePanel.java
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;

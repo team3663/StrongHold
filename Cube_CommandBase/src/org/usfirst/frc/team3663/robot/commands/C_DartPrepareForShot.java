@@ -26,6 +26,8 @@ public class C_DartPrepareForShot extends Command {
     	table.putBoolean("finishedMovingPot: ", false);
     	 pInches = table.getNumber("distanceByMass: ", 0);
     	 target = Robot.ss_Dart.ConvertInchesToTicks((int)pInches);
+    	 Robot.gui.sendNumber("dart/potValue", target);
+    	 
     	 speed = Robot.ss_Dart.findSpeed(target);
     }
 
