@@ -48,7 +48,7 @@ public class SS_WheelyBar extends Subsystem {
     
     public boolean moveWheelyBarAuto(int pTarget, double pSpeed){	//moves to a set distance on the encoder
     	int distValue = grabEncoder();
-    	if(wheelyBarDelay>Timer.getFPGATimestamp()){
+    	if(wheelyBarDelay<Timer.getFPGATimestamp()){
     		return true;
     	}
     	if(distValue < pTarget){
