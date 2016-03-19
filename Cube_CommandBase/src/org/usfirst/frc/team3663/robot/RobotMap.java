@@ -78,6 +78,9 @@ public class RobotMap {
 	    public int hard2 = 1810;//1918
 	    public int touch1 = 640;
 	    public int touch2 = 1500;
+	    //defence shot 1630
+	    //1520
+	    //1708
 	    
 	    public int dartDir = -1;
 	//drive

@@ -1,8 +1,6 @@
-<<<<<<< HEAD:SmartHashboard/src/SubTablePanel.java
-package src;
-=======
+
 package notDefault;
->>>>>>> 3abd6380c8069f36fa4dbb17788080778d1e786c:SmartHashboard/src/notDefault/SubTablePanel.java
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -24,15 +22,13 @@ public class SubTablePanel extends JPanel implements Runnable{
 	String subTable;
 	Color bckg;
 	Archiver archy;
-	MessageBoard msgb;
 	Font f;
 
-	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, MessageBoard msgb){
+	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy){
 		this.table = table;
 		this.subTable = subTable;
 		this.bckg = bckg;
 		this.archy = archy;
-		this.msgb = msgb;
 		setBackground(bckg);
 	}
 	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy, Font f){
@@ -50,7 +46,6 @@ public class SubTablePanel extends JPanel implements Runnable{
         if(f == null){
         	setLayout(new GridLayout(18,0,0,0));
         }
-//        else setLayout(new GridLayout(1,0,0,0));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
 	}
@@ -79,7 +74,6 @@ public class SubTablePanel extends JPanel implements Runnable{
 				jList[i] = jl;
 			}
 			System.out.println(sList[i]);
-//			msgb.say(sList[i]);
 		}
 	}
 	public void fillPanel(){
@@ -102,7 +96,6 @@ public class SubTablePanel extends JPanel implements Runnable{
 		//guiElements = table.getKeys();
 		guiElements = table.getSubTable(subTable).getKeys();
 		System.out.println("There are " + guiElements.size() + " elements in the Set");
-//		msgb.say("There are " + guiElements.size() + " elements in the Set");
 		sList = new String[guiElements.size()+1];
 		jList = new JLabel[guiElements.size()+1];
 		//populate String Array
@@ -162,7 +155,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 				else{
 					jList[i].setForeground(Color.WHITE);
 					if(sList[i].equals("Time")){
-						o = (double)o - 100;
+						o = (double)o - 1;
 //						if((double)o < 15.0 && (double)o > 0){
 //							for(int j=0;j<sList.length;j++){
 //								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[i],3663).equals("Autonomous")){
@@ -171,7 +164,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 //								}
 //							}
 //						}else{
-//							jList[i].setFont(updateFont(jList[i],false));
+							jList[i].setFont(updateFont(jList[i],false));
 //						}
 						//^^^^ the Drive team wasn't fond of this ^^^^
 					}else{
@@ -193,7 +186,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 			}
 		}
 	}
-	public String get(int index){
+	public String get(int index) throws NullPointerException{
 		return (table.getSubTable(subTable).getValue(sList[index],3663).toString());
 	}
 	public Font updateFont(JLabel label,boolean crazy){

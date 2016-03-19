@@ -45,11 +45,11 @@ public class C_DriveVisionSeeAnyGoal extends Command {
     		//====
     		if ((Timer.getFPGATimestamp()-startTime) < (turnTime))
     		{
-    			Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.63);
+    			Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.73);
     		}
     		else
     		{
-    			Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.63);
+    			Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.73);
     		}
     		
     	}

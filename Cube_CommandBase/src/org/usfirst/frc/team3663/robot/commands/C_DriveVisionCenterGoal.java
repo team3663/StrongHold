@@ -140,10 +140,10 @@ public class C_DriveVisionCenterGoal extends Command {
 	    		{
 	    			moveTime = Math.abs(cameraMoveAngle/(angleToTime-5));//Math.pow(Math.abs(cameraMoveAngle/angleToTime)*1.2,1.2);//6.0, .25);
 	    			forwardVariable = 0.5;
-	    			turnSpeed = 0.78;
-	    			if (moveTime < 0.18)
+	    			turnSpeed = 0.70;
+	    			if (moveTime < 0.13)
 	    			{
-	    				moveTime = 0.18;
+	    				moveTime = 0.13;
 	    			}
 	    		}
 				switchForward*=-1;

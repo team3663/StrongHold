@@ -5,12 +5,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class CG_ConfigLongShot extends CommandGroup {
+public class CG_ConfigDefencePos4 extends CommandGroup {
     
-    public  CG_ConfigLongShot() {
+    public  CG_ConfigDefencePos4() {
         // Add Commands here:
-        addSequential(new C_PickupFirePiston(true));
-        addSequential(new C_DartAutoMove(1780));
+        addSequential(new C_DartAutoMove(1700));
         //      addSequential(new Command2());
         // these will run in order.
 

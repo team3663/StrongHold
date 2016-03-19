@@ -15,7 +15,6 @@ public class TestC_TestWheelyBar extends Command {
 	double speed = 0;
 	double delta = .01;
 	double delay = .5;
-	int encoderStart = 0;
 	int encoderTolerance = 4;
 	double topSpeed = .4;
 	long startTime = System.currentTimeMillis();
@@ -29,7 +28,6 @@ public class TestC_TestWheelyBar extends Command {
     protected void initialize() {
     	state = 0;
     	speed = 0;
-    	encoderStart = Robot.ss_WheelyBar.grabEncoder();
     	Robot.gui.sendString("Test/testState","wheelyBar starting");
     	Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.untested;
     	Robot.ss_Test.update();
@@ -38,7 +36,7 @@ public class TestC_TestWheelyBar extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	switch (state){
-    	case 0://Drive up
+    	case 0://Drive up to hitting the wheels
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
     		Robot.ss_WheelyBar.moveWheelyBar(speed);
     		speed += delta*10.0;
@@ -57,7 +55,7 @@ public class TestC_TestWheelyBar extends Command {
     		if (speed < -topSpeed)
     		{
     			speed = -topSpeed;
-    			if(Robot.ss_WheelyBar.grabEncoder() >= 2500){
+    			if(Robot.ss_WheelyBar.grabEncoder() >= Robot.robotMap.wbMaxEnc){
         			state++;
     			}
     		}
@@ -69,11 +67,10 @@ public class TestC_TestWheelyBar extends Command {
     		if (speed > topSpeed)
     		{
     			speed = topSpeed;
-    			if(Robot.ss_WheelyBar.grabEncoder() <= 20){
+    			if(Robot.ss_WheelyBar.grabEncoder() <= Robot.robotMap.wbMinEnc){
         			state++;
         		}
     		}
-    		encoderStart = Robot.ss_WheelyBar.grabEncoder();
     		break;
     	case 3://Stop
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
