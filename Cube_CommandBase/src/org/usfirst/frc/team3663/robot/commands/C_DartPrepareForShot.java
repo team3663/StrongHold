@@ -27,7 +27,15 @@ public class C_DartPrepareForShot extends Command {
     	 pInches = table.getNumber("distanceByMass: ", 0);
     	 target = Robot.ss_Dart.ConvertInchesToTicks((int)pInches);
     	 Robot.gui.sendNumber("dart/potValue", target);
-    	 
+
+    	 if (target > Robot.ss_Dart.maxDistance())
+    	 {
+    		 target = Robot.ss_Dart.maxDistance();
+    	 }
+    	 else if (target < Robot.ss_Dart.minDistance())
+    	 {
+    		 target = Robot.ss_Dart.minDistance();
+    	 }
     	 speed = Robot.ss_Dart.findSpeed(target);
     	 
     	 if (target > Robot.ss_Dart.maxDistance())

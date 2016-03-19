@@ -109,6 +109,12 @@ public class SS_ConfigReader extends Subsystem{
 			    		Robot.robotMap.touch2 = Integer.parseInt(keyValue[1]);
 			    	}else if(keyValue[0].equals("isDriveFlipped")){
 			    		Robot.robotMap.isDriveFlipped = Boolean.parseBoolean(keyValue[1]);
+			    	}else if(keyValue[0].equals("wbMaxEnc")){
+			    		Robot.robotMap.wbMaxEnc = Integer.parseInt(keyValue[1]);
+			    	}else if(keyValue[0].equals("wbMinEnc")){
+			    		Robot.robotMap.wbMinEnc = Integer.parseInt(keyValue[1]);
+			    	}else if(keyValue[0].equals("wheelyBarEncDir")){
+			    		Robot.robotMap.wheelyBarEncDir = Integer.parseInt(keyValue[1]);
 			    	}
 			    }
 			} catch (IOException x) {
