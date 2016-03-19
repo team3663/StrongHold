@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -70,9 +69,6 @@ public class SS_PickupArm extends Subsystem {
     }
     
     public void updateDashboard(){							//Updates the dash board
-    	SmartDashboard.putBoolean("Pickup Lower Limit : ", !lowerLimit.get());
-    	SmartDashboard.putBoolean("Pickup Safe Setting : ", stayInSafeZone);
-    	SmartDashboard.putBoolean("is down : ", isDown());
     	Robot.gui.sendBoolean("pickUp/Pickup Lower Limit", !lowerLimit.get());
     	Robot.gui.sendBoolean("pickUp/Pickup Safe Setting", stayInSafeZone);
     	Robot.gui.sendBoolean("pickUp/is down", isDown());

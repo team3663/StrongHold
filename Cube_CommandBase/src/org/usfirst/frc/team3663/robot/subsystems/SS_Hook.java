@@ -6,7 +6,6 @@ import org.usfirst.frc.team3663.robot.commands.C_HookMove;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -57,7 +56,6 @@ public class SS_Hook extends Subsystem {
     	{
     		int distValue = hookMotor.getEncPosition();
     			hookMotor.set(pSpeed);    		
-    		SmartDashboard.putNumber("Hook Encoder", distValue);
     	}
     }
     

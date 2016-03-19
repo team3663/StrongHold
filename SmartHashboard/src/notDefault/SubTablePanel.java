@@ -23,6 +23,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 	Color bckg;
 	Archiver archy;
 	Font f;
+	boolean isDrive = false;
 
 	public SubTablePanel(String subTable, NetworkTable table, Color bckg, Archiver archy){
 		this.table = table;
@@ -37,13 +38,14 @@ public class SubTablePanel extends JPanel implements Runnable{
 		this.bckg = bckg;
 		this.archy = archy;
 		this.f = f;
+		isDrive = true;
 		setBackground(Color.BLACK);
 	}
 	public void init(){
         getNames();
         fillJLabels();
         fillPanel();
-        if(f == null){
+        if(!isDrive){
         	setLayout(new GridLayout(18,0,0,0));
         }
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
@@ -63,7 +65,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 	}
 	public void fillJLabels(){
 		for(int i=0;i<sList.length;i++){
-			if(f == null){
+			if(!isDrive){
 				jList[i] = new JLabel(sList[i] + ": " + table.getValue(sList[i],3663));
 			}
 			//DRIVER MODE CODE//
@@ -77,7 +79,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 		}
 	}
 	public void fillPanel(){
-		if(f == null){
+		if(!isDrive){
 			for(int i=0;i<sList.length;i++){
 				add(jList[i]);
 			}
@@ -114,13 +116,12 @@ public class SubTablePanel extends JPanel implements Runnable{
 	}
 	@Override
 	public void run(){
-		int count = 0;
+		long start = System.currentTimeMillis();
 		while(true){
 			sleep(2); //necessary to not blow up your CPU
-			update(bckg);
-			count++;
-
-			if(count%100 == 0){
+			//update(bckg);
+			if(start + 2000 > System.currentTimeMillis()){
+				start = System.currentTimeMillis();
 				do{
 					int oldSize = guiElements.size();
 					guiElements = table.getSubTable(subTable).getKeys();
@@ -129,11 +130,6 @@ public class SubTablePanel extends JPanel implements Runnable{
 					refresh();
 				}while(false);
 			}
-		}
-	}
-	public void emptyTable(){
-		for(int i=0;i<sList.length;i++){
-			table.getSubTable("sensor").delete(sList[i]);
 		}
 	}
 	public void sleep(int milliseconds){
@@ -148,38 +144,41 @@ public class SubTablePanel extends JPanel implements Runnable{
 		for(int i=0;i<sList.length;i++){
 			if(i != 0){
 				Object o = table.getSubTable(subTable).getValue(sList[i],3663);
-				if(f == null){
+				archy.addValue(sList[i], o.toString());
+				if(!isDrive){
 					jList[i].setText(sList[i] + ": " + o);
 				}
 				//DRIVER MODE CODE//
-				else{
+				else if(subTable.equals("operation")){
 					jList[i].setForeground(Color.WHITE);
 					if(sList[i].equals("Time")){
 						o = (double)o - 1;
 //						if((double)o < 15.0 && (double)o > 0){
 //							for(int j=0;j<sList.length;j++){
-//								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[i],3663).equals("Autonomous")){
+//								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[j],3663).equals("Autonomous")){
 //									jList[i].setForeground(Color.getHSBColor((float)Math.random(), 1.0f, 1.0f));
 //									jList[i].setFont(updateFont(jList[i],true));
 //								}
 //							}
 //						}else{
-							jList[i].setFont(updateFont(jList[i],false));
-//						}
 						//^^^^ the Drive team wasn't fond of this ^^^^
+						jList[i].setFont(updateFont(jList[i],false));
+//						}
+						String text = o.toString();
+						// " h a p p y . h i"
+						// " 0 1 2 3 4 . 5 6"
+						int decimalPlaces = text.length() - text.indexOf(".") - 1;
+						if(decimalPlaces < 2){
+							jList[i].setText("" + text.concat("0"));
+						}else if(decimalPlaces > 2){
+							jList[i].setText("" + text.substring(text.indexOf(".")));
+						}else{
+							jList[i].setText("" + o);
+						}
 					}else{
 						jList[i].setFont(updateFont(jList[i],false));
 					}
-					//these lines here modify the time to have a consistent number of decimal places
-					String text = o.toString();
-					int decimalPlaces = text.length() - text.indexOf('.') - 1;
-					if(decimalPlaces < 2){
-						jList[i].setText("" + text.concat("0"));
-					}else{
-						jList[i].setText("" + o);
-					}
 				}
-				archy.addValue(sList[i], o.toString());
 			}else{
 				//titles
 				jList[i].setText("---------" + subTable.toUpperCase() + "---------");

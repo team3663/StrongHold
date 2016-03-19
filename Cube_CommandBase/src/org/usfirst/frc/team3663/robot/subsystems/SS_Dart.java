@@ -6,7 +6,6 @@ import org.usfirst.frc.team3663.robot.commands.C_DartMove;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -103,7 +102,6 @@ public class SS_Dart extends Subsystem {
     
     public void setMovingArm(boolean pValue){
     	movePickup = pValue;
-//    	SmartDashboard.putBoolean("asd jfkla", pValue); Curtis.... please no
     }
     
     public boolean getMoveArm(){
@@ -127,7 +125,6 @@ public class SS_Dart extends Subsystem {
     public void moveDart(double pSpeed, boolean pArm){			//set the speed of the dart motor 
     	int distValue = dartPotentiometer.getAverageValue();
     	pSpeed = convertSpeed(pSpeed);
-    	SmartDashboard.putNumber("dart speed ", pSpeed);
     	if((distValue < maxPotentiometer && pSpeed < 0)||(distValue > minPotentiometer && pSpeed > 0)){
     		if(!pArm && useSafety){
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
@@ -135,29 +132,24 @@ public class SS_Dart extends Subsystem {
     					dartMotor.set(pSpeed * dartDir);
     			}
     			else if(distValue < hard2 && distValue > hard1){
-    				SmartDashboard.putString("ERROR : ", "number 2");
     				Robot.gui.sendString("dart/Error","hard stop");
     				setMovingArm(true);
     				dartMotor.set(0);
     			}
     			else if(distValue > soft1 && distValue < soft2){
-    				SmartDashboard.putString("ERROR : ", "number 1");
     				Robot.gui.sendString("dart/Error","soft stop");
     				dartMotor.set(pSpeed/4 * dartDir);
     				setMovingArm(true);
     			}
     			else if(distValue < touch2 && distValue > touch1){
-    				SmartDashboard.putString("ERROR : ", "number 3");
     				Robot.gui.sendString("dart/Error","touch stop");
     				setMovingArm(true);
     				dartMotor.set(0);
     			}
     			else{
-    				SmartDashboard.putString("ERROR : ", "an error has occured in the dart subsystem" + pSpeed);
     			}
     		}
     		else{
-				SmartDashboard.putString("ERROR : ", "out");
     			setMovingArm(false);
     			dartMotor.set(pSpeed * dartDir);
     		}
