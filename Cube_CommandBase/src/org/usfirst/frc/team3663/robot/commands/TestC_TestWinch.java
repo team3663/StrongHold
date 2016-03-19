@@ -42,7 +42,7 @@ public class TestC_TestWinch extends Command {
     		if (speed < -topSpeed)
     		{
     			speed = -topSpeed;
-    			state--;
+    			state++;
     		}
     		break;
     	case 1:
@@ -60,7 +60,7 @@ public class TestC_TestWinch extends Command {
     		if (speed < -topSpeed)
     		{
     			speed = -topSpeed;
-    			state--;
+    			state++;
     		}
     		break;
     	case 3:

@@ -8,15 +8,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TestC_TestDart extends Command {
+public class TestC_TestDartNoPot extends Command {
 	int state;
-	double speed;
-	int initPotValue;
+	double speed = 0;	
+	double deltaSpeed = 0.01;
+	double maxSpeed = 0.4;
+	double startTime;
+	double delay = 1.5;
 	
-	double endTime;
-	double delay = 0.5;
-	
-    public TestC_TestDart() {
+    public TestC_TestDartNoPot() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ss_Dart);
     }
@@ -24,17 +24,10 @@ public class TestC_TestDart extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	state = 0;
-    	speed = 0.6;//for now
     	Robot.gui.sendString("Test/testState", "dart starting");
     	Robot.ss_Test.dartStatus = Robot.ss_Test.untested;
     	Robot.ss_Test.update();
-
-    	initPotValue = Robot.ss_Dart.getPotentiometerValue();
-    	if (initPotValue >= ((double)Robot.ss_Dart.minDistance()+(double)Robot.ss_Dart.maxDistance())/2)
-    	{
-    		speed = -speed;
-    	}
-    	endTime = Timer.getFPGATimestamp()+delay;
+    	startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -42,40 +35,37 @@ public class TestC_TestDart extends Command {
     	//move slightly to check potentiometer working, go to max, go to min, 
     	switch(state){
     	case 0:
-    		Robot.ss_Test.dartStatus = Robot.ss_Test.testing;
-    		int currPotValue = Robot.ss_Dart.getPotentiometerValue();
-    		Robot.ss_Dart.moveDart(speed,Robot.ss_PickupArm.isDown());
-    		if ((currPotValue > initPotValue+5 && speed > 0) || (currPotValue < initPotValue-5 && speed < 0))
-    		{
+    		if(startTime + delay > Timer.getFPGATimestamp() && speed < maxSpeed){
+    			Robot.ss_Dart.NOTSAFEMoveDart(speed);
+    			speed += deltaSpeed;
+    		}else{
     			state++;
+    			startTime = Timer.getFPGATimestamp();
     		}
-    		else if (Timer.getFPGATimestamp() >= endTime)
-    		{
-    			Robot.ss_Test.dartStatus = "Failed - potentiometer not following";
-    			state = 100;
-    		}
-    		break;
+			break;
     	case 1:
-    		Robot.ss_Dart.moveDart(1.0, Robot.ss_PickupArm.isDown());
-    		if (Robot.ss_Dart.hitLocation(1.0, Robot.ss_Dart.maxDistance()))
-			{
-    			Robot.ss_Dart.STOP();
+    		if(startTime + delay > Timer.getFPGATimestamp() && speed > -maxSpeed){
+    			Robot.ss_Dart.NOTSAFEMoveDart(speed);
+    			speed -= deltaSpeed;
+    		}else{
     			state++;
-			}
-    		break;
+    			startTime = Timer.getFPGATimestamp();
+    		}
+			break;
     	case 2:
-    		Robot.ss_Dart.moveDart(-1.0, Robot.ss_PickupArm.isDown());
-    		if (Robot.ss_Dart.hitLocation(-1.0, Robot.ss_Dart.minDistance()))
-    		{
-    			Robot.ss_Dart.STOP();
+    		if(startTime + delay > Timer.getFPGATimestamp() && speed < 0){
+    			Robot.ss_Dart.NOTSAFEMoveDart(speed);
+    			speed += deltaSpeed;
+    		}else{
     			state++;
     		}
+			break;
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return (state >= 3);
+        return state >= 3;
     }
 
     // Called once after isFinished returns true

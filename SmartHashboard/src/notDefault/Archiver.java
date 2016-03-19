@@ -1,3 +1,5 @@
+
+package notDefault;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -67,7 +69,7 @@ public class Archiver {
 		}
 		acceptingValues = true;
 	}
-	public void writeFile(String day, String name){
+	public boolean writeFile(String day, String name){
 //		alphabetizeRows(); //doesn't work yet
 		PrintWriter writer = null;
 		new File("C:\\logFiles").mkdir();
@@ -78,10 +80,12 @@ public class Archiver {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 			System.exit(0);
 		}
-		
-		int maxLength = rows.get(0).size();
-		//the minus 1 is to cut off one row off the bottom of every column to prevent
-		//null pointer exceptions (not all columns are the same height)
+		int maxLength = 0;
+		try{
+			maxLength = rows.get(0).size();
+		}catch(NullPointerException | ArrayIndexOutOfBoundsException e){
+			return true;
+		}
 		String currentLine = "";
 		String lastLine = "";
 		String tempTime = "";
@@ -110,6 +114,7 @@ public class Archiver {
 		System.out.println("Exported log file to C:\\logFiles\\" + day + "\\" + name + ".csv");
 		reset();
 		writer.close();
+		return true;
 	}
 	
 }

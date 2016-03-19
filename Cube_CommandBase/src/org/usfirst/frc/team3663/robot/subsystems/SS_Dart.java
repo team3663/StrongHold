@@ -27,6 +27,7 @@ public class SS_Dart extends Subsystem {
 	private int touch2 = Robot.robotMap.touch2;
 	//this is what determins what area of acceptance for the dart
 	private int bufferZone = 10;
+	private int dartDir = Robot.robotMap.dartDir;
 	
 	//Motor
 	private CANTalon dartMotor = new CANTalon(Robot.robotMap.dartMotor);
@@ -64,22 +65,23 @@ public class SS_Dart extends Subsystem {
     public int ConvertInchesToTicks(int pInches){
     	//return (int)((0.0253*pInches*pInches) - (8.5606*pInches) + (2399.1)); //CUBE's code
     	//return (int)((0.0356*pInches*pInches) - (10.041*pInches) + (2499.5));	//Glass' code subset#1
-    	return (int)((0.0187*pInches*pInches) - (6.9911*pInches) + (2382.3));	//Glass' code subset#2
+    	//return (int)((0.0187*pInches*pInches) - (6.9911*pInches) + (2382.3));	//Glass' code subset#2
+    	return (int)(-328.7*Math.log(pInches)+3347.2);
         
     }
     
     public double findSpeed(int pFinalDist){ 		//finds the speed needed to hit the target
     	int distValue = dartPotentiometer.getAverageValue();
     	if(distValue < pFinalDist){
-    		return 1;
+    		return -1;
     	}
     	else{
-    		return -1;
+    		return 1;
     	}
     }
     
     public void NOTSAFEMoveDart(double pSpeed){
-    	dartMotor.set(pSpeed);
+    	dartMotor.set(pSpeed * dartDir);
     }
     
     public boolean inSoftZone(){
@@ -115,6 +117,11 @@ public class SS_Dart extends Subsystem {
     	return pSpeed;
     }
     
+    public double incrementSpeed(double pSpeed, int pTarget, boolean pArm){
+    	moveDart(pSpeed, pArm);
+    	return pSpeed;
+    }
+    
     public void moveDart(double pSpeed, boolean pArm){			//set the speed of the dart motor 
     	int distValue = dartPotentiometer.getAverageValue();
     	pSpeed = convertSpeed(pSpeed);
@@ -123,7 +130,7 @@ public class SS_Dart extends Subsystem {
     		if(!pArm && useSafety){
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
     					(pSpeed > 0 && distValue < touch1) || (pSpeed > 0 && distValue > soft2)){
-    				dartMotor.set(pSpeed);
+    					dartMotor.set(pSpeed * dartDir/2);
     			}
     			else if(distValue < hard2 && distValue > hard1){
     				SmartDashboard.putString("ERROR : ", "number 2");
@@ -134,7 +141,7 @@ public class SS_Dart extends Subsystem {
     			else if(distValue > soft1 && distValue < soft2){
     				SmartDashboard.putString("ERROR : ", "number 1");
     				Robot.gui.sendString("dart/Error","soft stop");
-    				dartMotor.set(pSpeed/4);
+    				dartMotor.set(pSpeed/4 * dartDir/2);
     				setMovingArm(true);
     			}
     			else if(distValue < touch2 && distValue > touch1){
@@ -150,7 +157,7 @@ public class SS_Dart extends Subsystem {
     		else{
 				SmartDashboard.putString("ERROR : ", "out");
     			setMovingArm(false);
-    			dartMotor.set(pSpeed);
+    			dartMotor.set(pSpeed * dartDir/2);
     		}
     	}
     	else{
@@ -166,10 +173,10 @@ public class SS_Dart extends Subsystem {
     
     public boolean hitLocation(double pSpeed, int pFinalLocation){				//checks to see if the bot has hit the target location for the dart
     	int distValue = dartPotentiometer.getAverageValue();
-    	if(pSpeed < 0 && distValue < pFinalLocation+bufferZone){
+    	if(pSpeed *dartDir < 0 && distValue < pFinalLocation+bufferZone){
     		 return true;
     	}
-    	if(pSpeed > 0 && distValue > pFinalLocation-bufferZone){
+    	if(pSpeed*dartDir > 0 && distValue > pFinalLocation-bufferZone){
     		return true;
     	}
     	return false;
@@ -185,9 +192,6 @@ public class SS_Dart extends Subsystem {
     }
     
     public void updateDashboard(){					//updates to the dash board
-    	SmartDashboard.putNumber("Dart Potentiometer : ", dartPotentiometer.getAverageValue());
-    	SmartDashboard.putBoolean("SafeToRaisePickup : ", getMoveArm());
-
     	Robot.gui.sendNumber("dart/Dart Potentiometer", dartPotentiometer.getAverageValue());
     	Robot.gui.sendBoolean("dart/SafeToRaisePickup", getMoveArm());
 

@@ -63,13 +63,15 @@ public class SS_Test extends Subsystem {
 	}
 	
 	private void resetTestStatus(){
-		shooterTopStatus = untested;
-		shooterBottomStatus = untested;
-		shooterPlungerStatus = untested;
+		shooterTopStatus = untested; 
+		shooterBottomStatus = untested; 
+		shooterPlungerStatus = untested; 
 		pickupIntakeStatus = untested;
 		pickupArmStatus = untested;
+		wheelyBarMotorStatus = untested;
 		driveTrainStatus = untested;
 		dartStatus = untested;
+		winchStatus = untested;
 		hookStatus = untested;
 	}
 	
@@ -99,8 +101,10 @@ public class SS_Test extends Subsystem {
     	Robot.gui.sendString("Test/Shooter plunger", shooterPlungerStatus);
     	Robot.gui.sendString("Test/Pickup intake", pickupIntakeStatus);
     	Robot.gui.sendString("Test/Pickup arm", pickupArmStatus);
-    	Robot.gui.sendString("Test/DriveTrain left", driveTrainStatus);
+    	Robot.gui.sendString("Test/WheelyBar motor", wheelyBarMotorStatus);
+    	Robot.gui.sendString("Test/DriveTrain", driveTrainStatus);
     	Robot.gui.sendString("Test/Dart",dartStatus);
+    	Robot.gui.sendString("Test/Winch",winchStatus);
     	Robot.gui.sendString("Test/Hook", hookStatus);
     }
 }

@@ -1,3 +1,8 @@
+<<<<<<< HEAD:SmartHashboard/src/SubTablePanel.java
+package src;
+=======
+package notDefault;
+>>>>>>> 3abd6380c8069f36fa4dbb17788080778d1e786c:SmartHashboard/src/notDefault/SubTablePanel.java
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -74,7 +79,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 				jList[i] = jl;
 			}
 			System.out.println(sList[i]);
-			msgb.say(sList[i]);
+//			msgb.say(sList[i]);
 		}
 	}
 	public void fillPanel(){
@@ -97,7 +102,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 		//guiElements = table.getKeys();
 		guiElements = table.getSubTable(subTable).getKeys();
 		System.out.println("There are " + guiElements.size() + " elements in the Set");
-		msgb.say("There are " + guiElements.size() + " elements in the Set");
+//		msgb.say("There are " + guiElements.size() + " elements in the Set");
 		sList = new String[guiElements.size()+1];
 		jList = new JLabel[guiElements.size()+1];
 		//populate String Array
@@ -157,18 +162,22 @@ public class SubTablePanel extends JPanel implements Runnable{
 				else{
 					jList[i].setForeground(Color.WHITE);
 					if(sList[i].equals("Time")){
-						if((double)o < 15.0 && (double)o > 0){
-							for(int j=0;j<sList.length;j++){
-								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[i],3663).equals("Teleop")){
-									jList[i].setFont(updateFont(jList[i],true));
-								}
-							}
-						}else{
-							jList[i].setFont(updateFont(jList[i],false));
-						}
+						o = (double)o - 100;
+//						if((double)o < 15.0 && (double)o > 0){
+//							for(int j=0;j<sList.length;j++){
+//								if(sList[j].equals("Mode") && table.getSubTable(subTable).getValue(sList[i],3663).equals("Autonomous")){
+//									jList[i].setForeground(Color.getHSBColor((float)Math.random(), 1.0f, 1.0f));
+//									jList[i].setFont(updateFont(jList[i],true));
+//								}
+//							}
+//						}else{
+//							jList[i].setFont(updateFont(jList[i],false));
+//						}
+						//^^^^ the Drive team wasn't fond of this ^^^^
 					}else{
 						jList[i].setFont(updateFont(jList[i],false));
 					}
+					//these lines here modify the time to have a consistent number of decimal places
 					String text = o.toString();
 					int decimalPlaces = text.length() - text.indexOf('.') - 1;
 					if(decimalPlaces < 2){
