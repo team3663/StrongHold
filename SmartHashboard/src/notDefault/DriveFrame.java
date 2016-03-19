@@ -1,8 +1,6 @@
-<<<<<<< HEAD:SmartHashboard/src/DriveFrame.java
-package src;
-=======
+
 package notDefault;
->>>>>>> 3abd6380c8069f36fa4dbb17788080778d1e786c:SmartHashboard/src/notDefault/DriveFrame.java
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -72,28 +70,6 @@ public class DriveFrame implements Runnable{
 	@Override
 	public void run(){
 		init();
-		//periodically scan the table for new systems
-		//if new system is found, update subs, add it to the frame, refresh the frame
-		//figure out a way to tell the Archiver to offset the log by a certain amount
-		//(b/c it started later than the systems at init)
-		boolean updateFlag = true;
-		sleep(1500);
-		if(owat.isEnabled() && updateFlag){
-			//if the tableList has changed
-			tableList = table.getSubTables();
-			if(tableSize != tableList.size()){
-				System.out.println("~~~~~" + "table has changed" + "~~~~~~");
-				subs = new SubTablePanel[tableList.size()];
-				System.out.println("Table size: " + tableList.size());
-				frame.remove(systems);
-				initSystems();
-				addToFrame(systems, "North");
-				sleep(1300);
-			}
-			sleep(3000);
-		}else if(!owat.isEnabled()){
-			updateFlag = true;
-		}
 	}
 	public void initSystems(){
 		systems = new JPanel();
@@ -107,7 +83,7 @@ public class DriveFrame implements Runnable{
 				new Thread(owat).start();
 			}
 		}
-		systems.setLayout(new GridLayout(2,1)); //columns, rows
+		systems.setLayout(new GridLayout(1,1)); //columns, rows
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
@@ -120,13 +96,17 @@ public class DriveFrame implements Runnable{
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
 		frame.setBounds(0,0,1200,520);
-		frame.setBackground(Color.white);
+		frame.setBackground(Color.PINK);
 		frame.getContentPane().setBackground(Color.white);
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
 		    @Override
 		    public void windowClosing(WindowEvent windowEvent) {
+		    	frame.setVisible(false);
+		    	System.out.println("=======================");
+		    	System.out.println("Closing... please wait");
+		    	System.out.println("=======================");
 		    	if(owat != null){
 		    		owat.export();
 		    	}

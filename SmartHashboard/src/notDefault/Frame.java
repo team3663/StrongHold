@@ -1,8 +1,6 @@
-<<<<<<< HEAD:SmartHashboard/src/Frame.java
-package src;
-=======
+
 package notDefault;
->>>>>>> 3abd6380c8069f36fa4dbb17788080778d1e786c:SmartHashboard/src/notDefault/Frame.java
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -29,7 +27,6 @@ public class Frame implements Runnable{
 	JFrame frame;
 	OperationWatchAndTimer owat;
 	Set<String> tableList;
-	MessageBoard msgBoard;
 	Archiver archiver;
 	String ip;
 	int tableSize = 0;
@@ -47,7 +44,6 @@ public class Frame implements Runnable{
 //		initRefreshButton(refresh);
 //		refresh.setPreferredSize(new Dimension(10,30));
 		
-		msgBoard = new MessageBoard();
 		archiver = new Archiver();
 		
 		do{
@@ -61,16 +57,7 @@ public class Frame implements Runnable{
 		System.out.println("Connected");
 		
 		//CREATING EACH COLUMN//
-		int count = 0;
-		float offset = (float)Math.random();
-		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
-					(float)(offset + Math.random()/5), 
-					(float)(0.3 + Math.random()/4.6), 
-					(float)(0.6f + (Math.random()/3))),archiver,msgBoard);
-			count++;
-			System.out.println("SubTable: " + k);
-		}
+		populateSubs();
 //		Box box = Box.createHorizontalBox();
 //		box.add(msgBoard);
 //		box.add(Box.createHorizontalGlue());
@@ -86,22 +73,39 @@ public class Frame implements Runnable{
 		init();
 		boolean updateFlag = true;
 		sleep(1500);
-		if(owat.isEnabled() && updateFlag){
-			updateFlag = false;
-			//if the tableList has changed
-			tableList = table.getSubTables();
-			if(tableSize != tableList.size()){
-				System.out.println("~~~~~" + "table has changed" + "~~~~~~");
-				subs = new SubTablePanel[tableList.size()];
-				System.out.println("Table size: " + tableList.size());
-				frame.remove(systems);
-				initSystems();
-				addToFrame(systems, "Center");
-				sleep(1300);
+		while(true){
+			if(owat.isEnabled() && updateFlag){
+				updateFlag = false;
+				//if the tableList has changed
+				tableList = table.getSubTables();
+				if(tableSize != tableList.size()){
+					tableSize = tableList.size();
+					System.out.println("~~~~~" + "table has changed" + "~~~~~~");
+					subs = new SubTablePanel[tableList.size()];
+					System.out.println("Table size: " + tableList.size());
+					frame.remove(systems);
+					populateSubs();
+					initSystems();
+					addToFrame(systems, "North");
+					sleep(1300);
+				}
+				sleep(3000);
+			}else if(!owat.isEnabled()){
+				updateFlag = true;
 			}
-			sleep(3000);
-		}else if(!owat.isEnabled()){
-			updateFlag = true;
+			sleep(300);
+		}
+	}
+	public void populateSubs(){
+		int count = 0;
+		float offset = (float)Math.random();
+		for(String k:tableList){
+			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
+					(float)(offset + Math.random()/5), 
+					(float)(0.3 + Math.random()/4.6), 
+					(float)(0.6f + (Math.random()/3))),archiver);
+			count++;
+			System.out.println("SubTable: " + k);
 		}
 	}
 	public void initSystems(){
@@ -141,6 +145,10 @@ public class Frame implements Runnable{
 		frame.addWindowListener(new WindowAdapter() {
 		    @Override
 		    public void windowClosing(WindowEvent windowEvent) {
+		    	frame.setVisible(false);
+		    	System.out.println("=======================");
+		    	System.out.println("Closing... please wait");
+		    	System.out.println("=======================");
 		    	System.out.println("Hey");
 		    	if(owat != null){
 		    		owat.export();
