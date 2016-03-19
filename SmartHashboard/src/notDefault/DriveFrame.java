@@ -29,8 +29,6 @@ public class DriveFrame implements Runnable{
 	String ip;
 	int tableSize = 0;
 	
-	SubTablePanel asdf;
-	
 	public DriveFrame(String ipAdr){
 		ip = ipAdr;
 	}
@@ -101,9 +99,8 @@ public class DriveFrame implements Runnable{
 			new Thread(subs[i]).start();
 			if(tableList.toArray()[i].equals("operation")){
 				owat = new OperationWatchAndTimer(subs[i],archiver);
-				asdf = subs[i];
+				systems.add(subs[i]);
 				new Thread(owat).start();
-				systems.add(asdf);
 			}
 		}
 		systems.setLayout(new GridLayout(2,1)); //columns, rows
@@ -115,14 +112,7 @@ public class DriveFrame implements Runnable{
 		table = NetworkTable.getTable("Gui");
 		sleep(2000);
 	}
-	public void setWindowsLookAndFeel(){
-		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
-	}
+
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
 		frame.setBounds(0,0,1200,520);
@@ -140,16 +130,6 @@ public class DriveFrame implements Runnable{
 		    }
 		});
 		frame.setVisible(true);
-	}
-	public void initRefreshButton(JButton b){
-		b.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				for(int i=0;i<subs.length;i++){
-					subs[i].emptyTable();
-				}
-			}
-		});
 	}
 	public void addToFrame(Component c, String position){
 		frame.getContentPane().add(c, position);

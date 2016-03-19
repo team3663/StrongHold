@@ -75,7 +75,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 				jList[i] = jl;
 			}
 			System.out.println(sList[i]);
-			msgb.say(sList[i]);
+//			msgb.say(sList[i]);
 		}
 	}
 	public void fillPanel(){
@@ -98,7 +98,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 		//guiElements = table.getKeys();
 		guiElements = table.getSubTable(subTable).getKeys();
 		System.out.println("There are " + guiElements.size() + " elements in the Set");
-		msgb.say("There are " + guiElements.size() + " elements in the Set");
+//		msgb.say("There are " + guiElements.size() + " elements in the Set");
 		sList = new String[guiElements.size()+1];
 		jList = new JLabel[guiElements.size()+1];
 		//populate String Array

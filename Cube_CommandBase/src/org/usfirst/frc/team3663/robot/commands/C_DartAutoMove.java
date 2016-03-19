@@ -19,7 +19,7 @@ public class C_DartAutoMove extends Command {
     protected void initialize() {
     	speed = Robot.ss_Dart.findSpeed(targetDist);
     }
-
+                                                                                                                             
     protected void execute() {
     	Robot.ss_Dart.moveDart(-speed, Robot.ss_PickupArm.isDown());
     }

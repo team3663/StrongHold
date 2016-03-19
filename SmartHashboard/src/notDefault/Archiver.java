@@ -82,11 +82,9 @@ public class Archiver {
 		int maxLength = 0;
 		try{
 			maxLength = rows.get(0).size();
-		}catch(NullPointerException e){
+		}catch(NullPointerException | ArrayIndexOutOfBoundsException e){
 			return true;
 		}
-		//the minus 1 is to cut off one row off the bottom of every column to prevent
-		//null pointer exceptions (not all columns are the same height)
 		String currentLine = "";
 		String lastLine = "";
 		String tempTime = "";

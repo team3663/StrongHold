@@ -18,8 +18,8 @@ public class SS_WheelyBar extends Subsystem {
 	private CANTalon wheelyBarMotor = new CANTalon(Robot.robotMap.wheelyBarMotor);
 	
 	private int maxEncoderTicks = -1211;
-	private int accptance = 10;
-	private boolean setToZero = false;
+//	private int acceptance = 10;
+//	private boolean setToZero = false;
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new C_WheelyBarMove());
@@ -71,7 +71,6 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public void updateDashboard(){
-    	SmartDashboard.putNumber("WheelyBar Encoder", wheelyBarMotor.getEncPosition());
     	Robot.gui.sendNumber("wheelyBar/Wheely Encoder",wheelyBarMotor.getEncPosition());
     }
 }
