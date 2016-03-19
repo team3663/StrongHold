@@ -1,8 +1,6 @@
-<<<<<<< HEAD:SmartHashboard/src/ModeChooser.java
-package src;
-=======
+
 package notDefault;
->>>>>>> 3abd6380c8069f36fa4dbb17788080778d1e786c:SmartHashboard/src/notDefault/ModeChooser.java
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
