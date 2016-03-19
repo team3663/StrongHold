@@ -17,7 +17,7 @@ public class CG_AutoOverBasicDefence extends CommandGroup {
     	//addSequential(new C_DartAutoMove(1389));
     	//addSequential(new C_PickupFirePiston(false));
     														addSequential(new C_CameraLightSet(true));
-        addSequential(new C_DriveBasedTime());
+        addSequential(new C_DriveBasedTime(175, -.7));
 												    		addSequential(new C_CameraLightSet(false));
 												        	addSequential(new C_CameraLightSet(true));
         //      addSequential(new Command2());

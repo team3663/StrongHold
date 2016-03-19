@@ -22,16 +22,16 @@ public class C_DriveControllerDPad extends Command {
 
     protected void execute() {
     	if(Robot.oi.driveJoystick.getPOV() == 0 && !cg_Normal.isRunning()){
-    		cg_Normal.start();
+    		//cg_Normal.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == 90 && !cg_OverD.isRunning()){
     		cg_OverD.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == 180 && !cg_LowBar.isRunning()){
-    		cg_LowBar.start();
+    		//cg_LowBar.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == 270){
-    		cg_Long.start();
+    		//cg_Long.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == -1){
     		//cg_Normal.cancel();

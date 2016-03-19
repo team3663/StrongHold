@@ -1,4 +1,8 @@
+<<<<<<< HEAD:SmartHashboard/src/messageBoard.java
 package src;
+=======
+package notDefault;
+>>>>>>> 3abd6380c8069f36fa4dbb17788080778d1e786c:SmartHashboard/src/notDefault/MessageBoard.java
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JPanel;

@@ -13,7 +13,7 @@ public class C_DartAutoMove extends Command {
 	private double speed;
     public C_DartAutoMove(int pTarget) {
         requires(Robot.ss_Dart);
-        targetDist = pTarget+20;
+        targetDist = pTarget;
     }
 
     protected void initialize() {
@@ -21,7 +21,7 @@ public class C_DartAutoMove extends Command {
     }
 
     protected void execute() {
-    	Robot.ss_Dart.moveDart(-speed, Robot.ss_PickupArm.isDown());
+    	Robot.ss_Dart.incrementSpeed(speed, targetDist, Robot.ss_PickupArm.isDown());
     }
 
     protected boolean isFinished() {

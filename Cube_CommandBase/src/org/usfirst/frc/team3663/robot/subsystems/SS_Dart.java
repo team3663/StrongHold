@@ -64,17 +64,18 @@ public class SS_Dart extends Subsystem {
     public int ConvertInchesToTicks(int pInches){
     	//return (int)((0.0253*pInches*pInches) - (8.5606*pInches) + (2399.1)); //CUBE's code
     	//return (int)((0.0356*pInches*pInches) - (10.041*pInches) + (2499.5));	//Glass' code subset#1
-    	return (int)((0.0187*pInches*pInches) - (6.9911*pInches) + (2382.3));	//Glass' code subset#2
+    	//return (int)((0.0187*pInches*pInches) - (6.9911*pInches) + (2382.3));	//Glass' code subset#2
+    	return (int)(-328.7*Math.log(pInches)+3347.2);
         
     }
     
     public double findSpeed(int pFinalDist){ 		//finds the speed needed to hit the target
     	int distValue = dartPotentiometer.getAverageValue();
     	if(distValue < pFinalDist){
-    		return 1;
+    		return -1;
     	}
     	else{
-    		return -1;
+    		return 1;
     	}
     }
     
@@ -116,25 +117,6 @@ public class SS_Dart extends Subsystem {
     }
     
     public double incrementSpeed(double pSpeed, int pTarget, boolean pArm){
-    	int distValue = dartPotentiometer.getAverageValue();
-    	if(distValue + 50 > pTarget && pSpeed < 0){
-    		pSpeed = -.5;
-    	}
-    	else if(distValue - 50 < pTarget && pSpeed > 0){
-    		pSpeed = .5;
-    	}
-    	else if(pSpeed > 1){
-    		pSpeed = 1;
-    	}
-    	else if(pSpeed < -1){
-    		pSpeed = -1;
-    	}
-    	else if(pSpeed < 0){
-    		pSpeed -= .05;
-    	}
-    	else if(pSpeed > 0){
-    		pSpeed += .05;
-    	}
     	moveDart(pSpeed, pArm);
     	return pSpeed;
     }
@@ -147,7 +129,7 @@ public class SS_Dart extends Subsystem {
     		if(!pArm && useSafety){
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
     					(pSpeed > 0 && distValue < touch1) || (pSpeed > 0 && distValue > soft2)){
-    				dartMotor.set(pSpeed);
+    				//dartMotor.set(pSpeed);
     			}
     			else if(distValue < hard2 && distValue > hard1){
     				SmartDashboard.putString("ERROR : ", "number 2");
@@ -158,7 +140,7 @@ public class SS_Dart extends Subsystem {
     			else if(distValue > soft1 && distValue < soft2){
     				SmartDashboard.putString("ERROR : ", "number 1");
     				Robot.gui.sendString("dart/Error","soft stop");
-    				dartMotor.set(pSpeed/4);
+    				//dartMotor.set(pSpeed/4);
     				setMovingArm(true);
     			}
     			else if(distValue < touch2 && distValue > touch1){
@@ -174,7 +156,7 @@ public class SS_Dart extends Subsystem {
     		else{
 				SmartDashboard.putString("ERROR : ", "out");
     			setMovingArm(false);
-    			dartMotor.set(pSpeed);
+    			//dartMotor.set(pSpeed);
     		}
     	}
     	else{
