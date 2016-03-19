@@ -601,7 +601,7 @@ public class CameraRun {
 			}
 			if (massObjectPointer.getGPiece(o).mass < 600)// || massObjectPointer.getMaskOverlap(o) < 62)
 			{
-				System.out.println("mass: " + massObjectPointer.getGPiece(o).mass);
+				//System.out.println("mass: " + massObjectPointer.getGPiece(o).mass);
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
 				gPieceKey--;
@@ -810,17 +810,22 @@ public class CameraRun {
 					}
 					else
 					{
-			*/			if (cMaskOverlap > maskOverlap)
+			*/			if (Math.abs(cMaskOverlap - maskOverlap) < 8)
+						{
+							if (Math.abs(getAngleTilt(o)) < Math.abs(getAngleTilt(bestPiece)))
+							{
+								System.out.println("switching goals");
+							/*	bestPiece = o;
+								bestPieceChanged = true;
+								bestMaskOverlap = cMaskOverlap;
+						*/	}
+						}
+						else if (cMaskOverlap > maskOverlap)
 						{
 							bestPiece = o;
 							bestPieceChanged = true;
 							bestMaskOverlap = cMaskOverlap;
 						}
-					/*	else if (((cMaskOverlap <= maskOverlap+10)&&(cMaskOverlap >= maskOverlap-10) || (maskOverlap <= cMaskOverlap+10)&&(maskOverlap >= cMaskOverlap-10)) && (massObjectPointer.getGPiece(bestPiece).mass < massObjectPointer.getGPiece(o).mass))
-						{
-							bestPiece = o;
-							bestPieceChanged = true;
-						}*/
 						else
 						{
 							bestPieceChanged = false;
@@ -881,12 +886,12 @@ public class CameraRun {
 				{
 					if (pic[x][y] > 0)
 					{
-						overlapMask+=2;
-						totalGreen+=2;
+						overlapMask++;
+						totalGreen++;
 					}
 					else
 					{
-						//overlapMask-=2;
+						//overlapMask-=0.025;
 					}
 				}
 				else if (pic[x][y] > 0)
@@ -959,7 +964,11 @@ public class CameraRun {
 		///===============================================
 		//for final bot===================================
 		goalCenterX = (int)(300);//(325);//*resolutionRatio);
-		if (distance > 155)
+		if (distance > 149)
+		{
+			//goalCenterX = (int)(305);
+		}
+		else if (distance > 160)
 		{
 			//goalCenterX = (int)(310);
 		}
