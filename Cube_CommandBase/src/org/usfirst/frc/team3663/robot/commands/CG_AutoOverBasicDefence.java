@@ -22,7 +22,7 @@ public class CG_AutoOverBasicDefence extends CommandGroup {
 												        	addSequential(new C_CameraLightSet(true));
         
     	addSequential(new C_WaitSecs(0.25));
-		addSequential(new CG_AutoVisionShooting());										        	
+		addSequential(new CG_AutoVisionShooting());	
 												        	
     	//      addSequential(new Command2());
         // these will run in order.
