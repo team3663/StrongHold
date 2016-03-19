@@ -56,7 +56,7 @@ public class RobotMap {
 	    public int[] shooterSolenoid = new int[]{1,0};//1.0
 	    public int[] hookSolenoid 	 = new int[]{4,5};
 	    
-/****DriveControlles*****/
+/****DriveControls*****/
 	//driveTrain
 	    public int driveAxisForward = 2;
 	    public int driveAxisReverse = 3;
@@ -81,9 +81,10 @@ public class RobotMap {
 	    
 	    public int dartDir = -1;
 	//drive
-	    
 	    public boolean isDriveFlipped = false;
 	//Wheelbar
+	    public int wbMaxEnc = 2564;
+	    public int wbMinEnc = 1211;
 	    public int wheelyBarEncDir = -1;
 	
 }
