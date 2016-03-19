@@ -6,6 +6,7 @@ import org.usfirst.frc.team3663.robot.commands.C_WheelyBarMove;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -40,10 +41,18 @@ public class SS_WheelyBar extends Subsystem {
     	return wheelyBarMotor.getEncVelocity();
     }
     
+    private int wheelyBarDelay = 0;
+    public void setEndTime(int delay){
+    	wheelyBarDelay = (int) (delay+Timer.getFPGATimestamp());
+    }
+    
     public boolean moveWheelyBarAuto(int pTarget, double pSpeed){	//moves to a set distance on the encoder
     	int distValue = grabEncoder();
+    	if(wheelyBarDelay>Timer.getFPGATimestamp()){
+    		return true;
+    	}
     	if(distValue < pTarget){
-        	moveWheelyBar(pSpeed);
+        	moveWheelyBar(pSpeed/2);
     		return false;
     	}
     	STOP();

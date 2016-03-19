@@ -23,6 +23,7 @@ public class C_PickupFirePiston extends Command {
     }
 
     protected boolean isFinished() {
+    	Robot.gui.sendNumber("asdfjsdflasjdflsadfasdfasdfasd;flkja;lsdkjf;lksadjflkasjdl;fkjas'ldfkjas;ld4k=jfaslkjg;lkajsldkjfsaiojcla;ksdjf;lasd;fkljasd;lfkjas;ldjfsdaosldfas/as", 4);
         return true;
     }
 

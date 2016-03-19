@@ -60,7 +60,7 @@ public class OI {
 	private JoystickButton pickupRaiseArmB 	= new JoystickButton(buttonJoystick, 6);
 	private JoystickButton pickupLowerArmB 	= new JoystickButton(buttonJoystick, 5);
 	
-	private JoystickButton pickupCycleSafty = new JoystickButton(driveJoystick, 8);
+	//private JoystickButton pickupCycleSafty = new JoystickButton(driveJoystick, 8);  Button 8 is used for presets
 	private JoystickButton pickupRunOut 	= new JoystickButton(driveJoystick, 2);
   //Shooter Buttons
 	private JoystickButton shooterMotorsFullPower 	= new JoystickButton(driveJoystick, 1);
@@ -106,7 +106,7 @@ public class OI {
 		pickupLowerArmD.whenPressed(new C_PickupFirePiston(true));
 		pickupRaiseArmB.whenPressed(new C_PickupFirePiston(false));
 		pickupLowerArmB.whenPressed(new C_PickupFirePiston(true));
-		pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
+		//pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
 		pickupRunOut.whileHeld(new C_PickupRunMotor(1));
 	  //Shooter Buttons
 		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());

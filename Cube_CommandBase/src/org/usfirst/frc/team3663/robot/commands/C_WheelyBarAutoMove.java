@@ -19,6 +19,7 @@ public class C_WheelyBarAutoMove extends Command {
     }
 
     protected void initialize() {
+    	Robot.ss_WheelyBar.setEndTime(5);
     }
 
     protected void execute() {

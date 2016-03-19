@@ -56,15 +56,7 @@ public class SS_Hook extends Subsystem {
     	else
     	{
     		int distValue = hookMotor.getEncPosition();
-    		if(!safety){
-    			hookMotor.set(pSpeed);
-    		}
-    		else if (distValue < 0){
     			hookMotor.set(pSpeed);    		
-    		}
-    		else{
-    			hookMotor.set(0);
-    		}
     		SmartDashboard.putNumber("Hook Encoder", distValue);
     	}
     }

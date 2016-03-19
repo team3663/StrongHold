@@ -12,6 +12,6 @@ public class CG_ConfigGoOverDefenses extends CommandGroup {
     public  CG_ConfigGoOverDefenses() {
     	addSequential(new C_PickupFirePiston(true));
     	addSequential(new C_DartAutoMove(1462));
-    	//addSequential(new C_PickupFirePiston(false));
+    	addSequential(new C_PickupFirePiston(false));
     }
 }

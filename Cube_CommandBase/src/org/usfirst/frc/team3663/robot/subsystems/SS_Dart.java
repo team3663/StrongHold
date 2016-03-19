@@ -66,7 +66,9 @@ public class SS_Dart extends Subsystem {
     	//return (int)((0.0253*pInches*pInches) - (8.5606*pInches) + (2399.1)); //CUBE's code
     	//return (int)((0.0356*pInches*pInches) - (10.041*pInches) + (2499.5));	//Glass' code subset#1
     	//return (int)((0.0187*pInches*pInches) - (6.9911*pInches) + (2382.3));	//Glass' code subset#2
-    	return (int)(-328.7*Math.log(pInches)+3347.2);
+    	//return (int)(-328.7*Math.log(pInches)+3347.2);
+
+    	return (int)((0.032*pInches*pInches) - (11.018*pInches) + (2587.3));
         
     }
     
@@ -130,7 +132,7 @@ public class SS_Dart extends Subsystem {
     		if(!pArm && useSafety){
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
     					(pSpeed > 0 && distValue < touch1) || (pSpeed > 0 && distValue > soft2)){
-    					dartMotor.set(pSpeed * dartDir/2);
+    					dartMotor.set(pSpeed * dartDir);
     			}
     			else if(distValue < hard2 && distValue > hard1){
     				SmartDashboard.putString("ERROR : ", "number 2");
@@ -141,7 +143,7 @@ public class SS_Dart extends Subsystem {
     			else if(distValue > soft1 && distValue < soft2){
     				SmartDashboard.putString("ERROR : ", "number 1");
     				Robot.gui.sendString("dart/Error","soft stop");
-    				dartMotor.set(pSpeed/4 * dartDir/2);
+    				dartMotor.set(pSpeed/4 * dartDir);
     				setMovingArm(true);
     			}
     			else if(distValue < touch2 && distValue > touch1){
@@ -157,7 +159,7 @@ public class SS_Dart extends Subsystem {
     		else{
 				SmartDashboard.putString("ERROR : ", "out");
     			setMovingArm(false);
-    			dartMotor.set(pSpeed * dartDir/2);
+    			dartMotor.set(pSpeed * dartDir);
     		}
     	}
     	else{
