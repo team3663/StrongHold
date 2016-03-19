@@ -27,6 +27,7 @@ public class SS_Dart extends Subsystem {
 	private int touch2 = Robot.robotMap.touch2;
 	//this is what determins what area of acceptance for the dart
 	private int bufferZone = 10;
+	private int dartDir = Robot.robotMap.dartDir;
 	
 	//Motor
 	private CANTalon dartMotor = new CANTalon(Robot.robotMap.dartMotor);
@@ -80,7 +81,7 @@ public class SS_Dart extends Subsystem {
     }
     
     public void NOTSAFEMoveDart(double pSpeed){
-    	dartMotor.set(pSpeed);
+    	dartMotor.set(pSpeed * dartDir);
     }
     
     public boolean inSoftZone(){
@@ -129,7 +130,7 @@ public class SS_Dart extends Subsystem {
     		if(!pArm && useSafety){
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
     					(pSpeed > 0 && distValue < touch1) || (pSpeed > 0 && distValue > soft2)){
-    				//dartMotor.set(pSpeed);
+    					dartMotor.set(pSpeed * dartDir/2);
     			}
     			else if(distValue < hard2 && distValue > hard1){
     				SmartDashboard.putString("ERROR : ", "number 2");
@@ -140,7 +141,7 @@ public class SS_Dart extends Subsystem {
     			else if(distValue > soft1 && distValue < soft2){
     				SmartDashboard.putString("ERROR : ", "number 1");
     				Robot.gui.sendString("dart/Error","soft stop");
-    				//dartMotor.set(pSpeed/4);
+    				dartMotor.set(pSpeed/4 * dartDir/2);
     				setMovingArm(true);
     			}
     			else if(distValue < touch2 && distValue > touch1){
@@ -156,7 +157,7 @@ public class SS_Dart extends Subsystem {
     		else{
 				SmartDashboard.putString("ERROR : ", "out");
     			setMovingArm(false);
-    			//dartMotor.set(pSpeed);
+    			dartMotor.set(pSpeed * dartDir/2);
     		}
     	}
     	else{
@@ -172,10 +173,10 @@ public class SS_Dart extends Subsystem {
     
     public boolean hitLocation(double pSpeed, int pFinalLocation){				//checks to see if the bot has hit the target location for the dart
     	int distValue = dartPotentiometer.getAverageValue();
-    	if(pSpeed < 0 && distValue < pFinalLocation+bufferZone){
+    	if(pSpeed *dartDir < 0 && distValue < pFinalLocation+bufferZone){
     		 return true;
     	}
-    	if(pSpeed > 0 && distValue > pFinalLocation-bufferZone){
+    	if(pSpeed*dartDir > 0 && distValue > pFinalLocation-bufferZone){
     		return true;
     	}
     	return false;

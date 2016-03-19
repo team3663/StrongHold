@@ -21,7 +21,7 @@ public class C_DartAutoMove extends Command {
     }
 
     protected void execute() {
-    	Robot.ss_Dart.incrementSpeed(speed, targetDist, Robot.ss_PickupArm.isDown());
+    	Robot.ss_Dart.incrementSpeed(speed/2, targetDist, Robot.ss_PickupArm.isDown());
     }
 
     protected boolean isFinished() {

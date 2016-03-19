@@ -70,16 +70,20 @@ public class RobotMap {
 	//DriveTrain
 	    public int encoderTicksPerInch = 20;
 	//Dart
-	    public int minDistanceValue = 480;//410;
-	    public int maxDistanceValue = 2320;
-	    public int soft1 = 555;
-	    public int soft2 = 1916;
-	    public int hard1 = 557;
-	    public int hard2 = 1749;//1918
-	    public int touch1 = 557;
-	    public int touch2 = 1436;
+	    public int minDistanceValue = 620;//410;
+	    public int maxDistanceValue = 2380;
+	    public int soft1 = 640;
+	    public int soft2 = 2000;
+	    public int hard1 = 650;
+	    public int hard2 = 1810;//1918
+	    public int touch1 = 640;
+	    public int touch2 = 1500;
+	    
+	    public int dartDir = -1;
 	//drive
 	    
 	    public boolean isDriveFlipped = false;
+	//Wheelbar
+	    public int wheelyBarEncDir = -1;
 	
 }
