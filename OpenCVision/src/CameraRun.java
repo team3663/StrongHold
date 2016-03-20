@@ -666,9 +666,11 @@ public class CameraRun {
 		
 		return angle;
 	}
+	
 	boolean firstTime;
 	double[] massArr = new double[5];
 	int counter = 0;
+	double distAtCompDiff = 25;
 	private double getDistanceMass(int keyNum)
 	{
 		double d = 0;
@@ -686,7 +688,7 @@ public class CameraRun {
 		double mass = ((massArr[0]+massArr[1]+massArr[2]+massArr[3]+massArr[4])/5)*27.5/21.0;//*((480*640)/(320*240));//if we want to use resolution ratio: ((480*640)/(320*240))
 		//table.putNumber("mass: ",mass);
 		
-		d = (-93.5*Math.log(mass)) + 858.41;
+		d = (-93.5*Math.log(mass)) + 858.41   +distAtCompDiff;//+distAtCompDiff is a temp fix to mass
 		//distance dog d = ((-0.067*mass)+351.24)*mass/4000;//4048.36;
 		//distance direct real time d = 0.000003*mass^2 - 0.0374*mass + 201.84
 		

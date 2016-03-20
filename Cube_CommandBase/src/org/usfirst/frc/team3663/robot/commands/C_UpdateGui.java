@@ -11,8 +11,8 @@ public class C_UpdateGui extends Command {
 	boolean run = false;
 	long startTime;
     public C_UpdateGui(boolean run) {
+    	this.run = run;
         requires(Robot.gui);
-        this.run = run;
     }
 
     // Called just before this Command runs the first time

@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -81,8 +80,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
     	LiveWindow.setEnabled(false);
         gui.sendNumber("operation/Time", Timer.getMatchTime());
-        new C_UpdateGui(false);
-
+        new C_UpdateGui(true);
     }
 	
 	/**
@@ -91,7 +89,6 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-    	SmartDashboard.putBoolean("TestModeEnabled", false);
     	//oi.canTest(false);
         gui.sendBoolean("operation/Enabled", false);
         gui.sendString("operation/Mode", "Disabled");
@@ -156,7 +153,6 @@ public class Robot extends IterativeRobot {
         gui.sendString("operation/Mode", "Test");
     }
     public void testPeriodic() {
-//    	SmartDashboard.putBoolean("TestModeEnabled", true);
 //    	LiveWindow.setEnabled(false);
     	//oi.canTest(true);
     }

@@ -5,14 +5,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Set;
 
-import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -39,30 +35,23 @@ public class DriveFrame implements Runnable{
 		System.out.println("Initialized JFrame");
 		initNetworkTable(ip);
 		System.out.println("Initialized Network Table");
+		setWindowsLookAndFeel();
 		
 		archiver = new Archiver();
 		
 		do{
 			tableList = table.getSubTables();
 			subs = new SubTablePanel[tableList.size()];
+			System.out.println("Table size: " + tableList.size());
 			tableSize = tableList.size();
-			System.out.println("Table size: " + tableSize);
 			sleep(1300);
 		}while(subs.length == 0);
 		
 		System.out.println("Connected");
 		
 		//CREATING EACH COLUMN//
-		Font myFont = new Font("SanSerif", Font.PLAIN, 12);
-		int count = 0;
-		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.DARK_GRAY,archiver,myFont);
-			count++;
-			System.out.println("SubTable: " + k);
-		}
+		populateSubs();
 		initSystems();
-		frame.getContentPane().revalidate();
-		systems.revalidate();
 		/////////////////////////////
 		addToFrame(systems, "Center");
 		/////////////////////////////
@@ -70,20 +59,59 @@ public class DriveFrame implements Runnable{
 	@Override
 	public void run(){
 		init();
+		boolean updateFlag = true;
+		while(true){
+			if(owat.isEnabled()){
+				for(SubTablePanel stp:subs){
+					stp.update(stp.bckg);
+				}
+				if(updateFlag){
+					updateFlag = false;
+					//if the tableList has changed
+					if(tableSize != table.getSubTables().size()){
+						tableList = table.getSubTables();
+						tableSize = tableList.size();
+						System.out.println("~~~~~" + "table has changed" + "~~~~~~");
+						subs = new SubTablePanel[tableList.size()];
+						System.out.println("Table size: " + tableList.size());
+						frame.remove(systems);
+						populateSubs();
+						initSystems();
+						addToFrame(systems, "Center");
+					}
+				}
+				sleep(2);
+			}else if(!owat.isEnabled()){
+				updateFlag = true;
+			}
+			sleep(100);
+		}
+	}
+	public void populateSubs(){
+		Font font = new Font("SansSerif",Font.PLAIN,12); ////////////////////////////////////////////////////////////////////////
+		int count = 0;
+		float offset = (float)Math.random();
+		for(String k:tableList){
+			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
+					(float)(offset + Math.random()/5), 
+					(float)(0.3 + Math.random()/4.6), 
+					(float)(0.6f + (Math.random()/3))),archiver,font);
+			count++;
+			System.out.println("SubTable: " + k);
+		}
 	}
 	public void initSystems(){
 		systems = new JPanel();
 		for(int i=0;i<subs.length;i++){
-//			systems.add(subs[i]);
 			subs[i].init();
 			new Thread(subs[i]).start();
 			if(tableList.toArray()[i].equals("operation")){
+				systems.add(subs[i]);////////////////////////////////////////////////////////////////////////
 				owat = new OperationWatchAndTimer(subs[i],archiver);
-				systems.add(subs[i]);
 				new Thread(owat).start();
 			}
 		}
-		systems.setLayout(new GridLayout(1,1)); //columns, rows
+		systems.setLayout(new GridLayout(1,1));////////////////////////////////////////////////////////////////////////
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
@@ -92,12 +120,18 @@ public class DriveFrame implements Runnable{
 		table = NetworkTable.getTable("Gui");
 		sleep(2000);
 	}
-
+	public void setWindowsLookAndFeel(){
+			try {
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+				e.printStackTrace();
+			}
+	}
 	public void initJFrame(){
 		frame = new JFrame("Smart Hashboard");
 		frame.setBounds(0,0,1200,520);
-		frame.setBackground(Color.PINK);
-		frame.getContentPane().setBackground(Color.white);
+		frame.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frame.addWindowListener(new WindowAdapter() {
@@ -107,6 +141,7 @@ public class DriveFrame implements Runnable{
 		    	System.out.println("=======================");
 		    	System.out.println("Closing... please wait");
 		    	System.out.println("=======================");
+		    	System.out.println("Hey");
 		    	if(owat != null){
 		    		owat.export();
 		    	}

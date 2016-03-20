@@ -3,16 +3,11 @@ package notDefault;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Set;
 
-import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -64,36 +59,37 @@ public class Frame implements Runnable{
 		initSystems();
 		/////////////////////////////
 		addToFrame(systems, "Center");
-//		addToFrame(box, "South");
-//		addToFrame(refresh, "South");
 		/////////////////////////////
 	}
 	@Override
 	public void run(){
 		init();
 		boolean updateFlag = true;
-		sleep(1500);
 		while(true){
-			if(owat.isEnabled() && updateFlag){
-				updateFlag = false;
-				//if the tableList has changed
-				tableList = table.getSubTables();
-				if(tableSize != tableList.size()){
-					tableSize = tableList.size();
-					System.out.println("~~~~~" + "table has changed" + "~~~~~~");
-					subs = new SubTablePanel[tableList.size()];
-					System.out.println("Table size: " + tableList.size());
-					frame.remove(systems);
-					populateSubs();
-					initSystems();
-					addToFrame(systems, "North");
-					sleep(1300);
+			if(owat.isEnabled()){
+				for(SubTablePanel stp:subs){
+					stp.update(stp.bckg);
 				}
-				sleep(3000);
+				if(updateFlag){
+					updateFlag = false;
+					//if the tableList has changed
+					if(tableSize != table.getSubTables().size()){
+						tableList = table.getSubTables();
+						tableSize = tableList.size();
+						System.out.println("~~~~~" + "table has changed" + "~~~~~~");
+						subs = new SubTablePanel[tableList.size()];
+						System.out.println("Table size: " + tableList.size());
+						frame.remove(systems);
+						populateSubs();
+						initSystems();
+						addToFrame(systems, "Center");
+					}
+				}
+				sleep(2);
 			}else if(!owat.isEnabled()){
 				updateFlag = true;
 			}
-			sleep(300);
+			sleep(100);
 		}
 	}
 	public void populateSubs(){
@@ -146,9 +142,9 @@ public class Frame implements Runnable{
 		    @Override
 		    public void windowClosing(WindowEvent windowEvent) {
 		    	frame.setVisible(false);
-		    	System.out.println("=======================");
+		    	System.out.println("///////////////////////");
 		    	System.out.println("Closing... please wait");
-		    	System.out.println("=======================");
+		    	System.out.println("///////////////////////");
 		    	System.out.println("Hey");
 		    	if(owat != null){
 		    		owat.export();
@@ -157,16 +153,6 @@ public class Frame implements Runnable{
 		    }
 		});
 		frame.setVisible(true);
-	}
-	public void initRefreshButton(JButton b){
-		b.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				for(int i=0;i<subs.length;i++){
-					subs[i].emptyTable();
-				}
-			}
-		});
 	}
 	public void addToFrame(Component c, String position){
 		frame.getContentPane().add(c, position);

@@ -6,7 +6,6 @@ import org.usfirst.frc.team3663.robot.commands.C_WinchMove;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -66,7 +65,6 @@ public class SS_Winch extends Subsystem {
     
     public void updateDashboard(){								
     	Robot.gui.sendNumber("winch/Winch Encoder",winchMotor1.getSpeed());
-    	SmartDashboard.putNumber("Winch Encoder", winchMotor1.getEncPosition());
     }
 }
 
