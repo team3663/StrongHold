@@ -39,12 +39,12 @@ public class TestC_TestWheelyBar extends Command {
     	switch (state){
     	case 0://Drive up to hitting the wheels
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
-    		Robot.ss_WheelyBar.moveWheelyBar(speed);
-    		speed += delta;
-    		if(speed > topSpeed){
-    			speed = topSpeed;
-    		}
-    		if(System.currentTimeMillis() > 2000 + startTime){
+    		Robot.ss_WheelyBar.moveWheelyBar(1.0);
+//    		speed += delta;
+//    		if(speed > topSpeed){
+//    			speed = topSpeed;
+//    		}
+    		if(System.currentTimeMillis() > 1000 + startTime){
     			state++;
     		}
     		Robot.ss_WheelyBar.resetEncoder();
@@ -52,27 +52,27 @@ public class TestC_TestWheelyBar extends Command {
     		break;
     	case 1://Drive down
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
-    		Robot.ss_WheelyBar.moveWheelyBar(speed);
-    		speed -= delta;
-    		if (speed < -topSpeed)
-    		{
-    			speed = -topSpeed;
-    		}
-    		if(System.currentTimeMillis() > 2000 + startTime){
+    		Robot.ss_WheelyBar.moveWheelyBar(-1.0);
+//    		speed -= delta;
+//    		if (speed < -topSpeed)
+//    		{
+//    			speed = -topSpeed;
+//    		}
+    		if(System.currentTimeMillis() > 1000 + startTime){
     			state++;
     		}
     		break;
     	case 2://Drive up again
-    		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
-    		Robot.ss_WheelyBar.moveWheelyBar(speed);
-    		speed += delta;
-    		if (speed > topSpeed)
-    		{
-    			speed = topSpeed;
-    		}
-    		if(System.currentTimeMillis() > 2000 + startTime){
+//    		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
+//    		Robot.ss_WheelyBar.moveWheelyBar(speed);
+//    		speed += delta;
+//    		if (speed > topSpeed)
+//    		{
+//    			speed = topSpeed;
+//    		}
+//    		if(System.currentTimeMillis() > 2000 + startTime){
     			state++;
-    		}
+//    		}
     		break;
     	case 3://Stop
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
