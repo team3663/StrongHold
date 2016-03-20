@@ -89,7 +89,6 @@ public class Frame implements Runnable{
 			}else if(!owat.isEnabled()){
 				updateFlag = true;
 			}
-			sleep(100);
 		}
 	}
 	public void populateSubs(){

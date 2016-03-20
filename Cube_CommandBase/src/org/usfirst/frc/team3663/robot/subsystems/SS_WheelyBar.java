@@ -37,7 +37,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public int getVelocity(){
-    	return wheelyBarMotor.getEncVelocity();
+    	return Robot.robotMap.wheelyBarEncDir*wheelyBarMotor.getEncVelocity();
     }
     
     private int wheelyBarDelay = 0;
@@ -67,13 +67,13 @@ public class SS_WheelyBar extends Subsystem {
     		STOP();
     	}
     }
-    
+    //TODO: standardize speed division
     public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
     	wheelyBarMotor.set(pSpeed/1.5);
     }
     
     public void STOP(){												//stops the motor
-    	wheelyBarMotor.set(0);
+    	moveWheelyBar(0);
     }
     
     public void updateDashboard(){

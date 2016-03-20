@@ -28,7 +28,7 @@ public class TestC_TestWheelyBar extends Command {
     protected void initialize() {
     	state = 0;
     	speed = 0.2;
-    	startTime = System.currentTimeMillis();
+    	startTime = 0;
     	Robot.gui.sendString("Test/testState","wheelyBar starting");
     	Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.untested;
     	Robot.ss_Test.update();
@@ -38,41 +38,27 @@ public class TestC_TestWheelyBar extends Command {
     protected void execute() {
     	switch (state){
     	case 0://Drive up to hitting the wheels
-    		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
-    		Robot.ss_WheelyBar.moveWheelyBar(speed);
-    		speed += delta;
-    		if(speed > topSpeed){
-    			speed = topSpeed;
+    		if(startTime == 0){
+    			startTime = System.currentTimeMillis();
     		}
+    		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
+    		Robot.ss_WheelyBar.moveWheelyBar(1.0);
     		if(System.currentTimeMillis() > 2000 + startTime){
     			state++;
+    			startTime = System.currentTimeMillis();
     		}
     		Robot.ss_WheelyBar.resetEncoder();
-    		startTime = System.currentTimeMillis();
     		break;
     	case 1://Drive down
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
-    		Robot.ss_WheelyBar.moveWheelyBar(speed);
-    		speed -= delta;
-    		if (speed < -topSpeed)
-    		{
-    			speed = -topSpeed;
-    		}
+    		Robot.ss_WheelyBar.moveWheelyBar(-1.0);
     		if(System.currentTimeMillis() > 2000 + startTime){
     			state++;
+    			startTime = System.currentTimeMillis();
     		}
     		break;
     	case 2://Drive up again
-    		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
-    		Robot.ss_WheelyBar.moveWheelyBar(speed);
-    		speed += delta;
-    		if (speed > topSpeed)
-    		{
-    			speed = topSpeed;
-    		}
-    		if(System.currentTimeMillis() > 2000 + startTime){
-    			state++;
-    		}
+    		state++;
     		break;
     	case 3://Stop
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
@@ -91,7 +77,7 @@ public class TestC_TestWheelyBar extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return state >= 3;
+        return state > 3;
     }
 
     // Called once after isFinished returns true
