@@ -3,6 +3,7 @@ package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.CG_AutoOverBasicDefence;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
+import org.usfirst.frc.team3663.robot.commands.C_UpdateGui;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
 import org.usfirst.frc.team3663.robot.subsystems.SS_ConfigReader;
@@ -79,7 +80,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
     	LiveWindow.setEnabled(false);
         gui.sendNumber("operation/Time", Timer.getMatchTime());
-
+        new C_UpdateGui(true);
     }
 	
 	/**

@@ -80,6 +80,13 @@ public class Archiver {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 			System.exit(0);
 		}
+		PrintWriter error = null;
+		new File("HashboardErrorReport.txt");
+		try {
+			error = new PrintWriter("HashboardErrorReport.txt","UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.err.println("ErrorFileFailure");
+		}
 		int maxLength = 0;
 		try{
 			maxLength = rows.get(0).size();
