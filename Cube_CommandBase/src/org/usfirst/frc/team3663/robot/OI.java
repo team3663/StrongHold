@@ -91,10 +91,10 @@ public class OI {
 //	private JoystickButton turn90Degrees = new JoystickButton(visionTestStick,4);
 //	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
 
-	private JoystickButton testCenterGoal = new JoystickButton(testJoystick,3);
-	private JoystickButton testFineAdjust = new JoystickButton(testJoystick,4);
-	private JoystickButton testTeleopVisionShooting = new JoystickButton(testJoystick,5);
-	private JoystickButton turn90Degrees = new JoystickButton(testJoystick,6);
+	private JoystickButton testCenterGoal = new JoystickButton(testJoystick,3);//on xbox one is x
+	//private JoystickButton testFineAdjust = new JoystickButton(testJoystick,4);
+	private JoystickButton testTeleopVisionShooting = new JoystickButton(testJoystick,5);//on xbox one is bumperL
+	//private JoystickButton turn90Degrees = new JoystickButton(testJoystick,6);
 
 //	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
 	
@@ -139,8 +139,8 @@ public class OI {
 		testCenterGoal.whenReleased(new C_EndCommand(cCenterGoal));
 		//NOT USE!!! //turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
 		C_DartPrepareForShot cPrepareDartShot = new C_DartPrepareForShot();
-		testFineAdjust.whenPressed(cPrepareDartShot);//C_VisionFineAdjust());
-		testFineAdjust.whenReleased(new C_EndCommand(cPrepareDartShot));
+		//testFineAdjust.whenPressed(cPrepareDartShot);//C_VisionFineAdjust());
+		//testFineAdjust.whenReleased(new C_EndCommand(cPrepareDartShot));
 		CG_TeleopVisionShooting cgTeleopVision = new CG_TeleopVisionShooting();
 		testTeleopVisionShooting.whenPressed(cgTeleopVision);
 		testTeleopVisionShooting.whenReleased(new C_EndCommand(cgTeleopVision));

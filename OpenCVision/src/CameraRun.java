@@ -49,6 +49,10 @@ public class CameraRun {
 	int goalCenterX = 325/*-1*/,goalCenterY;
 	double angle, distance;//angle called in comment in findCenterGoal()
 	
+	
+	boolean hardChooseLeft = true;//will choose leftgoal if close enough
+	
+	
 //	boolean foundObject = false;
 	
 	boolean autoFindLeft,centeringGoal/*,movingWithRadius*/,okayToShoot;
@@ -810,15 +814,24 @@ public class CameraRun {
 					}
 					else
 					{
-			*/			if (Math.abs(cMaskOverlap - maskOverlap) < 8)
+			*/			if (Math.abs(cMaskOverlap - maskOverlap) < 10)
 						{
-							if (Math.abs(getAngleTilt(o)) < Math.abs(getAngleTilt(bestPiece)))
+							if (hardChooseLeft)
+							{
+								if (massObjectPointer.getGPiece(o).xStart < massObjectPointer.getGPiece(bestPiece).xStart)
+								{
+									bestPiece = o;
+									bestPieceChanged = true;
+									bestMaskOverlap = cMaskOverlap;
+								}
+							}
+							else if (Math.abs(getAngleTilt(o)) < Math.abs(getAngleTilt(bestPiece)))
 							{
 								System.out.println("switching goals");
-							/*	bestPiece = o;
+								bestPiece = o;
 								bestPieceChanged = true;
 								bestMaskOverlap = cMaskOverlap;
-						*/	}
+							}
 						}
 						else if (cMaskOverlap > maskOverlap)
 						{
@@ -1153,7 +1166,7 @@ public class CameraRun {
 		if (x < fixWidth-rad)			   		img.setRGB(x+rad, y, color);//.getRGB());
 		if (x > rad-1)			   			img.setRGB(x-rad, y, color);//.getRGB());
 		if (y < fixHeight-rad)			   		img.setRGB(x, y+rad, color);//.getRGB());//out of bounds exception
-		if (x < fixWidth-1 && y < fixHeight-1)		img.setRGB(x+rad, y+rad, color);//.getRGB());
+		if (x < fixWidth-rad && y < fixHeight-rad)		img.setRGB(x+rad, y+rad, color);//.getRGB());
 		if (x > rad-1 && y < fixHeight-rad)  		img.setRGB(x-rad, y+rad, color);//.getRGB());
 		if (y > rad-1)			   			img.setRGB(x, y-rad, color);//.getRGB());
 		if (x < fixWidth-rad && y > rad-1)  		img.setRGB(x+rad, y-rad, color);//.getRGB());

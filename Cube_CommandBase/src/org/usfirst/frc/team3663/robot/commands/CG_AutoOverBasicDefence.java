@@ -23,7 +23,7 @@ public class CG_AutoOverBasicDefence extends CommandGroup {
     		addSequential(new C_CameraLightSet(false));
         	addSequential(new C_CameraLightSet(true));	
     	addSequential(new C_PickupFirePiston(true));
-    	addSequential(new C_DartAutoMove(Robot.robotMap.touch2+500));
+    	addSequential(new C_DartAutoMove(Robot.robotMap.touch2+400));
     	addSequential(new CG_AutoVisionShooting());
     	
         // these will run in order.
