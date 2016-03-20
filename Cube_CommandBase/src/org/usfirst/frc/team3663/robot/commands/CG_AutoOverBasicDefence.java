@@ -26,7 +26,6 @@ public class CG_AutoOverBasicDefence extends CommandGroup {
     	addSequential(new C_DartAutoMove(Robot.robotMap.touch2+500));
     	addSequential(new CG_AutoVisionShooting());
     	
-        //      addSequential(new Command2());
         // these will run in order.
 
         // To run multiple commands at the same time,

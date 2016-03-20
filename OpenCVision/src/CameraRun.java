@@ -140,7 +140,7 @@ public class CameraRun {
 				try
 				{
 					new File("C:\\2016CameraImages").mkdir();
-					File outputfile = new File("C:\\2016CameraImages\\cameraImg" + System.currentTimeMillis() + ".jpg");
+					File outputfile = new File("C:\\2016CameraImages\\START-Img" + System.currentTimeMillis() + ".jpg");
 					ImageIO.write(buffImg, "jpg", outputfile);
 				} catch (IOException e)
 				{
@@ -227,7 +227,7 @@ public class CameraRun {
 						{
 							try
 							{
-								File outputfile = new File("C:\\2016CameraImages\\cameraImg" + System.currentTimeMillis() + ".jpg");
+								File outputfile = new File("C:\\2016CameraImages\\SHOOT-Img" + System.currentTimeMillis() + ".jpg");
 								ImageIO.write(buffImg, "jpg", outputfile);
 							} catch (IOException e)
 							{
@@ -321,11 +321,11 @@ public class CameraRun {
 		{
 			for(int x = (int)(104)/**resolutionRatio)0*/; x<width; x++)//make it ignore left corner!!!!!!!!!!!
 			{
-				if (/*!(x < 104/* && y  < 377*./) && */(!dartBlwThrsh || (dartBlwThrsh && y < 374/**resolutionRatio*/)))
+				if (/*!(x < 104/* && y  < 377*./) && */(!dartBlwThrsh || (dartBlwThrsh && y < 358/**resolutionRatio*/)))
 				{
 					c = new Color(img.getRGB(x,y));
 					gg = c.getGreen();
-					if (c.getRed()<60 && /*c.getBlue()<210 &&*/ (gg>=210 || gg>=c.getBlue()+40))//c.HSBtoRGB(hue, saturation, 100) greater than 100 luminosity
+					if (c.getRed()<60 && /*c.getBlue()<210 &&*/ (gg>=210 || gg>=c.getBlue()+35))//c.HSBtoRGB(hue, saturation, 100) greater than 100 luminosity
 					{
 						if (okayToShoot && !centeringGoal)
 						{
@@ -601,7 +601,7 @@ public class CameraRun {
 			}
 			if (massObjectPointer.getGPiece(o).mass < 600)// || massObjectPointer.getMaskOverlap(o) < 62)
 			{
-				System.out.println("mass: " + massObjectPointer.getGPiece(o).mass);
+				//System.out.println("mass: " + massObjectPointer.getGPiece(o).mass);
 				massObjectPointer.removeMass(o);
 		//		System.out.println("removing object " + o);
 				gPieceKey--;
@@ -794,7 +794,7 @@ public class CameraRun {
 					table.putNumber("cMaskOverlap: ", cMaskOverlap);
 					table.putNumber("MaskOverlap: ", maskOverlap);
 				//	if (Math.abs(a))
-					if (cMaskOverlap < 66)
+		/*			if (cMaskOverlap < 66)
 					{
 						massObjectPointer.removeMass(o);
 						gPieceKey--;
@@ -810,27 +810,32 @@ public class CameraRun {
 					}
 					else
 					{
-						if (cMaskOverlap > maskOverlap)
+			*/			if (Math.abs(cMaskOverlap - maskOverlap) < 8)
+						{
+							if (Math.abs(getAngleTilt(o)) < Math.abs(getAngleTilt(bestPiece)))
+							{
+								System.out.println("switching goals");
+							/*	bestPiece = o;
+								bestPieceChanged = true;
+								bestMaskOverlap = cMaskOverlap;
+						*/	}
+						}
+						else if (cMaskOverlap > maskOverlap)
 						{
 							bestPiece = o;
 							bestPieceChanged = true;
 							bestMaskOverlap = cMaskOverlap;
 						}
-					/*	else if (((cMaskOverlap <= maskOverlap+10)&&(cMaskOverlap >= maskOverlap-10) || (maskOverlap <= cMaskOverlap+10)&&(maskOverlap >= cMaskOverlap-10)) && (massObjectPointer.getGPiece(bestPiece).mass < massObjectPointer.getGPiece(o).mass))
-						{
-							bestPiece = o;
-							bestPieceChanged = true;
-						}*/
 						else
 						{
 							bestPieceChanged = false;
 						}
-					}
+			//		}
 				}
 			}
 
 		}
-		if (gPieceKey > -1 && bestMaskOverlap > 69)//may not need bestMaskOverlap comparison
+		if (gPieceKey > -1)// && bestMaskOverlap > 69)//may not need bestMaskOverlap comparison
 		{
 			bestPieceKey = bestPiece;
 	//		checkWithObjectRatio(bestPiece);
@@ -881,18 +886,18 @@ public class CameraRun {
 				{
 					if (pic[x][y] > 0)
 					{
-						overlapMask+=2;
-						totalGreen+=2;
+						overlapMask++;
+						totalGreen++;
 					}
 					else
 					{
-						//overlapMask-=2;
+						//overlapMask-=0.025;
 					}
 				}
 				else if (pic[x][y] > 0)
 				{
 					totalGreen++;
-					overlapMask-=0.05;
+					overlapMask-=0.05;//later try commenting out to see if affect percentages
 				}
 		/*		if (mask[x-xStart][y-yStart] == pic[x][y])
 				{
@@ -958,7 +963,15 @@ public class CameraRun {
 		}*/
 		///===============================================
 		//for final bot===================================
-		goalCenterX = (int)(325);//*resolutionRatio);
+		goalCenterX = (int)(300);//(325);//*resolutionRatio);
+		if (distance > 149)
+		{
+			//goalCenterX = (int)(305);
+		}
+		else if (distance > 160)
+		{
+			//goalCenterX = (int)(310);
+		}
 		/*
 		if (distance < 64)
 		{
@@ -991,12 +1004,12 @@ public class CameraRun {
 		if (gPieceKey > -1)
 		{
 			int xCenter = massObjectPointer.getGPiece(bestPieceKey).xStart + (massObjectPointer.getGPiece(bestPieceKey).width/2);
-			double buffer = (double)(massObjectPointer.getGPiece(bestPieceKey).width*4.0/20.0);
+			double buffer = (double)(massObjectPointer.getGPiece(bestPieceKey).width*3.5/20.0);
 			//int yCenter = massObjectPointer.getGPiece(bestPieceKey).yStart + (massObjectPointer.getGPiece(bestPieceKey).height/8);
 			
 			double moveAngle = 45.0*((double)xCenter-goalCenterX/*320.0*/)/320.0;//-160)/160;
 		
-			if (xCenter < goalCenterX-buffer)//10)
+			if (xCenter <= goalCenterX-buffer)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", true);
@@ -1004,7 +1017,7 @@ public class CameraRun {
 				table.putBoolean("turnLeft: ",true);
 				return true;
 			}
-			else if (xCenter > goalCenterX+buffer)//10)
+			else if (xCenter >= goalCenterX+buffer)//10)
 			{
 				table.putNumber("cameraMoveAngle: ", moveAngle);
 				//table.putBoolean("turnLeft: ", false);
@@ -1088,8 +1101,9 @@ public class CameraRun {
 	
 	private void colorSquare(BufferedImage img, int x, int y, int color)
 	{
-		int width = 7, height = 7;
-		int x2 = x-3,y2 = y-3;
+		int width = 11, height = 11;
+		//changed from 3 to 5 so if broken, then fix
+		int x2 = x-5,y2 = y-5;
 
 		if (x > fixWidth-1)
 		{
@@ -1108,7 +1122,7 @@ public class CameraRun {
 			y = 0;
 		}
 		//-------------
-		if (x2+((width/2)+1) > fixWidth-1)
+		if (x2+((width/2)+3) > fixWidth-1)
 		{
 			width-=(x-x2);
 			//x2 = fixWidth-1;
@@ -1118,7 +1132,7 @@ public class CameraRun {
 			width-=(x-x2);
 			x2 = 0;
 		}
-		if (y2+((height/2)+1) > fixHeight-1)
+		if (y2+((height/2)+3) > fixHeight-1)
 		{
 			height-=(y-y2);
 			//y2 = fixHeight-1;
@@ -1132,7 +1146,7 @@ public class CameraRun {
 		img.getGraphics().setColor(Color.RED);
 		img.getGraphics().fillRect(x2, y2, width, height);
 		//------
-		color = Color.HSBtoRGB((float)Math.random(), (float)1.0, (float)1.0);
+		color = Color.HSBtoRGB((float)Math.random(), (float)1.0, (float)0.6);
 												img.setRGB(x, y, color);//.getRGB());
 		for (int rad = 1; rad <= 4; rad++)
 		{

@@ -37,6 +37,11 @@ public class C_DartPrepareForShot extends Command {
     		 target = Robot.ss_Dart.minDistance();
     	 }
     	 speed = Robot.ss_Dart.findSpeed(target);
+    	 
+    	 if (target > Robot.ss_Dart.maxDistance())
+    	 {
+    		 target = Robot.ss_Dart.maxDistance();
+    	 }
     }
 
     protected void execute() {
