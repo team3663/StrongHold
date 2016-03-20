@@ -4,7 +4,6 @@ import org.usfirst.frc.team3663.robot.Robot;
 
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *		ya this changes the camera true is one false is off pretty self explanatory
@@ -27,7 +26,6 @@ public class SS_Camera extends Subsystem {
 	}
 	
 	public void updateDashboard(){
-		SmartDashboard.putBoolean("Camera Location : ", light.get() == Relay.Value.kOn);
 	}
 }
 

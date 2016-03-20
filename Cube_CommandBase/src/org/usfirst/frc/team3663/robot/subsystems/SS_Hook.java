@@ -6,7 +6,6 @@ import org.usfirst.frc.team3663.robot.commands.C_HookMove;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *I realy have no idea on which way this goes becasue it changes everytime i pickup the controller and its not something sw can fix 
@@ -57,8 +56,7 @@ public class SS_Hook extends Subsystem {
     	else
     	{
     		int distValue = hookMotor.getEncPosition();
-    			hookMotor.set(pSpeed*speedDir);    		
-    		SmartDashboard.putNumber("Hook Encoder", distValue);
+    			hookMotor.set(pSpeed*speedDir);
     	}
     }
     

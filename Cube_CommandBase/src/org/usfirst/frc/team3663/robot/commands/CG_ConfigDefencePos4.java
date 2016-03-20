@@ -9,7 +9,7 @@ public class CG_ConfigDefencePos4 extends CommandGroup {
     
     public  CG_ConfigDefencePos4() {
         // Add Commands here:
-        addSequential(new C_DartAutoMove(1700));
+        addSequential(new C_DartAutoMove(1680));
         //      addSequential(new Command2());
         // these will run in order.
 

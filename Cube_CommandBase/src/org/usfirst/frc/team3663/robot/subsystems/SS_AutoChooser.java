@@ -48,6 +48,7 @@ public class SS_AutoChooser extends Subsystem {
     	else if(value > 3270 && value < 3700){ //81-90
     	}
     	else if(value > 3700 && value < 3955){ //91-100
+    		auto = new CG_AutoUnderLowBar();
     	}
     	
     	if(auto != null){

@@ -33,7 +33,7 @@ public class SS_Gui extends Subsystem{
 	}
 	@Override
 	protected void initDefaultCommand() {
-		setDefaultCommand(new C_UpdateGui());
+		setDefaultCommand(new C_UpdateGui(false));
 		
 	}
 }

@@ -10,6 +10,7 @@ public class OperationWatchAndTimer implements Runnable{
 	Date timeStamp;
 	String name;
 	long startTime = System.currentTimeMillis();
+	boolean recording = true;
 	public OperationWatchAndTimer(SubTablePanel operation, Archiver archiver){
 		this.operation = operation;
 		this.archiver = archiver;
@@ -22,6 +23,7 @@ public class OperationWatchAndTimer implements Runnable{
 		boolean setNewTimeFlag = true;
 		boolean exportFlag = false;
 		while(true){
+			recording = true;
 			sleep(2);
 			//the time in seconds, truncated to two decimal places
 			archiver.addValue(name, Double.toString(((double)System.currentTimeMillis() - (double)startTime)/1000.0));
@@ -34,6 +36,7 @@ public class OperationWatchAndTimer implements Runnable{
 				}
 			//On disable
 			}else if(!keepGoing(2000)){
+				recording = false;
 				setNewTimeFlag = true;
 				if(exportFlag){
 					export(); //Timed out, write file
@@ -59,11 +62,7 @@ public class OperationWatchAndTimer implements Runnable{
 		return System.currentTimeMillis() - startTime;
 	}
 	public boolean isEnabled(){
-		try{
-			return operation.get(1).equals("true");
-		}catch(NullPointerException e){
-			return false;
-		}
+		return recording;
 	}
 	public void export(){
 		SimpleDateFormat mdy = new SimpleDateFormat("MM-dd-yyyy");

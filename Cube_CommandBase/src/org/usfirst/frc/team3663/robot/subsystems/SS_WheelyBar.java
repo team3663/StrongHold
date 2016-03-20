@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Setting the speed in a positive direction (+) moves the
@@ -18,6 +17,7 @@ public class SS_WheelyBar extends Subsystem {
     
 	private CANTalon wheelyBarMotor = new CANTalon(Robot.robotMap.wheelyBarMotor);
 	private int accptance = 10;
+	//test
 	private boolean setToZero = false;
 	private int speedDir = Robot.robotMap.wbSpeedDir;
 	
@@ -39,7 +39,7 @@ public class SS_WheelyBar extends Subsystem {
     }
     
     public int getVelocity(){
-    	return wheelyBarMotor.getEncVelocity();
+    	return Robot.robotMap.wheelyBarEncDir*wheelyBarMotor.getEncVelocity();
     }
     
     private int wheelyBarDelay = 0;
@@ -69,13 +69,13 @@ public class SS_WheelyBar extends Subsystem {
     		STOP();
     	}
     }
-    
+    //TODO: standardize speed division
     public void moveWheelyBar(double pSpeed){						//moves the motor based on speed
     	wheelyBarMotor.set(pSpeed/1.5);
     }
     
     public void STOP(){												//stops the motor
-    	wheelyBarMotor.set(0);
+    	moveWheelyBar(0);
     }
     
     public void updateDashboard(){

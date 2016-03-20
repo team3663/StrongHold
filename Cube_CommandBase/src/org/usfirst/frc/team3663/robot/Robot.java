@@ -3,6 +3,7 @@ package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.CG_AutoOverBasicDefence;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
+import org.usfirst.frc.team3663.robot.commands.C_UpdateGui;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
 import org.usfirst.frc.team3663.robot.subsystems.SS_ConfigReader;
@@ -23,7 +24,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -80,7 +80,7 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
     	LiveWindow.setEnabled(false);
         gui.sendNumber("operation/Time", Timer.getMatchTime());
-
+        new C_UpdateGui(true);
     }
 	
 	/**
@@ -89,7 +89,6 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-    	SmartDashboard.putBoolean("TestModeEnabled", false);
     	//oi.canTest(false);
         gui.sendBoolean("operation/Enabled", false);
         gui.sendString("operation/Mode", "Disabled");
@@ -154,7 +153,6 @@ public class Robot extends IterativeRobot {
         gui.sendString("operation/Mode", "Test");
     }
     public void testPeriodic() {
-//    	SmartDashboard.putBoolean("TestModeEnabled", true);
 //    	LiveWindow.setEnabled(false);
     	//oi.canTest(true);
     }

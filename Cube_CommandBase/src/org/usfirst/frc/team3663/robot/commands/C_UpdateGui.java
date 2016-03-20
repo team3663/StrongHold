@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class C_UpdateGui extends Command {
-
+	boolean run = false;
 	long startTime;
-    public C_UpdateGui() {
+    public C_UpdateGui(boolean run) {
+    	this.run = run;
         requires(Robot.gui);
     }
 
@@ -39,7 +40,7 @@ public class C_UpdateGui extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return run;
     }
 
     // Called once after isFinished returns true

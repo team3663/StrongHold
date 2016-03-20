@@ -16,7 +16,7 @@ public class CG_AutoVisionShooting extends CommandGroup {
     	
 		addSequential(new CG_VisionCenterGoal());
 		addSequential(new C_DartPrepareForShot());
-		addSequential(new CG_AutoShoot(-25000));
+		addSequential(new CG_AutoShoot(-25000));//-24000
 		
 		//----------------------------------------------
         // Add Commands here:

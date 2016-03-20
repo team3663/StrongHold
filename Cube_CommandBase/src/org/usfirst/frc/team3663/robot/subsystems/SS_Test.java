@@ -5,7 +5,6 @@ import org.usfirst.frc.team3663.robot.commands.TestCG_TestRequiresAll;
 import org.usfirst.frc.team3663.robot.commands.TestC_CycleTest;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -40,12 +39,9 @@ public class SS_Test extends Subsystem {
     }
     	
     public SS_Test(){
-//		SmartDashboard.putNumber("Testing #:", testNumber);
-//    	SmartDashboard.putBoolean("Test Mode:", isTesting);
-//    	SmartDashboard.putString("Testing:", testName);
     	Robot.gui.sendNumber("Test/Test#", testNumber);
     	Robot.gui.sendBoolean("Test/IsTesting", isTesting);
-    	Robot.gui.sendString("Test/TestMode", testName);
+//    	Robot.gui.sendString("Test/TestMode", testName);
     	resetTestStatus();
 	}
 	
@@ -93,12 +89,9 @@ public class SS_Test extends Subsystem {
 	}
 
 	public void update(){
-//    	SmartDashboard.putNumber("Testing #:", testNumber);
-//    	SmartDashboard.putBoolean("Test Mode:", isTesting);
-//    	SmartDashboard.putString("Testing:", testName);
     	Robot.gui.sendNumber("Test/Test#", testNumber);
     	Robot.gui.sendBoolean("Test/IsTesting", isTesting);
-    	Robot.gui.sendString("Test/TestMode", testName);
+//    	Robot.gui.sendString("Test/TestMode", testName);
     	
     	Robot.gui.sendString("Test/Shooter top motor+enc", shooterTopStatus);
     	Robot.gui.sendString("Test/Shooter bottom motor+enc", shooterBottomStatus);

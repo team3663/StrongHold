@@ -27,7 +27,7 @@ public class Archiver {
 		if(acceptingValues){
 			for(ArrayList<String> a:rows){
 				try{
-					if(a.get(0).contains(key)){
+					if(a.get(0).toLowerCase().equals(key.toLowerCase())){
 						a.add(value);
 						break;
 					}
@@ -80,6 +80,13 @@ public class Archiver {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 			System.exit(0);
 		}
+		PrintWriter error = null;
+		new File("HashboardErrorReport.txt");
+		try {
+			error = new PrintWriter("HashboardErrorReport.txt","UTF-8");
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			System.err.println("ErrorFileFailure");
+		}
 		int maxLength = 0;
 		try{
 			maxLength = rows.get(0).size();
@@ -89,8 +96,8 @@ public class Archiver {
 		String currentLine = "";
 		String lastLine = "";
 		String tempTime = "";
-		for(int i=0;i<maxLength;i++){
-			for(ArrayList<String> a:rows){
+		for(int i=0;i<maxLength;i++){ //iterate vertically
+			for(ArrayList<String> a:rows){ //iterate horizontally first
 				if(!a.get(0).equals("aa_time")){ //if the column isn't aa_time
 					try{
 						currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine

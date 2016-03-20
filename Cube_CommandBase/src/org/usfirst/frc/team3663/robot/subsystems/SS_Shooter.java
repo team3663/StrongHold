@@ -5,7 +5,6 @@ import org.usfirst.frc.team3663.robot.Robot;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //
 
@@ -91,7 +90,6 @@ public class SS_Shooter extends Subsystem {
     		topSpeed = -1;
     	}
     	setShooterTopMotorSpeed(topSpeed);
-    	SmartDashboard.putNumber("tops speed", topSpeed);
     }
     
     private double bottomSpeed = 0;    
@@ -106,7 +104,6 @@ public class SS_Shooter extends Subsystem {
     		bottomSpeed = -1;
     	}
     	setShooterBottomMotorSpeed(bottomSpeed);
-    	SmartDashboard.putNumber("bottoms speed", bottomSpeed);
     }
     
     public void holdSpeed(int pSpeed){
@@ -147,8 +144,6 @@ public class SS_Shooter extends Subsystem {
     }
     
     public void updateDashboard(){							//sends a update to the dashboard			LEAVE THE SMARTDASHBOARD
-    	SmartDashboard.putNumber("Top Shooter Motor Speed : ", shooterTop.getEncVelocity());
-    	SmartDashboard.putNumber("Bottom Shooter Motor Speed : ", shooterBottom.getEncVelocity());
     	Robot.gui.sendNumber("shooter/Top Shooter Motor", getShooterTopEncoderVelocity());
     	Robot.gui.sendNumber("shooter/Bottom Shooter Motor", getShooterBottomEncoderVelocity());
     }
