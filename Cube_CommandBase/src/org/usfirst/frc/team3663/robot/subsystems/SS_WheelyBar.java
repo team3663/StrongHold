@@ -19,6 +19,7 @@ public class SS_WheelyBar extends Subsystem {
 	private CANTalon wheelyBarMotor = new CANTalon(Robot.robotMap.wheelyBarMotor);
 	private int accptance = 10;
 	private boolean setToZero = false;
+	private int speedDir = Robot.robotMap.wbSpeedDir;
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new C_WheelyBarMove());

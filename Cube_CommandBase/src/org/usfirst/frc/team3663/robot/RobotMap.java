@@ -89,5 +89,9 @@ public class RobotMap {
 	    public int wbMaxEnc = 2564;
 	    public int wbMinEnc = 1211;
 	    public int wheelyBarEncDir = -1;
+	    public int wbSpeedDir = 1;
+	//hook
+	    public int hookDir = 1;
+	    
 	
 }

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ *Ya explained
  */
 public class SS_PowerDistributionBoard extends Subsystem {
     

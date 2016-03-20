@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ * assume that negative is lifting the robot up
  */
 public class SS_Winch extends Subsystem {
 

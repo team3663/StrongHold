@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import org.usfirst.frc.team3663.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-
+//i have no idea that this does 
 public class SS_ConfigReader extends Subsystem{
 	public SS_ConfigReader(){
 		try{

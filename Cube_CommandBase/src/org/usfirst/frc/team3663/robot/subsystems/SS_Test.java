@@ -7,7 +7,11 @@ import org.usfirst.frc.team3663.robot.commands.TestC_CycleTest;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
+/**
+ * 
+ * @author curti_000
+ * I really don't want to mess this up
+ */
 public class SS_Test extends Subsystem {
 	public int testNumber = 0;
 	private boolean isTesting = false;

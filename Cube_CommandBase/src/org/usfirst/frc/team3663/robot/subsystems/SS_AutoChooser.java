@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ *  The numbers in the comments are the numbers on the auto dial which is on the left side of the bot
  */
+
 public class SS_AutoChooser extends Subsystem {
 	
-	private AnalogInput dial = new AnalogInput(Robot.robotMap.autoAnalogDial);    
-    public boolean autoShoot = false;
+	private AnalogInput dial = new AnalogInput(Robot.robotMap.autoAnalogDial);  
 	
     public void initDefaultCommand() {
     	
@@ -31,11 +31,9 @@ public class SS_AutoChooser extends Subsystem {
     	}
     	else if(value > 200 && value < 650){ //11-20
     		auto = new CG_AutoOverBasicDefence();
-    		autoShoot = false;    		
     	}
     	else if(value > 650 && value < 1100){ //21-30
     		auto = new CG_AutoUnderLowBar();
-    		autoShoot = false;
     	}
     	else if(value > 1100 && value < 1540){ //31-40
     	}
@@ -48,12 +46,8 @@ public class SS_AutoChooser extends Subsystem {
     	else if(value > 2860 && value < 3700){ //71-80
     	}
     	else if(value > 3270 && value < 3700){ //81-90
-    		auto = new CG_AutoUnderLowBar();
-    		autoShoot = true;
     	}
     	else if(value > 3700 && value < 3955){ //91-100
-    		auto = new CG_AutoOverBasicDefence();
-    		autoShoot = true;
     	}
     	
     	if(auto != null){

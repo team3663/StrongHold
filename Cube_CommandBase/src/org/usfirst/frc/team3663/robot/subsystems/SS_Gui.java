@@ -5,6 +5,9 @@ import org.usfirst.frc.team3663.robot.commands.C_UpdateGui;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
+/*
+ * pushes stuff to the HashBoard
+ */
 public class SS_Gui extends Subsystem{
 	NetworkTable table;
 	public SS_Gui(){

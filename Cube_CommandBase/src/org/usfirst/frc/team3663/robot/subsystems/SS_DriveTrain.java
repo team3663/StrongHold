@@ -12,8 +12,11 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-
+/**
+ * 
+ * @author curti_000
+ *I realy dont know how to explain this but the labeling for the driveTrain is correct
+ */
 
 
 public class SS_DriveTrain extends Subsystem {

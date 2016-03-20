@@ -8,8 +8,12 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-
-
+/**
+ * 
+ * @author curti_000
+ * this is made to move the dart the bigger the number the farther up on the dart you are positive is up and negeitive speed is down
+ *
+ */
 
 public class SS_Dart extends Subsystem {
 	

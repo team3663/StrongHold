@@ -9,11 +9,12 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- *
+ *I realy have no idea on which way this goes becasue it changes everytime i pickup the controller and its not something sw can fix 
+ *Supposed Negitive is up
  */
 public class SS_Hook extends Subsystem {
 
-	
+	private int speedDir = Robot.robotMap.hookDir;
 	private CANTalon hookMotor = new CANTalon(Robot.robotMap.hookMotor);
 	private DoubleSolenoid hookPiston = new DoubleSolenoid(Robot.robotMap.hookSolenoid[0], Robot.robotMap.hookSolenoid[1]);
     public void initDefaultCommand() {
@@ -56,7 +57,7 @@ public class SS_Hook extends Subsystem {
     	else
     	{
     		int distValue = hookMotor.getEncPosition();
-    			hookMotor.set(pSpeed);    		
+    			hookMotor.set(pSpeed*speedDir);    		
     		SmartDashboard.putNumber("Hook Encoder", distValue);
     	}
     }
