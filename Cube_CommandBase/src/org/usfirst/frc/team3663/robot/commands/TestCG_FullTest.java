@@ -14,7 +14,7 @@ public class TestCG_FullTest extends CommandGroup {
     	addSequential(new TestC_TestWheelyBar());
 //    	addSequential(new TestC_TestDriveTrain());
     	//addSequential(new TestC_TestDart());
-    	addSequential(new TestC_TestHook());
+    	//addSequential(new TestC_TestHook());
 //    	addSequential(new TestC_TestWinch());
 //    	addSequential(new TestC_TestDartNoPot());
     	addSequential(new C_WaitSecs(5));
