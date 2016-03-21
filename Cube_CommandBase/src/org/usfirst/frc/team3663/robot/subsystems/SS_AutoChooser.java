@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
-import org.usfirst.frc.team3663.robot.commands.CG_AutoOverBasicDefence;
+import org.usfirst.frc.team3663.robot.commands.CG_AutoOverDefenceShot;
 import org.usfirst.frc.team3663.robot.commands.CG_AutoUnderLowBar;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -30,12 +30,13 @@ public class SS_AutoChooser extends Subsystem {
     		auto = null;
     	}
     	else if(value > 200 && value < 650){ //11-20
-    		auto = new CG_AutoOverBasicDefence();
+    		auto = new CG_AutoOverDefenceShot(4.0);
     	}
     	else if(value > 650 && value < 1100){ //21-30
     		auto = new CG_AutoUnderLowBar();
     	}
     	else if(value > 1100 && value < 1540){ //31-40
+//    		auto = new CG_AutoOverDefenceShot(3.0);
     	}
     	else if(value > 1540 && value < 1970){ //41-50
     	}
