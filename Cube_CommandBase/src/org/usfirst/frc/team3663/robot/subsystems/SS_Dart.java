@@ -65,13 +65,15 @@ public class SS_Dart extends Subsystem {
     	useSafety = value;
     }
     
+    
+    int raiseDartExtra = 75;
     public int ConvertInchesToTicks(int pInches){
     	//return (int)((0.0253*pInches*pInches) - (8.5606*pInches) + (2399.1)); //CUBE's code
     	//return (int)((0.0356*pInches*pInches) - (10.041*pInches) + (2499.5));	//Glass' code subset#1
     	//return (int)((0.0187*pInches*pInches) - (6.9911*pInches) + (2382.3));	//Glass' code subset#2
     	//return (int)(-328.7*Math.log(pInches)+3347.2);
 
-    	return (int)((0.032*pInches*pInches) - (11.018*pInches) + (2587.3));
+    	return (int)((0.032*pInches*pInches) - (11.018*pInches) + (2587.3)) + raiseDartExtra;
         
     }
     

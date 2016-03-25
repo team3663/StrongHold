@@ -817,7 +817,7 @@ public class CameraRun {
 					}
 					else
 					{
-			*/			if (Math.abs(cMaskOverlap - maskOverlap) < 10)
+			*/			if (Math.abs(cMaskOverlap - maskOverlap) < 18)
 						{
 							if (hardChooseLeft)
 							{
@@ -979,14 +979,18 @@ public class CameraRun {
 		}*/
 		///===============================================
 		//for final bot===================================
-		goalCenterX = (int)(300);//(325);//*resolutionRatio);
+		goalCenterX = (int)(295);//(300);//(325);//*resolutionRatio);
 		if (distance > 149)
 		{
-			//goalCenterX = (int)(305);
+			//goalCenterX = (int)(300);//(310);//(305);
 		}
 		else if (distance > 160)
 		{
-			//goalCenterX = (int)(310);
+			//goalCenterX = (int)(306);//(310);//308
+		}
+		else if (distance < 50)
+		{
+			//goalCenterX = (int)(290);
 		}
 		/*
 		if (distance < 64)

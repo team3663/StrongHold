@@ -103,7 +103,7 @@ public class C_DriveVisionCenterGoal extends Command {
 		    		//moveTime-=0.1;
 		    		if (firstMove && cameraMoveAngle < 0)//first move and going left
 		    		{
-		    			moveTime*=2.5;
+		    			//moveTime*=2.5;
 		    		}
 		    	}
 				/*else if (Math.abs(cameraMoveAngle) < 10)
