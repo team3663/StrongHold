@@ -8,23 +8,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class CG_AutoOverBasicDefence extends CommandGroup {
+public class CG_AutoOverDefenceBasic extends CommandGroup {
     
-    public  CG_AutoOverBasicDefence() {
+    public  CG_AutoOverDefenceBasic() {
         // Add Commands here:
-			addSequential(new C_CameraLightSet(true));
     	addParallel(new C_WheelyBarAutoMove(2046, .7));
     	addSequential(new C_PickupFirePiston(true));
-			addSequential(new C_CameraLightSet(false));
     	addSequential(new C_DartAutoMove(1462));
     	addSequential(new C_PickupFirePiston(false));
-			addSequential(new C_CameraLightSet(true));
-        addSequential(new C_DriveBasedTime(175, -.7));
-    		addSequential(new C_CameraLightSet(false));
-        	addSequential(new C_CameraLightSet(true));	
+        addSequential(new C_DriveBasedTime(4.0, -0.7));
     	addSequential(new C_PickupFirePiston(true));
-    	addSequential(new C_DartAutoMove(Robot.robotMap.touch2+400));
-    	addSequential(new CG_AutoVisionShooting());
     	
         // these will run in order.
 

@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team3663.robot;
 
-import org.usfirst.frc.team3663.robot.commands.CG_AutoOverBasicDefence;
+import org.usfirst.frc.team3663.robot.commands.CG_AutoOverDefenceShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_UpdateGui;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
@@ -109,7 +109,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	
-    	CG_AutoOverBasicDefence auto = new CG_AutoOverBasicDefence();
+//    	CG_AutoOverDefenceShot auto = new CG_AutoOverDefenceShot(4.0);
     	//auto.start();
     	ss_AutoChooser.autoStart();
         gui.sendBoolean("operation/Enabled", true);

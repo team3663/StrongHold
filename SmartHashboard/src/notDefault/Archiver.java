@@ -69,7 +69,7 @@ public class Archiver {
 		}
 		acceptingValues = true;
 	}
-	public boolean writeFile(String day, String name){
+	public boolean writeFile(String day, String name) throws NullPointerException{
 //		alphabetizeRows(); //doesn't work yet
 		PrintWriter writer = null;
 		new File("C:\\logFiles").mkdir();
@@ -79,13 +79,6 @@ public class Archiver {
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			System.err.println("THE PRINTWRITER FAILED TO INITIALIZE");
 			System.exit(0);
-		}
-		PrintWriter error = null;
-		new File("HashboardErrorReport.txt");
-		try {
-			error = new PrintWriter("HashboardErrorReport.txt","UTF-8");
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			System.err.println("ErrorFileFailure");
 		}
 		int maxLength = 0;
 		try{
