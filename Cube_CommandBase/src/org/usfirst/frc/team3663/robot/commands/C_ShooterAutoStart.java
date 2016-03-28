@@ -31,6 +31,6 @@ public class C_ShooterAutoStart extends Command {
     }
 
     protected void interrupted() {
-    	end();
+    	//end();//if interrupted, not at speed therefore ! fire!!!
     }
 }
