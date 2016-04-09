@@ -327,7 +327,7 @@ public class CameraRun {
 		colmns = new int[img.getWidth()];*/
 		for(int y = 0; y<height; y++)
 		{
-			for(int x = (int)(104)/**resolutionRatio)0*/; x<width; x++)//make it ignore left corner!!!!!!!!!!!
+			for(int x = (int)(85)/**resolutionRatio)0*/; x<width; x++)//make it ignore left corner!!!!!!!!!!!
 			{
 				if (/*!(x < 104/* && y  < 377*./) && */(!dartBlwThrsh || (dartBlwThrsh && y < 358/**resolutionRatio*/)))
 				{
@@ -979,10 +979,10 @@ public class CameraRun {
 		}*/
 		///===============================================
 		//for final bot===================================
-		goalCenterX = (int)(290);//(300);//(325);//*resolutionRatio);
+		goalCenterX = (int)(285);//(300);//(325);//*resolutionRatio);
 		if (distance > 140)
 		{
-			goalCenterX = (int)(295);//(310);//(305);
+			goalCenterX = (int)(287);//(310);//(305);
 		}
 		else if (distance > 160)
 		{
