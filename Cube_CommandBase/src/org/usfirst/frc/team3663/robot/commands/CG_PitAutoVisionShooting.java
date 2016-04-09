@@ -1,34 +1,19 @@
 package org.usfirst.frc.team3663.robot.commands;
 
-import org.usfirst.frc.team3663.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  */
-public class CG_AutoVisionShooting extends CommandGroup {
+public class CG_PitAutoVisionShooting extends CommandGroup {
     
-	NetworkTable table = Robot.visionTable;
-	
-    public  CG_AutoVisionShooting() {
-    	
-    	//addParallel(new C_HoldSpeedToFlag(-25000));
-    	//addSequential(new C_WaitSecs(0.25));//may see old flag before C_HoldSpeedToFlag resets it
-		
-    	//addParallel(new CG_VisionCenterGoal());
-    	addSequential(new CG_VisionSeeAnyGoal());
-    	addParallel(new C_DriveVisionCenterGoal2());
-    	//addSequential(new C_DriveVisionCenterGoal());
-		
-		addSequential(new C_WaitSecs(0.4));
-		//addSequential(new C_DartAutoMove(1761));
+    public  CG_PitAutoVisionShooting() {
+
+    	addParallel(new C_HoldSpeedToFlag(-3500));
+		addSequential(new CG_VisionCenterGoal());
 		addSequential(new C_DartPrepareForShot());
-	
-		addSequential(new CG_AutoShoot(-25000));//-24000
+		addSequential(new CG_AutoShoot(-3500));//-24000'
 		
-		//----------------------------------------------
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

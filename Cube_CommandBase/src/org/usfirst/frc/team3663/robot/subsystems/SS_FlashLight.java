@@ -21,19 +21,19 @@ public class SS_FlashLight extends Subsystem {
     
     public void setLight(boolean pValue){
     	if(pValue){
-    		spike.set(Relay.Value.kOn);
+    		spike.set(Relay.Value.kForward);
     	}
     	else{
-    		spike.set(Relay.Value.kOff);
+    		spike.set(Relay.Value.kReverse);
     	}
     }
     
     public void toggleLight(){
-    	if(spike.get() == Relay.Value.kOn){
-    		spike.set(Relay.Value.kOff);
+    	if(spike.get() == Relay.Value.kForward){
+    		spike.set(Relay.Value.kReverse);
     	}
     	else{
-    		spike.set(Relay.Value.kOn);
+    		spike.set(Relay.Value.kForward);
     	}
     }   
     

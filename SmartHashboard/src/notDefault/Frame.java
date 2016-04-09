@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -16,7 +17,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class Frame implements Runnable{
-	SubTablePanel[] subs;
+	ArrayList<SubTablePanel> subs;
 	NetworkTable table;
 	JPanel systems;
 	JFrame frame;
@@ -25,6 +26,8 @@ public class Frame implements Runnable{
 	Archiver archiver;
 	String ip;
 	int tableSize = 0;
+	float offset = (float)Math.random();
+
 	
 	public Frame(String ipAdr){
 		ip = ipAdr;
@@ -43,11 +46,11 @@ public class Frame implements Runnable{
 		
 		do{
 			tableList = table.getSubTables();
-			subs = new SubTablePanel[tableList.size()];
+			subs = new ArrayList<SubTablePanel>();
 			System.out.println("Table size: " + tableList.size());
 			tableSize = tableList.size();
 			sleep(1300);
-		}while(subs.length == 0);
+		}while(tableSize == 0);
 		
 		System.out.println("Connected");
 		
@@ -65,56 +68,80 @@ public class Frame implements Runnable{
 	public void run(){
 		init();
 		boolean updateFlag = true;
+		long startTime = System.currentTimeMillis();
+		int delay = 1500;
 		while(true){
 			if(owat.isEnabled()){
 				for(SubTablePanel stp:subs){
-					stp.update(stp.bckg);
+					if(!stp.subTable.equals("operation")){
+						stp.update(stp.bckg);
+					}
+				}
+				if(System.currentTimeMillis() > startTime + delay){
+					updateFlag = true;
+					startTime = System.currentTimeMillis();
 				}
 				if(updateFlag){
 					updateFlag = false;
 					//if the tableList has changed
 					if(tableSize != table.getSubTables().size()){
+						System.out.println("~~~~~Table has changed~~~~~");
+						Set<String> oldTable = tableList;
 						tableList = table.getSubTables();
+						//get the difference between the old table and current one
+						for(String s: tableList){
+							boolean addNew = true;
+							for(String old: oldTable){
+								if(s.equals(old)){
+									addNew = false;
+									break;
+								}
+							}
+							if(addNew){
+								addNewSub(s);
+							}
+						}
 						tableSize = tableList.size();
-						System.out.println("~~~~~" + "table has changed" + "~~~~~~");
-						subs = new SubTablePanel[tableList.size()];
-						System.out.println("Table size: " + tableList.size());
-						frame.remove(systems);
-						populateSubs();
-						initSystems();
-						addToFrame(systems, "Center");
 					}
 				}
-				sleep(2);
-			}else if(!owat.isEnabled()){
+			}else{
 				updateFlag = true;
 			}
+			sleep(2);
 		}
 	}
+	public void addNewSub(String name){
+		SubTablePanel addThis = new SubTablePanel(name,table,Color.getHSBColor(
+				(float)(offset + Math.random()/5), 
+				(float)(0.3 + Math.random()/4.6), 
+				(float)(0.6f + (Math.random()/3))),archiver);
+		subs.add(addThis);
+		systems.add(addThis);
+		systems.revalidate();
+		addThis.init();
+		new Thread(addThis).start();
+	}
 	public void populateSubs(){
-		int count = 0;
-		float offset = (float)Math.random();
 		for(String k:tableList){
-			subs[count] = new SubTablePanel(k,table,Color.getHSBColor(
+			subs.add(new SubTablePanel(k,table,Color.getHSBColor(
 					(float)(offset + Math.random()/5), 
 					(float)(0.3 + Math.random()/4.6), 
-					(float)(0.6f + (Math.random()/3))),archiver);
-			count++;
+					(float)(0.6f + (Math.random()/3))),archiver));
 			System.out.println("SubTable: " + k);
 		}
 	}
 	public void initSystems(){
 		systems = new JPanel();
-		for(int i=0;i<subs.length;i++){
-			systems.add(subs[i]);
-			subs[i].init();
-			new Thread(subs[i]).start();
-			if(tableList.toArray()[i].equals("operation")){
-				owat = new OperationWatchAndTimer(subs[i],archiver);
+		for(SubTablePanel stp: subs){
+			systems.add(stp);
+			stp.init();
+			new Thread(stp).start();
+			if(stp.subTable.equals("operation")){
+				owat = new OperationWatchAndTimer(stp,archiver);
 				new Thread(owat).start();
 			}
 		}
-		systems.setLayout(new GridLayout(2,subs.length,4,4));
+		systems.setLayout(new GridLayout(2,subs.size(),4,4));
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){

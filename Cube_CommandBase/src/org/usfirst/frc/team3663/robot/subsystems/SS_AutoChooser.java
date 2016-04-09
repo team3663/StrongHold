@@ -1,7 +1,7 @@
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
-import org.usfirst.frc.team3663.robot.commands.CG_AutoOverBasicDefence;
+import org.usfirst.frc.team3663.robot.commands.CG_AutoOverDefenceShot;
 import org.usfirst.frc.team3663.robot.commands.CG_AutoUnderLowBar;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -18,24 +18,27 @@ public class SS_AutoChooser extends Subsystem {
 	
 	private AnalogInput dial = new AnalogInput(Robot.robotMap.autoAnalogDial);  
 	
+	private Command auto = null; 
+	
     public void initDefaultCommand() {
     	
     }
     
     public void autoStart(){
-    	Command auto = null;
+    	auto = null;
     	int value = dial.getAverageValue();
     	SmartDashboard.putNumber("Auto Pot", value);
     	if(value > 3 && value < 200){ //0-10
     		auto = null;
     	}
     	else if(value > 200 && value < 650){ //11-20
-    		auto = new CG_AutoOverBasicDefence();
+    		auto = new CG_AutoOverDefenceShot(4.0);
     	}
     	else if(value > 650 && value < 1100){ //21-30
     		auto = new CG_AutoUnderLowBar();
     	}
     	else if(value > 1100 && value < 1540){ //31-40
+    		auto = new CG_AutoOverDefenceShot(2.6);
     	}
     	else if(value > 1540 && value < 1970){ //41-50
     	}
@@ -55,6 +58,15 @@ public class SS_AutoChooser extends Subsystem {
         	auto.start();    		
     	}
     }   
+    
+    public void autoEnd()
+    {
+    	if (auto != null)
+    	{
+    		auto.cancel();
+    		auto = null;
+    	}
+    }
     
     public void updateDashboard(){
     	Robot.gui.sendNumber("Auto/Dial", dial.getAverageValue());

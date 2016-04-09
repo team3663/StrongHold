@@ -46,7 +46,7 @@ public class C_DartPrepareForShot extends Command {
     }
 
      protected boolean isFinished() {
-        return Robot.ss_Dart.hitLocation(speed, target);
+        return Robot.ss_Dart.hitLocation(speed, target) || Robot.ss_Shooter.fireAnyways;
     }
 
      

@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team3663.robot;
 
-import org.usfirst.frc.team3663.robot.commands.CG_AutoOverBasicDefence;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_UpdateGui;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
@@ -21,7 +20,6 @@ import org.usfirst.frc.team3663.robot.subsystems.SS_Winch;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -70,6 +68,7 @@ public class Robot extends IterativeRobot {
 		ss_FlashLight = new SS_FlashLight();
 		ss_DriveTrain = new SS_DriveTrain();
 		ss_Shooter = new SS_Shooter();
+		ss_FlashLight = new SS_FlashLight();
 		ss_PickupArm = new SS_PickupArm();
 		ss_Dart = new SS_Dart();
 		ss_Winch = new SS_Winch();
@@ -112,7 +111,7 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
     	
-    	CG_AutoOverBasicDefence auto = new CG_AutoOverBasicDefence();
+//    	CG_AutoOverDefenceShot auto = new CG_AutoOverDefenceShot(4.0);
     	//auto.start();
     	ss_AutoChooser.autoStart();
         gui.sendBoolean("operation/Enabled", true);
@@ -127,6 +126,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	Robot.ss_AutoChooser.autoEnd();
     	C_DriveControllerDPad dPadControls = new C_DriveControllerDPad();
     	dPadControls.start();
     	ss_DriveTrain.resetGyro();

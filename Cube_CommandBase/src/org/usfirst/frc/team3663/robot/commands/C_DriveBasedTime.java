@@ -2,35 +2,37 @@ package org.usfirst.frc.team3663.robot.commands;
 
 import org.usfirst.frc.team3663.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class C_DriveBasedTime extends Command {
-    public int delay = 0;
-    public double speed = 0;
+    private double targetTime = 0;
+    private double startTime;
+    private double speed = 0;
 
-    public C_DriveBasedTime(int pDelay, double pSpeed) {
+    public C_DriveBasedTime(double time, double pSpeed) {
         requires(Robot.ss_DriveTrain);
-        delay = pDelay;
-        
+        targetTime = time;
+        speed = pSpeed;
     }
 
     // Called just before this Command runs the first time
     //Curtis
     protected void initialize() {
+    	startTime = Timer.getFPGATimestamp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	delay--;
-    	Robot.ss_DriveTrain.arcadeRobotDrive(-.7, 0);
+    	Robot.ss_DriveTrain.arcadeRobotDrive(speed, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return delay < 0;
+        return Timer.getFPGATimestamp() > targetTime + startTime;
     }
 
     // Called once after isFinished returns true

@@ -1,35 +1,24 @@
 package org.usfirst.frc.team3663.robot;
 
-import org.usfirst.frc.team3663.robot.commands.CG_AutoShoot;
+import org.usfirst.frc.team3663.robot.commands.CG_AutoVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
+import org.usfirst.frc.team3663.robot.commands.CG_PitAutoVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.TestCG_FullTest;
-import org.usfirst.frc.team3663.robot.commands.CG_TeleopVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.CG_VisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DartMoveNOTSAFE;
-import org.usfirst.frc.team3663.robot.commands.C_DartPrepareForShot;
-import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
-import org.usfirst.frc.team3663.robot.commands.C_PickupArmSwitchSafety;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_PickupRunMotor;
-import org.usfirst.frc.team3663.robot.commands.C_ShooterFirePiston;
-import org.usfirst.frc.team3663.robot.commands.C_ShooterHoldSpeed;
-import org.usfirst.frc.team3663.robot.commands.C_ShooterRunMotors;
-import org.usfirst.frc.team3663.robot.commands.C_DriveVisionCenterGoal;
-import org.usfirst.frc.team3663.robot.commands.C_DriveVisionFineAdjust;
 import org.usfirst.frc.team3663.robot.commands.C_EndCommand;
+import org.usfirst.frc.team3663.robot.commands.C_FlashLightToggle;
 import org.usfirst.frc.team3663.robot.commands.C_HookSetPiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
-import org.usfirst.frc.team3663.robot.commands.C_TrentsVision;
-import org.usfirst.frc.team3663.robot.commands.C_WaitSecs;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafety;
 import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
-import org.usfirst.frc.team3663.robot.commands.TC_TurnByGyro;
 import org.usfirst.frc.team3663.robot.commands.TestCG_CycleTest;
-import org.usfirst.frc.team3663.robot.commands.TestCG_TestRequiresAll;
 import org.usfirst.frc.team3663.robot.commands.TestC_Cycle;
 import org.usfirst.frc.team3663.robot.commands.TestC_DisableTestMode;
 import org.usfirst.frc.team3663.robot.commands.TestC_StopCycleTest;
-import org.usfirst.frc.team3663.robot.commands.TestC_ToggleTestMode;
+import org.usfirst.frc.team3663.robot.commands.TestC_VisionDartTracking;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -66,7 +55,7 @@ public class OI {
 	public int shooterFirePistonNoWait 	= 7;
 	public int shooterFirerPistonWait	= 2;
   //Winch Buttons
-	private JoystickButton winchToHoist = 	  new JoystickButton(buttonJoystick, 1);
+	private JoystickButton turnOnFlashlight = 	  new JoystickButton(buttonJoystick, 1);
 	private JoystickButton winchNotSafeMove = new JoystickButton(buttonJoystick, 7);
   //Hook Buttons
 	private JoystickButton fireHookPiston = new JoystickButton(buttonJoystick, 3);
@@ -110,7 +99,7 @@ public class OI {
 	  //Shooter Buttons
 		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
-		winchToHoist.whileHeld(new C_WinchGoToLocation(1111, -.5));
+		turnOnFlashlight.whenPressed(new C_FlashLightToggle());//new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
 	  //Hook
 		fireHookPiston.whenPressed(new C_HookSetPiston(true));
@@ -133,20 +122,38 @@ public class OI {
 		//VisionTestButtons
 		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
 //		trentsBadCode.whenPressed(new C_TrentsVision());
-		CG_VisionCenterGoal cCenterGoal = new CG_VisionCenterGoal();
-		testCenterGoal.whenPressed(cCenterGoal);
-		testCenterGoal.whenReleased(new C_EndCommand(cCenterGoal));
+		//CG_VisionCenterGoal cCenterGoal = new CG_VisionCenterGoal();
+		testCenterGoal.whileHeld(new TestC_VisionDartTracking());
+		//testCenterGoal.whenReleased(new C_EndCommand(cCenterGoal));
 		//NOT USE!!! //turn90Degrees.whenPressed(new TC_TurnByGyro(table.getNumber("cameraMoveAngle: ",0)));
-		C_DartPrepareForShot cPrepareDartShot = new C_DartPrepareForShot();
+//		C_DartPrepareForShot cPrepareDartShot = new C_DartPrepareForShot();
 		//testFineAdjust.whenPressed(cPrepareDartShot);//C_VisionFineAdjust());
 		//testFineAdjust.whenReleased(new C_EndCommand(cPrepareDartShot));
-		CG_TeleopVisionShooting cgTeleopVision = new CG_TeleopVisionShooting();
-		testTeleopVisionShooting.whenPressed(cgTeleopVision);
-		testTeleopVisionShooting.whenReleased(new C_EndCommand(cgTeleopVision));
+		
+		//CG_PitAutoVisionShooting cgTeleopVision = new CG_PitAutoVisionShooting();
+		//testTeleopVisionShooting.whenPressed(cgTeleopVision);
+		//testTeleopVisionShooting.whenReleased(new C_EndCommand(cgTeleopVision));
+		testTeleopVisionShooting.whileHeld(new CG_AutoVisionShooting());
 	}
 //	public void canTest(boolean inTestMode){
 //		if(inTestMode) testJoystick = new Joystick(1);
 //		else testJoystick = null;
 //	}
+	public void updateDashboard(){
+		Robot.gui.sendNumber("operation/DriveJoyAxis0", driveJoystick.getRawAxis(0));
+		Robot.gui.sendNumber("operation/DriveJoyAxis1", driveJoystick.getRawAxis(1));
+		Robot.gui.sendNumber("operation/DriveJoyAxis2", driveJoystick.getRawAxis(2));
+		Robot.gui.sendNumber("operation/DriveJoyAxis3", driveJoystick.getRawAxis(3));
+		Robot.gui.sendNumber("operation/DriveJoyAxis4", driveJoystick.getRawAxis(4));
+		Robot.gui.sendNumber("operation/DriveJoyAxis5", driveJoystick.getRawAxis(5));
+
+		Robot.gui.sendNumber("operation/ButtonJoyAxis0", driveJoystick.getRawAxis(0));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis1", driveJoystick.getRawAxis(1));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis2", driveJoystick.getRawAxis(2));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis3", driveJoystick.getRawAxis(3));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis4", driveJoystick.getRawAxis(4));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis5", driveJoystick.getRawAxis(5));
+
+	}
 }
 

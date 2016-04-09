@@ -7,19 +7,19 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class CG_AutoUnderLowBar extends CommandGroup {
-    public  CG_AutoUnderLowBar() {
-    	addSequential(new C_CameraLightSet(true));
-        addSequential(new C_PickupFirePiston(true));
-    	addParallel(new C_WheelyBarAutoMove(Robot.ss_WheelyBar.maxDistance(), .5));
-    	addSequential(new C_DartAutoMove(Robot.ss_Dart.minDistance()));
-        addSequential(new C_DriveBasedTime(0.5, -0.7));
-    	addParallel(new C_WheelyBarAutoMove(2046, .7));
-    	addSequential(new C_DriveBasedTime(2.6,-0.7));
+public class CG_VisionSeeAnyGoal extends CommandGroup {
+    
+    public  CG_VisionSeeAnyGoal() {
     	
-    	addSequential(new C_DartAutoMove(1900));//1761));//Robot.robotMap.touch2+400));
-    	addSequential(new CG_AutoVisionShooting());
+    	addSequential(new C_VisionTurnTime(-0.85,1.25));
+    	addSequential(new C_VisionTurnTime(0.85,2.5));
+    //	addSequential(new C_VisionDartAutoMove(Robot.robotMap.touch2+350));
+    //	addSequential(new C_VisionTurnTime(-0.85,2.6));
+        
+    	// Add Commands here:
+        // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
+        // these will run in order.
 
         // To run multiple commands at the same time,
         // use addParallel()
