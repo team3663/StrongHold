@@ -7,16 +7,18 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_WheelyBarZeroEnc extends Command {
+public class C_WheelyBarChangeEnc extends Command {
 
-    public C_WheelyBarZeroEnc() {
+	private int newNumber;
+    public C_WheelyBarChangeEnc(int pNum) {
+    	newNumber = pNum;
         // Use requires() here to declare subsystem dependencies
         requires(Robot.ss_WheelyBar);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.ss_WheelyBar.resetEncoder();
+    	Robot.ss_WheelyBar.resetEncoderTo(newNumber);
     }
 
     // Called repeatedly when this Command is scheduled to run
