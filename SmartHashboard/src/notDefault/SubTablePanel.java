@@ -51,17 +51,18 @@ public class SubTablePanel extends JPanel implements Runnable{
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         setVisible(true);
 	}
-	public void organizeElements(){
-		Arrays.sort(sList);
-	}
 	public void refresh(){
-		for(int i=0;i<jList.length;i++){
-			remove(jList[i]);
+		guiElements = table.getSubTable(subTable).getKeys();
+		sList = new String[guiElements.size()+1];
+		sList[0] = "!"; //this is important
+		int count = 1;
+		for(String k:guiElements){
+			sList[count] = k;
+			count++;
 		}
-//		remove(grid);
-        getNames();
-        fillJLabels();
-        fillPanel();
+		Arrays.sort(sList);
+		sList[0] = subTable;
+
 	}
 	public void fillJLabels(){
 		for(int i=0;i<sList.length;i++){
@@ -75,7 +76,6 @@ public class SubTablePanel extends JPanel implements Runnable{
 				jl.setForeground(Color.WHITE);
 				jList[i] = jl;
 			}
-			System.out.println(sList[i]);
 		}
 	}
 	public void fillPanel(){
@@ -97,23 +97,25 @@ public class SubTablePanel extends JPanel implements Runnable{
         //initialize set and arrays
 		//guiElements = table.getKeys();
 		guiElements = table.getSubTable(subTable).getKeys();
-		System.out.println("There are " + guiElements.size() + " elements in the Set");
+		System.out.println("----- There are " + guiElements.size() + " elements in " + subTable + " -----");
 		sList = new String[guiElements.size()+1];
 		jList = new JLabel[guiElements.size()+1];
 		//populate String Array
+		sList[0] = "!"; //this is to keep the zero spot clear. When the array is sorted, "!" is always first
 		int count = 1;
-		sList[0] = "!";
 		for(String k:guiElements){
 			sList[count] = k;
 			count++;
 		}
-		organizeElements();
+		Arrays.sort(sList);
 		sList[0] = subTable;
 		for(int i=1;i<sList.length;i++){
 			archy.addNewColumn(sList[i]);
+			System.out.println(sList[i]);
 		}
 		return count-1;
 	}
+	//Unused//
 	@Override
 	public void run(){
 		long start = System.currentTimeMillis();
@@ -132,6 +134,7 @@ public class SubTablePanel extends JPanel implements Runnable{
 			}
 		}
 	}
+	/////////
 	public void sleep(int milliseconds){
 		try{
 			Thread.sleep(milliseconds);
@@ -139,12 +142,14 @@ public class SubTablePanel extends JPanel implements Runnable{
 			System.err.println("We didn't get proper sleep");
 		}
 	}
-	public void update(Color c){
-		setBackground(c);
+	public void update(){
 		for(int i=0;i<sList.length;i++){
 			if(i != 0){
 				Object o = table.getSubTable(subTable).getValue(sList[i],3663);
 				archy.addValue(sList[i], o.toString());
+//				if(o.equals(3663)){
+//					o = "";
+//				}
 				if(!isDrive){
 					jList[i].setText(sList[i] + ": " + o);
 				}
@@ -162,32 +167,38 @@ public class SubTablePanel extends JPanel implements Runnable{
 //							}
 //						}else{
 						//^^^^ the Drive team wasn't fond of this ^^^^
-						jList[i].setFont(updateFont(jList[i],false));
+						Font temp = updateFont(jList[i],false);
+						if(Math.abs(temp.getSize() - jList[i].getFont().getSize()) > 2){
+							jList[i].setFont(temp);
+						}
+//						jList[i].setFont(new Font("SansSerif",Font.PLAIN,350));
 //						}
 						String text = o.toString();
 						// " h a p p y . h i"
 						// " 0 1 2 3 4 . 5 6"
 						int decimalPlaces = text.length() - text.indexOf(".") - 1;
 						if(decimalPlaces < 2){
-							jList[i].setText("" + text.concat("0"));
+							while(decimalPlaces < 2){
+								text = text.concat("0");
+								decimalPlaces++;
+							}
 						}else if(decimalPlaces > 2){
-							jList[i].setText("" + text.substring(text.indexOf(".")));
-						}else{
-							jList[i].setText("" + o);
+							text = text.substring(0,text.indexOf(".")+3);
 						}
-					}else{
-						jList[i].setFont(updateFont(jList[i],false));
+						jList[i].setText(text);
 					}
 				}
 			}else{
 				//titles
-				jList[i].setText("---------" + subTable.toUpperCase() + "---------");
+				jList[0].setText("---------" + subTable.toUpperCase() + "---------"); //hard-coded in the zero instead of "i" b/c I was making sure this wasn't the source of one of my bugs
 			}
 		}
 	}
+	
 	public String get(int index) throws NullPointerException{
 		return (table.getSubTable(subTable).getValue(sList[index],3663).toString());
 	}
+	
 	public Font updateFont(JLabel label,boolean crazy){
 		Font labelFont = label.getFont();
 		String labelText = label.getText();
@@ -199,13 +210,13 @@ public class SubTablePanel extends JPanel implements Runnable{
 		double widthRatio = (double)componentWidth / (double)stringWidth;
 
 		int newFontSize = (int)(labelFont.getSize() * widthRatio);
-		int componentHeight = this.getHeight() - (int)((double)this.getHeight()/3.4);
+		int componentHeight = this.getHeight() - (int)((double)this.getHeight()/3.2);
 
 		// Pick a new font size so it will not be larger than the height of label.
 		int fontSizeToUse = Math.min(newFontSize, componentHeight);
 
 		// Set the label's font size to the newly determined size.
-		if(!crazy) return new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse);
+		if(!crazy) return new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse-10);
 		return new Font(labelFont.getName(),Font.PLAIN,fontSizeToUse - (int)((fontSizeToUse/30) * Math.random()));
 	}
 }

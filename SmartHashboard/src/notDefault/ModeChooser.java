@@ -18,7 +18,6 @@ import javax.swing.JRadioButton;
 
 public class ModeChooser {
 	Frame f;
-	DriveFrame df;
 	public ModeChooser(){
 		String ip = "10.36.63.2";
 		try
@@ -39,6 +38,8 @@ public class ModeChooser {
 		
 		JFrame firstFrame = new JFrame("SmartH");
 		JButton launch = new JButton("Launch");
+		launch.setFocusable(true);
+		launch.requestFocus();
 		
 		JRadioButton drive = new JRadioButton("Driver Mode");
 		JRadioButton sw = new JRadioButton("Software Mode");
@@ -49,10 +50,8 @@ public class ModeChooser {
 		options.add(drive);
 		options.add(sw);
 		
-		sw.setSelected(true);
+		drive.setSelected(true);
 		
-		f = new Frame(ipAddress);
-		df = new DriveFrame(ipAddress);
 				
 		launch.addActionListener(new ActionListener() {
 			@Override
@@ -60,10 +59,12 @@ public class ModeChooser {
 				String command = options.getSelection().getActionCommand();
 				if(command.equals("drive")){
 					firstFrame.dispose();
-					new Thread(df).start();
+					f = new Frame(ipAddress,true);
+					new Thread(f).start();
 					System.out.println("IN DRIVE MODE");
 				}else if(command.equals("software")){
 					firstFrame.dispose();
+					f = new Frame(ipAddress);
 					new Thread(f).start();
 					System.out.println("IN SW MODE");
 				}

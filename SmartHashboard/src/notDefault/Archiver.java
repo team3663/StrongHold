@@ -10,12 +10,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Archiver {
 	CopyOnWriteArrayList<ArrayList<String>> rows;
 	boolean acceptingValues = true;
+	boolean resetting = false;
 	String[] columnHeadings;
 	public Archiver(){
 		rows = new CopyOnWriteArrayList<ArrayList<String>>();
 	}
 	public void addNewColumn(String key){
-		if(acceptingValues){
+		if(acceptingValues || resetting){
 			if(!alreadyContains(key)){
 				ArrayList<String> temp = new ArrayList<String>(); //new ArrayList<String>.add(key);
 				temp.add(key);
@@ -49,14 +50,15 @@ public class Archiver {
 		boolean sorted = false;
 		while(!sorted){
 			for(int i=0;i<rows.size()-1;i++){
-				rows.get(i).get(0).compareTo(rows.get(i).get(0));
+				rows.get(i).get(0).compareTo(rows.get(i + 1).get(0));
 			}
 		}
 	}
 	public void reset(){
 		acceptingValues = false;
-		int count = 0;
 		columnHeadings = new String[rows.size()];
+		System.out.println("resetting - there are " + rows.size() + " columns");
+		int count = 0;
 		for(ArrayList<String> a:rows){
 			columnHeadings[count] = a.get(0);
 			count++;
@@ -65,9 +67,38 @@ public class Archiver {
 		System.gc(); //Garbage collector please run?
 		rows = new CopyOnWriteArrayList<ArrayList<String>>();
 		for(int i=0;i<columnHeadings.length;i++){
+			resetting = true;
 			addNewColumn(columnHeadings[i]);
+			resetting = false;
 		}
 		acceptingValues = true;
+	}
+	@SuppressWarnings("unused")
+	private int shiftRows(){
+		//first, find the longest row
+		//iterate through each column and shift them downward until they are the same length as the longest
+		//by adding empty entries "" just after line zero
+		int longest = 0;
+		for(ArrayList<String> al:rows){
+			if(al.size() > longest){
+				longest = al.size();
+			}
+		}
+		System.out.println("The longest column is " + longest + " high");
+		for(ArrayList<String> al:rows){
+			int diff = longest - al.size();
+			ArrayList<String> temp = new ArrayList<String>();
+			for(int i=diff;i>0;i--){
+				temp.add("");
+			}
+			if(diff > 0){
+				for(String s:al){
+					temp.add(s);
+				}
+			}
+			al = temp;
+		}
+		return longest;
 	}
 	public boolean writeFile(String day, String name) throws NullPointerException{
 //		alphabetizeRows(); //doesn't work yet
@@ -82,10 +113,18 @@ public class Archiver {
 		}
 		int maxLength = 0;
 		try{
-			maxLength = rows.get(0).size();
+			for(ArrayList<String> al:rows){
+				if(al.size() > maxLength){
+					maxLength = al.size();
+				}
+			}
+			System.out.println("File Length: " + maxLength);
 		}catch(NullPointerException | ArrayIndexOutOfBoundsException e){
+			System.out.println("Something is wrong at Archiver -> writeFile -> getting max length");
+			e.printStackTrace();
 			return true;
 		}
+//		int maxLength = shiftRows();
 		String currentLine = "";
 		String lastLine = "";
 		String tempTime = "";
@@ -95,7 +134,7 @@ public class Archiver {
 					try{
 						currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine
 					}catch(IndexOutOfBoundsException e){
-						currentLine = currentLine + ",";
+						currentLine = currentLine + "x,";
 					}
 				}else{ //if this is aa_time
 					try{
@@ -107,6 +146,8 @@ public class Archiver {
 			}
 			if(!currentLine.equals(lastLine)){ //if this line isn't exactly the same as the previous
 				writer.println(tempTime + "," + currentLine);
+			}else{
+//				System.out.println("deleted duplicate line at " + i);
 			}
 			lastLine = currentLine;
 			currentLine = "";

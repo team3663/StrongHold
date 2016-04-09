@@ -3,6 +3,7 @@ package notDefault;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -27,10 +28,14 @@ public class Frame implements Runnable{
 	String ip;
 	int tableSize = 0;
 	float offset = (float)Math.random();
+	boolean isDrive = false;
 
-	
 	public Frame(String ipAdr){
 		ip = ipAdr;
+	}
+	public Frame(String ipAdr, boolean isDrive){
+		ip = ipAdr;
+		this.isDrive = isDrive;
 	}
 	public void init(){
 		initJFrame();
@@ -49,16 +54,13 @@ public class Frame implements Runnable{
 			subs = new ArrayList<SubTablePanel>();
 			System.out.println("Table size: " + tableList.size());
 			tableSize = tableList.size();
-			sleep(1300);
+			sleep(800);
 		}while(tableSize == 0);
 		
 		System.out.println("Connected");
 		
 		//CREATING EACH COLUMN//
 		populateSubs();
-//		Box box = Box.createHorizontalBox();
-//		box.add(msgBoard);
-//		box.add(Box.createHorizontalGlue());
 		initSystems();
 		/////////////////////////////
 		addToFrame(systems, "Center");
@@ -74,7 +76,7 @@ public class Frame implements Runnable{
 			if(owat.isEnabled()){
 				for(SubTablePanel stp:subs){
 					if(!stp.subTable.equals("operation")){
-						stp.update(stp.bckg);
+						stp.update();
 					}
 				}
 				if(System.currentTimeMillis() > startTime + delay){
@@ -82,6 +84,9 @@ public class Frame implements Runnable{
 					startTime = System.currentTimeMillis();
 				}
 				if(updateFlag){
+//					for(SubTablePanel stp:subs){
+//						stp.refresh();
+//					}
 					updateFlag = false;
 					//if the tableList has changed
 					if(tableSize != table.getSubTables().size()){
@@ -122,33 +127,51 @@ public class Frame implements Runnable{
 		new Thread(addThis).start();
 	}
 	public void populateSubs(){
-		for(String k:tableList){
-			subs.add(new SubTablePanel(k,table,Color.getHSBColor(
-					(float)(offset + Math.random()/5), 
-					(float)(0.3 + Math.random()/4.6), 
-					(float)(0.6f + (Math.random()/3))),archiver));
-			System.out.println("SubTable: " + k);
+		if(isDrive){
+			Font f = new Font("SansSerif",Font.PLAIN,12);
+			for(String k:tableList){
+				subs.add(new SubTablePanel(k,table,Color.DARK_GRAY,archiver,f));
+				System.out.println("SubTable: " + k);
+			}
+		}
+		else{
+			for(String k:tableList){
+				subs.add(new SubTablePanel(k,table,Color.getHSBColor(
+						(float)(offset + Math.random()/5), 
+						(float)(0.3 + Math.random()/4.6), 
+						(float)(0.6f + (Math.random()/3))),archiver));
+				System.out.println("SubTable: " + k);
+			}
 		}
 	}
 	public void initSystems(){
 		systems = new JPanel();
 		for(SubTablePanel stp: subs){
-			systems.add(stp);
+			if(!isDrive){
+				systems.add(stp);
+			}
 			stp.init();
-			new Thread(stp).start();
 			if(stp.subTable.equals("operation")){
+				if(isDrive){
+					systems.add(stp);
+					System.out.println("Added " + stp.subTable + " in drive mode");
+				}
 				owat = new OperationWatchAndTimer(stp,archiver);
 				new Thread(owat).start();
 			}
 		}
-		systems.setLayout(new GridLayout(2,subs.size(),4,4));
+		if(!isDrive){
+			systems.setLayout(new GridLayout(2,subs.size(),4,4));
+		}else{
+			systems.setLayout(new GridLayout(1,1));
+		}
 //		systems.setPreferredSize(new Dimension(0,300));
 	}
 	public void initNetworkTable(String ip){
 		NetworkTable.setClientMode();
 		NetworkTable.setIPAddress(ip);
 		table = NetworkTable.getTable("Gui");
-		sleep(2000);
+		sleep(1500);
 	}
 	public void setWindowsLookAndFeel(){
 			try {
@@ -158,7 +181,7 @@ public class Frame implements Runnable{
 			}
 	}
 	public void initJFrame(){
-		frame = new JFrame("Smart Hashboard");
+		frame = new JFrame("Smart Hashboard - Drive Mode: " + Boolean.toString(isDrive));
 		frame.setBounds(0,0,1200,520);
 		frame.setBackground(Color.DARK_GRAY);
 		frame.getContentPane().setBackground(Color.DARK_GRAY);
@@ -171,8 +194,7 @@ public class Frame implements Runnable{
 		    	System.out.println("///////////////////////");
 		    	System.out.println("Closing... please wait");
 		    	System.out.println("///////////////////////");
-		    	System.out.println("Hey");
-		    	if(owat != null){
+		    	if(owat != null && owat.isEnabled()){
 		    		owat.export();
 		    	}
 		        System.exit(0);
@@ -187,7 +209,7 @@ public class Frame implements Runnable{
 		try{
 			Thread.sleep(milliseconds);
 		}catch(InterruptedException ex){
-			System.err.println("We didn't get proper sleep");
+			System.err.println("This will never happen");
 		}
 	}
 }
