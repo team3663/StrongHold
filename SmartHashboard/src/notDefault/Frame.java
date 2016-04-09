@@ -54,7 +54,7 @@ public class Frame implements Runnable{
 			subs = new ArrayList<SubTablePanel>();
 			System.out.println("Table size: " + tableList.size());
 			tableSize = tableList.size();
-			sleep(800);
+			sleep(10);
 		}while(tableSize == 0);
 		
 		System.out.println("Connected");
@@ -121,10 +121,12 @@ public class Frame implements Runnable{
 				(float)(0.3 + Math.random()/4.6), 
 				(float)(0.6f + (Math.random()/3))),archiver);
 		subs.add(addThis);
-		systems.add(addThis);
-		systems.revalidate();
+		if(!isDrive){
+			systems.add(addThis);
+			systems.revalidate();
+		}
 		addThis.init();
-		new Thread(addThis).start();
+//		new Thread(addThis).start();
 	}
 	public void populateSubs(){
 		if(isDrive){

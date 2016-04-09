@@ -50,6 +50,7 @@ public class OperationWatchAndTimer implements Runnable{
 			archiver.addValue("OWAT_Enabled", Boolean.toString(enabled));
 			archiver.addValue("Archiver", Boolean.toString(archiver.acceptingValues));
 			if(operation.get(modeIndex).equals("true")){ //If enabled
+				System.out.println("enabled!!!!!!!");
 				keepGoingFlag = true;
 				enabled = true;
 				operation.update();
@@ -63,6 +64,7 @@ public class OperationWatchAndTimer implements Runnable{
 			//On disable
 			}else if(keepGoingFlag){
 				keepGoingFlag = false;
+				System.out.println("attempting a keepGoing");
 				if(!keepGoing(2000)){
 					enabled = false;
 					setNewTimeFlag = true;
@@ -71,6 +73,8 @@ public class OperationWatchAndTimer implements Runnable{
 						exportFlag = false;
 					}
 				}
+			}else{
+				System.out.println("disabled!!!!!!");
 			}
 			sleep(2);
 		}
@@ -78,6 +82,7 @@ public class OperationWatchAndTimer implements Runnable{
 	//this will continue adding time values to the archiver while it waits to see if the robot is re-enabled
 	//after less than 2 seconds. This will prevent a break in csv logging between Autonomous and Teleop
 	public boolean keepGoing(long wait){
+		System.out.println("keepGoing is running");
 		long stTime = System.currentTimeMillis();
 		while(stTime + wait >= System.currentTimeMillis()){
 			archiver.addValue("OWAT_Enabled", Boolean.toString(enabled));
