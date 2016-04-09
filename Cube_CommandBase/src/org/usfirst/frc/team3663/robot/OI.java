@@ -21,7 +21,6 @@ import org.usfirst.frc.team3663.robot.commands.C_HookSetPiston;
 import org.usfirst.frc.team3663.robot.commands.C_ShooterShoot;
 import org.usfirst.frc.team3663.robot.commands.C_TrentsVision;
 import org.usfirst.frc.team3663.robot.commands.C_WaitSecs;
-import org.usfirst.frc.team3663.robot.commands.C_WheelyBarZeroEnc;
 import org.usfirst.frc.team3663.robot.commands.C_WinchMoveNoSafety;
 import org.usfirst.frc.team3663.robot.commands.C_WinchGoToLocation;
 import org.usfirst.frc.team3663.robot.commands.TC_TurnByGyro;

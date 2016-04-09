@@ -51,6 +51,7 @@ public class RobotMap {
 /*********Relays*********/
 	//Camera
 		public int cameraRelay = 0;
+		public int flashLightRelay = 1;
 /*******Solenoids*******/
 	    public int[] pickUpSolenoid  = new int[]{3,2};//3.2  
 	    public int[] shooterSolenoid = new int[]{1,0};//1.0
@@ -70,6 +71,14 @@ public class RobotMap {
 	//DriveTrain
 	    public int encoderTicksPerInch = 20;
 	//Dart
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    public int minDistanceValue = 620;//410;
 	    public int maxDistanceValue = 2380;
 	    public int soft1 = 640;

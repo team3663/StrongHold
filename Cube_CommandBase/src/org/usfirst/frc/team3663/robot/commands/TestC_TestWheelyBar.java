@@ -47,7 +47,7 @@ public class TestC_TestWheelyBar extends Command {
     			state++;
     			startTime = System.currentTimeMillis();
     		}
-    		Robot.ss_WheelyBar.resetEncoder();
+    		Robot.ss_WheelyBar.resetEncoderTo(0);
     		break;
     	case 1://Drive down
     		Robot.ss_Test.wheelyBarMotorStatus = Robot.ss_Test.testing;
