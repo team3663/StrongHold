@@ -13,17 +13,19 @@ public class CG_AutoOverDefenceShot extends CommandGroup {
     public  CG_AutoOverDefenceShot(double driveTime) {
         // Add Commands here:
 			addSequential(new C_CameraLightSet(true));
-    	addParallel(new C_WheelyBarAutoMove(2046, .7));
     	addSequential(new C_PickupFirePiston(true));
 			addSequential(new C_CameraLightSet(false));
     	addSequential(new C_DartAutoMove(1462));
     	addSequential(new C_PickupFirePiston(false));
 			addSequential(new C_CameraLightSet(true));
-        addSequential(new C_DriveBasedTime(driveTime, -0.7));
+        addSequential(new C_DriveBasedTime(driveTime/4, -0.7));
+    	addParallel(new C_WheelyBarAutoMove(2046, .7));
+    	addSequential(new C_DriveBasedTime(3*driveTime/4,-0.7));
     		addSequential(new C_CameraLightSet(false));
         	addSequential(new C_CameraLightSet(true));	
     	addSequential(new C_PickupFirePiston(true));
-    	addSequential(new C_DartAutoMove(Robot.robotMap.touch2+400));
+    	
+    	addSequential(new C_DartAutoMove(1900));//Robot.robotMap.touch2+400));
     	addSequential(new CG_AutoVisionShooting());
     	
         // these will run in order.

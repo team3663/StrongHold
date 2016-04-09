@@ -17,6 +17,7 @@ public class C_WinchMove extends Command {
     }
 
     protected void execute() {
+    	
     	Robot.ss_Winch.runMotorTeleop(Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.winchAxis));
     }
 

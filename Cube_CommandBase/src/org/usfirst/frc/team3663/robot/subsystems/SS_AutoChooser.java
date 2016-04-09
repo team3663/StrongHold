@@ -18,12 +18,14 @@ public class SS_AutoChooser extends Subsystem {
 	
 	private AnalogInput dial = new AnalogInput(Robot.robotMap.autoAnalogDial);  
 	
+	private Command auto = null; 
+	
     public void initDefaultCommand() {
     	
     }
     
     public void autoStart(){
-    	Command auto = null;
+    	auto = null;
     	int value = dial.getAverageValue();
     	SmartDashboard.putNumber("Auto Pot", value);
     	if(value > 3 && value < 200){ //0-10
@@ -36,7 +38,7 @@ public class SS_AutoChooser extends Subsystem {
     		auto = new CG_AutoUnderLowBar();
     	}
     	else if(value > 1100 && value < 1540){ //31-40
-//    		auto = new CG_AutoOverDefenceShot(3.0);
+    		auto = new CG_AutoOverDefenceShot(2.6);
     	}
     	else if(value > 1540 && value < 1970){ //41-50
     	}
@@ -56,6 +58,15 @@ public class SS_AutoChooser extends Subsystem {
         	auto.start();    		
     	}
     }   
+    
+    public void autoEnd()
+    {
+    	if (auto != null)
+    	{
+    		auto.cancel();
+    		auto = null;
+    	}
+    }
     
     public void updateDashboard(){
     	Robot.gui.sendNumber("Auto/Dial", dial.getAverageValue());

@@ -33,6 +33,7 @@ public class C_UpdateGui extends Command {
     		Robot.ss_Shooter.updateDashboard();
     		Robot.ss_WheelyBar.updateDashboard();
     		Robot.ss_Winch.updateDashboard();
+    		Robot.oi.updateDashboard();
     		startTime = currentTime;
     	}
     	

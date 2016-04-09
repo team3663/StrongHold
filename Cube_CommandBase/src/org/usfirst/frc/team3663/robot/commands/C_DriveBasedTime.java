@@ -23,11 +23,11 @@ public class C_DriveBasedTime extends Command {
     //Curtis
     protected void initialize() {
     	startTime = Timer.getFPGATimestamp();
-    	Robot.ss_DriveTrain.arcadeRobotDrive(speed, 0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.ss_DriveTrain.arcadeRobotDrive(speed, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

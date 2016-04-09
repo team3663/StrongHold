@@ -14,6 +14,6 @@ public class CG_DriverPickupBall extends CommandGroup {
     	addSequential(new C_DartAutoMove(Robot.ss_Dart.minDistance()));
     	
     	addParallel(new C_ShooterRunMotors(-1));
-    	addParallel(new C_PickupRunMotor(-1));
+    	addParallel(new C_PickupRunMotor(-.85));
     }
 }

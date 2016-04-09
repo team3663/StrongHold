@@ -1,0 +1,38 @@
+package org.usfirst.frc.team3663.robot.commands;
+
+import org.usfirst.frc.team3663.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
+
+/**
+ *
+ */
+public class C_VisionDartAutoMove extends Command {
+
+	private int targetDist;
+	private double speed;
+    public C_VisionDartAutoMove(int pTarget) {
+        requires(Robot.ss_Dart);
+        targetDist = pTarget;
+    }
+
+    protected void initialize() {
+    	speed = Robot.ss_Dart.findSpeed(targetDist);
+    }
+                                                                                                                             
+    protected void execute() {
+    	Robot.ss_Dart.incrementSpeed(speed, targetDist, Robot.ss_PickupArm.isDown());
+    }
+
+    protected boolean isFinished() {
+        return (Robot.ss_Dart.hitLocation(speed, targetDist) || Robot.visionTable.getBoolean("foundObject: ",false));
+    }
+
+    protected void end() {
+    	Robot.ss_Dart.STOP();
+    }
+
+    protected void interrupted() {
+    	end();
+    }
+}
