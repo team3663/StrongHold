@@ -35,7 +35,7 @@ public class SS_PickupArm extends Subsystem {
     
     public boolean isDown(){
     	// todo also use pickupDownSetting from RobotMap
-    	return pickupSolenoid.get() == DoubleSolenoid.Value.kForward && lowerLimit.get();
+    	return (pickupSolenoid.get() == DoubleSolenoid.Value.kForward && lowerLimit.get());
     }
     
     public boolean isSafe(){

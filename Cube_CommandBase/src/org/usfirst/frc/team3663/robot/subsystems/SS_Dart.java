@@ -155,6 +155,7 @@ public class SS_Dart extends Subsystem {
     				dartMotor.set(0);
     			}
     			else{
+    				dartMotor.set(0);
     			}
     		}
     		else{

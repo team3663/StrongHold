@@ -34,8 +34,8 @@ public class SS_WheelyBar extends Subsystem {
     	return Robot.robotMap.wbMaxEnc;
     }
     
-    public void resetEncoder(){										//resets the encoder
-		wheelyBarMotor.reset();
+    public void resetEncoderTo(int pValue){										//resets the encoder
+		wheelyBarMotor.setEncPosition(pValue);;
     }
     
     public int getVelocity(){
