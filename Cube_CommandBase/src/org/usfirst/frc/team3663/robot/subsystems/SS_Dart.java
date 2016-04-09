@@ -66,14 +66,15 @@ public class SS_Dart extends Subsystem {
     }
     
     
-    int raiseDartExtra = 75;
+    int raiseDartExtra = -60;
     public int ConvertInchesToTicks(int pInches){
     	//return (int)((0.0253*pInches*pInches) - (8.5606*pInches) + (2399.1)); //CUBE's code
     	//return (int)((0.0356*pInches*pInches) - (10.041*pInches) + (2499.5));	//Glass' code subset#1
     	//return (int)((0.0187*pInches*pInches) - (6.9911*pInches) + (2382.3));	//Glass' code subset#2
     	//return (int)(-328.7*Math.log(pInches)+3347.2);
-
-    	return (int)((0.032*pInches*pInches) - (11.018*pInches) + (2587.3)) + raiseDartExtra;
+    	
+    	//y = 0.0194x2 - 7.2886x + 2320.5
+    	return (int)((0.019*pInches*pInches) - (7.2886*pInches) + (2320.5)) + raiseDartExtra;
         
     }
     
@@ -136,6 +137,7 @@ public class SS_Dart extends Subsystem {
     			if((pSpeed < 0 && distValue > touch2) || (pSpeed < 0 && distValue < soft1)||
     					(pSpeed > 0 && distValue < touch1) || (pSpeed > 0 && distValue > soft2)){
     					dartMotor.set(pSpeed * dartDir);
+    					Robot.gui.sendString("dart/Error","TOUCHING SOFT!!!!  (>:0)");
     			}
     			else if(distValue < hard2 && distValue > hard1){
     				Robot.gui.sendString("dart/Error","hard stop");
@@ -156,6 +158,7 @@ public class SS_Dart extends Subsystem {
     			}
     		}
     		else{
+				Robot.gui.sendString("dart/Error","Arm down");
     			setMovingArm(false);
     			dartMotor.set(pSpeed * dartDir);
     		}

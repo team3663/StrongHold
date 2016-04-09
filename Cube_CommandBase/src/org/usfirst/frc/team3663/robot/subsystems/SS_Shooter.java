@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class SS_Shooter extends Subsystem {
 	
+	public boolean fireAnyways = false;
+	public boolean autoFire = false;
+	
 	//Motors
 	private CANTalon shooterTop = new CANTalon(Robot.robotMap.shooterMotorTop);
 	private CANTalon shooterBottom = new CANTalon(Robot.robotMap.shooterMotorBottom);
@@ -69,12 +72,15 @@ public class SS_Shooter extends Subsystem {
     	}
     }
     
+    private boolean pistonState;
     public void fireShooterSolenoid(boolean pFire){							//Manually sets the location of the shooter solenoid
     	if(!pFire){
     		shooterSolenoid.set(DoubleSolenoid.Value.kForward);
+    		pistonState = true;
     	}
     	else{
     		shooterSolenoid.set(DoubleSolenoid.Value.kReverse);
+    		pistonState = false;
     	}
     }
         
@@ -114,7 +120,7 @@ public class SS_Shooter extends Subsystem {
     private int topSafeTimes = 3;
     public boolean topInSpeed(int pSpeed){
     	int currentSpeed = getShooterTopEncoderVelocity();
-    	if(pSpeed+300>currentSpeed&&pSpeed-300<currentSpeed){
+    	if(pSpeed+1000>currentSpeed&&pSpeed-1000<currentSpeed){
     		topSafeTimes--;
     	}
     	else{
@@ -126,7 +132,7 @@ public class SS_Shooter extends Subsystem {
     private int bottomSafeTimes = 3;
     public boolean bottomInSpeed(int pSpeed){
     	int currentSpeed = getShooterBottomEncoderVelocity();
-    	if(pSpeed+300>currentSpeed&&pSpeed-300<currentSpeed){
+    	if(pSpeed+1000>currentSpeed&&pSpeed-1000<currentSpeed){
     		bottomSafeTimes--;
     	}
     	else{
@@ -139,12 +145,30 @@ public class SS_Shooter extends Subsystem {
     	return topInSpeed(pSpeed) && bottomInSpeed(pSpeed);
     }
     
+    public void resetHoldSpeedVars()
+    {
+    	topSpeed = 0;
+    	bottomSpeed = 0;
+    	topSafeTimes = 3;
+    	bottomSafeTimes = 3;
+    }
+    
+    public boolean autoTimeUp()
+    {
+    	double time = Robot.gui.getNumber("operation/Time");
+    	
+    	return (time < 2.8/*sec*/ || time > 15.2);//1 sec delay
+    }
+    
     public void STOP(){
     	setShooterMotorsSpeed(0);
+    	resetHoldSpeedVars();
     }
     
     public void updateDashboard(){							//sends a update to the dashboard			LEAVE THE SMARTDASHBOARD
     	Robot.gui.sendNumber("shooter/Top Shooter Motor", getShooterTopEncoderVelocity());
     	Robot.gui.sendNumber("shooter/Bottom Shooter Motor", getShooterBottomEncoderVelocity());
+    	Robot.gui.sendBoolean("shooter/fireAnyways", fireAnyways);
+    	Robot.gui.sendBoolean("shooter/Piston state", pistonState);
     }
 }

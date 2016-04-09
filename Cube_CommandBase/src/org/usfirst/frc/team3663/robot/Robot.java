@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team3663.robot;
 
-import org.usfirst.frc.team3663.robot.commands.CG_AutoOverDefenceShot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_UpdateGui;
 import org.usfirst.frc.team3663.robot.subsystems.SS_AutoChooser;
@@ -9,6 +8,7 @@ import org.usfirst.frc.team3663.robot.subsystems.SS_Camera;
 import org.usfirst.frc.team3663.robot.subsystems.SS_ConfigReader;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Dart;
 import org.usfirst.frc.team3663.robot.subsystems.SS_DriveTrain;
+import org.usfirst.frc.team3663.robot.subsystems.SS_FlashLight;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Hook;
 import org.usfirst.frc.team3663.robot.subsystems.SS_Gui;
 import org.usfirst.frc.team3663.robot.subsystems.SS_PickupArm;
@@ -20,7 +20,6 @@ import org.usfirst.frc.team3663.robot.subsystems.SS_Winch;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
@@ -41,6 +40,7 @@ public class Robot extends IterativeRobot {
 	public static SS_PickupArm ss_PickupArm;
 	public static SS_Dart ss_Dart;
 	public static SS_Winch ss_Winch;
+	public static SS_FlashLight ss_FlashLight;
 	public static SS_WheelyBar ss_WheelyBar;
 	public static SS_AutoChooser ss_AutoChooser;
 	public static SS_Hook ss_Hook;
@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
 		
 		ss_DriveTrain = new SS_DriveTrain();
 		ss_Shooter = new SS_Shooter();
+		ss_FlashLight = new SS_FlashLight();
 		ss_PickupArm = new SS_PickupArm();
 		ss_Dart = new SS_Dart();
 		ss_Winch = new SS_Winch();
@@ -124,6 +125,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	Robot.ss_AutoChooser.autoEnd();
     	C_DriveControllerDPad dPadControls = new C_DriveControllerDPad();
     	dPadControls.start();
     	ss_DriveTrain.resetGyro();

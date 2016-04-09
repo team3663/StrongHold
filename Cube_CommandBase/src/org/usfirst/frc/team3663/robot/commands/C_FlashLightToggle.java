@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class TestC_RequiresDart extends Command {
+public class C_FlashLightToggle extends Command {
 
-    public TestC_RequiresDart() {
+    public C_FlashLightToggle() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.ss_Dart);
+        requires(Robot.ss_FlashLight);
     }
 
     // Called just before this Command runs the first time
@@ -20,6 +20,7 @@ public class TestC_RequiresDart extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.ss_FlashLight.toggleLight();
     }
 
     // Make this return true when this Command no longer needs to run execute()

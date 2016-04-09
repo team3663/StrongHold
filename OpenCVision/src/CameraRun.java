@@ -134,6 +134,9 @@ public class CameraRun {
 		}*/
 	//	do
 		{
+			//------------=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+		//Image i = File("C:\Users\angel_000\Pictures\Screenshots\.");
+		
 			if (camera.isOpened())
 			{
 				cameraFound = true;
@@ -306,13 +309,14 @@ public class CameraRun {
 	}
 	//Constants for image converting
 	Color c;
-	int g = Color.GREEN.getRGB();
+	int g = Color.PINK.getRGB();//Color.GREEN.getRGB();
 	int cy = Color.CYAN.getRGB();
 	int bl = Color.BLUE.getRGB();
 	int r = Color.RED.getRGB();
 	int gg;
 	
-	int b = Color.black.getRGB();
+	int b = Color.ORANGE.getRGB();//= Color.black.getRGB();
+	//int p = Color.PINK.getRGB();
 	private BufferedImage convertToBlackGreenImage(BufferedImage img)
 	{
 		int width = img.getWidth();
@@ -817,23 +821,19 @@ public class CameraRun {
 					}
 					else
 					{
-			*/			if (Math.abs(cMaskOverlap - maskOverlap) < 18)
+			*/			if (Math.abs(cMaskOverlap - maskOverlap) < 10)
 						{
-							if (hardChooseLeft)
+							if ((Math.abs(getAngleTilt(o)) <= Math.abs(getAngleTilt(bestPiece))-5)
+									|| ((hardChooseLeft) && ((massObjectPointer.getGPiece(o).xStart < massObjectPointer.getGPiece(bestPiece).xStart))))
 							{
-								if (massObjectPointer.getGPiece(o).xStart < massObjectPointer.getGPiece(bestPiece).xStart)
+								/*if (Math.abs(lastPieceX-massObjectPointer.getGPiece(o).xStart) < 9
+										&& Math.abs(lastPieceX2-massObjectPointer.getGPiece(o).xStart) < 9
+										&& Math.abs(lastPieceX3-massObjectPointer.getGPiece(o).xStart) < 9)*/
 								{
 									bestPiece = o;
 									bestPieceChanged = true;
 									bestMaskOverlap = cMaskOverlap;
 								}
-							}
-							else if (Math.abs(getAngleTilt(o)) < Math.abs(getAngleTilt(bestPiece)))
-							{
-								System.out.println("switching goals");
-								bestPiece = o;
-								bestPieceChanged = true;
-								bestMaskOverlap = cMaskOverlap;
 							}
 						}
 						else if (cMaskOverlap > maskOverlap)
@@ -979,10 +979,10 @@ public class CameraRun {
 		}*/
 		///===============================================
 		//for final bot===================================
-		goalCenterX = (int)(295);//(300);//(325);//*resolutionRatio);
-		if (distance > 149)
+		goalCenterX = (int)(290);//(300);//(325);//*resolutionRatio);
+		if (distance > 140)
 		{
-			//goalCenterX = (int)(300);//(310);//(305);
+			goalCenterX = (int)(295);//(310);//(305);
 		}
 		else if (distance > 160)
 		{
