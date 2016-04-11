@@ -14,6 +14,7 @@ public class C_ShooterAutoStart extends Command {
 	int state = 0;
 	boolean stop = false;
 	double startTime;
+	boolean initFound = true;
 	
     public C_ShooterAutoStart(int pSpeed) {
     	requires(Robot.ss_Shooter);
@@ -25,10 +26,11 @@ public class C_ShooterAutoStart extends Command {
 		startTime = Timer.getFPGATimestamp();
 		stop = false;
 		state = 0;
+		initFound = Robot.visionTable.getBoolean("foundObject: ",false);
     }
 
     protected void execute() {
-    	if (Robot.visionTable.getBoolean("foundObject: ",false))
+    	if (initFound)
     	{
 	    	//Robot.ss_Shooter.holdSpeed(speed);
 	    	Robot.ss_Shooter.setShooterTopMotorSpeed(1.0);//out both pos

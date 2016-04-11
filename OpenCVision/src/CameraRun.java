@@ -990,7 +990,7 @@ public class CameraRun {
 		}
 		else if (distance < 50)
 		{
-			//goalCenterX = (int)(290);
+			goalCenterX = (int)(288);
 		}
 		/*
 		if (distance < 64)

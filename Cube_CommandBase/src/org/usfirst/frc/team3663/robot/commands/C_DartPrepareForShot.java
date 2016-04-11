@@ -45,8 +45,8 @@ public class C_DartPrepareForShot extends Command {
     	Robot.ss_Dart.moveDart(speed, Robot.ss_PickupArm.isDown());
     }
 
-     protected boolean isFinished() {
-        return Robot.ss_Dart.hitLocation(speed, target) || Robot.ss_Shooter.fireAnyways;
+     protected boolean isFinished() {//if too close is no longer a problem, then add
+        return Robot.ss_Dart.hitLocation(speed, target) /*|| !Robot.visionTable.getBoolean("foundObject: ",false)*/|| Robot.ss_Shooter.fireAnyways;
     }
 
      

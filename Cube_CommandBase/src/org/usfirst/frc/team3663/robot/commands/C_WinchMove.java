@@ -17,8 +17,9 @@ public class C_WinchMove extends Command {
     }
 
     protected void execute() {
-    	
-    	Robot.ss_Winch.runMotorTeleop(Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.winchAxis));
+    	//if go backwards, flip (+) sign
+//    	Robot.ss_Winch.runMotorTeleop(Robot.oi.winchJoystick.getRawAxis(Robot.robotMap.winchAxis)+ Robot.oi.buttonJoystick.getRawAxis(2));
+    	Robot.ss_Winch.runMotorTeleop(Robot.oi.winchJoystick.getRawAxis(Robot.robotMap.winchAxis)+ Robot.oi.getOneDirectionButtonJoyWinchAxis());
     }
 
     protected boolean isFinished() {

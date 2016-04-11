@@ -35,6 +35,7 @@ public class OI {
 	//Joysticks	
 	public Joystick driveJoystick = new Joystick(0);
 	public Joystick buttonJoystick = new Joystick(1);
+	public Joystick winchJoystick = new Joystick(2);
 	//public Joystick testJoystick1= new Joystick(5);
 	public Joystick testJoystick = new Joystick(4);
 	
@@ -139,6 +140,13 @@ public class OI {
 //		if(inTestMode) testJoystick = new Joystick(1);
 //		else testJoystick = null;
 //	}
+	public double getOneDirectionButtonJoyWinchAxis(){
+		double value = buttonJoystick.getRawAxis(5);
+		if(value > 0){
+			return value;
+		}
+		return 0;
+	}
 	public void updateDashboard(){
 		Robot.gui.sendNumber("operation/DriveJoyAxis0", driveJoystick.getRawAxis(0));
 		Robot.gui.sendNumber("operation/DriveJoyAxis1", driveJoystick.getRawAxis(1));
@@ -147,12 +155,12 @@ public class OI {
 		Robot.gui.sendNumber("operation/DriveJoyAxis4", driveJoystick.getRawAxis(4));
 		Robot.gui.sendNumber("operation/DriveJoyAxis5", driveJoystick.getRawAxis(5));
 
-		Robot.gui.sendNumber("operation/ButtonJoyAxis0", driveJoystick.getRawAxis(0));
-		Robot.gui.sendNumber("operation/ButtonJoyAxis1", driveJoystick.getRawAxis(1));
-		Robot.gui.sendNumber("operation/ButtonJoyAxis2", driveJoystick.getRawAxis(2));
-		Robot.gui.sendNumber("operation/ButtonJoyAxis3", driveJoystick.getRawAxis(3));
-		Robot.gui.sendNumber("operation/ButtonJoyAxis4", driveJoystick.getRawAxis(4));
-		Robot.gui.sendNumber("operation/ButtonJoyAxis5", driveJoystick.getRawAxis(5));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis0", buttonJoystick.getRawAxis(0));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis1", buttonJoystick.getRawAxis(1));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis2", buttonJoystick.getRawAxis(2));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis3", buttonJoystick.getRawAxis(3));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis4", buttonJoystick.getRawAxis(4));
+		Robot.gui.sendNumber("operation/ButtonJoyAxis5", buttonJoystick.getRawAxis(5));
 
 	}
 }

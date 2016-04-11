@@ -50,7 +50,7 @@ public class RobotMap {
 	//Camera
 		public int cameraRelay = 0;
 	//Light
-		public int flashLightRelay= 1;
+		public int flashLightRelay= 2;
 /*******Solenoids*******/
 	    public int[] pickUpSolenoid  = new int[]{3,2};//3.2  
 	    public int[] shooterSolenoid = new int[]{1,0};//1.0

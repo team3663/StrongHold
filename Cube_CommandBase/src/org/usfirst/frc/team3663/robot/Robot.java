@@ -68,7 +68,6 @@ public class Robot extends IterativeRobot {
 		ss_FlashLight = new SS_FlashLight();
 		ss_DriveTrain = new SS_DriveTrain();
 		ss_Shooter = new SS_Shooter();
-		ss_FlashLight = new SS_FlashLight();
 		ss_PickupArm = new SS_PickupArm();
 		ss_Dart = new SS_Dart();
 		ss_Winch = new SS_Winch();
