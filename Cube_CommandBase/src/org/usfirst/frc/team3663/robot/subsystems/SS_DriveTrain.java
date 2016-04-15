@@ -3,12 +3,16 @@ package org.usfirst.frc.team3663.robot.subsystems;
 import org.usfirst.frc.team3663.robot.Robot;
 import org.usfirst.frc.team3663.robot.commands.C_DriveTrainArcade;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 /**
@@ -19,7 +23,7 @@ import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 
 
 public class SS_DriveTrain extends Subsystem {
-	
+	AHRS ahrs = new AHRS(SPI.Port.kMXP); 
 	//Motors
 	private CANTalon driveMotorLeft1 = new CANTalon(Robot.robotMap.driveLeftMotor1);
 	private CANTalon driveMotorLeft2 = new CANTalon(Robot.robotMap.driveLeftMotor2);
@@ -54,10 +58,10 @@ public class SS_DriveTrain extends Subsystem {
     		driveTrain = new RobotDrive(driveMotorLeft1, driveMotorLeft2, driveMotorRight1, driveMotorRight2);
     	}
     	if(Robot.robotMap.isDriveFlipped){
-    		driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed);
+    		driveTrain.arcadeDrive(pTurnSpeed, pForwardSpeed*-1);
     	}
     	else{
-    		driveTrain.arcadeDrive(pForwardSpeed, pTurnSpeed);    		
+    		driveTrain.arcadeDrive(pForwardSpeed, pTurnSpeed);
     	}
     }
     
@@ -159,13 +163,35 @@ public class SS_DriveTrain extends Subsystem {
     	}
     	return 0.0;
     }
-    
+  
+    public double getAngle(){
+    	return ahrs.getAngle();
+    }
+
     public void updateDashboard(){
     	Robot.gui.sendNumber("drive/Left Drive Motor 1", Math.round(driveMotorLeft1.get()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Left Drive Motor 2", Math.round(driveMotorLeft2.get()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Right Drive Motor 1", Math.round(driveMotorRight1.get()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Right Drive Motor 2", Math.round(driveMotorRight2.get()*100.0)/100.0);
     	Robot.gui.sendNumber("drive/Drive Gyro Angle", Math.round(driveGyro.getAngle()*100.0)/100.0);
+    	Robot.gui.sendNumber("ahrs/Angle", ahrs.getAngle());
+    	Robot.gui.sendNumber("ahrs/CompassHeading", ahrs.getCompassHeading());
+    	Robot.gui.sendNumber("ahrs/DisplacementX", ahrs.getDisplacementX());
+    	Robot.gui.sendNumber("ahrs/DisplacementY", ahrs.getDisplacementY());
+    	Robot.gui.sendNumber("ahrs/DisplacementZ", ahrs.getDisplacementZ());
+    	Robot.gui.sendNumber("ahrs/Pitch", ahrs.getPitch());
+    	Robot.gui.sendNumber("ahrs/Yaw", ahrs.getYaw());
+    	Robot.gui.sendNumber("ahrs/Roll", ahrs.getRoll());
+    	Robot.gui.sendNumber("ahrs/VelocityX", ahrs.getVelocityX());
+    	Robot.gui.sendNumber("ahrs/VelocityY", ahrs.getVelocityY());
+    	Robot.gui.sendNumber("ahrs/VelocityZ", ahrs.getVelocityZ());
+    	Robot.gui.sendNumber("ahrs/RawAccelX", ahrs.getRawAccelX());
+    	Robot.gui.sendNumber("ahrs/RawAccelY", ahrs.getRawAccelY());
+    	Robot.gui.sendNumber("ahrs/RawAccelZ", ahrs.getRawAccelZ());
+    	Robot.gui.sendBoolean("ahrs/isMoving", ahrs.isMoving());
+    	Robot.gui.sendBoolean("ahrs/isRotating", ahrs.isRotating());
+    	Robot.gui.sendBoolean("ahrs/isCalibrating", ahrs.isCalibrating());
+
 //    	Robot.gui.sendNumber("drive/Left Encoder", getRightEnc());
 //    	Robot.gui.sendNumber("drive/Right Encoder", getLeftEnc());
     }

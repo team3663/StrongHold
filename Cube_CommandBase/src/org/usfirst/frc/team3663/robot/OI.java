@@ -6,6 +6,7 @@ import org.usfirst.frc.team3663.robot.commands.CG_PitAutoVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.TestCG_FullTest;
 import org.usfirst.frc.team3663.robot.commands.CG_VisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DartMoveNOTSAFE;
+import org.usfirst.frc.team3663.robot.commands.C_DriveToAngle;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_PickupRunMotor;
 import org.usfirst.frc.team3663.robot.commands.C_EndCommand;
@@ -83,8 +84,8 @@ public class OI {
 	private JoystickButton testCenterGoal = new JoystickButton(testJoystick,3);//on xbox one is x
 	//private JoystickButton testFineAdjust = new JoystickButton(testJoystick,4);
 	private JoystickButton testTeleopVisionShooting = new JoystickButton(testJoystick,5);//on xbox one is bumperL
-	//private JoystickButton turn90Degrees = new JoystickButton(testJoystick,6);
-
+	private JoystickButton turn90Degrees = new JoystickButton(testJoystick,4);
+	
 //	private JoystickButton trentsBadCode = new JoystickButton(visionTestStick,6);
 	
 	public OI(){
@@ -120,6 +121,7 @@ public class OI {
 		cycleUp.whenPressed(new TestC_Cycle(true));
 		cycleDown.whenPressed(new TestC_Cycle(false));
 		
+		turn90Degrees.whenPressed(new C_DriveToAngle(-90.0, 0.0, 0.6));
 		//VisionTestButtons
 		//testCenterGoal.whileHeld(new C_DriveVisionCenterGoal());
 //		trentsBadCode.whenPressed(new C_TrentsVision());

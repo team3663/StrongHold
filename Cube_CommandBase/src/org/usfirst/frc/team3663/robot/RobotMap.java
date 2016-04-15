@@ -60,7 +60,7 @@ public class RobotMap {
 	//driveTrain
 	    public int driveAxisForward = 2;
 	    public int driveAxisReverse = 3;
-	    public int driveAxisTurn =	 0;
+	    public int driveAxisTurn = 0;
 	//winch
 	    public int winchAxis = 5;
 	//hook
@@ -70,14 +70,6 @@ public class RobotMap {
 	//DriveTrain
 	    public int encoderTicksPerInch = 20;
 	//Dart
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
 	    public int minDistanceValue = 620;//410;
 	    public int maxDistanceValue = 2380;
 	    public int soft1 = 640;
