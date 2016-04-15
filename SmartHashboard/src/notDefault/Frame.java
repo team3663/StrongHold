@@ -73,7 +73,7 @@ public class Frame implements Runnable{
 		long startTime = System.currentTimeMillis();
 		int delay = 1500;
 		while(true){
-			if(owat.isEnabled()){
+			if(/*owat.isEnabled()*/true){
 				for(SubTablePanel stp:subs){
 					if(!stp.subTable.equals("operation")){
 						stp.update();

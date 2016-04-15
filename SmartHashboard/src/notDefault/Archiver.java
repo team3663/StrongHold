@@ -134,7 +134,7 @@ public class Archiver {
 					try{
 						currentLine = currentLine + a.get(i) + ","; //add the column[i] to currentLine
 					}catch(IndexOutOfBoundsException e){
-						currentLine = currentLine + "x,";
+						currentLine = currentLine + ",";
 					}
 				}else{ //if this is aa_time
 					try{

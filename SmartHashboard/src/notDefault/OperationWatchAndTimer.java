@@ -47,10 +47,12 @@ public class OperationWatchAndTimer implements Runnable{
 			System.out.println("\"Enabled\" is at location: " + modeIndex);
 		}
 		while(true){
+//			archiver.acceptingValues = enabled;
+			
 			archiver.addValue("OWAT_Enabled", Boolean.toString(enabled));
 			archiver.addValue("Archiver", Boolean.toString(archiver.acceptingValues));
 			if(operation.get(modeIndex).equals("true")){ //If enabled
-				System.out.println("enabled!!!!!!!");
+				archiver.acceptingValues = true;
 				keepGoingFlag = true;
 				enabled = true;
 				operation.update();
@@ -74,7 +76,8 @@ public class OperationWatchAndTimer implements Runnable{
 					}
 				}
 			}else{
-				System.out.println("disabled!!!!!!");
+				archiver.acceptingValues = false;
+				enabled = false;
 			}
 			sleep(2);
 		}
