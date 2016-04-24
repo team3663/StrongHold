@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team3663.robot;
 
-//Angelique Is Writing Here! HAHA
+//Angelique Is Writing Here!
 
 import org.usfirst.frc.team3663.robot.commands.C_DriveControllerDPad;
 import org.usfirst.frc.team3663.robot.commands.C_UpdateGui;
