@@ -18,7 +18,11 @@ public class C_HookMove extends Command {
     }
 
     protected void execute() {
-    	Robot.ss_Hook.moveHook(Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.hookAxis), true);
+    	double speed = Robot.oi.buttonJoystick.getRawAxis(Robot.robotMap.hookAxis);
+    	Robot.ss_Hook.moveHook(speed, true);
+    	if(speed > .1 || speed < -.1){
+    		Robot.ss_DriveTrain.setBrakeMode(true);
+    	}
     }
 
     protected boolean isFinished() {
