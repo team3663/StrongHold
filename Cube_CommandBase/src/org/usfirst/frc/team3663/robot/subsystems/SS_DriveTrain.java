@@ -65,6 +65,13 @@ public class SS_DriveTrain extends Subsystem {
     	}
     }
     
+    public void setBrakeMode(boolean pValue){
+		driveMotorLeft1.enableBrakeMode(pValue);
+		driveMotorLeft2.enableBrakeMode(pValue);
+		driveMotorRight1.enableBrakeMode(pValue);
+		driveMotorRight2.enableBrakeMode(pValue);
+    }
+    
     public void resetGyro(){							//Resets the Gyro
     	driveGyro.reset();
     }

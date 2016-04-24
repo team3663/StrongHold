@@ -97,7 +97,7 @@ public class OI {
 		pickupRaiseArmB.whenPressed(new C_PickupFirePiston(false));
 		pickupLowerArmB.whenPressed(new C_PickupFirePiston(true));
 		//pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
-		pickupRunOut.whileHeld(new C_PickupRunMotor(1));
+		pickupRunOut.whileHeld(new C_PickupRunMotor(.6));
 	  //Shooter Buttons
 		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
