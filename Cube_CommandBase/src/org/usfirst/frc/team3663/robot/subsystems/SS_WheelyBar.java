@@ -1,3 +1,5 @@
+
+
 package org.usfirst.frc.team3663.robot.subsystems;
 
 import org.usfirst.frc.team3663.robot.Robot;
@@ -52,14 +54,21 @@ public class SS_WheelyBar extends Subsystem {
     	if(wheelyBarDelay<Timer.getFPGATimestamp()){
     		return true;
     	}
-    	if(distValue < pTarget){
+    	if((distValue < pTarget && pSpeed > 0) || (distValue > pTarget && pSpeed < 0)){
         	moveWheelyBar(pSpeed/2);
     		return false;
     	}
     	STOP();
     	return true;
     }
-    
+    public double getSpeed(int pTarget)
+    {
+    	if (grabEncoder() > pTarget)
+    	{
+    		return -0.7;
+    	}
+    	return 0.7;
+    }
     public void moveWheelyBarSafe(double pSpeed){
     	int distValue = grabEncoder();
     	if((pSpeed > 0 && distValue < Robot.robotMap.wbMaxEnc) || (pSpeed < 0 && distValue > Robot.robotMap.wbMinEnc)&&(pSpeed>.4||pSpeed<-.4)){

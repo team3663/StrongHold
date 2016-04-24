@@ -1,6 +1,7 @@
 package org.usfirst.frc.team3663.robot;
 
 import org.usfirst.frc.team3663.robot.commands.CG_AutoVisionShooting;
+import org.usfirst.frc.team3663.robot.commands.CG_ConfigHookSetUp;
 import org.usfirst.frc.team3663.robot.commands.CG_DriverPickupBall;
 import org.usfirst.frc.team3663.robot.commands.CG_PitAutoVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.TestCG_FullTest;
@@ -59,6 +60,8 @@ public class OI {
   //Winch Buttons
 	private JoystickButton turnOnFlashlight = 	  new JoystickButton(buttonJoystick, 1);
 	private JoystickButton winchNotSafeMove = new JoystickButton(buttonJoystick, 7);
+  //DartButtons
+	private JoystickButton configHookSetUp = new JoystickButton(buttonJoystick,8);
   //Hook Buttons
 	private JoystickButton fireHookPiston = new JoystickButton(buttonJoystick, 3);
 	private JoystickButton retractHookPiston = new JoystickButton(buttonJoystick,2);
@@ -97,12 +100,14 @@ public class OI {
 		pickupRaiseArmB.whenPressed(new C_PickupFirePiston(false));
 		pickupLowerArmB.whenPressed(new C_PickupFirePiston(true));
 		//pickupCycleSafty.whenPressed(new C_PickupArmSwitchSafety());
-		pickupRunOut.whileHeld(new C_PickupRunMotor(1));
+		pickupRunOut.whileHeld(new C_PickupRunMotor(.6));
 	  //Shooter Buttons
 		shooterMotorsFullPower.whileHeld(new C_ShooterShoot());
 	  //Winch Buttons
 		turnOnFlashlight.whenPressed(new C_FlashLightToggle());//new C_WinchGoToLocation(1111, -.5));
 		winchNotSafeMove.whileHeld(new C_WinchMoveNoSafety());
+	  //Dart Buttons
+		configHookSetUp.whenPressed(new CG_ConfigHookSetUp());
 	  //Hook
 		fireHookPiston.whenPressed(new C_HookSetPiston(true));
 		retractHookPiston.whenPressed(new C_HookSetPiston(false));
