@@ -28,6 +28,7 @@ public class CameraRun {
 	JFrame frame;
 	Component com;
 	String videoStreamAddress = "http://root:team3663@10.36.63.15/mjpg/video.mjpg";//"http://root:password@10.36.63.100/mjpg/video.mjpg";
+	//String videoStreamAddressUSB = something "http://roborio-3663FRC.local";
 	String videoStreamAddress2 = "http://root:password@10.36.63.100/mjpg/video.mjpg";
 	String videoStreamAddress3 = "http://root:password@169.254.199.100/mjpg/video.mjpg";
 	String streamAddress = videoStreamAddress;

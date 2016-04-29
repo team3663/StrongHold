@@ -15,12 +15,12 @@ public class C_WheelyBarAutoMove extends Command {
     public C_WheelyBarAutoMove(int pTarget, double pSpeed) { 
         requires(Robot.ss_WheelyBar);
         target = pTarget;
-        //speed = pSpeed;
+        //in initialize speed = pSpeed;
     }
 
     protected void initialize() {
     	Robot.ss_WheelyBar.setEndTime(15);
-    	Robot.ss_WheelyBar.getSpeed(target);
+    	speed = Robot.ss_WheelyBar.getSpeed(target);
     }
 
     protected void execute() {
