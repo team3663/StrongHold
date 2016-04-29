@@ -14,6 +14,7 @@ public class C_DriveToAngle extends Command {
 	double angle;
 	double forwardSpeed;
 	double turnSpeed;
+	int angleBuffer = 30;
 
     public C_DriveToAngle(double angle,double forwardSpeed,double turnSpeed) {
     	this.angle = angle;
@@ -31,14 +32,14 @@ public class C_DriveToAngle extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(angle > 0){
-    		if(Math.abs((Robot.ss_DriveTrain.getAngle() - startAngle) - angle) < 15){
-        		Robot.ss_DriveTrain.arcadeRobotDrive(forwardSpeed, -Math.abs(turnSpeed)/1.3);
+    		if(Math.abs((Robot.ss_DriveTrain.getAngle() - startAngle) - angle) < angleBuffer){
+        		Robot.ss_DriveTrain.arcadeRobotDrive(forwardSpeed, -Math.abs(turnSpeed)/1.5);
     		}else{
         		Robot.ss_DriveTrain.arcadeRobotDrive(forwardSpeed, -Math.abs(turnSpeed));
     		}
     	}else{
-    		if(Math.abs((Robot.ss_DriveTrain.getAngle() - startAngle) - angle) < 15){
-        		Robot.ss_DriveTrain.arcadeRobotDrive(forwardSpeed, Math.abs(turnSpeed/1.3));
+    		if(Math.abs((Robot.ss_DriveTrain.getAngle() - startAngle) - angle) < angleBuffer){
+        		Robot.ss_DriveTrain.arcadeRobotDrive(forwardSpeed, Math.abs(turnSpeed)/1.5);
     		}else{
     			Robot.ss_DriveTrain.arcadeRobotDrive(forwardSpeed, Math.abs(turnSpeed));
     		}

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CG_Climb extends CommandGroup {
     
     public  CG_Climb() {
-    	addParallel(new C_DriveBasedTime(30.0, 0.3)); //drive backwards continually
+    	addParallel(new C_DriveBasedTime(30.0, 0.3, 0)); //drive backwards continually
     	addSequential(new C_WaitSecs(4.0));
 //    	addParallel(new C_HookSetPiston());
 //    	addSequential(new C_DartAutoMove()); //hook out + dart up (kick out the hook)

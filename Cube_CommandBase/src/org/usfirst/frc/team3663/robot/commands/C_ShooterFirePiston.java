@@ -16,6 +16,7 @@ public class C_ShooterFirePiston extends Command {
     }
 
     protected void initialize() {
+    	Robot.ss_Shooter.setShooterMotorsSpeed(1);
         Robot.ss_Shooter.fireShooterSolenoid(true);  
     }
 
@@ -29,6 +30,7 @@ public class C_ShooterFirePiston extends Command {
 
     protected void end() {
     	Robot.ss_Shooter.fireShooterSolenoid(false);
+    	Robot.ss_Shooter.STOP();
     }
 
     protected void interrupted() {

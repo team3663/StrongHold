@@ -13,9 +13,9 @@ public class CG_AutoUnderLowBar extends CommandGroup {
         addSequential(new C_PickupFirePiston(true));
     	addParallel(new C_WheelyBarAutoMove(Robot.ss_WheelyBar.maxDistance(), .5));
     	addSequential(new C_DartAutoMove(Robot.ss_Dart.minDistance()));
-        addSequential(new C_DriveBasedTime(0.5, -0.7));
+        addSequential(new C_DriveBasedTime(0.5, -0.7, 0));
     	addParallel(new C_WheelyBarAutoMove(2046, .7));
-    	addSequential(new C_DriveBasedTime(2.6,-0.7));
+    	addSequential(new C_DriveBasedTime(2.6,-0.7, 0));
     	
     	addSequential(new C_DartAutoMove(1900));//1761));//Robot.robotMap.touch2+400));
     	addSequential(new CG_AutoVisionShooting());
