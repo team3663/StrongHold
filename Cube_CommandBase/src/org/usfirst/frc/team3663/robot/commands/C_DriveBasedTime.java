@@ -12,9 +12,11 @@ public class C_DriveBasedTime extends Command {
     private double targetTime = 0;
     private double startTime;
     private double speed = 0;
+    private double angle = 0;
 
-    public C_DriveBasedTime(double time, double pSpeed) {
+    public C_DriveBasedTime(double time, double pSpeed, double pAngle) {
         requires(Robot.ss_DriveTrain);
+        angle = pAngle;
         targetTime = time;
         speed = pSpeed;
     }
@@ -27,7 +29,7 @@ public class C_DriveBasedTime extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.ss_DriveTrain.arcadeRobotDrive(speed, 0);
+    	Robot.ss_DriveTrain.arcadeRobotDrive(speed, angle);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -19,12 +19,12 @@ public class SS_FlashLight extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void setLight(boolean pValue){
+    public void setLight(boolean pValue){			//True is on
     	if(pValue){
-    		spike.set(Relay.Value.kForward);
+    		spike.set(Relay.Value.kReverse);
     	}
     	else{
-    		spike.set(Relay.Value.kReverse);
+    		spike.set(Relay.Value.kForward);
     	}
     }
     

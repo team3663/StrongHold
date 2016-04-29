@@ -10,14 +10,14 @@ public class CG_AutoCornerShot extends CommandGroup {
     
     public  CG_AutoCornerShot() {
     	addParallel(new C_ShooterRunMotors(1)); //spin up
-    	addParallel(new C_WheelyBarAutoMove(Robot.robotMap.wbMinEnc, 0.6));
+    	addParallel(new C_WheelyBarAutoMove(200, 0.05));
     	addSequential(new CG_ConfigLongShot()); //adjust dart angle
-    	addSequential(new C_WaitSecs(1));		//wait for spin up
+    	addSequential(new C_WaitSecs(1.5));		//wait for spin up
     	addSequential(new C_ShooterFirePiston());	//fire
-    	addSequential(new C_DriveBasedTime(1.5,0.6));
+    	addSequential(new C_DriveBasedTime(.75,-0.6, -.5));
     	addParallel(new C_DartAutoMove(Robot.ss_Dart.minDistance()));
-    	addSequential(new C_DriveToAngle(90.0, 0.0, 0.7));
-    	addSequential(new C_DriveBasedTime(3.5,0.7));
+    	addSequential(new C_DriveToAngle(88.0, 0.0, 1));
+    	addSequential(new C_DriveBasedTime(3.5,-0.7, 0));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

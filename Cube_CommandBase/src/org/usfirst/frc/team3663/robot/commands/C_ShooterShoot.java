@@ -19,7 +19,6 @@ public class C_ShooterShoot extends Command {
     protected void initialize() {
     	count = 20;
     	end = false;
-    	Robot.ss_FlashLight.setLight(true);
     }
 
     protected void execute() {

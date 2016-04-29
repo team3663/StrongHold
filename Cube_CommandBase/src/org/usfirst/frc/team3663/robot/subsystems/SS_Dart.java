@@ -66,7 +66,7 @@ public class SS_Dart extends Subsystem {
     }
     
     
-    int raiseDartExtra = -60;
+    int raiseDartExtra = -45;
     public int ConvertInchesToTicks(int pInches){
     	//return (int)((0.0253*pInches*pInches) - (8.5606*pInches) + (2399.1)); //CUBE's code
     	//return (int)((0.0356*pInches*pInches) - (10.041*pInches) + (2499.5));	//Glass' code subset#1

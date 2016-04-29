@@ -7,6 +7,7 @@ import org.usfirst.frc.team3663.robot.commands.CG_PitAutoVisionShooting;
 import org.usfirst.frc.team3663.robot.commands.TestCG_FullTest;
 import org.usfirst.frc.team3663.robot.commands.CG_VisionCenterGoal;
 import org.usfirst.frc.team3663.robot.commands.C_DartMoveNOTSAFE;
+import org.usfirst.frc.team3663.robot.commands.C_DriveBasedTime;
 import org.usfirst.frc.team3663.robot.commands.C_DriveToAngle;
 import org.usfirst.frc.team3663.robot.commands.C_PickupFirePiston;
 import org.usfirst.frc.team3663.robot.commands.C_PickupRunMotor;
@@ -67,6 +68,8 @@ public class OI {
 	private JoystickButton retractHookPiston = new JoystickButton(buttonJoystick,2);
   //NOTSAFE
 	private JoystickButton moveDartNotSafe = new JoystickButton(buttonJoystick, 4); 
+  //Drive Buttons
+	private JoystickButton autoMoveWheels = new JoystickButton(driveJoystick, 3);
 	
 	
   //Test Joystick Buttons
@@ -120,6 +123,9 @@ public class OI {
 		disableFullTest.whenReleased(new TestC_DisableTestMode());
 	  //Not Safe Buttons
 		moveDartNotSafe.whenPressed(new C_DartMoveNOTSAFE());
+	  //Drive Buttons
+		autoMoveWheels.whileHeld(new C_DriveBasedTime(15,.3,0));
+	
 		
 		cycleTest.whenPressed(new TestCG_CycleTest());
 		stopCycleTest.whenPressed(new TestC_StopCycleTest());

@@ -35,6 +35,7 @@ public class C_DriveControllerDPad extends Command {
     		cg_Long.start();
     	}
     	else if(Robot.oi.driveJoystick.getRawButton(8) && !cg_Pos4.isRunning()){
+    		Robot.ss_FlashLight.setLight(true);
     		cg_Pos4.start();
     	}
     	else if(Robot.oi.driveJoystick.getPOV() == -1){

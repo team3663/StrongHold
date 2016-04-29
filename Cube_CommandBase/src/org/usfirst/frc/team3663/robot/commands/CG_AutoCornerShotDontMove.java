@@ -1,15 +1,22 @@
 package org.usfirst.frc.team3663.robot.commands;
 
+import org.usfirst.frc.team3663.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class CG_ConfigDefencePos4 extends CommandGroup {
+public class CG_AutoCornerShotDontMove extends CommandGroup {
     
-    public  CG_ConfigDefencePos4() {
+    public  CG_AutoCornerShotDontMove() {
+    	addParallel(new C_ShooterRunMotors(1)); //spin up
+    	addParallel(new C_WheelyBarAutoMove(Robot.robotMap.wbMinEnc, 0.6));
+    	addSequential(new CG_ConfigLongShot()); //adjust dart angle
+    	addSequential(new C_WaitSecs(1));		//wait for spin up
+    	addSequential(new C_ShooterFirePiston());
         // Add Commands here:
-        addSequential(new C_DartAutoMove(1775));
+        // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.
 

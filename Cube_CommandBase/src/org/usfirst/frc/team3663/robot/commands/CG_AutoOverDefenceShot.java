@@ -15,12 +15,12 @@ public class CG_AutoOverDefenceShot extends CommandGroup {
 			addSequential(new C_CameraLightSet(true));
     	addSequential(new C_PickupFirePiston(true));
 			addSequential(new C_CameraLightSet(false));
-    	addSequential(new C_DartAutoMove(1462));
+    	addSequential(new C_DartAutoMove(1447));
     	addSequential(new C_PickupFirePiston(false));
 			addSequential(new C_CameraLightSet(true));
-        addSequential(new C_DriveBasedTime(driveTime/4, -0.7));
+        addSequential(new C_DriveBasedTime(driveTime/4, -0.7, 0));
     	addParallel(new C_WheelyBarAutoMove(2046, .7));
-    	addSequential(new C_DriveBasedTime(3*driveTime/4,-0.7));
+    	addSequential(new C_DriveBasedTime(3*driveTime/4,-0.7, 0));
     		addSequential(new C_CameraLightSet(false));
         	addSequential(new C_CameraLightSet(true));	
     	addSequential(new C_PickupFirePiston(true));
