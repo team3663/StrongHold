@@ -26,7 +26,7 @@ public class CG_AutoOverDefenceShot extends CommandGroup {
     	addSequential(new C_PickupFirePiston(true));
     	
     	//if no time for short auto move, then raise dart 50?
-    	addSequential(new C_DartAutoMove(1900));//Robot.robotMap.touch2+400));
+    	addSequential(new C_DartAutoMove(1750));//Robot.robotMap.touch2+400));
     	addSequential(new CG_AutoVisionShooting());
     	
         // these will run in order.

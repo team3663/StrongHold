@@ -56,7 +56,7 @@ public class CameraRun {
 	
 //	boolean foundObject = false;
 	
-	boolean autoFindLeft,centeringGoal/*,movingWithRadius*/,okayToShoot;
+	boolean autoFindLeft,centeringGoal/*,movingWithRadius*/,okayToShoot,centeringY;
 	
 	public void CameraFirstInit()
 	{
@@ -226,9 +226,13 @@ public class CameraRun {
 							{
 								okayToShoot = isFineAdjustedGoal();
 							}
+							{
+								centeringY = centeringY();
+							}
 							table.putBoolean("C_/centeringGoal: ", centeringGoal);
 							//table.putBoolean("C_/movingWithRadius: ", movingWithRadius);
 							table.putBoolean("C_/okayToShoot: ", okayToShoot);
+							table.putBoolean("C_/centeringY: ", centeringY);
 						}
 						
 						if (table.getBoolean("ShooterShot: ",false))
@@ -980,10 +984,10 @@ public class CameraRun {
 		}*/
 		///===============================================
 		//for final bot===================================
-		goalCenterX = (int)(285);//(300);//(325);//*resolutionRatio);
+		goalCenterX = (int)(280);//5);//(300);//(325);//*resolutionRatio);
 		if (distance > 140)
 		{
-			goalCenterX = (int)(287);//(310);//(305);
+			goalCenterX = (int)(282);//7);//(310);//(305);
 		}
 		else if (distance > 160)
 		{
@@ -991,7 +995,7 @@ public class CameraRun {
 		}
 		else if (distance < 50)
 		{
-			goalCenterX = (int)(288);
+			goalCenterX = (int)(283);//8);
 		}
 		/*
 		if (distance < 64)
@@ -1118,6 +1122,22 @@ public class CameraRun {
 		/*double dist = getDistanceMass(bestPieceKey);
 		double angle = getAngleTilt(bestPieceKey);*/
 		return (/*(Math.abs(angle) < maxDistortedAngle) && !moveShooterArm &&*/table.getBoolean("finishedMovingPot: ",false) && !centeringGoal && distance < 15*12);
+	}
+	
+	private boolean centeringY()
+	{
+		int yCenter = (int)table.getNumber("bestGoal Y: ",240);
+		if (yCenter > 240+120)
+		{
+			table.putBoolean("raiseDart: ", true);
+			return true;
+		}
+		else if (yCenter < 240-120)
+		{
+			table.putBoolean("raiseDart: ", false);
+			return true;
+		}
+		return false;
 	}
 	
 	private void colorSquare(BufferedImage img, int x, int y, int color)

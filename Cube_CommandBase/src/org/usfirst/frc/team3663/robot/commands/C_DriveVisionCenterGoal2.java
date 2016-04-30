@@ -16,7 +16,7 @@ public class C_DriveVisionCenterGoal2 extends Command {
 	
 	double forwardVariable = 0.2;
 	double switchForward = -1.0;
-	double turnSpeed = 0.72;
+	double turnSpeed = 0.76;//0.72
 	double angleToTime = 70.0;
 	
 	//
@@ -34,17 +34,18 @@ public class C_DriveVisionCenterGoal2 extends Command {
     boolean initFound = true;
     int moveCount = 0;
     int state = 0;
+    int i = 0;
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	i = 0;
     	if (!table.getBoolean("foundObject: ",false))
     	{
     		initFound = false;
     		System.out.println("didn't find Object! DriveVisionSeeAnyGoal didn't work!");
     	}
     	table.putBoolean("Mode/commandRunning: ", true);
-    	turnSpeed = 0.75;//until we know we can go faster
+    	turnSpeed = 0.77;//75;//until we know we can go faster
     	
     	moveCount = 0;
     	state = 0;
@@ -62,8 +63,8 @@ public class C_DriveVisionCenterGoal2 extends Command {
 			startTime = Timer.getFPGATimestamp();
 			if (Math.abs(cameraMoveAngle) < 10)//will need to add big one later
     		{
-    			moveTime = Math.abs(cameraMoveAngle/(angleToTime-5));
-    			forwardVariable = 0.5;
+    			moveTime = Math.abs(cameraMoveAngle/(angleToTime-13));
+    			forwardVariable = 0.6;
     			turnSpeed = 0.77;
     			if (moveTime < 0.13)
     			{
@@ -99,20 +100,30 @@ public class C_DriveVisionCenterGoal2 extends Command {
 			}
 			break;
 		case 2:
-			if (Timer.getFPGATimestamp()-startTime > 0.3)
+			if (Timer.getFPGATimestamp()-startTime > 0.4)
 			{
-				state = 0;
-				startTime = Timer.getFPGATimestamp();
+				state++;// = 0;
+				//startTime = Timer.getFPGATimestamp();
 				moveCount++;
 				switchForward*=-1;
 			}
+			break;
+		case 3:
+			if (i > 9)
+			{
+				i = 0;
+				startTime = Timer.getFPGATimestamp();
+				state = 0;
+			}
+			stop = !table.getBoolean("C_/centeringGoal: ",false);
+			i++;
 		}
 	}
 
     
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-		stop = !table.getBoolean("C_/centeringGoal: ",false);
+		//stop = !table.getBoolean("C_/centeringGoal: ",false);// && state!=2;
     	return (stop || /*Robot.ss_Shooter.fireAnyways ||*/ moveCount > 7 || !initFound);// || Timer.getFPGATimestamp()-startTime > moveTime);// || !table.getBoolean("C_/centeringGoal: ", false);
     }
 

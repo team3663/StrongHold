@@ -14,16 +14,17 @@ public class CG_AutoVisionShooting extends CommandGroup {
 	
     public  CG_AutoVisionShooting() {
     	
-    	//addParallel(new C_HoldSpeedToFlag(-25000));
-    	//addSequential(new C_WaitSecs(0.25));//may see old flag before C_HoldSpeedToFlag resets it
+    	/////////addParallel(new C_HoldSpeedToFlag(-25000));
+    	/////////addSequential(new C_WaitSecs(0.25));//may see old flag before C_HoldSpeedToFlag resets it
 		
-    	//addParallel(new CG_VisionCenterGoal());
+    	///////addParallel(new CG_VisionCenterGoal());
     	addSequential(new CG_VisionSeeAnyGoal());
     	addParallel(new C_DriveVisionCenterGoal2());
-    	//addSequential(new C_DriveVisionCenterGoal());
+    	//-->addSequential(new C_VisionDartCenterGoal());
+    	///////addSequential(new C_DriveVisionCenterGoal());
 		
-		addSequential(new C_WaitSecs(0.4));
-		//addSequential(new C_DartAutoMove(1761));
+		addSequential(new C_WaitSecs(0.6));
+		////////addSequential(new C_DartAutoMove(1761));
 		addSequential(new C_DartPrepareForShot());
 	
 		addSequential(new CG_AutoShoot(-25000));//-24000

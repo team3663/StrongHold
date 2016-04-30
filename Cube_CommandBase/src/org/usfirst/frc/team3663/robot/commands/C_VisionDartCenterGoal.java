@@ -7,17 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class C_VisionDartAutoMove extends Command {
+public class C_VisionDartCenterGoal extends Command {
 
-	private int targetDist;
-	private double speed;
-    public C_VisionDartAutoMove(int pTarget) {
+	int targetDist;
+	double speed;
+	
+    public C_VisionDartCenterGoal() {
         requires(Robot.ss_Dart);
-        targetDist = pTarget;
     }
 
     protected void initialize() {
-    	speed = Robot.ss_Dart.findSpeed(targetDist);
+    	if (Robot.visionTable.getBoolean("C_/centeringY: ",false))
+    	{
+    		if (Robot.visionTable.getBoolean("raiseDart: ",true))
+    		{
+    	    	targetDist = Robot.ss_Dart.getPotentiometerValue()+65;
+    		}
+    		else
+    		{
+    			targetDist = Robot.ss_Dart.getPotentiometerValue()-65;
+    		}
+    		speed = Robot.ss_Dart.findSpeed(targetDist);
+    	}
     }
                                                                                                                              
     protected void execute() {
@@ -25,7 +36,7 @@ public class C_VisionDartAutoMove extends Command {
     }
 
     protected boolean isFinished() {
-        return (Robot.ss_Dart.hitLocation(speed, targetDist) || Robot.visionTable.getBoolean("foundObject: ",false));
+    	return Robot.ss_Dart.hitLocation(speed, targetDist);
     }
 
     protected void end() {

@@ -48,7 +48,7 @@ public class C_DriveVisionSeeAnyGoal extends Command {
     		//====
     		switch(dir)
     		{
-    		case 0:
+    		case 0://right
     			Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.85);
     			if ((Timer.getFPGATimestamp()-startTime) > (turnTime))
     			{
@@ -56,7 +56,7 @@ public class C_DriveVisionSeeAnyGoal extends Command {
     				startTime = Timer.getFPGATimestamp();
     			}
     			break;
-    		case 1:
+    		case 1://left
     			Robot.ss_DriveTrain.arcadeRobotDrive(0, 0.82);
     			if ((Timer.getFPGATimestamp()-startTime) > (2*turnTime))
     			{
@@ -65,23 +65,23 @@ public class C_DriveVisionSeeAnyGoal extends Command {
     			}
     			break;
     		case 2:
-    			if (Robot.ss_Dart.hitLocation(Robot.ss_Dart.findSpeed(Robot.robotMap.touch2+450), Robot.robotMap.touch2+350))
+    	//temp		//if (Robot.ss_Dart.hitLocation(Robot.ss_Dart.findSpeed(Robot.robotMap.touch2+350), Robot.robotMap.touch2+350))
     			{
-    				Robot.ss_Dart.STOP();
+    				//Robot.ss_Dart.STOP();
     				dir++;
-    				startTime = Timer.getFPGATimestamp();
+    				//startTime = Timer.getFPGATimestamp();
     			}
-    			else
+    			//else
     			{
-    				Robot.ss_Dart.moveDart(Robot.ss_Dart.findSpeed(Robot.robotMap.touch2+450),Robot.ss_PickupArm.isDown());
+    				//Robot.ss_Dart.moveDart(Robot.ss_Dart.findSpeed(Robot.robotMap.touch2+350),Robot.ss_PickupArm.isDown());
     			}
     			break;
     		case 3:
-    			Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.85);
-    			if ((Timer.getFPGATimestamp()-startTime) > (2*turnTime))
+    	//temp		//Robot.ss_DriveTrain.arcadeRobotDrive(0, -0.85);
+    			//if ((Timer.getFPGATimestamp()-startTime) > (2*turnTime))
     			{
     				dir++;
-    				startTime = Timer.getFPGATimestamp();
+    			//	startTime = Timer.getFPGATimestamp();
     			}
     			break;
     		case 4:
